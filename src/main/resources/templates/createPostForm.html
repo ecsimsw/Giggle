@@ -7,19 +7,19 @@
 <body>
 <div>
     <h3>Giggle</h3>
-    <p>Welcome</p>
-    <form th:action="@{/login}" method="post">
+    <p>createPost</p>
+    <form th:action="@{/post/create}" method="post">
         <table>
             <tr>
-                <td>id</td>
+                <td>title</td>
                 <td>
-                    <input type="text" name = "loginId" placeholder="id">
+                    <input type="text" name = "title" placeholder="title">
                 </td>
             </tr>
             <tr>
-                <td>pw</td>
+                <td>content</td>
                 <td>
-                    <input type="text" name ="loginPw" placeholder="pw">
+                    <textarea type="text" name ="content" placeholder="content.."></textarea>
                 </td>
             </tr>
         </table>

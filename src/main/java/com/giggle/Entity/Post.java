@@ -1,5 +1,8 @@
 package com.giggle.Entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -7,7 +10,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
-public class Board {
+@Getter @Setter
+public class Post {
     @Id
     @GeneratedValue
     private Long id;
