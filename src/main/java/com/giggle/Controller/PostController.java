@@ -26,7 +26,6 @@ public class PostController {
     @PostMapping("/post/create")
     @ResponseBody
     public String create(CreatePostForm createPostForm) throws JsonProcessingException {
-
         String result = objectMapper.writeValueAsString(createPostForm);
         return result;
     }

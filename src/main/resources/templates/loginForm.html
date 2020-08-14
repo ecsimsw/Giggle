@@ -28,4 +28,16 @@
     </form>
 </div>
 </body>
+<script th:inline="javascript">
+
+    /*<![CDATA[*/
+	var result = /*[[ ${message} ]]*/;
+	/*]]*/
+
+    if(message != null){
+        $(document).ready(function(){
+            alert(result);
+        });
+    }
+</script>
 </html>

@@ -14,8 +14,8 @@ public class Member {
     @GeneratedValue
     private Long id;
 
-    private String LoginId;
-    private String LoginPw;
+    private String loginId;
+    private String loginPw;
     private String name;
     private String nickName;
 }

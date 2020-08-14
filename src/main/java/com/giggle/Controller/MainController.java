@@ -17,9 +17,13 @@ public class MainController {
 
     @RequestMapping("/")
     @ResponseBody
-    public String hello(){
-        return "hi";
-    }
+    public String hello(){ return "hi"; }
 
+
+    @RequestMapping("/board")
+    @ResponseBody
+    public String board(@SessionAttribute String loginId){
+        return loginId;
+    }
 
 }
