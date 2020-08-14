@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Insert title here</title>
+</head>
+<body>
+<div>
+    <h3>Join Giggle</h3>
+    <p>Join</p>
+    <form th:action="@{/join}" method="post">
+        <table>
+            <tr>
+                <td>id</td>
+                <td>
+                    <input type="text" name = "LoginId" placeholder="id">
+                </td>
+            </tr>
+            <tr>
+                <td>pw</td>
+                <td>
+                    <input type="text" name ="LoginPw" placeholder="pw">
+                </td>
+            </tr>
+            <tr>
+                <td>name</td>
+                <td>
+                    <input type="text" name = "name" placeholder="name">
+                </td>
+            </tr>
+            <tr>
+                <td>nickName</td>
+                <td>
+                    <input type="text" name ="nickName" placeholder="nickName">
+                </td>
+            </tr>
+        </table>
+        <br>
+        <button type="submit" >Enter</button>
+    </form>
+</div>
+</body>
+</html>
