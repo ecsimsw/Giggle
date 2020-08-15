@@ -24,8 +24,8 @@ public class Post {
 
     private String content;
 
-    @CreatedDate
-    private LocalDateTime dateTime;
+//    @CreatedDate
+//    private LocalDateTime dateTime;
 
     private int viewCnt;
 }

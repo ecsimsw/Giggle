@@ -7,13 +7,23 @@
 <body>
 <h3>Giggle</h3>
 <p th:if="${category} == null" >Category</p>
-<p style="color:red" th:if="${category} != null"  th:text="${category}"></p>
+<p th:if="${category} != null"  th:text="${category}"></p>
 
 <table>
-    <tr th:each="post : ${postList}">
+    <tr class="warning">
+        <th>No</th>
+        <th>Category</th>
+        <th>Writer</th>
+        <th>Title</th>
+    </tr>
+    <tr th:each="post, numStatus : ${postList}">
+        <td th:text ="${numStatus.size-numStatus.index}"></td>
         <td th:text="${post.category}"></td>
         <td th:text="${post.writer}"></td>
-        <td th:text="${post.title}"></td>
+        <td >
+            <a th:href="'/board/'+${post.id}" th:text="${post.title}"></a>
+        </td>
+
     </tr>
 </table>
 
