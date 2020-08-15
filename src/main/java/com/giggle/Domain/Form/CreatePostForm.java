@@ -1,4 +1,4 @@
-package com.giggle.Entity;
+package com.giggle.Domain.Form;
 
 import lombok.Getter;
 import lombok.Setter;

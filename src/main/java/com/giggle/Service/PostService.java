@@ -1,6 +1,6 @@
 package com.giggle.Service;
 
-import com.giggle.Entity.Post;
+import com.giggle.Domain.Entity.Post;
 import com.giggle.Repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

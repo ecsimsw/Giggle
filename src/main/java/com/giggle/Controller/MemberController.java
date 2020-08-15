@@ -1,56 +1,52 @@
 package com.giggle.Controller;
 
-import com.giggle.Entity.JoinForm;
-import com.giggle.Entity.LoginForm;
-import com.giggle.Entity.Member;
+import com.giggle.Domain.Form.JoinForm;
+import com.giggle.Domain.Form.LoginForm;
+import com.giggle.Message.EjoinMessage;
+import com.giggle.Message.EloginMessage;
 import com.giggle.Service.MemberService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 
 @Controller
 @RequiredArgsConstructor
+@Slf4j
 public class MemberController {
     private final MemberService memberService;
 
     @GetMapping("/login")
-    public String login(Model model)
-    {
-        String message = (String)model.asMap().get("message");
-
-        return "loginForm";
-    }
+    public String login() { return "loginForm"; }
 
     @PostMapping("/login")
-    public String login(@ModelAttribute LoginForm loginForm, Model model, RedirectAttributes redirectAttributes){
-        redirectAttributes.addFlashAttribute("loginForm", loginForm);
-        return "redirect:/loginCheck";
-    }
-
-    @GetMapping("/loginCheck")
-    public String loginCheck(Model model, RedirectAttributes redirectAttributes, HttpSession session)
+    public String login(LoginForm loginForm,
+                        HttpSession session,
+                        RedirectAttributes redirectAttributes)
     {
-        LoginForm loginForm = (LoginForm) model.asMap().get("loginForm");
-        boolean result = memberService.loginCheck(loginForm);
+        EloginMessage resultMessage = memberService.loginCheck(loginForm);
 
-        if(result){
-            redirectAttributes.addAttribute("message", "login success");
+        if(resultMessage == EloginMessage.success){
+            redirectAttributes.addFlashAttribute("message", "login_success");
             session.setAttribute("loginId", loginForm.getLoginId());
             return "redirect:/board";
         }
-        else{
-            redirectAttributes.addAttribute("message", "login failed");
+        else if(resultMessage == EloginMessage.nonExistLoginId){
+            redirectAttributes.addFlashAttribute("message", "non-existent users");
             return "redirect:/login";
         }
-    }
+        else if(resultMessage == EloginMessage.wrongLoginPw){
+            redirectAttributes.addFlashAttribute("message", "wrong password");
+            return "redirect:/login";
+        }
 
+        return "error"; // error
+    }
 
     @GetMapping("/join")
     public String join(){
@@ -58,17 +54,21 @@ public class MemberController {
     }
 
     @PostMapping("/join")
-    public String join(@ModelAttribute JoinForm joinForm, Model model){
-        Member member = new Member();
-        member.setLoginId(joinForm.getLoginId());
-        member.setLoginPw(joinForm.getLoginPw());
-        member.setName(joinForm.getName());
-        member.setNickName(joinForm.getNickName());
-        memberService.join(member);
-
-        model.addAttribute("Member", member);
+    public String join(JoinForm joinForm, Model model, RedirectAttributes redirectAttributes){
+        EjoinMessage resultMessage = memberService.join(joinForm);
+        if(resultMessage == EjoinMessage.loginIdDuplicate){
+            redirectAttributes.addFlashAttribute("message", "Duplicated loginId");
+            return "redirect:/join";
+        }
+        else if(resultMessage == EjoinMessage.nickNameDuplicate){
+            redirectAttributes.addFlashAttribute("message", "Duplicated nickName");
+            return "redirect:/join";
+        }
+        else if(resultMessage == EjoinMessage.success){
+            model.addAttribute("Member", joinForm.getNickName());
+            return "test";
+        }
         return "test";
-
         // redirect after join Form
     }
 }

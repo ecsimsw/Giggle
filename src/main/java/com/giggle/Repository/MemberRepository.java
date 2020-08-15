@@ -1,11 +1,10 @@
 package com.giggle.Repository;
 
-import com.giggle.Entity.Member;
+import com.giggle.Domain.Entity.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Repository
@@ -17,17 +16,21 @@ public class MemberRepository {
         em.persist(member);
     }
 
+    // loginId 는 중복x
     public Member findByLoginId(String loginId){
         List<Member> selectedMembers = em.createQuery("select m from Member m where m.loginId = :loginId",Member.class)
             .setParameter("loginId",loginId)
             .getResultList();
-
         if(selectedMembers.isEmpty()) return null;
+        else { return selectedMembers.get(0); }
+    }
 
-        else {
-            return selectedMembers.get(0);
-        }
-
-        // loginId는 중복x
+    // nickName 는 중복x
+    public Member findByNickName(String nickName){
+        List<Member> selectedMembers = em.createQuery("select m from Member m where m.nickName = :nickName",Member.class)
+                .setParameter("nickName",nickName)
+                .getResultList();
+        if(selectedMembers.isEmpty()) return null;
+        else { return selectedMembers.get(0); }
     }
 }

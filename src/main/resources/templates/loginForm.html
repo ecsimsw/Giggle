@@ -7,7 +7,8 @@
 <body>
 <div>
     <h3>Giggle</h3>
-    <p>Welcome</p>
+    <p th:if="${message} == null" >Welcome</p>
+    <p style="color:red" th:if="${message} != null"  th:text="${message}"></p>
     <form th:action="@{/login}" method="post">
         <table>
             <tr>
@@ -28,16 +29,4 @@
     </form>
 </div>
 </body>
-<script th:inline="javascript">
-
-    /*<![CDATA[*/
-	var result = /*[[ ${message} ]]*/;
-	/*]]*/
-
-    if(message != null){
-        $(document).ready(function(){
-            alert(result);
-        });
-    }
-</script>
 </html>

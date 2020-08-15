@@ -2,7 +2,7 @@ package com.giggle.Controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.giggle.Entity.CreatePostForm;
+import com.giggle.Domain.Form.CreatePostForm;
 import com.giggle.Service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -16,7 +16,6 @@ public class PostController {
 
     private final PostService postService;
     private final ObjectMapper objectMapper;
-
 
     @GetMapping("/post/create")
     public String create(){
