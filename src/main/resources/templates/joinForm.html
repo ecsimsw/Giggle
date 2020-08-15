@@ -7,7 +7,9 @@
 <body>
 <div>
     <h3>Giggle</h3>
-    <p>Join</p>
+    <p th:if="${message} == null" >Join</p>
+    <p style="color:red" th:if="${message} != null"  th:text="${message}"></p>
+
     <form th:action="@{/join}" method="post">
         <table>
             <tr>

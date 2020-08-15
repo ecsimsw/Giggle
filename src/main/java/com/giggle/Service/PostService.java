@@ -5,6 +5,7 @@ import com.giggle.Repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import java.util.List;
 
 @Service
 @Transactional(readOnly = true)
@@ -17,5 +18,9 @@ public class PostService {
     public long createPost(Post post){
         postRepository.save(post);
         return post.getId();
+    }
+
+    public List<Post> getAllPosts(){
+        return postRepository.findAllPosts();
     }
 }

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h3>Giggle</h3>
+<p th:if="${category} == null" >Category</p>
+<p style="color:red" th:if="${category} != null"  th:text="${category}"></p>
+
+<table>
+    <tr th:each="post : ${postList}">
+        <td th:text="${post.category}"></td>
+        <td th:text="${post.writer}"></td>
+        <td th:text="${post.title}"></td>
+    </tr>
+</table>
+
+</body>
+</html>

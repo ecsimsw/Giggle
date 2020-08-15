@@ -44,8 +44,7 @@ public class MemberController {
             redirectAttributes.addFlashAttribute("message", "wrong password");
             return "redirect:/login";
         }
-
-        return "error"; // error
+        throw new RuntimeException();
     }
 
     @GetMapping("/join")
@@ -56,6 +55,7 @@ public class MemberController {
     @PostMapping("/join")
     public String join(JoinForm joinForm, Model model, RedirectAttributes redirectAttributes){
         EjoinMessage resultMessage = memberService.join(joinForm);
+        model.addAttribute("joinForm", joinForm);
         if(resultMessage == EjoinMessage.loginIdDuplicate){
             redirectAttributes.addFlashAttribute("message", "Duplicated loginId");
             return "redirect:/join";
@@ -66,9 +66,8 @@ public class MemberController {
         }
         else if(resultMessage == EjoinMessage.success){
             model.addAttribute("Member", joinForm.getNickName());
-            return "test";
+            return "test";  // after joinPage
         }
-        return "test";
-        // redirect after join Form
+        throw new RuntimeException();
     }
 }
