@@ -11,6 +11,12 @@
     <form th:action="@{/post/create}" method="post">
         <table>
             <tr>
+                <td>category</td>
+                <td>
+                    <input type="text" readonly name ="category" th:placeholder="${category}" th:value="${category}">
+                </td>
+            </tr>
+            <tr>
                 <td>title</td>
                 <td>
                     <input type="text" name = "title" placeholder="title">
@@ -22,6 +28,7 @@
                     <textarea type="text" name ="content" placeholder="content.."></textarea>
                 </td>
             </tr>
+
         </table>
         <br>
         <button type="submit" >Enter</button>

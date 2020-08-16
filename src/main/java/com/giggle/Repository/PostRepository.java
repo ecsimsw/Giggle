@@ -22,4 +22,12 @@ public class PostRepository {
                 .getResultList();
         return selectedPosts;
     }
+
+    public List<Post> postInCategory(String categoryName){
+        List<Post> selectedPosts = em.createQuery("select p from Post p where p.category = :categoryName",Post.class)
+                .setParameter("categoryName",categoryName)
+                .getResultList();
+
+        return selectedPosts;
+    }
  }

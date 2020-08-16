@@ -23,4 +23,9 @@ public class PostService {
     public List<Post> getAllPosts(){
         return postRepository.findAllPosts();
     }
+
+    public List<Post> getPostsInCategory(String categoryName){
+        return postRepository.postInCategory(categoryName);
+    }
+
 }

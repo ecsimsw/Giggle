@@ -6,9 +6,23 @@
 </head>
 <body>
 <h3>Giggle</h3>
-<p th:if="${category} == null" >Category</p>
-<p th:if="${category} != null"  th:text="${category}"></p>
-
+<span th:if="${category} == null" >ALL</span>
+<span th:if="${category} != null"  th:text="${category}"></span>
+<br>
+<br>
+<table>
+    <tr>
+        <td>
+            <a th:href="@{/post/All}">ALL</a>
+        </td>
+    </tr>
+    <tr th:each="c : ${categoryNames}">
+        <td>
+            <a th:href="'/post/'+${c}" th:text="${c}"></a>
+        </td>
+    </tr>
+</table>
+<br>
 <table>
     <tr class="warning">
         <th>No</th>
@@ -20,12 +34,15 @@
         <td th:text ="${numStatus.size-numStatus.index}"></td>
         <td th:text="${post.category}"></td>
         <td th:text="${post.writer}"></td>
-        <td >
-            <a th:href="'/board/'+${post.id}" th:text="${post.title}"></a>
+        <td>
+            <a th:href="'/post/'+${post.id}" th:text="${post.title}"></a>
         </td>
-
     </tr>
 </table>
+<br><br>
+<a th:if="${category}!=All" th:href="'/post/create/'+${category}">Create Post</a>
+
+<a th:href="@{/category/create}">Create Category</a>
 
 </body>
 </html>

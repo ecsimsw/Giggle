@@ -1,5 +1,6 @@
 package com.giggle.Service;
 
+import com.giggle.Domain.Entity.MemberType;
 import com.giggle.Domain.Form.JoinForm;
 import com.giggle.Domain.Form.LoginForm;
 import com.giggle.Domain.Entity.Member;
@@ -44,6 +45,7 @@ public class MemberService {
         member.setLoginPw(joinForm.getLoginPw());
         member.setName(joinForm.getName());
         member.setNickName(joinForm.getNickName());
+        member.setMemberType(MemberType.PUBLIC);
         memberRepository.save(member);
 
         return EjoinMessage.success;

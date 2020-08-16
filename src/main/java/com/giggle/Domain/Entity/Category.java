@@ -9,15 +9,11 @@ import javax.persistence.Id;
 
 @Entity
 @Getter @Setter
-public class Member {
+public class Category {
+
     @Id
     @GeneratedValue
-    private Long id;
-
-    private String loginId;
-    private String loginPw;
+    private long id;
     private String name;
-    private String nickName;
-
-    private MemberType memberType;
+    private int postCnt;
 }

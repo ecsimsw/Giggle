@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -23,8 +24,9 @@ public class PostController {
     private final PostService postService;
     private final ObjectMapper objectMapper;
 
-    @GetMapping("/post/create")
-    public String create(){
+    @GetMapping("/post/create/{category}")
+    public String create(@PathVariable String category, Model model){
+        model.addAttribute("category", category);
         return "createPostForm";
     }
 
@@ -32,21 +34,12 @@ public class PostController {
     public String create(CreatePostForm createPostForm) throws JsonProcessingException {
         String result = objectMapper.writeValueAsString(createPostForm);
         Post newPost = new Post();
-        newPost.setCategory("All");
+        newPost.setCategory(createPostForm.getCategory());
         newPost.setTitle(createPostForm.getTitle());
-        newPost.setWriter("a");
+        newPost.setWriter("tester");
         newPost.setContent(createPostForm.getContent());
 
         postService.createPost(newPost);
-        return "redirect:/post/listAll";
-    }
-
-    @GetMapping("/post/listAll")
-    public String postList(Model model){
-        List<Post> allPosts = postService.getAllPosts();
-        Collections.sort(allPosts, Collections.reverseOrder());
-        model.addAttribute("postList", allPosts);
-        model.addAttribute("category", "All");
-        return "board";
+        return "redirect:/post/"+createPostForm.getCategory();
     }
 }
