@@ -1,37 +1,34 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <title>Insert title here</title>
-</head>
-<body>
-<div>
-    <h3>Giggle</h3>
-    <p>createPost</p>
-    <form th:action="@{/post/create}" method="post">
-        <table>
-            <tr>
-                <td>category</td>
-                <td>
-                    <input type="text" readonly name ="category" th:placeholder="${category}" th:value="${category}">
-                </td>
-            </tr>
-            <tr>
-                <td>title</td>
-                <td>
-                    <input type="text" name = "title" placeholder="title">
-                </td>
-            </tr>
-            <tr>
-                <td>content</td>
-                <td>
-                    <textarea type="text" name ="content" placeholder="content.."></textarea>
-                </td>
-            </tr>
+    <title>Giggle</title>
+    <link href="../bootstrap/css/bootstrap.css" rel="stylesheet">
 
-        </table>
+    <style>
+        .container, .container-sm, .container-md, .container-lg, .container-xl {
+            max-width: 500px;
+        }
+        .container{
+            margin-top: 3%;
+        }
+    </style>
+</head>
+
+<body class="text-center">
+<div class="container">
+    <br>
+    <h3>Giggle</h3>
+    <br>
+    <p>createPost</p>
+    <br>
+    <form class="form" th:action="@{/post/create}" method="post">
+        <input type="text" name="category" class="form-control" th:placeholder="${category}" th:value="${category}">
         <br>
-        <button type="submit" >Enter</button>
+        <input type="text" name="title" class="form-control" placeholder="title" required="" autofocus="">
+        <br>
+        <input type="text" name="content" class="form-control" placeholder="content.." required="">
+        <br>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Create</button>
     </form>
 </div>
 </body>

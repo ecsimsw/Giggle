@@ -1,133 +1,40 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <title>Insert title here</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
+    <title>Giggle</title>
+    <link href="../bootstrap/css/bootstrap.css" rel="stylesheet">
+
+    <style>
+        .container, .container-sm, .container-md, .container-lg, .container-xl {
+            max-width: 500px;
+        }
+
+        .container{
+            margin-top: 3%;
+        }
+    </style>
 </head>
-<body>
-<div>
-    <h3>Giggle</h3>
-    <p th:if="${message} == null" >Join</p>
-    <p style="color:red" th:if="${message} != null"  th:text="${message}"></p>
 
-    <form th:action="@{/join}" method="post">
-        <table>
-            <tr>
-                <td>id</td>
-                <td>
-                    <input type="text" name = "LoginId" placeholder="id">
-                </td>
-            </tr>
-            <tr>
-                <td>pw</td>
-                <td>
-                    <input type="text" name ="LoginPw" placeholder="pw">
-                </td>
-            </tr>
-            <tr>
-                <td>name</td>
-                <td>
-                    <input type="text" name = "name" placeholder="name">
-                </td>
-            </tr>
-            <tr>
-                <td>nickName</td>
-                <td>
-                    <input type="text" name ="nickName" placeholder="nickName">
-                </td>
-            </tr>
-        </table>
+<body class="text-center">
+<div class="container">
+    <br>
+    <h3>Giggle</h3>
+    <br>
+    <form class="form" th:action="@{/join}" method="post">
+        <p th:if="${message} == null" >Join</p>
+        <p style="color:red" th:if="${message} != null"  th:text="${message}"></p>
         <br>
-        <button type="submit" >Enter</button>
+        <input type="text" name="loginId" class="form-control" placeholder="Id" required="" autofocus="">
+        <br>
+        <input type="text" name="loginPw" class="form-control" placeholder="Pw" required="">
+        <br>
+        <input type="text" name="name" class="form-control" placeholder="name" required="">
+        <br>
+        <input type="text" name="nickName" class="form-control" placeholder="nickName" required="">
+        <br>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Join</button>
     </form>
 </div>
-</body>
-</html>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>회원가입</title>
-    <!-- Bootstrap -->
-    <link href="../plugin/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <!-- font awesome -->
-    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
-    <!-- Custom style -->
-    <link rel="stylesheet" href="../plugin/bootstrap/css/style.css" media="screen" title="no title" charset="utf-8">
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="../plugin/bootstrap/js/bootstrap.min.js"></script>
-    <script src="../config/js/join.js"></script>
-</head>
-<body>
-<article class="container">
-    <div class="page-header">
-        <div class="col-md-6 col-md-offset-3">
-            <h3>회원가입 Form</h3>
-        </div>
-    </div>
-    <div class="col-sm-6 col-md-offset-3">
-        <form role="form">
-            <div class="form-group">
-                <label for="inputName">성명</label>
-                <input type="text" class="form-control" id="inputName" placeholder="이름을 입력해 주세요">
-            </div>
-            <div class="form-group">
-                <label for="InputEmail">이메일 주소</label>
-                <input type="email" class="form-control" id="InputEmail" placeholder="이메일 주소를 입력해주세요">
-            </div>
-            <div class="form-group">
-                <label for="inputPassword">비밀번호</label>
-                <input type="password" class="form-control" id="inputPassword" placeholder="비밀번호를 입력해주세요">
-            </div>
-            <div class="form-group">
-                <label for="inputPasswordCheck">비밀번호 확인</label>
-                <input type="password" class="form-control" id="inputPasswordCheck" placeholder="비밀번호 확인을 위해 다시한번 입력 해 주세요">
-            </div>
-            <div class="form-group">
-                <label for="inputMobile">휴대폰 번호</label>
-                <input type="tel" class="form-control" id="inputMobile" placeholder="휴대폰번호를 입력해 주세요">
-            </div>
-            <div class="form-group">
-                <label for="inputtelNO">사무실 번호</label>
-                <input type="tel" class="form-control" id="inputtelNO" placeholder="사무실번호를 입력해 주세요">
-            </div>
-
-            <div class="form-group">
-                <label>약관 동의</label>
-                <div data-toggle="buttons">
-                    <label class="btn btn-primary active">
-                        <span class="fa fa-check"></span>
-                        <input id="agree" type="checkbox" autocomplete="off" checked>
-                    </label>
-                    <a href="#">이용약관</a>에 동의합니다.
-                </div>
-            </div>
-
-            <div class="form-group text-center">
-                <button type="submit" id="join-submit" class="btn btn-primary">
-                    회원가입<i class="fa fa-check spaceLeft"></i>
-                </button>
-                <button type="submit" class="btn btn-warning">
-                    가입취소<i class="fa fa-times spaceLeft"></i>
-                </button>
-            </div>
-        </form>
-    </div>
-
-</article>
 </body>
 </html>

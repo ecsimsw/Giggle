@@ -1,26 +1,17 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="ko">
 <head>
-
-    <title>Insert title here</title>
-    <link rel="stylesheet"
-          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
-    <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/sign-in/">
-
-    <link href="../bootstrap/css/bootstrap.css" rel="stylesheet">
-
+    <title>Giggle</title>
+    <link th:href="@{/resources/bootstrap/css/bootstrap.css}" rel="stylesheet">
 
     <style>
         .container, .container-sm, .container-md, .container-lg, .container-xl {
             max-width: 500px;
         }
-
         .container{
             margin-top: 3%;
         }
     </style>
-    <title>Giggle</title>
 </head>
 
 <body class="text-center">
@@ -28,7 +19,7 @@
     <br>
     <h3>Giggle</h3>
     <br>
-    <form class="form-signin" th:action="@{/login}" method="post">
+    <form class="form" th:action="@{/login}" method="post">
 
         <!--<img class="mb-4"
              src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg"
@@ -39,11 +30,9 @@
         <p th:if="${message} == null" >Welcome</p>
         <p style="color:red" th:if="${message} != null"  th:text="${message}"></p>
         <br>
-        <label for="loginId" class="sr-only">Email address</label>
-        <input type="text" id="loginId" class="form-control" placeholder="Id" required="" autofocus="">
+        <input type="text" name="loginId" class="form-control" placeholder="Id" required="" autofocus="">
         <br>
-        <label for="loginPw" class="sr-only">Password</label>
-        <input type="text" id="loginPw" class="form-control" placeholder="Password" required="">
+        <input type="text" name="loginPw" class="form-control" placeholder="Password" required="">
         <br>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
 

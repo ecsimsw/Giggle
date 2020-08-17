@@ -1,5 +1,6 @@
 package com.giggle.Controller;
 
+import com.giggle.Domain.Form.CreateCategoryForm;
 import com.giggle.Service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,16 +24,15 @@ public class CategoryController {
     }
 
     @PostMapping("/category/create")
-    public String createCategory(@RequestParam String name, Model model){
-        log.info(name);
+    public String createCategory(CreateCategoryForm createCategoryForm, Model model){
         List<String> categoryNames = categoryService.getCategoryNames();
-        if(categoryNames.contains(name)){
+        if(categoryNames.contains(createCategoryForm.getName())){
             model.addAttribute("message","category already existent");
             return "redirect:/category/create";
         }
         else{
-            categoryService.save(name);
+            categoryService.save(createCategoryForm);
         }
-        return "redirect:/post/"+name;
+        return "redirect:/post/"+createCategoryForm.getName();
     }
 }

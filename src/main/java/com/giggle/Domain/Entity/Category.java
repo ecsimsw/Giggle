@@ -16,4 +16,5 @@ public class Category {
     private long id;
     private String name;
     private int postCnt;
+    private String description;
 }

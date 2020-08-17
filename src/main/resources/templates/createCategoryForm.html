@@ -1,26 +1,33 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <title>Insert title here</title>
+    <title>Giggle</title>
+    <link href="../bootstrap/css/bootstrap.css" rel="stylesheet">
+
+    <style>
+        .container, .container-sm, .container-md, .container-lg, .container-xl {
+            max-width: 500px;
+        }
+        .container{
+            margin-top: 3%;
+        }
+    </style>
 </head>
-<body>
-<div>
+
+<body class="text-center">
+<div class="container">
+    <br>
     <h3>Giggle</h3>
+    <br>
     <p th:if="${message} == null" >Create Category</p>
     <p style="color:red" th:if="${message} != null"  th:text="${message}"></p>
-
-    <form th:action="@{/category/create}" method="post">
-        <table>
-            <tr>
-                <td>categoryName</td>
-                <td>
-                    <input type="text"  name ="name" placeholder="categoryName..">
-                </td>
-            </tr>
-        </table>
+    <br>
+    <form class="form" th:action="@{/category/create}"method="post">
+        <input type="text" name="name" class="form-control" placeholder="name">
         <br>
-        <button type="submit" >Enter</button>
+        <input type="text" name="description" class="form-control" placeholder="description">
+        <br>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Create</button>
     </form>
 </div>
 </body>
