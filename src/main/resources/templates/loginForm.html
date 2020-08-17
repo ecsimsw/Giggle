@@ -1,31 +1,53 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="ko">
 <head>
-    <meta charset="UTF-8">
+
     <title>Insert title here</title>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/sign-in/">
+
+    <link href="../bootstrap/css/bootstrap.css" rel="stylesheet">
+
+
+    <style>
+        .container, .container-sm, .container-md, .container-lg, .container-xl {
+            max-width: 500px;
+        }
+
+        .container{
+            margin-top: 3%;
+        }
+    </style>
+    <title>Giggle</title>
 </head>
-<body>
-<div>
+
+<body class="text-center">
+<div class="container">
+    <br>
     <h3>Giggle</h3>
-    <p th:if="${message} == null" >Welcome</p>
-    <p style="color:red" th:if="${message} != null"  th:text="${message}"></p>
-    <form th:action="@{/login}" method="post">
-        <table>
-            <tr>
-                <td>id</td>
-                <td>
-                    <input type="text" name = "loginId" placeholder="id">
-                </td>
-            </tr>
-            <tr>
-                <td>pw</td>
-                <td>
-                    <input type="text" name ="loginPw" placeholder="pw">
-                </td>
-            </tr>
-        </table>
+    <br>
+    <form class="form-signin" th:action="@{/login}" method="post">
+
+        <!--<img class="mb-4"
+             src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg"
+             alt="" width="72" height="72">
+        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+         -->
+
+        <p th:if="${message} == null" >Welcome</p>
+        <p style="color:red" th:if="${message} != null"  th:text="${message}"></p>
         <br>
-        <button type="submit" >Enter</button>
+        <label for="loginId" class="sr-only">Email address</label>
+        <input type="text" id="loginId" class="form-control" placeholder="Id" required="" autofocus="">
+        <br>
+        <label for="loginPw" class="sr-only">Password</label>
+        <input type="text" id="loginPw" class="form-control" placeholder="Password" required="">
+        <br>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+
+        <!--<p class="mt-5 mb-3 text-muted">© 2017-2018</p> -->
     </form>
 </div>
 </body>
