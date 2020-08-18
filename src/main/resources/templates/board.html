@@ -28,9 +28,11 @@
             </form>
         </nav>
         <table>
-            <td>
-                <a th:href="@{/post/All}">All</a>
-            </td>
+            <tr>
+                <td>
+                    <a th:href="@{/post/All}">All</a>
+                </td>
+            </tr>
             <tr th:each="c : ${categoryNames}">
 
                 <td>
@@ -38,9 +40,11 @@
                 </td>
 
             </tr>
-            <td>
-                <a th:href="@{/category/create}">Create Category</a>
-            </td>
+            <tr>
+                <td>
+                    <a th:href="@{/category/create}">Create Category</a>
+                </td>
+            </tr>
         </table>
 
         <br>
@@ -56,10 +60,10 @@
             <tbody>
                 <tr th:each="post, numStatus : ${postList}">
                     <td th:text ="${numStatus.size-numStatus.index}">1</td>
-                    <td th:text="${post.category}">study</td>
                     <td>
                         <a th:href="'/post/'+${post.id}" th:text="${post.title}">Title</a>
                     </td>
+                    <td th:text="${post.category}">study</td>
                     <td th:text="${post.writer}">tester</td>
                 </tr>
             </tbody>

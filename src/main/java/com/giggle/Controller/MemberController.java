@@ -34,7 +34,7 @@ public class MemberController {
         if(resultMessage == EloginMessage.success){
             redirectAttributes.addFlashAttribute("message", "login_success");
             session.setAttribute("loginId", loginForm.getLoginId());
-            return "redirect:/board";
+            return "redirect:/main";
         }
         else if(resultMessage == EloginMessage.nonExistLoginId){
             redirectAttributes.addFlashAttribute("message", "non-existent users");
@@ -53,7 +53,8 @@ public class MemberController {
     }
 
     @PostMapping("/join")
-    public String join(JoinForm joinForm, Model model, RedirectAttributes redirectAttributes){
+    public String join(JoinForm joinForm, Model model, HttpSession session,
+                       RedirectAttributes redirectAttributes){
         EjoinMessage resultMessage = memberService.join(joinForm);
         model.addAttribute("joinForm", joinForm);
         if(resultMessage == EjoinMessage.loginIdDuplicate){
@@ -65,8 +66,8 @@ public class MemberController {
             return "redirect:/join";
         }
         else if(resultMessage == EjoinMessage.success){
-            model.addAttribute("Member", joinForm.getNickName());
-            return "test";  // after joinPage
+            session.setAttribute("loginId", joinForm.getLoginId());
+            return "redirect:/main";  // after joinPage
         }
         throw new RuntimeException();
     }

@@ -11,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
 import java.util.Collections;
 import java.util.List;
 
@@ -26,11 +28,16 @@ public class MainController {
     @ResponseBody
     public String hello(){ return "hi"; }
 
-    @RequestMapping("/board")
-    @ResponseBody
-    public String board(@SessionAttribute String loginId){
-        return loginId;
+    @GetMapping("/main")
+    public String mainPage(Model model, HttpSession session){
+        String loginId = (String)session.getAttribute("loginId");
+        List<String> categoryNameList = categoryService.getCategoryNames();
+        model.addAttribute("categoryNameList", categoryNameList);
+        model.addAttribute("loginId",loginId);
+
+        return "mainPage";
     }
+
 
     @GetMapping("/post/{categoryName}")
     public String postList(@PathVariable String categoryName, Model model){
