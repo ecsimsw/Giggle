@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="ko">
 <head>
     <title>Giggle</title>
-    <link th:href="@{/resources/bootstrap/css/bootstrap.css}" rel="stylesheet">
+    <link href="../bootstrap/css/bootstrap.css" rel="stylesheet">
 
     <style>
         .container, .container-sm, .container-md, .container-lg, .container-xl {
@@ -34,8 +34,16 @@
         <br>
         <input type="text" name="loginPw" class="form-control" placeholder="Password" required="">
         <br>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-
+        <table width="100%">
+        <tr>
+            <td width="50%">
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+            </td>
+            <td width="50%">
+                <button class="btn btn-lg btn-primary btn-block" type="button" th:onclick = "location.href='/join'">Join</button>
+            </td>
+        </tr>
+        </table>
         <!--<p class="mt-5 mb-3 text-muted">© 2017-2018</p> -->
     </form>
 </div>
