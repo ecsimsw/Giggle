@@ -1,48 +1,72 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Giggle</title>
+<!--    <link href="/static/bootstrap/css/bootstrap.css" rel="stylesheet">-->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <style>
+        .container, .container-sm, .container-md, .container-lg, .container-xl {
+            max-width: 1000px;
+        }
+        .container{
+            margin-top: 3%;
+        }
+    </style>
 </head>
-<body>
-<h3>Giggle</h3>
-<span th:if="${category} == null" >ALL</span>
-<span th:if="${category} != null"  th:text="${category}"></span>
-<br>
-<br>
-<table>
-    <tr>
-        <td>
-            <a th:href="@{/post/All}">ALL</a>
-        </td>
-    </tr>
-    <tr th:each="c : ${categoryNames}">
-        <td>
-            <a th:href="'/post/'+${c}" th:text="${c}"></a>
-        </td>
-    </tr>
-</table>
-<br>
-<table>
-    <tr class="warning">
-        <th>No</th>
-        <th>Category</th>
-        <th>Writer</th>
-        <th>Title</th>
-    </tr>
-    <tr th:each="post, numStatus : ${postList}">
-        <td th:text ="${numStatus.size-numStatus.index}"></td>
-        <td th:text="${post.category}"></td>
-        <td th:text="${post.writer}"></td>
-        <td>
-            <a th:href="'/post/'+${post.id}" th:text="${post.title}"></a>
-        </td>
-    </tr>
-</table>
-<br><br>
-<a th:if="${category}!=All" th:href="'/post/create/'+${category}">Create Post</a>
 
-<a th:href="@{/category/create}">Create Category</a>
+<body class="text-center">
+    <div class="container">
+        <h3>Giggle</h3>
+        <span th:if="${category} == null" >ALL</span>
+        <span th:if="${category} != null"  th:text="${category}"></span>
+        <br><br>
+        <br>
+        <nav class="navbar navbar-light bg-light">
+            <form class="form-inline">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+        </nav>
+        <table>
+            <td>
+                <a th:href="@{/post/All}">All</a>
+            </td>
+            <tr th:each="c : ${categoryNames}">
 
+                <td>
+                    <a th:href="'/post/'+${c}" th:text="${c}"></a>
+                </td>
+
+            </tr>
+            <td>
+                <a th:href="@{/category/create}">Create Category</a>
+            </td>
+        </table>
+
+        <br>
+        <table class ="table table-hover table-striped">
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Title</th>
+                    <th>Category</th>
+                    <th>Writer</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="post, numStatus : ${postList}">
+                    <td th:text ="${numStatus.size-numStatus.index}">1</td>
+                    <td th:text="${post.category}">study</td>
+                    <td>
+                        <a th:href="'/post/'+${post.id}" th:text="${post.title}">Title</a>
+                    </td>
+                    <td th:text="${post.writer}">tester</td>
+                </tr>
+            </tbody>
+        </table>
+        <br><br>
+        <a class="btn btn-default pull-right" th:if="${category}!=All" th:href="'/post/create/'+${category}">Create Post</a>
+
+    </div>
 </body>
 </html>

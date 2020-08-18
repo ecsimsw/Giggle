@@ -2,8 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="ko">
 <head>
     <title>Giggle</title>
-    <link href="../bootstrap/css/bootstrap.css" rel="stylesheet">
-
+    <link href="/static/bootstrap/css/bootstrap.css" rel="stylesheet">
+<!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">-->
     <style>
         .container, .container-sm, .container-md, .container-lg, .container-xl {
             max-width: 500px;
@@ -22,13 +22,24 @@
     <p>createPost</p>
     <br>
     <form class="form" th:action="@{/post/create}" method="post">
-        <input type="text" name="category" class="form-control" th:placeholder="${category}" th:value="${category}">
+
+        <div class="form-group">
+            <label for="category">category</label>
+            <select class="form-control" id="category" name="category">
+                <option th:value="${categoryNow}" th:text="${categoryNow}" selected>categoryNow</option>
+
+                <option th:each="categoryName : ${categoryNameList}"
+                        th:value="${categoryName}"
+                        th:if="${categoryName}!=${categoryNow}"
+                        th:text="${categoryName}">categoryName</option>
+            </select>
+        </div>
         <br>
         <input type="text" name="title" class="form-control" placeholder="title" required="" autofocus="">
         <br>
         <input type="text" name="content" class="form-control" placeholder="content.." required="">
         <br>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Create</button>
+        <button class="btn btn-primary btn-lg btn-block" type="submit">Create</button>
     </form>
 </div>
 </body>
