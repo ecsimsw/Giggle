@@ -62,10 +62,10 @@ public class PostController {
         return "redirect:/post/"+createPostForm.getCategory();
     }
 
-    @GetMapping("/post/board/{communityType}/{categoryName}")
-    public String postList(@PathVariable String communityType, @PathVariable String categoryName, HttpSession session, Model model){
+    @GetMapping("/post/board/{communityName}/{categoryName}")
+    public String postList(@PathVariable String communityName, @PathVariable String categoryName, HttpSession session, Model model){
 
-        CommunityType eCommunityType = CommunityType.valueOf(communityType);
+        CommunityType eCommunityType = CommunityType.valueOf(communityName);
         List<String> categoryNames = categoryService.getCategoryNamesInCommunity(eCommunityType);
         List<Post> posts = null;
 
@@ -73,7 +73,7 @@ public class PostController {
             posts = postService.getAllPosts();
         }
         else if(categoryNames.contains(categoryName)){
-            posts = postService.getPostsInCommunityCategory(CommunityType.valueOf(communityType), categoryName);
+            posts = postService.getPostsInCommunityCategory(CommunityType.valueOf(communityName), categoryName);
         }
         else{
             throw new RuntimeException("non-existent category");
@@ -85,7 +85,8 @@ public class PostController {
         }
 
         model.addAttribute("post",posts);
-
+        model.addAttribute("communityName", communityName);
+        model.addAttribute("categoryName", categoryName);
 
         String loginId = (String)session.getAttribute("loginId");
 
@@ -102,6 +103,9 @@ public class PostController {
         model.addAttribute("communityList", communityList);
         model.addAttribute("loginId",loginId);
 
+
+        List<String> categoriesInCommunity = categoryService.getCategoryNamesInCommunity(eCommunityType);
+        model.addAttribute("categoriesInCommunity",categoriesInCommunity);
 
         return "board";
     }

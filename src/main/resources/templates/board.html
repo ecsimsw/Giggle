@@ -40,7 +40,7 @@
         <!-- Nav Item - Dashboard -->
         <li class="nav-item">
             <!--        <a class="nav-link active" href="mainPage.html">-->
-            <a class="nav-link active" th:href="@{main}">
+            <a class="nav-link active" th:href="@{/main}">
                 <i class="fas fa-fw fa-cog"></i>
                 <span>Dashboard</span>
             </a>
@@ -347,7 +347,7 @@
                         <div class="card shadow mb-3 ">
                             <!-- Card Header - Dropdown -->
                             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between ">
-                                <h6 class="m-0 font-weight-bold text-primary ">Study</h6>
+                                <h6 class="m-0 font-weight-bold text-primary " th:text="${communityName}">Study</h6>
 
                                 <a class=" collapsed" href="#" data-toggle="collapse" data-target="#collapseCategories" aria-expanded="true" aria-controls="collapseCategories">
                                     <i class="fas fa-fw fa-folder"></i>
@@ -356,11 +356,10 @@
                             </div>
                             <!-- Card Body -->
                             <div id="collapseCategories" class="card-body collapse show"  aria-labelledby="headingPages">
-                                <div>
-                                    <td>Spring Boot / </td>
-                                    <td>Node.js / </td>
-                                    <td>React</td>
-                                </div>
+                                <td th:each="category, index : ${categoriesInCommunity}">
+                                    <span th:text="${category}">Spring Boot</span>
+                                    <span th:if="${index.count!=index.size}">/</span>
+                                </td>
                             </div>
                         </div>
                     </div>
@@ -370,7 +369,7 @@
                         <div class="card shadow mb-3">
                             <!-- Card Header - Dropdown -->
                             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                <h6 class="m-0 font-weight-bold text-primary">Spring Boot</h6>
+                                <h6 class="m-0 font-weight-bold text-primary" th:text="${categoryName}" >Spring Boot</h6>
 
                                 <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
                                     <i class="fas fa-download fa-sm text-white-50"></i>
