@@ -41,10 +41,16 @@
                             <!-- Card Body -->
                             <div id="collapseCategories" class="card-body collapse show"  aria-labelledby="headingPages">
                                 <td th:each="category, index : ${categoriesInCommunity}">
-                                    <span th:text="${category}">Spring Boot</span>
+                                    <a id="categoryLink" th:href="${'/post/board/'+communityName+'/'+category}" th:text="${category}">Spring Boot</a>
                                     <span th:if="${index.count!=index.size}">/</span>
                                 </td>
                             </div>
+
+                            <style type="text/css">
+                                 #categoryLink:link { color: #858796; text-decoration: none;}
+                                 #categoryLink:visited { color: #858796; text-decoration: none;}
+                                 #categoryLink:hover { color: black; text-decoration: none;}
+                            </style>
                         </div>
                     </div>
 
