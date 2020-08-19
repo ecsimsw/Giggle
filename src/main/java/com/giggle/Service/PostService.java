@@ -1,6 +1,7 @@
 package com.giggle.Service;
 
 import com.giggle.Domain.Entity.Post;
+import com.giggle.Domain.Entity.CommunityType;
 import com.giggle.Repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,8 +25,7 @@ public class PostService {
         return postRepository.findAllPosts();
     }
 
-    public List<Post> getPostsInCategory(String categoryName){
-        return postRepository.postInCategory(categoryName);
+    public List<Post> getPostsInCommunityCategory(CommunityType communityType, String categoryName){
+        return postRepository.postInCommunityCategory(communityType, categoryName);
     }
-
 }

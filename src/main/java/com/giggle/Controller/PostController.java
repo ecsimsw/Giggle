@@ -2,6 +2,7 @@ package com.giggle.Controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.giggle.Domain.Entity.CommunityType;
 import com.giggle.Domain.Entity.Post;
 import com.giggle.Domain.Form.CreatePostForm;
 import com.giggle.Service.CategoryService;
@@ -26,19 +27,31 @@ public class PostController {
     private final CategoryService categoryService;
     private final ObjectMapper objectMapper;
 
-    @GetMapping("/post/create/{category}")
-    public String create(@PathVariable String category, Model model){
-        List<String> categoryNameList = categoryService.getCategoryNames();
+    @GetMapping("/post/create/{communityType}/{category}")
+    public String create(@PathVariable String communityType, @PathVariable String category, Model model){
+        List<String> categoryNameList = categoryService.getCategoryNamesInCommunity(CommunityType.valueOf(communityType));
+        model.addAttribute("communityType",communityType);
         model.addAttribute("categoryNow", category);
         model.addAttribute("categoryNameList", categoryNameList);
         return "createPostForm";
     }
 
+    @GetMapping("/post/create/{communityType}")
+    public String createPost(@PathVariable String communityType, Model model){
+        List<String> categoryNameList = categoryService.getCategoryNamesInCommunity(CommunityType.valueOf(communityType));
+        model.addAttribute("communityType",communityType);
+        model.addAttribute("categoryNow", null);
+        model.addAttribute("categoryNameList", categoryNameList);
+        return "createPostForm";
+    }
+
+
     @PostMapping("/post/create")
-    public String create(CreatePostForm createPostForm) throws JsonProcessingException {
+    public String createNewPost(CreatePostForm createPostForm) throws JsonProcessingException {
         String result = objectMapper.writeValueAsString(createPostForm);
         Post newPost = new Post();
         newPost.setCategory(createPostForm.getCategory());
+        newPost.setCommunityType(CommunityType.valueOf(createPostForm.getCommunity()));
         newPost.setTitle(createPostForm.getTitle());
         newPost.setWriter("tester");
         newPost.setContent(createPostForm.getContent());

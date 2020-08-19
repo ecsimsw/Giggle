@@ -9,9 +9,7 @@ public class WholeController {
 
     @ExceptionHandler(RuntimeException.class)
     public String runtimeExceptionHandler(RuntimeException d, Model model){
-
         model.addAttribute("message", d.getMessage());
-
-        return "RuntimeError";
+        return "runtimeError";
     }
 }

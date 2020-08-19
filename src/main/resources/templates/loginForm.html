@@ -19,7 +19,7 @@
     <br>
     <h3>Giggle</h3>
     <br>
-    <form class="form" th:action="@{/login}" method="post">
+    <form class="form" th:action="@{/member/login}" method="post">
 
         <p th:if="${message} == null" >Welcome</p>
         <p style="color:red" th:if="${message} != null"  th:text="${message}"></p>
@@ -34,7 +34,7 @@
                 <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
             </td>
             <td width="50%">
-                <button class="btn btn-lg btn-primary btn-block" type="button" th:onclick = "location.href='/join'">Join</button>
+                <button class="btn btn-lg btn-primary btn-block" type="button" th:onclick = "location.href='/member/join'">Join</button>
             </td>
         </tr>
         </table>

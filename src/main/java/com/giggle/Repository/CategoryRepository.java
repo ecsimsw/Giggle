@@ -1,6 +1,7 @@
 package com.giggle.Repository;
 
 import com.giggle.Domain.Entity.Category;
+import com.giggle.Domain.Entity.CommunityType;
 import com.giggle.Domain.Entity.Member;
 import com.giggle.Domain.Entity.Post;
 import lombok.RequiredArgsConstructor;
@@ -19,8 +20,9 @@ public class CategoryRepository {
         em.persist(category);
     }
 
-    public List<Category> findAllCategory(){
-        List<Category> selectedCategories= em.createQuery("select c from Category c", Category.class)
+    public List<Category> findAllCategoryInCommunity(CommunityType communityType){
+        List<Category> selectedCategories= em.createQuery("select c from Category c where c.communityType =: communityType", Category.class)
+                .setParameter("communityType", communityType)
                 .getResultList();
         return selectedCategories;
     }

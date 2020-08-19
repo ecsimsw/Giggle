@@ -25,12 +25,21 @@
 
         <div class="form-group">
             <label for="category">category</label>
-            <select class="form-control" id="category" name="category">
+            <select th:if="${categoryNow !=null}" class="form-control" id="category" name="category">
                 <option th:value="${categoryNow}" th:text="${categoryNow}" selected>categoryNow</option>
 
                 <option th:each="categoryName : ${categoryNameList}"
                         th:value="${categoryName}"
                         th:if="${categoryName}!=${categoryNow}"
+                        th:text="${categoryName}">categoryName</option>
+            </select>
+
+
+            <select th:if="${categoryNow == null}" class="form-control" id="category" name="category">
+                <option valie="" selected disabled hidden>Choose category</option>
+
+                <option th:each="categoryName : ${categoryNameList}"
+                        th:value="${categoryName}"
                         th:text="${categoryName}">categoryName</option>
             </select>
         </div>

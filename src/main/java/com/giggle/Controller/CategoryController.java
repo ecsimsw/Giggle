@@ -17,22 +17,22 @@ import java.util.List;
 @Slf4j
 public class CategoryController {
     private final CategoryService categoryService;
-
-    @GetMapping("/category/create")
-    public String createCategory(){
-        return "createCategoryForm";
-    }
-
-    @PostMapping("/category/create")
-    public String createCategory(CreateCategoryForm createCategoryForm, Model model){
-        List<String> categoryNames = categoryService.getCategoryNames();
-        if(categoryNames.contains(createCategoryForm.getName())){
-            model.addAttribute("message","category already existent");
-            return "redirect:/category/create";
-        }
-        else{
-            categoryService.save(createCategoryForm);
-        }
-        return "redirect:/post/"+createCategoryForm.getName();
-    }
+//
+//    @GetMapping("/category/create")
+//    public String createCategory(){
+//        return "createCategoryForm";
+//    }
+//
+//    @PostMapping("/category/create")
+//    public String createCategory(CreateCategoryForm createCategoryForm, Model model){
+//        List<String> categoryNames = categoryService.getCategoryNamesInCommunity();
+//        if(categoryNames.contains(createCategoryForm.getName())){
+//            model.addAttribute("message","category already existent");
+//            return "redirect:/category/create";
+//        }
+//        else{
+//            categoryService.save(createCategoryForm);
+//        }
+//        return "redirect:/post/"+createCategoryForm.getName();
+//    }
 }

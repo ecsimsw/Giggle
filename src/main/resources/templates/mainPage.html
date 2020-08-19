@@ -9,7 +9,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>SB Admin 2 - Dashboard</title>
+  <title>Giggle</title>
 
   <!-- Custom styles for this template-->
   <!--  <link href="/static/SBadmin2/sb-admin-2.min.css" rel="stylesheet">-->
@@ -25,7 +25,7 @@
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
-      <a class="sidebar-brand align-items-center justify-content-center" href="index.html"
+      <a class="sidebar-brand align-items-center justify-content-center" th:href="@{/main}"
          style=" font-size: 23px;
                  font-weight: normal;
                   text-align: center;
@@ -59,37 +59,26 @@
             Community
       </div>
 
+
+      <!-- Community List -->
+
       <!-- Nav Item - Pages Collapse Menu -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAgora" aria-expanded="true" aria-controls="collapseAgora">
+      <li class="nav-item" th:each="community, index : ${communityList}" >
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" th:data-target="${'#collapse'+index.index}" aria-expanded="true" aria-controls="collapseAgora">
           <i class="fas fa-fw fa-cog"></i>
-          <span>Agora</span>
+          <span th:text="${communityNameList.get(index.index)}"></span>
         </a>
 
-        <div id="collapseAgora" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+        <div th:id="${'collapse'+index.index}" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Categories:</h6>
             <a class="collapse-item" th:href="@{/post/All}">All</a>
-            <div th:each="cName : ${categoryNameList}">
-              <a class="collapse-item" th:href="'/post/'+${cName}" th:text="${cName}">Study</a>
+            <div th:each="categoryList : ${community}">
+              <div th:each="categoryName : ${categoryList}">
+               <a class="collapse-item" th:href="'/post/'+${categoryName}" th:text="${categoryName}">Study</a>
+              </div>
             </div>
-            <a class="collapse-item" th:href="@{/category/create}">Create Category</a>
-          </div>
-        </div>
-      </li>
-
-      <!-- Nav Item - Utilities Collapse Menu -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseStudyGroup" aria-expanded="true" aria-controls="collapseStudyGroup">
-          <i class="fas fa-fw fa-cog"></i>
-          <span>Study Group</span>
-        </a>
-        <div id="collapseStudyGroup" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Groups:</h6>
-            <a class="collapse-item" href="buttons.html">Spring</a>
-            <a class="collapse-item" href="cards.html">Node.js</a>
-            <a class="collapse-item" href="cards.html">React</a>
+            <a class="collapse-item" style="font-weight:700" th:href="@{/category/create}">Create Category</a>
           </div>
         </div>
       </li>
@@ -118,6 +107,13 @@
             <a class="collapse-item" href="register.html">Contact</a>
           </div>
         </div>
+      </li>
+
+      <!-- Nav Item - Charts -->
+      <li class="nav-item">
+        <a class="nav-link" href="charts.html">
+          <i class="fas fa-fw fa-chart-area"></i>
+          <span>Notice</span></a>
       </li>
 
       <!-- Nav Item - Charts -->
@@ -305,7 +301,7 @@
             <div th:if="${loginId}!=null">
               <li class="nav-item dropdown no-arrow">
                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <span class="mr-2 d-none d-lg-inline text-gray-600 small" th:text="${loginId}"></span>
+                  <span class="mr-2 d-none d-lg-inline text-gray-600 small" th:text="${loginId}">Test</span>
                   <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
                 </a>
                 <!-- Dropdown - User Information -->
@@ -332,8 +328,8 @@
             </div>
             <div th:if="${loginId}==null">
               <li class="nav-item dropdown no-arrow">
-                <a class="nav-link dropdown-toggle" th:href="@{/login}" id="userDropdown" role="button" >
-                  <span class="mr-2 d-none d-lg-inline text-gray-600 small">Login</span>
+                <a class="nav-link dropdown-toggle" th:href="@{/member/login}" id="userDropdown" role="button" >
+                  <span class="mr-2 d-none d-lg-inline text-gray-600 small">login</span>
                   <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
                 </a>
               </li>
@@ -438,23 +434,22 @@
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">New Posts</h6>
-                  <div class="dropdown no-arrow">
-                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
-                      <div class="dropdown-header">Dropdown Header:</div>
-                      <a class="dropdown-item" href="#">Action</a>
-                      <a class="dropdown-item" href="#">Another action</a>
-                      <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
-                  </div>
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
                   <div class="chart-area">
-                    <canvas id="myAreaChart"></canvas>
+                    <table class ="table table-hover table-striped">
+                      <tbody>
+                      <tr th:each="post, numStatus : ${postList}">
+                        <td th:text ="${numStatus.size-numStatus.index}">1</td>
+                        <td>
+                          <a th:href="'/post/'+${post.id}" th:text="${post.title}">Title</a>
+                        </td>
+                        <td th:text="${post.category}">study</td>
+                        <td th:text="${post.writer}">tester</td>
+                      </tr>
+                      </tbody>
+                    </table>
                   </div>
                 </div>
               </div>
@@ -465,31 +460,23 @@
               <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">Revenue Sources</h6>
-                  <div class="dropdown no-arrow">
-                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
-                      <div class="dropdown-header">Dropdown Header:</div>
-                    </div>
-                  </div>
+                  <h6 class="m-0 font-weight-bold text-primary">Hot posts</h6>
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
-                  <div class="chart-pie pt-4 pb-2">
-                    <canvas id="myPieChart"></canvas>
-                  </div>
-                  <div class="mt-4 text-center small">
-                    <span class="mr-2">
-                      <i class="fas fa-circle text-primary"></i> Direct
-                    </span>
-                    <span class="mr-2">
-                      <i class="fas fa-circle text-success"></i> Social
-                    </span>
-                    <span class="mr-2">
-                      <i class="fas fa-circle text-info"></i> Referral
-                    </span>
+                  <div class="chart-area">
+                    <table class ="table table-hover table-striped">
+                      <tbody>
+                      <tr th:each="post, numStatus : ${postList}">
+                        <td th:text ="${numStatus.size-numStatus.index}">1</td>
+                        <td>
+                          <a th:href="'/post/'+${post.id}" th:text="${post.title}">Title</a>
+                        </td>
+                        <td th:text="${post.category}">study</td>
+                        <td th:text="${post.writer}">tester</td>
+                      </tr>
+                      </tbody>
+                    </table>
                   </div>
                 </div>
               </div>
@@ -507,14 +494,11 @@
                 <!-- Illustrations -->
                 <div class="card shadow mb-4">
                   <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Illustrations</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">Latest notice</h6>
                   </div>
                   <div class="card-body">
-                    <div class="text-center">
-                      <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;" src="img/undraw_posting_photo.svg" alt="">
-                    </div>
                     <p>Add some quality, svg illustrations to your project courtesy of <a target="_blank" rel="nofollow" href="https://undraw.co/">unDraw</a>, a constantly updated collection of beautiful svg images that you can use completely free and without attribution!</p>
-                    <a target="_blank" rel="nofollow" href="https://undraw.co/">Browse Illustrations on unDraw &rarr;</a>
+                    <a target="_blank" rel="nofollow" href="https://undraw.co/">See that notice &rarr;</a>
                   </div>
                 </div>
 

@@ -1,6 +1,7 @@
 package com.giggle.Controller;
 
 import com.giggle.Domain.Entity.Category;
+import com.giggle.Domain.Entity.CommunityType;
 import com.giggle.Domain.Entity.Post;
 import com.giggle.Service.CategoryService;
 import com.giggle.Service.MemberService;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import javax.websocket.Session;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -31,24 +33,36 @@ public class MainController {
     @GetMapping("/main")
     public String mainPage(Model model, HttpSession session){
         String loginId = (String)session.getAttribute("loginId");
-        List<String> categoryNameList = categoryService.getCategoryNames();
-        model.addAttribute("categoryNameList", categoryNameList);
+
+        List<String> communityNameList = new ArrayList<>();
+        List<List<String>> communityList = new ArrayList<>();
+
+        for(CommunityType communityType : CommunityType.values()){
+            communityNameList.add(communityType.name());
+            List<String> categoryNameList = categoryService.getCategoryNamesInCommunity(communityType);
+            communityList.add(categoryNameList);
+        }
+
+        model.addAttribute("communityNameList", communityNameList);
+        model.addAttribute("communityList", communityList);
         model.addAttribute("loginId",loginId);
 
         return "mainPage";
     }
 
 
-    @GetMapping("/post/{categoryName}")
-    public String postList(@PathVariable String categoryName, Model model){
-        List<String> categoryNames = categoryService.getCategoryNames();
+    @GetMapping("/post/board/{communityType}/{categoryName}")
+    public String postList(@PathVariable String communityType, @PathVariable String categoryName, Model model){
+
+        CommunityType eCommunityType = CommunityType.valueOf(communityType);
+        List<String> categoryNames = categoryService.getCategoryNamesInCommunity(eCommunityType);
         List<Post> posts = null;
 
         if(categoryName.equals("All")){
             posts = postService.getAllPosts();
         }
         else if(categoryNames.contains(categoryName)){
-            posts = postService.getPostsInCategory(categoryName);
+            posts = postService.getPostsInCommunityCategory(CommunityType.valueOf(communityType), categoryName);
         }
         else{
             throw new RuntimeException();
