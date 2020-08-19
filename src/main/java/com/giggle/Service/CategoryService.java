@@ -19,13 +19,12 @@ public class CategoryService {
     private final CategoryRepository categoryRepository;
 
     @Transactional
-    public void save(CreateCategoryForm createCategoryForm){
+    public void createCategory(CommunityType communityType, CreateCategoryForm createCategoryForm){
         Category newCategory = new Category();
         newCategory.setName(createCategoryForm.getName());
-
+        newCategory.setCommunityType(communityType);
         newCategory.setDescription(createCategoryForm.getDescription());
         newCategory.setPostCnt(0);
-
         categoryRepository.save(newCategory);
     }
 

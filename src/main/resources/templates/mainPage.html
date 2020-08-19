@@ -41,7 +41,7 @@
       <!-- Nav Item - Dashboard -->
       <li class="nav-item">
 <!--        <a class="nav-link active" href="mainPage.html">-->
-        <a class="nav-link active" th:href="@{main}">
+        <a class="nav-link active" th:href="@{/main}">
           <i class="fas fa-fw fa-cog"></i>
           <span>Dashboard</span>
         </a>
@@ -72,13 +72,13 @@
         <div th:id="${'collapse'+index.index}" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Categories:</h6>
-            <a class="collapse-item" th:href="@{/post/All}">All</a>
+<!--            <a class="collapse-item" th:href="@{/post/All}">All</a>-->
             <div th:each="categoryList : ${community}">
               <div th:each="categoryName : ${categoryList}">
-               <a class="collapse-item" th:href="'/post/'+${categoryName}" th:text="${categoryName}">Study</a>
+               <a class="collapse-item" th:href="${'/post/board/'+communityNameList.get(index.index)+'/'+categoryName" th:text="${categoryName}">Study</a>
               </div>
             </div>
-            <a class="collapse-item" style="font-weight:700" th:href="@{/category/create}">Create Category</a>
+            <a class="collapse-item" style="font-weight:700" th:href="${'/category/create/'+ communityNameList.get(index.index)}">Create Category</a>
           </div>
         </div>
       </li>

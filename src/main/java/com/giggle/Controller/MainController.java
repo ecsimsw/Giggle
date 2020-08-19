@@ -51,29 +51,5 @@ public class MainController {
     }
 
 
-    @GetMapping("/post/board/{communityType}/{categoryName}")
-    public String postList(@PathVariable String communityType, @PathVariable String categoryName, Model model){
 
-        CommunityType eCommunityType = CommunityType.valueOf(communityType);
-        List<String> categoryNames = categoryService.getCategoryNamesInCommunity(eCommunityType);
-        List<Post> posts = null;
-
-        if(categoryName.equals("All")){
-            posts = postService.getAllPosts();
-        }
-        else if(categoryNames.contains(categoryName)){
-            posts = postService.getPostsInCommunityCategory(CommunityType.valueOf(communityType), categoryName);
-        }
-        else{
-            throw new RuntimeException();
-        }
-
-        if(posts.isEmpty()){}
-        else { Collections.reverse(posts); }
-
-        model.addAttribute("categoryNames", categoryNames);
-        model.addAttribute("postList", posts);
-        model.addAttribute("category", categoryName);
-        return "board";
-    }
 }

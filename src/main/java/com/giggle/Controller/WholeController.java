@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class WholeController {
 
-    @ExceptionHandler(RuntimeException.class)
-    public String runtimeExceptionHandler(RuntimeException d, Model model){
-        model.addAttribute("message", d.getMessage());
-        return "runtimeError";
-    }
+//    @ExceptionHandler(RuntimeException.class)
+//    public String runtimeExceptionHandler(RuntimeException re, Model model){
+//        model.addAttribute("message", re.getMessage());
+//        return "runtimeError";
+//    }
 }

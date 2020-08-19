@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -58,5 +60,49 @@ public class PostController {
 
         postService.createPost(newPost);
         return "redirect:/post/"+createPostForm.getCategory();
+    }
+
+    @GetMapping("/post/board/{communityType}/{categoryName}")
+    public String postList(@PathVariable String communityType, @PathVariable String categoryName, HttpSession session, Model model){
+
+        CommunityType eCommunityType = CommunityType.valueOf(communityType);
+        List<String> categoryNames = categoryService.getCategoryNamesInCommunity(eCommunityType);
+        List<Post> posts = null;
+
+        if(categoryName.equals("All")){
+            posts = postService.getAllPosts();
+        }
+        else if(categoryNames.contains(categoryName)){
+            posts = postService.getPostsInCommunityCategory(CommunityType.valueOf(communityType), categoryName);
+        }
+        else{
+            throw new RuntimeException("non-existent category");
+        }
+
+        if(posts.isEmpty()){}
+        else {
+            Collections.reverse(posts);
+        }
+
+        model.addAttribute("post",posts);
+
+
+        String loginId = (String)session.getAttribute("loginId");
+
+        List<String> communityNameList = new ArrayList<>();
+        List<List<String>> communityList = new ArrayList<>();
+
+        for(CommunityType community : CommunityType.values()){
+            communityNameList.add(community.name());
+            List<String> categoryNameList = categoryService.getCategoryNamesInCommunity(community);
+            communityList.add(categoryNameList);
+        }
+
+        model.addAttribute("communityNameList", communityNameList);
+        model.addAttribute("communityList", communityList);
+        model.addAttribute("loginId",loginId);
+
+
+        return "board";
     }
 }

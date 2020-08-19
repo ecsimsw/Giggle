@@ -23,9 +23,9 @@ public class PostRepository {
         return selectedPosts;
     }
 
-    public List<Post> postInCommunityCategory(CommunityType type, String categoryName){
-        List<Post> selectedPosts = em.createQuery("select p from Post p where p.postType =:postType AND p.category = :categoryName",Post.class)
-                .setParameter("postType", type.name())
+    public List<Post> postInCommunityCategory(CommunityType communityType, String categoryName){
+        List<Post> selectedPosts = em.createQuery("select p from Post p where p.communityType =:communityType AND p.category = :categoryName",Post.class)
+                .setParameter("communityType", communityType)
                 .setParameter("categoryName",categoryName)
                 .getResultList();
         return selectedPosts;

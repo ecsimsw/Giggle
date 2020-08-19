@@ -1,80 +1,3 @@
-<!--<!DOCTYPE html>-->
-<!--<html xmlns:th="http://www.thymeleaf.org" lang="ko">-->
-<!--<head>-->
-<!--    <title>Giggle</title>-->
-<!--&lt;!&ndash;    <link href="/static/bootstrap/css/bootstrap.css" rel="stylesheet">&ndash;&gt;-->
-<!--        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">-->
-<!--    <style>-->
-<!--        .container, .container-sm, .container-md, .container-lg, .container-xl {-->
-<!--            max-width: 1000px;-->
-<!--        }-->
-<!--        .container{-->
-<!--            margin-top: 3%;-->
-<!--        }-->
-<!--    </style>-->
-<!--</head>-->
-
-<!--<body class="text-center">-->
-<!--    <div class="container">-->
-<!--        <h3>Giggle</h3>-->
-<!--        <span th:if="${category} == null" >ALL</span>-->
-<!--        <span th:if="${category} != null"  th:text="${category}"></span>-->
-<!--        <br><br>-->
-<!--        <br>-->
-<!--        <nav class="navbar navbar-light bg-light">-->
-<!--            <form class="form-inline">-->
-<!--                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">-->
-<!--                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>-->
-<!--            </form>-->
-<!--        </nav>-->
-<!--        <table>-->
-<!--            <tr>-->
-<!--                <td>-->
-<!--                    <a th:href="@{/post/All}">All</a>-->
-<!--                </td>-->
-<!--            </tr>-->
-<!--            <tr th:each="c : ${categoryNames}">-->
-
-<!--                <td>-->
-<!--                    <a th:href="'/post/'+${c}" th:text="${c}"></a>-->
-<!--                </td>-->
-
-<!--            </tr>-->
-<!--            <tr>-->
-<!--                <td>-->
-<!--                    <a th:href="@{/category/create}">Create Category</a>-->
-<!--                </td>-->
-<!--            </tr>-->
-<!--        </table>-->
-
-<!--        <br>-->
-<!--        <table class ="table table-hover table-striped">-->
-<!--            <thead>-->
-<!--                <tr>-->
-<!--                    <th>No</th>-->
-<!--                    <th>Title</th>-->
-<!--                    <th>Category</th>-->
-<!--                    <th>Writer</th>-->
-<!--                </tr>-->
-<!--            </thead>-->
-<!--            <tbody>-->
-<!--                <tr th:each="post, numStatus : ${postList}">-->
-<!--                    <td th:text ="${numStatus.size-numStatus.index}">1</td>-->
-<!--                    <td>-->
-<!--                        <a th:href="'/post/'+${post.id}" th:text="${post.title}">Title</a>-->
-<!--                    </td>-->
-<!--                    <td th:text="${post.category}">study</td>-->
-<!--                    <td th:text="${post.writer}">tester</td>-->
-<!--                </tr>-->
-<!--            </tbody>-->
-<!--        </table>-->
-<!--        <br><br>-->
-<!--        <a class="btn btn-default pull-right" th:if="${category}!=All" th:href="'/post/create/'+${category}">Create Post</a>-->
-
-<!--    </div>-->
-<!--</body>-->
-<!--</html>-->
-
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="ko">
 
@@ -89,7 +12,7 @@
 
     <!-- Custom styles for this template-->
     <!--  <link href="/static/SBadmin2/sb-admin-2.min.css" rel="stylesheet">-->
-    <link href="../static/SBadmin2/sb-admin-2.min.css" rel="stylesheet">
+    <link href="/static/SBadmin2/sb-admin-2.min.css" rel="stylesheet">
 </head>
 
 <body id="page-top">
@@ -519,14 +442,14 @@
 </div>
 
 <!-- Bootstrap core JavaScript-->
-<script src="../static/SBadmin2/jquery.min.js"></script>
-<script src="../static/SBadmin2/bootstrap.bundle.min.js"></script>
+<script src="/static/SBadmin2/jquery.min.js"></script>
+<script src="/static/SBadmin2/bootstrap.bundle.min.js"></script>
 
 <!-- Core plugin JavaScript-->
-<script src="../static/SBadmin2/jquery.easing.min.js"></script>
+<script src="/static/SBadmin2/jquery.easing.min.js"></script>
 
 <!-- Custom scripts for all pages-->
-<script src="../static/SBadmin2/sb-admin-2.min.js"></script>
+<script src="/static/SBadmin2/sb-admin-2.min.js"></script>
 </body>
 
 </html>
