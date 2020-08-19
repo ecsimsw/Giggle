@@ -26,10 +26,6 @@ public class MainController {
     private final PostService postService;
     private final CategoryService categoryService;
 
-    @RequestMapping("/")
-    @ResponseBody
-    public String hello(){ return "hi"; }
-
     @GetMapping("/main")
     public String mainPage(Model model, HttpSession session){
         String loginId = (String)session.getAttribute("loginId");
