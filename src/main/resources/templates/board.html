@@ -2,7 +2,12 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="ko">
 
 <head>
-    <div th:replace="/fragment/header :: header"> </div>
+<!--     <div th:replace="/fragment/header :: header"> </div>-->
+
+    <link href="C:\Users\user\IdeaProjects\Giggle\src\main\resources\static\SBadmin2\sb-admin-2.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src ="https://cdnjs.cloudflare.com/ajax/libs/twbs-pagination/1.4.2/jquery.twbsPagination.min.js"></script>
+
 </head>
 
 <body id="page-top">
@@ -61,7 +66,7 @@
                             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                 <h6 class="m-0 font-weight-bold text-primary" th:text="${categoryName}" >Spring Boot</h6>
 
-                                <a th:href="${'/post/create/'+communityName+'/'+categoryName}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+                                <a style="color:white;" th:href="${'/post/create/'+communityName+'/'+categoryName}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
                                     <i class="fas fa-download fa-sm text-white-50"></i>
                                     Post
                                 </a>
@@ -84,7 +89,18 @@
                                 </div>
                             </div>
                         </div>
+
+
+                        <ul id="pagination-demo" class="pagination-sm">
+
+                        </ul>
                     </div>
+
+
+
+                    <span id="page-content"></span>
+
+
                 </div>
             </div>
         </div>
@@ -106,4 +122,39 @@
 <!-- BottomScript-->
 <div th:replace="/fragment/bottomScript :: bottomScript"> </div>
 </body>
+
+<style>
+
+    #page-item{
+        text-align: center;
+        width: 50px;
+    }
+
+    #pagination-demo{
+        place-content:center;
+    }
+
+    .pagination>li>a, .pagination>li>span {
+    position: relative;
+    padding: 6px 12px;
+    margin-left: -1px;
+    line-height: 1.42857143;
+    color: #337ab7;
+    text-decoration: none;
+    background-color: #fff;
+    border: 1px solid #ddd;
+}
+</style>
+
+<script>
+        $('#pagination-demo').twbsPagination({
+            totalPages: 2,
+            visiblePages: 10,
+            prev:null,
+            next:null,
+            onPageClick: function (event, page) {
+                $('#page-content').text('Page ' + page);
+            }
+        });
+</script>
 </html>

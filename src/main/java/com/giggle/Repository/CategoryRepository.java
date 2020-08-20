@@ -26,4 +26,13 @@ public class CategoryRepository {
                 .getResultList();
         return selectedCategories;
     }
+
+    public Category getCategoryByName(CommunityType communityType, String categoryName){
+        Category selectedCategory = em.createQuery("select c from Category c where c.name =:name AND c.communityType = :communityType",Category.class)
+                .setParameter("communityType", communityType)
+                .setParameter("categoryName",categoryName)
+                .getResultList()
+                .get(0);
+        return selectedCategory;
+    }
 }

@@ -56,8 +56,8 @@ public class PostController {
     }
 
     @GetMapping("/board/{communityName}/{categoryName}")
-    public String postList(@PathVariable String communityName, @PathVariable String categoryName, HttpSession session, Model model){
-
+    public String postList(@PathVariable String communityName, @PathVariable String categoryName,
+                           HttpSession session, Model model){
         CommunityType eCommunityType = CommunityType.valueOf(communityName);
         List<String> categoryNames = categoryService.getCategoryNamesInCommunity(eCommunityType);
         List<Post> posts = null;
@@ -95,4 +95,61 @@ public class PostController {
 
         return "board";
     }
+
+    @GetMapping("/board/{communityName}/{categoryName}")
+    public String postList(@PathVariable String communityName, @PathVariable String categoryName,
+                           @RequestParam int page,
+                           HttpSession session, Model model){
+
+        // top bar
+        String loginId = (String)session.getAttribute("loginId");
+        model.addAttribute("loginId",loginId);
+
+
+        // side bar
+        CommunityType eCommunityType = CommunityType.valueOf(communityName);
+
+        List<String> communityNameList = new ArrayList<>();
+        List<List<String>> communityList = new ArrayList<>();
+
+        for(CommunityType community : CommunityType.values()){
+            communityNameList.add(community.name());
+            List<String> categoryNameList = categoryService.getCategoryNamesInCommunity(community);
+            communityList.add(categoryNameList);
+        }
+
+        model.addAttribute("communityNameList", communityNameList);
+        model.addAttribute("communityList", communityList);
+
+
+        // category board
+        List<String> categoriesInCommunity = categoryService.getCategoryNamesInCommunity(eCommunityType);
+        model.addAttribute("categoriesInCommunity",categoriesInCommunity);
+
+
+        // post box
+        List<Post> posts = null;
+        int postForPage = 20;
+
+        if(categoryName.equals("All")){ posts = postService.getAllPosts();} // need pagination
+        else if(categoryService.getCategoryNamesInCommunity(eCommunityType).contains(categoryName)){
+            posts = postService.getPostsInCommunityCategory(CommunityType.valueOf(communityName), categoryName, page, postForPage);
+        }
+        else{ throw new RuntimeException("non-existent category"); }
+
+        if(!posts.isEmpty()){ Collections.reverse(posts); }
+
+        model.addAttribute("post",posts);
+        model.addAttribute("communityName", communityName);
+        model.addAttribute("categoryName", categoryName);
+
+        model.addAttribute("postForPage", postForPage);
+        model.addAttribute("totalPost", )
+
+
+        return "board";
+    }
+
+
+
 }

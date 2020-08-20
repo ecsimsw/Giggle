@@ -37,4 +37,12 @@ public class CategoryService {
         }
         return categoryNames;
     }
+
+    public int getTotalCnt(String categoryName){
+        return categoryRepository.getCategoryByName(categoryName).getPostCnt();
+    }
+
+    public Category getCategoryByName(CommunityType communityType, String categoryName){
+        return categoryRepository.getCategoryByName(communityType, categoryName);
+    }
 }

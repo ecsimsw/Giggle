@@ -30,4 +30,14 @@ public class PostRepository {
                 .getResultList();
         return selectedPosts;
     }
+
+    public List<Post> postInCommunityCategory(CommunityType communityType, String categoryName, int from, int maxCnt){
+        List<Post> selectedPosts = em.createQuery("select p from Post p where p.communityType =:communityType AND p.category = :categoryName",Post.class)
+                .setParameter("communityType", communityType)
+                .setParameter("categoryName",categoryName)
+                .setFirstResult(from)
+                .setMaxResults(maxCnt)
+                .getResultList();
+        return selectedPosts;
+    }
  }
