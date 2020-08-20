@@ -3,7 +3,6 @@
 <head>
     <title>Giggle</title>
     <link href="/static/bootstrap/css/bootstrap.css" rel="stylesheet">
-<!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">-->
     <style>
         .container, .container-sm, .container-md, .container-lg, .container-xl {
             max-width: 500px;
@@ -21,21 +20,24 @@
     <br>
     <p>createPost</p>
     <br>
-    <form class="form" th:action="@{/post/create}" method="post">
+    <form class="form" th:action="${'/post/create/'+communityName+'/'+categoryName}" method="post">
+
+        <br>
+        <input type="text" name="community" hidden th:value="${communityName}">
 
         <div class="form-group">
             <label for="category">category</label>
-            <select th:if="${categoryNow !=null}" class="form-control" id="category" name="category">
-                <option th:value="${categoryNow}" th:text="${categoryNow}" selected>categoryNow</option>
+
+            <select th:if="${categoryName !=null}" class="form-control" id="category" name="category">
+                <option th:value="${categoryName}" th:text="${categoryName}" selected>categoryNow</option>
 
                 <option th:each="categoryName : ${categoryNameList}"
                         th:value="${categoryName}"
-                        th:if="${categoryName}!=${categoryNow}"
+                        th:if="${categoryName}!=${categoryName}"
                         th:text="${categoryName}">categoryName</option>
             </select>
 
-
-            <select th:if="${categoryNow == null}" class="form-control" id="category" name="category">
+            <select th:if="${categoryName == null}" class="form-control" id="category" name="category">
                 <option valie="" selected disabled hidden>Choose category</option>
 
                 <option th:each="categoryName : ${categoryNameList}"

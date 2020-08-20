@@ -61,7 +61,7 @@
                             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                 <h6 class="m-0 font-weight-bold text-primary" th:text="${categoryName}" >Spring Boot</h6>
 
-                                <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+                                <a th:href="${'/post/create/'+communityName+'/'+categoryName}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
                                     <i class="fas fa-download fa-sm text-white-50"></i>
                                     Post
                                 </a>
@@ -105,7 +105,5 @@
 
 <!-- BottomScript-->
 <div th:replace="/fragment/bottomScript :: bottomScript"> </div>
-
-
 </body>
 </html>
