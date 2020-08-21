@@ -1,5 +1,6 @@
 package com.giggle.Service;
 
+import com.giggle.Domain.Entity.Category;
 import com.giggle.Domain.Entity.Post;
 import com.giggle.Domain.Entity.CommunityType;
 import com.giggle.Domain.Form.CreatePostForm;
@@ -20,13 +21,19 @@ public class PostService {
 
     @Transactional
     public long createPost(CreatePostForm createPostForm){
+        CommunityType communityType = CommunityType.valueOf(createPostForm.getCommunity());
+        String categoryName = createPostForm.getCategory();
+
         Post newPost = new Post();
-        newPost.setCategory(createPostForm.getCategory());
-        newPost.setCommunityType(CommunityType.valueOf(createPostForm.getCommunity()));
+        newPost.setCategory(categoryName);
+        newPost.setCommunityType(communityType);
         newPost.setTitle(createPostForm.getTitle());
         newPost.setWriter("tester");
         newPost.setContent(createPostForm.getContent());
         newPost.setViewCnt(0);
+
+        Category category = categoryService.getCategoryByName(communityType, categoryName);
+        categoryService.updatePostCnt(category, category.getPostCnt()+1);
 
         postRepository.save(newPost);
         return newPost.getId();

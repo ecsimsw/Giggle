@@ -28,11 +28,19 @@ public class CategoryRepository {
     }
 
     public Category getCategoryByName(CommunityType communityType, String categoryName){
-        Category selectedCategory = em.createQuery("select c from Category c where c.name =:name AND c.communityType = :communityType",Category.class)
+        Category selectedCategory = em.createQuery("select c from Category c where c.name =:categoryName AND c.communityType = :communityType",Category.class)
                 .setParameter("communityType", communityType)
                 .setParameter("categoryName",categoryName)
                 .getResultList()
                 .get(0);
         return selectedCategory;
+    }
+    public Category getCategoryById(Long id){
+        return em.find(Category.class,id);
+    }
+    public void updatePostCnt(Category category, int postCnt){
+//        Category c = getCategoryById(category.getId());  다시 찾을 필요 없음.
+        category.setPostCnt(postCnt);
+        em.merge(category);
     }
 }

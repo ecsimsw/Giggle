@@ -2,11 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="ko">
 
 <head>
-<!--     <div th:replace="/fragment/header :: header"> </div>-->
+     <div th:replace="/fragment/header :: header"> </div>
 
-    <link href="C:\Users\user\IdeaProjects\Giggle\src\main\resources\static\SBadmin2\sb-admin-2.min.css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script src ="https://cdnjs.cloudflare.com/ajax/libs/twbs-pagination/1.4.2/jquery.twbsPagination.min.js"></script>
+<!--    <link href="C:\Users\user\IdeaProjects\Giggle\src\main\resources\static\SBadmin2\sb-admin-2.min.css" rel="stylesheet">-->
+<!--    <script src="C:\Users\user\IdeaProjects\Giggle\src\main\resources\static\script\jquery-3.5.1.js"></script>-->
+<!--    <script src="C:\Users\user\IdeaProjects\Giggle\src\main\resources\static\script\jquery.twbsPagination.min.js"></script>-->
 
 </head>
 
@@ -96,11 +96,10 @@
                         </ul>
                     </div>
 
-
-
                     <span id="page-content"></span>
-
-
+                    <br>
+                    <div th:text="${'totalPage = '+totalPost}"></div>
+                    <div th:text="${'postForPage = '+postForPage}"></div>
                 </div>
             </div>
         </div>
@@ -121,7 +120,19 @@
 
 <!-- BottomScript-->
 <div th:replace="/fragment/bottomScript :: bottomScript"> </div>
-</body>
+
+<script>
+        $('#pagination-demo').twbsPagination({
+            totalPages: 2,
+            visiblePages: 10,
+            prev:null,
+            next:null,
+            onPageClick: function (event, page) {
+                $('#page-content').text('Page ' + page);
+            }
+        });
+    </script>
+
 
 <style>
 
@@ -146,15 +157,10 @@
 }
 </style>
 
-<script>
-        $('#pagination-demo').twbsPagination({
-            totalPages: 2,
-            visiblePages: 10,
-            prev:null,
-            next:null,
-            onPageClick: function (event, page) {
-                $('#page-content').text('Page ' + page);
-            }
-        });
-</script>
+</body>
+
+
+
+
+
 </html>

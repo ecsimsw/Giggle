@@ -38,11 +38,15 @@ public class CategoryService {
         return categoryNames;
     }
 
-    public int getTotalCnt(String categoryName){
-        return categoryRepository.getCategoryByName(categoryName).getPostCnt();
+    public int getTotalCnt(String communityName, String categoryName){
+        return this.getCategoryByName(CommunityType.valueOf(communityName), categoryName).getPostCnt();
     }
 
     public Category getCategoryByName(CommunityType communityType, String categoryName){
         return categoryRepository.getCategoryByName(communityType, categoryName);
+    }
+
+    public void updatePostCnt(Category category, int postCnt){
+        categoryRepository.updatePostCnt(category, postCnt);
     }
 }
