@@ -36,6 +36,6 @@ public class CategoryController {
         else{
             categoryService.createCategory(communityType, createCategoryForm);
         }
-        return "redirect:/post/board/"+community+"/"+createCategoryForm.getName();
+        return "redirect:/post/board/"+community+"/"+createCategoryForm.getName()+"?page=1";
     }
 }

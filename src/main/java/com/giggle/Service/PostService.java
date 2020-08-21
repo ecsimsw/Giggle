@@ -48,6 +48,21 @@ public class PostService {
     }
 
     public List<Post> getPostsInCommunityCategory(CommunityType communityType, String categoryName, int page, int postForPage){
-        return postRepository.postInCommunityCategory(communityType, categoryName,(page-1)*postForPage, (page*postForPage)-1);
+
+        int totalCnt = categoryService.getTotalCnt(communityType.name(), categoryName);
+
+        int from;
+        int max;
+
+        if((totalCnt-(page * postForPage))>=0){
+            from = totalCnt-(page * postForPage);
+            max = postForPage;
+        }
+        else{
+            from = 0;
+            max = totalCnt % postForPage;
+        }
+
+        return postRepository.postInCommunityCategory(communityType, categoryName, from, max);
     }
 }
