@@ -75,12 +75,12 @@
                                     <table class ="table table-hover table-striped">
                                         <body>
                                             <tr th:each="post, numStatus : ${postList}">
-                                                <td th:text ="${numStatus.size-numStatus.index}">1</td>
+                                                <td th:text ="${'#'+post.id}">#2154</td>
                                                 <td>
                                                     <a th:href="'/post/'+${post.id}" th:text="${post.title}">Title</a>
                                                 </td>
                                                 <td th:text="${post.writer}">tester</td>
-                                                <td th:text="${post.dateTime}">2020.08.21</td>
+                                                <td th:text="${#temporals.format(post.dateTime,'yyyy-MM-dd HH:mm:ss')}">2020.08.21</td>
                                             </tr>
                                         </body>
                                     </table>
@@ -117,14 +117,18 @@
 
 <script th:inline="javascript">
 /*<![CDATA[*/
-
         $('#pagination-demo').twbsPagination({
             totalPages: /*[[${(totalPost-1)/postForPage+1}]]*/ 2,
             visiblePages: /*[[${visiblePages}]]*/ 10,
+            initiateStartPageClick : false,
             prev:null,
             next:null,
             onPageClick: function (event, page) {
+
                 $('#page-content').text('Page ' + page);
+                if(page!=null){
+                    location.href(/*[["${'/post/board/'+communityName+'/'+categoryName+'?page='+page}"]]*/ "/main");
+                }
             }
         });
 /*]]>*/
@@ -133,7 +137,6 @@
 
 
 <style>
-
     #page-item{
         text-align: center;
         width: 50px;
