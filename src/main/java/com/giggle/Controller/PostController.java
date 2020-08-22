@@ -110,6 +110,8 @@ public class PostController {
         model.addAttribute("postForPage", postForPage);
         model.addAttribute("totalPost", categoryService.getTotalCnt(communityName,categoryName));
 
+        model.addAttribute("pageNow", page);
+
         return "board";
     }
 
