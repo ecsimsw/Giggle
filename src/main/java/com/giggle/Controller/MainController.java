@@ -29,19 +29,31 @@ public class MainController {
     @GetMapping("/main")
     public String mainPage(Model model, HttpSession session){
         String loginId = (String)session.getAttribute("loginId");
+        model.addAttribute("loginId",loginId);
 
         List<String> communityNameList = new ArrayList<>();
         List<List<String>> communityList = new ArrayList<>();
 
+        int totalPostCntInCommunity =0;
+
         for(CommunityType communityType : CommunityType.values()){
             communityNameList.add(communityType.name());
             List<String> categoryNameList = categoryService.getCategoryNamesInCommunity(communityType);
+            for(String categoryName : categoryNameList){
+                totalPostCntInCommunity += categoryService.getTotalCnt(communityType.name(), categoryName);
+            }
             communityList.add(categoryNameList);
         }
 
         model.addAttribute("communityNameList", communityNameList);
         model.addAttribute("communityList", communityList);
-        model.addAttribute("loginId",loginId);
+
+        // new Posts
+
+        int newPostCntToPrint = 7;
+
+        List<Post> newPostList = postService.getNewPost(totalPostCntInCommunity, newPostCntToPrint);
+        model.addAttribute("newPostList", newPostList);
 
         return "mainPage";
     }

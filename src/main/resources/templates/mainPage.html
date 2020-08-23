@@ -131,10 +131,10 @@
                   <div class="chart-area">
                     <table class ="table table-hover table-striped">
                       <tbody>
-                      <tr th:each="post, numStatus : ${postList}">
-                        <td th:text ="${numStatus.size-numStatus.index}">1</td>
+                      <tr th:each="post, numStatus : ${newPostList}">
+                        <td th:text ="${'#'+post.id}">1</td>
                         <td>
-                          <a th:href="'/post/'+${post.id}" th:text="${post.title}">Title</a>
+                          <a th:href="'/post/board'+${post.communityType} +'/'+${post.category}+'?page=1'" th:text="${post.title}">Title</a>
                         </td>
                         <td th:text="${post.category}">study</td>
                         <td th:text="${post.writer}">tester</td>

@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import java.util.Collections;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -38,6 +39,17 @@ public class PostRepository {
                 .setFirstResult(from)
                 .setMaxResults(maxCnt)
                 .getResultList();
+        return selectedPosts;
+    }
+
+    public List<Post> getNewPost(int from, int postCnt){
+        List<Post> selectedPosts = em.createQuery("select p from Post p",Post.class)
+                .setMaxResults(postCnt)
+                .setFirstResult(from)
+                .getResultList();
+
+        Collections.reverse(selectedPosts);
+
         return selectedPosts;
     }
  }

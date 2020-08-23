@@ -35,7 +35,8 @@
                     <div class="col-lg-12">
                         <div class="card shadow mb-3 ">
                             <!-- Card Header - Dropdown -->
-                            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between ">
+                            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
+                                 style= "border-bottom-width : 0px;">
                                 <h6 class="m-0 font-weight-bold text-primary " th:text="${communityName}">Study</h6>
 
                                 <a class=" collapsed" href="#" data-toggle="collapse" data-target="#collapseCategories" aria-expanded="true" aria-controls="collapseCategories">
@@ -46,7 +47,7 @@
                             <!-- Card Body -->
                             <div id="collapseCategories" class="card-body collapse show"  aria-labelledby="headingPages">
                                 <td th:each="category, index : ${categoriesInCommunity}">
-                                    <a id="categoryLink" th:href="${'/post/board/'+communityName+'/'+category}" th:text="${category}">Spring Boot</a>
+                                    <a id="categoryLink" th:href="${'/post/board/'+communityName+'/'+category+'?page=1'}" th:text="${category}">Spring Boot</a>
                                     <span th:if="${index.count!=index.size}">/</span>
                                 </td>
                             </div>
@@ -65,14 +66,15 @@
                             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                 <h6 class="m-0 font-weight-bold text-primary" th:text="${categoryName}" >Spring Boot</h6>
 
-                                <a style="color:white;" th:href="${'/post/create/'+communityName+'/'+categoryName}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+                                <a style="color:white;" th:href="${'/post/create/'+communityName+'/'+categoryName}" class="d-sm-inline-block btn btn-sm btn-primary shadow-sm">
                                     <i class="fas fa-download fa-sm text-white-50"></i>
                                     Post
                                 </a>
                             </div>
                             <div>
-                                <div>
-                                    <table class ="table table-hover table-striped">
+                                <div style="height:750px">
+                                    <table class ="table table-hover table-striped"
+                                           style="margin-bottom: 0px;">
                                         <body>
                                             <tr th:each="post, numStatus : ${postList}">
                                                 <td th:text ="${'#'+post.id}">#2154</td>

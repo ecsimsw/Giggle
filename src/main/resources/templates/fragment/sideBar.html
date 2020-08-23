@@ -54,7 +54,7 @@
                     <!--            <a class="collapse-item" th:href="@{/post/All}">All</a>-->
                     <div th:each="categoryList : ${community}">
                         <div th:each="categoryName : ${categoryList}">
-                            <a class="collapse-item" th:href="${'/post/board/'+communityNameList.get(index.index)+'/'+categoryName}" th:text="${categoryName}">Study</a>
+                            <a class="collapse-item" th:href="${'/post/board/'+communityNameList.get(index.index)+'/'+categoryName+'?page=1'}" th:text="${categoryName}">Study</a>
                         </div>
                     </div>
                     <a class="collapse-item" style="font-weight:700" th:href="${'/category/create/'+ communityNameList.get(index.index)}">Create Category</a>

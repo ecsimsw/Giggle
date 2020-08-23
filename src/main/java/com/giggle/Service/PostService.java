@@ -47,6 +47,15 @@ public class PostService {
         return postRepository.postInCommunityCategory(communityType, categoryName);
     }
 
+    public List<Post> getNewPost(int totalPostCnt, int newPostCnt){
+        if(totalPostCnt-newPostCnt <= 0){
+            return postRepository.getNewPost(0, newPostCnt);
+        }
+        else{
+            return postRepository.getNewPost(totalPostCnt-newPostCnt, newPostCnt);
+        }
+    }
+
     public List<Post> getPostsInCommunityCategory(CommunityType communityType, String categoryName, int page, int postForPage){
 
         int totalCnt = categoryService.getTotalCnt(communityType.name(), categoryName);

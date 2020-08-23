@@ -88,7 +88,7 @@ public class PostController {
 
         // post box
         List<Post> posts = null;
-        int postForPage =3;
+        int postForPage =15;
         int visiblePages = 10;
 
         if(categoryName.equals("All")){ posts = postService.getAllPosts();} // need pagination
