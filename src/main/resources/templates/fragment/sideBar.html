@@ -102,8 +102,58 @@
                 <span>Calendar</span></a>
         </li>
 
+        <div th:each = "mainCategory : ${mainCategoryList}">
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading"
+                 style="
+                         font-weight: normal;
+                          text-align: center;
+                          text-transform: none;"
+                th:text = ${mainCategory.name}>
+                Market
+            </div>
+
+            <!-- Community List -->
+
+            <a class="collapse-item" style="font-weight:700" th:href="${'/category/create/middleCategory'}">Create Category</a>
+
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item" th:each="middleCategory, index : ${mainCategory.middleCategoryList}" >
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" th:data-target="${middleCategory.name+index.index}" aria-expanded="true" aria-controls="collapseAgora">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span th:text="${middleCategory.name}"></span>
+                </a>
+
+                <div th:id="${middleCategory.name+index.index}" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Categories:</h6>
+                        <div th:each="category : ${middleCategory.categoryList}">
+                                <a class="collapse-item" th:text="${category.name}">Study</a>
+                        </div>
+                        <a class="collapse-item" style="font-weight:700" th:href="${'/category/create/'+ communityNameList.get(index.index)}">Create Category</a>
+                    </div>
+
+
+                </div>
+            </li>
+        </div>
+
+
         <!-- Divider -->
         <hr class="sidebar-divider d-none d-md-block">
+
+        <li class="nav-item">
+            <a class="nav-link" th:href="${'/category/create/mainCategory'}">
+                <i class="fas fa-fw fa-table"></i>
+                <span>Create Main Category</span></a>
+        </li>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider d-none d-md-block">
+
 
         <!-- Sidebar Toggler (Sidebar) -->
         <div class="text-center d-none d-md-inline">

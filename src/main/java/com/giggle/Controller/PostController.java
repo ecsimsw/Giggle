@@ -3,9 +3,11 @@ package com.giggle.Controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.giggle.Domain.Entity.CommunityType;
+import com.giggle.Domain.Entity.MainCategory;
 import com.giggle.Domain.Entity.Post;
 import com.giggle.Domain.Form.CreatePostForm;
 import com.giggle.Service.CategoryService;
+import com.giggle.Service.MainCategoryService;
 import com.giggle.Service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -26,6 +28,7 @@ public class PostController {
     private final PostService postService;
     private final CategoryService categoryService;
     private final ObjectMapper objectMapper;
+    private final MainCategoryService mainCategoryService;
 
     @GetMapping("/create/{communityName}/{categoryName}")
     public String create(@PathVariable String communityName, @PathVariable String categoryName, Model model){
@@ -66,6 +69,12 @@ public class PostController {
 
 
         // side bar
+
+        List<MainCategory> mainCategoryList = mainCategoryService.getAllMainCategory();
+
+        model.addAttribute("mainCategoryList", mainCategoryList);
+
+
         CommunityType eCommunityType = CommunityType.valueOf(communityName);
 
         List<String> communityNameList = new ArrayList<>();

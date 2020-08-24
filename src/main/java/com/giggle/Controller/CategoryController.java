@@ -2,7 +2,11 @@ package com.giggle.Controller;
 
 import com.giggle.Domain.Entity.CommunityType;
 import com.giggle.Domain.Form.CreateCategoryForm;
+import com.giggle.Domain.Form.CreateMainCategoryForm;
+import com.giggle.Domain.Form.CreateMiddleCategoryForm;
 import com.giggle.Service.CategoryService;
+import com.giggle.Service.MainCategoryService;
+import com.giggle.Service.MiddleCategoryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -17,6 +21,31 @@ import java.util.List;
 @Slf4j
 public class CategoryController {
     private final CategoryService categoryService;
+    private final MainCategoryService mainCategoryService;
+    private final MiddleCategoryService middleCategoryService;
+
+    @GetMapping("/create/mainCategory")
+    public String createMainCategory(){
+        return "createMainCategory";
+    }
+
+    @PostMapping("/create/mainCategory")
+    public String createMainCategory(CreateMainCategoryForm createMainCategoryForm){
+        mainCategoryService.createMainCategory(createMainCategoryForm);
+        return "redirect:/main";
+    }
+
+    @GetMapping("/create/middleCategory")
+    public String createMiddleCategory(){
+
+        return "createMiddleCategory";
+    }
+
+    @PostMapping("/create/middleCategory")
+    public String createMiddleCategory(CreateMiddleCategoryForm createMiddleCategoryForm){
+        middleCategoryService.createMiddleCategory(createMiddleCategoryForm);
+        return "redirect:/main";
+    }
 
     @GetMapping("/create/{community}")
     public String createCategory(@PathVariable String community, Model model){
