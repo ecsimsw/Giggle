@@ -118,26 +118,31 @@
 
             <!-- Community List -->
 
-            <a class="collapse-item" style="font-weight:700" th:href="${'/category/create/middleCategory'}">Create Category</a>
 
             <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item" th:each="middleCategory, index : ${mainCategory.middleCategoryList}" >
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" th:data-target="${middleCategory.name+index.index}" aria-expanded="true" aria-controls="collapseAgora">
-                    <i class="fas fa-fw fa-cog"></i>
-                    <span th:text="${middleCategory.name}"></span>
-                </a>
+            <li class="nav-item"  >
+                <div th:each="middleCategory, index : ${mainCategory.middleCategoryList}">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" th:data-target="${middleCategory.name+index.index}" aria-expanded="true" aria-controls="collapseAgora">
+                        <i class="fas fa-fw fa-cog"></i>
+                        <span th:text="${middleCategory.name}"></span>
+                    </a>
 
-                <div th:id="${middleCategory.name+index.index}" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Categories:</h6>
-                        <div th:each="category : ${middleCategory.categoryList}">
-                                <a class="collapse-item" th:text="${category.name}">Study</a>
+                    <!-- popUp -->
+                    <div th:id="${middleCategory.name+index.index}" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <h6 class="collapse-header">Categories:</h6>
+                            <div th:each="category : ${middleCategory.categoryList}">
+                                    <a class="collapse-item" th:text="${category.name}">Study</a>
+                            </div>
+                            <a class="collapse-item" style="font-weight:700" th:href="${'/category/create/'+ communityNameList.get(index.index)}">Create Category</a>
                         </div>
-                        <a class="collapse-item" style="font-weight:700" th:href="${'/category/create/'+ communityNameList.get(index.index)}">Create Category</a>
                     </div>
-
-
                 </div>
+
+                <a class="nav-link" th:href="${'/category/create/middleCategory?mainCategory='+mainCategory.id}">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>Ad) create Middle Category</span>
+                </a>
             </li>
         </div>
 
