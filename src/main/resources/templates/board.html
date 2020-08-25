@@ -34,20 +34,20 @@
                     <!-- Area Chart -->
                     <div class="col-lg-12">
                         <div class="card shadow mb-3 ">
-                            <!-- Card Header - Dropdown -->
+                            <!-- middle category -->
                             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
                                  style= "border-bottom-width : 0px;">
-                                <h6 class="m-0 font-weight-bold text-primary " th:text="${communityName}">Study</h6>
+                                <h6 class="m-0 font-weight-bold text-primary " th:text="${middleCategory.name}">Study</h6>
 
                                 <a class=" collapsed" href="#" data-toggle="collapse" data-target="#collapseCategories" aria-expanded="true" aria-controls="collapseCategories">
                                     <i class="fas fa-fw fa-folder"></i>
                                     <span class="glyphicon glyphicon-chevron-right">...</span>
                                 </a>
                             </div>
-                            <!-- Card Body -->
+                            <!-- categories in middle category -->
                             <div id="collapseCategories" class="card-body collapse show"  aria-labelledby="headingPages">
-                                <td th:each="category, index : ${categoriesInCommunity}">
-                                    <a id="categoryLink" th:href="${'/post/board/'+communityName+'/'+category+'?page=1'}" th:text="${category}">Spring Boot</a>
+                                <td th:each="category, index : ${middleCategory.categoryList}">
+                                    <a id="categoryLink" th:href="${'/post/board?category='+category.id+'&page=1'}" th:text="${category.name}">Spring Boot</a>
                                     <span th:if="${index.count!=index.size}">/</span>
                                 </td>
                             </div>
@@ -64,9 +64,9 @@
                     <div class="col-lg-12">
                         <div class="card shadow mb-3">
                             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                <h6 class="m-0 font-weight-bold text-primary" th:text="${categoryName}" >Spring Boot</h6>
+                                <h6 class="m-0 font-weight-bold text-primary" th:text="${category.name}" >Spring Boot</h6>
 
-                                <a style="color:white;" th:href="${'/post/create/'+communityName+'/'+categoryName}" class="d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+                                <a style="color:white;" th:href="${'/post/create?category='+category.id}" class="d-sm-inline-block btn btn-sm btn-primary shadow-sm">
                                     <i class="fas fa-download fa-sm text-white-50"></i>
                                     Post
                                 </a>
@@ -130,7 +130,7 @@
                 $('#page-content').text('Page ' + page);
 
                 if(page!=null){
-                    location.href="/post/board/"+[[${communityName}]]+"/"+[[${categoryName}]]+"?page="+page;
+                    location.href="/post/board?category="+[[${category.id}]]+"&page="+page;
                  }
             }
         });
@@ -160,11 +160,5 @@
     border: 1px solid #ddd;
 }
 </style>
-
 </body>
-
-
-
-
-
 </html>

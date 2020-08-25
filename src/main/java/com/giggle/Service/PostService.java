@@ -1,8 +1,6 @@
 package com.giggle.Service;
 
-import com.giggle.Domain.Entity.Category;
-import com.giggle.Domain.Entity.Post;
-import com.giggle.Domain.Entity.CommunityType;
+import com.giggle.Domain.Entity.*;
 import com.giggle.Domain.Form.CreatePostForm;
 import com.giggle.Repository.CategoryRepository;
 import com.giggle.Repository.PostRepository;
@@ -18,33 +16,31 @@ public class PostService {
 
     private final PostRepository postRepository;
     private final CategoryService categoryService;
+    private final MiddleCategoryService middleCategoryService;
+    private final MainCategoryService mainCategoryService;
 
     @Transactional
     public long createPost(CreatePostForm createPostForm){
-        CommunityType communityType = CommunityType.valueOf(createPostForm.getCommunity());
-        String categoryName = createPostForm.getCategory();
+        long categoryId = Long.parseLong(createPostForm.getCategoryId());
+        Category category = categoryService.findById(categoryId);
 
         Post newPost = new Post();
-        newPost.setCategory(categoryName);
-        newPost.setCommunityType(communityType);
+        newPost.setCategory(category);
         newPost.setTitle(createPostForm.getTitle());
         newPost.setWriter("tester");
         newPost.setContent(createPostForm.getContent());
         newPost.setViewCnt(0);
-
-        Category category = categoryService.getCategoryByName(communityType, categoryName);
         categoryService.updatePostCnt(category, category.getPostCnt()+1);
 
         postRepository.save(newPost);
+
+        MiddleCategory middleCategory = category.getMiddleCategory();
+        middleCategoryService.updatePostCnt(middleCategory,middleCategory.getPostCnt()+1);
+
+        MainCategory mainCategory = middleCategory.getMainCategory();
+        mainCategoryService.updatePostCnt(mainCategory, mainCategory.getPostCnt()+1);
+
         return newPost.getId();
-    }
-
-    public List<Post> getAllPosts(){
-        return postRepository.findAllPosts();
-    }
-
-    public List<Post> getPostsInCommunityCategory(CommunityType communityType, String categoryName){
-        return postRepository.postInCommunityCategory(communityType, categoryName);
     }
 
     public List<Post> getNewPost(int totalPostCnt, int newPostCnt){
@@ -54,24 +50,5 @@ public class PostService {
         else{
             return postRepository.getNewPost(totalPostCnt-newPostCnt, newPostCnt);
         }
-    }
-
-    public List<Post> getPostsInCommunityCategory(CommunityType communityType, String categoryName, int page, int postForPage){
-
-        int totalCnt = categoryService.getTotalCnt(communityType.name(), categoryName);
-
-        int from;
-        int max;
-
-        if((totalCnt-(page * postForPage))>=0){
-            from = totalCnt-(page * postForPage);
-            max = postForPage;
-        }
-        else{
-            from = 0;
-            max = totalCnt % postForPage;
-        }
-
-        return postRepository.postInCommunityCategory(communityType, categoryName, from, max);
     }
 }

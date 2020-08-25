@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter @Setter
@@ -11,12 +13,21 @@ public class Category {
 
     @Id
     @GeneratedValue
-    private long id;
+    @Column(name = "category_id")
+    private Long id;
+
     private String name;
 
-    @Enumerated(EnumType.STRING)
-    private CommunityType communityType;
+    private Long mainCatId;
+    private Long middleCatId;
+
+    @ManyToOne
+    @JoinColumn(name="middle_category_id")
+    private MiddleCategory middleCategory;
 
     private int postCnt;
     private String description;
+
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+    private List<Post> posts = new ArrayList<>();
 }

@@ -22,7 +22,12 @@
     <p th:if="${message} == null" >Create Category</p>
     <p style="color:red" th:if="${message} != null"  th:text="${message}"></p>
     <br>
-    <form class="form" th:action="${'/category/create/'+communityType}"method="post">
+    <form class="form" th:action="${'/category/create/category'}"method="post">
+
+        <input type="text" name="mainCategoryId" hidden th:value="${mainCategoryId}">
+        <br>
+        <input type="text" name="middleCategoryId" hidden th:value="${middleCategoryId}">
+        <br>
         <input type="text" name="name" class="form-control" placeholder="name">
         <br>
         <input type="text" name="description" class="form-control" placeholder="description">

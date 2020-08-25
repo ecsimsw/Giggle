@@ -4,11 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Getter @Setter
-public class CreateCategoryForm {
+public class CreateMainCategoryForm {
 
     private String name;
     private String description;
-
-    private long mainCategoryId;
-    private long middleCategoryId;
 }
