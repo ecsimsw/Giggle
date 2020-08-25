@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter @Setter
@@ -16,9 +18,6 @@ public class Category {
 
     private String name;
 
-//    @Enumerated(EnumType.STRING)
-//    private CommunityType communityType;
-
     private Long mainCatId;
     private Long middleCatId;
 
@@ -28,4 +27,7 @@ public class Category {
 
     private int postCnt;
     private String description;
+
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+    private List<Post> posts = new ArrayList<>();
 }

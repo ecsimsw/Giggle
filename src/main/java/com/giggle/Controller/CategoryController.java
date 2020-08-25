@@ -54,14 +54,11 @@ public class CategoryController {
     public String createCategory(@RequestParam Long mainCategory, @RequestParam Long middleCategory, Model model){
         model.addAttribute("mainCategoryId", mainCategory);
         model.addAttribute("middleCategoryId", middleCategory);
-
         return "createCategory";
     }
 
     @PostMapping("/create/category")
-    @ResponseBody
     public String createCategory(CreateCategoryForm createCategoryForm) throws JsonProcessingException {
-
         categoryService.createCategory(createCategoryForm);
         return "redirect:/main";
     }

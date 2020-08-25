@@ -2,6 +2,7 @@ package com.giggle.Service;
 
 import com.giggle.Domain.Entity.Category;
 import com.giggle.Domain.Entity.CommunityType;
+import com.giggle.Domain.Entity.Post;
 import com.giggle.Domain.Form.CreateCategoryForm;
 import com.giggle.Repository.CategoryRepository;
 import com.giggle.Repository.MiddleCategoryRepository;
@@ -34,22 +35,12 @@ public class CategoryService {
         categoryRepository.save(newCategory);
     }
 
-    public List<String> getCategoryNamesInCommunity(CommunityType communityType){
-        List<String> categoryNames = new ArrayList<>();
-        List<Category> categoriesInCommunity = categoryRepository.findAllCategoryInCommunity(communityType);
-
-        for(Category c : categoriesInCommunity){
-            categoryNames.add(c.getName());
-        }
-        return categoryNames;
+    public Category findById(Long id){
+        return categoryRepository.findCategoryById(id);
     }
 
-    public int getTotalCnt(String communityName, String categoryName){
-        return this.getCategoryByName(CommunityType.valueOf(communityName), categoryName).getPostCnt();
-    }
-
-    public Category getCategoryByName(CommunityType communityType, String categoryName){
-        return categoryRepository.getCategoryByName(communityType, categoryName);
+    public List<Post> getPostsInCategory(Category category){
+        return category.getPosts();
     }
 
     public void updatePostCnt(Category category, int postCnt){

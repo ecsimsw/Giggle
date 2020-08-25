@@ -18,26 +18,26 @@ public class PostService {
 
     private final PostRepository postRepository;
     private final CategoryService categoryService;
-
-    @Transactional
-    public long createPost(CreatePostForm createPostForm){
-        CommunityType communityType = CommunityType.valueOf(createPostForm.getCommunity());
-        String categoryName = createPostForm.getCategory();
-
-        Post newPost = new Post();
-        newPost.setCategory(categoryName);
-        newPost.setCommunityType(communityType);
-        newPost.setTitle(createPostForm.getTitle());
-        newPost.setWriter("tester");
-        newPost.setContent(createPostForm.getContent());
-        newPost.setViewCnt(0);
-
-        Category category = categoryService.getCategoryByName(communityType, categoryName);
-        categoryService.updatePostCnt(category, category.getPostCnt()+1);
-
-        postRepository.save(newPost);
-        return newPost.getId();
-    }
+//
+//    @Transactional
+//    public long createPost(CreatePostForm createPostForm){
+//        CommunityType communityType = CommunityType.valueOf(createPostForm.getCommunity());
+//        String categoryName = createPostForm.getCategory();
+//
+//        Post newPost = new Post();
+//        newPost.setCategory(categoryName);
+//        newPost.setCommunityType(communityType);
+//        newPost.setTitle(createPostForm.getTitle());
+//        newPost.setWriter("tester");
+//        newPost.setContent(createPostForm.getContent());
+//        newPost.setViewCnt(0);
+//
+//        Category category = categoryService.getCategoryByName(communityType, categoryName);
+//        categoryService.updatePostCnt(category, category.getPostCnt()+1);
+//
+//        postRepository.save(newPost);
+//        return newPost.getId();
+//    }
 
     public List<Post> getAllPosts(){
         return postRepository.findAllPosts();
@@ -56,22 +56,23 @@ public class PostService {
         }
     }
 
-    public List<Post> getPostsInCommunityCategory(CommunityType communityType, String categoryName, int page, int postForPage){
-
-        int totalCnt = categoryService.getTotalCnt(communityType.name(), categoryName);
-
-        int from;
-        int max;
-
-        if((totalCnt-(page * postForPage))>=0){
-            from = totalCnt-(page * postForPage);
-            max = postForPage;
-        }
-        else{
-            from = 0;
-            max = totalCnt % postForPage;
-        }
-
-        return postRepository.postInCommunityCategory(communityType, categoryName, from, max);
-    }
+//
+//    public List<Post> getPostsInCommunityCategory(CommunityType communityType, String categoryName, int page, int postForPage){
+//
+//        int totalCnt = categoryService.getTotalCnt(communityType.name(), categoryName);
+//
+//        int from;
+//        int max;
+//
+//        if((totalCnt-(page * postForPage))>=0){
+//            from = totalCnt-(page * postForPage);
+//            max = postForPage;
+//        }
+//        else{
+//            from = 0;
+//            max = totalCnt % postForPage;
+//        }
+//
+//        return postRepository.postInCommunityCategory(communityType, categoryName, from, max);
+//    }
 }

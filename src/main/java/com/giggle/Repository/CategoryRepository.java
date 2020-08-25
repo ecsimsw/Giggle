@@ -35,7 +35,7 @@ public class CategoryRepository {
                 .get(0);
         return selectedCategory;
     }
-    public Category getCategoryById(Long id){
+    public Category findCategoryById(Long id){
         return em.find(Category.class,id);
     }
     public void updatePostCnt(Category category, int postCnt){

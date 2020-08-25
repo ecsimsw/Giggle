@@ -18,14 +18,13 @@ public class Post{
     @GeneratedValue
     private Long id;
 
-    private String category;
-
     private String writer;
 
     private String title;
 
-    @Enumerated(EnumType.STRING)
-    private CommunityType communityType;
+    @ManyToOne
+    @JoinColumn(name="category_id")
+    private Category category;
 
     private String content;
 

@@ -19,5 +19,5 @@ public class MainCategory {
     private String description;
 
     @OneToMany(mappedBy = "mainCategory", cascade = CascadeType.ALL)
-    List<MiddleCategory> middleCategoryList = new ArrayList<>();
+    private List<MiddleCategory> middleCategoryList = new ArrayList<>();
 }
