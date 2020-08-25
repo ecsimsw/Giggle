@@ -23,4 +23,8 @@ public class MiddleCategoryRepository {
                 .getResultList();
         return middleCategories;
     }
+
+    public MiddleCategory findById(Long id){
+        return em.find(MiddleCategory.class, id);
+    }
 }

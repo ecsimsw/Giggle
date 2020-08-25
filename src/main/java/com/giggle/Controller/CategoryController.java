@@ -1,5 +1,7 @@
 package com.giggle.Controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.giggle.Domain.Entity.CommunityType;
 import com.giggle.Domain.Form.CreateCategoryForm;
 import com.giggle.Domain.Form.CreateMainCategoryForm;
@@ -23,6 +25,7 @@ public class CategoryController {
     private final CategoryService categoryService;
     private final MainCategoryService mainCategoryService;
     private final MiddleCategoryService middleCategoryService;
+    private final ObjectMapper objectMapper;
 
     @GetMapping("/create/mainCategory")
     public String createMainCategory(){
@@ -47,24 +50,20 @@ public class CategoryController {
         return "redirect:/main";
     }
 
-    @GetMapping("/create/{community}")
-    public String createCategory(@PathVariable String community, Model model){
-        model.addAttribute("communityType", community);
-        return "createCategoryForm";
+    @GetMapping("/create/category")
+    public String createCategory(@RequestParam Long mainCategory, @RequestParam Long middleCategory, Model model){
+        model.addAttribute("mainCategoryId", mainCategory);
+        model.addAttribute("middleCategoryId", middleCategory);
+
+        return "createCategory";
     }
 
-    @PostMapping("/create/{community}")
-    public String createCategory(@PathVariable String community, CreateCategoryForm createCategoryForm, Model model){
-        CommunityType communityType = CommunityType.valueOf(community);
+    @PostMapping("/create/category")
+    @ResponseBody
+    public String createCategory(CreateCategoryForm createCategoryForm) throws JsonProcessingException {
 
-        List<String> categoryNames = categoryService.getCategoryNamesInCommunity(communityType);
-        if(categoryNames.contains(createCategoryForm.getName())){
-            model.addAttribute("message","category in that community is already existent");
-            return "redirect:/category/create/"+community;
-        }
-        else{
-            categoryService.createCategory(communityType, createCategoryForm);
-        }
-        return "redirect:/post/board/"+community+"/"+createCategoryForm.getName()+"?page=1";
+        categoryService.createCategory(createCategoryForm);
+        return "redirect:/main";
     }
+
 }

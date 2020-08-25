@@ -23,8 +23,7 @@ public class MiddleCategory {
     @JoinColumn(name="main_category_id")
     private MainCategory mainCategory;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name="category_id")
+    @OneToMany(mappedBy = "middleCategory", cascade = CascadeType.ALL)
     List<Category> categoryList = new ArrayList<>();
 
     private int categoryCnt;

@@ -134,7 +134,7 @@
                             <div th:each="category : ${middleCategory.categoryList}">
                                     <a class="collapse-item" th:text="${category.name}">Study</a>
                             </div>
-                            <a class="collapse-item" th:href="${'/category/create/'+ communityNameList.get(index.index)}">Ad) Create Category</a>
+                            <a class="collapse-item" th:href="${'/category/create/category?mainCategory='+mainCategory.id+'&middleCategory='+middleCategory.id}">Ad) Create Category</a>
                         </div>
                     </div>
                 </div>

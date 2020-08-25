@@ -8,4 +8,7 @@ public class CreateCategoryForm {
 
     private String name;
     private String description;
+
+    private long mainCategoryId;
+    private long middleCategoryId;
 }

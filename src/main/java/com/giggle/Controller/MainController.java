@@ -36,29 +36,31 @@ public class MainController {
 
         model.addAttribute("mainCategoryList", mainCategoryList);
 
-        List<String> communityNameList = new ArrayList<>();
-        List<List<String>> communityList = new ArrayList<>();
+        //
 
-        int totalPostCntInCommunity =0;
-
-        for(CommunityType communityType : CommunityType.values()){
-            communityNameList.add(communityType.name());
-            List<String> categoryNameList = categoryService.getCategoryNamesInCommunity(communityType);
-            for(String categoryName : categoryNameList){
-                totalPostCntInCommunity += categoryService.getTotalCnt(communityType.name(), categoryName);
-            }
-            communityList.add(categoryNameList);
-        }
-
-        model.addAttribute("communityNameList", communityNameList);
-        model.addAttribute("communityList", communityList);
-
-        // new Posts
-
-        int newPostCntToPrint = 7;
-
-        List<Post> newPostList = postService.getNewPost(totalPostCntInCommunity, newPostCntToPrint);
-        model.addAttribute("newPostList", newPostList);
+//        List<String> communityNameList = new ArrayList<>();
+//        List<List<String>> communityList = new ArrayList<>();
+//
+//        int totalPostCntInCommunity =0;
+//
+//        for(CommunityType communityType : CommunityType.values()){
+//            communityNameList.add(communityType.name());
+//            List<String> categoryNameList = categoryService.getCategoryNamesInCommunity(communityType);
+//            for(String categoryName : categoryNameList){
+//                totalPostCntInCommunity += categoryService.getTotalCnt(communityType.name(), categoryName);
+//            }
+//            communityList.add(categoryNameList);
+//        }
+//
+//        model.addAttribute("communityNameList", communityNameList);
+//        model.addAttribute("communityList", communityList);
+//
+//        // new Posts
+//
+//        int newPostCntToPrint = 7;
+//
+//        List<Post> newPostList = postService.getNewPost(totalPostCntInCommunity, newPostCntToPrint);
+//        model.addAttribute("newPostList", newPostList);
 
         return "mainPage";
     }
