@@ -22,9 +22,8 @@ public class MiddleCategoryService {
 
     @Transactional
     public void createMiddleCategory(CreateMiddleCategoryForm createMiddleCategoryForm){
-
         MiddleCategory middleCategory = new MiddleCategory();
-        middleCategory.setMainCategory(mainCategoryRepository.findAllMainCategory().get(0));
+        middleCategory.setMainCategory(mainCategoryRepository.findById(createMiddleCategoryForm.getMainCategoryId()));
         middleCategory.setName(createMiddleCategoryForm.getName());
         middleCategory.setPostCnt(0);
 

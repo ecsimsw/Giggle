@@ -36,8 +36,8 @@ public class CategoryController {
     }
 
     @GetMapping("/create/middleCategory")
-    public String createMiddleCategory(){
-
+    public String createMiddleCategory(@RequestParam Long mainCategory, Model model){
+        model.addAttribute("mainCategoryId",mainCategory);
         return "createMiddleCategory";
     }
 

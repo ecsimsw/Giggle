@@ -43,7 +43,7 @@
 
         <!-- Nav Item - Pages Collapse Menu -->
         <li class="nav-item" th:each="community, index : ${communityList}" >
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" th:data-target="${'#collapse'+index.index}" aria-expanded="true" aria-controls="collapseAgora">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" th:data-target="${'#collapse'+index.index}" aria-expanded="true">
                 <i class="fas fa-fw fa-cog"></i>
                 <span th:text="${communityNameList.get(index.index)}"></span>
             </a>
@@ -51,13 +51,13 @@
             <div th:id="${'collapse'+index.index}" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">Categories:</h6>
-                    <!--            <a class="collapse-item" th:href="@{/post/All}">All</a>-->
                     <div th:each="categoryList : ${community}">
                         <div th:each="categoryName : ${categoryList}">
                             <a class="collapse-item" th:href="${'/post/board/'+communityNameList.get(index.index)+'/'+categoryName+'?page=1'}" th:text="${categoryName}">Study</a>
                         </div>
                     </div>
-                    <a class="collapse-item" style="font-weight:700" th:href="${'/category/create/'+ communityNameList.get(index.index)}">Create Category</a>
+                    <a class="collapse-item" style="font-weight:700" th:href="${'/category/create/'+ communityNameList.get(index.index)}">
+                        Ad) Create Category</a>
                 </div>
             </div>
         </li>
@@ -122,7 +122,7 @@
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item"  >
                 <div th:each="middleCategory, index : ${mainCategory.middleCategoryList}">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" th:data-target="${middleCategory.name+index.index}" aria-expanded="true" aria-controls="collapseAgora">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" th:data-target="${'#'+middleCategory.name+index.index}" aria-expanded="true">
                         <i class="fas fa-fw fa-cog"></i>
                         <span th:text="${middleCategory.name}"></span>
                     </a>
@@ -134,7 +134,7 @@
                             <div th:each="category : ${middleCategory.categoryList}">
                                     <a class="collapse-item" th:text="${category.name}">Study</a>
                             </div>
-                            <a class="collapse-item" style="font-weight:700" th:href="${'/category/create/'+ communityNameList.get(index.index)}">Create Category</a>
+                            <a class="collapse-item" th:href="${'/category/create/'+ communityNameList.get(index.index)}">Ad) Create Category</a>
                         </div>
                     </div>
                 </div>
@@ -153,7 +153,7 @@
         <li class="nav-item">
             <a class="nav-link" th:href="${'/category/create/mainCategory'}">
                 <i class="fas fa-fw fa-table"></i>
-                <span>Create Main Category</span></a>
+                <span>Ad) Create Main Category</span></a>
         </li>
 
         <!-- Divider -->

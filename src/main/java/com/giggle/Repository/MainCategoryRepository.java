@@ -25,4 +25,8 @@ public class MainCategoryRepository {
                 .getResultList();
         return mainCategories;
     }
+
+    public MainCategory findById(Long id){
+        return em.find(MainCategory.class, id);
+    }
 }

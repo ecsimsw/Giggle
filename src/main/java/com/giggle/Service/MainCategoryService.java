@@ -1,9 +1,11 @@
 package com.giggle.Service;
 
+import com.giggle.Domain.Entity.Category;
 import com.giggle.Domain.Entity.MainCategory;
 import com.giggle.Domain.Form.CreateMainCategoryForm;
 import com.giggle.Repository.MainCategoryRepository;
 import lombok.RequiredArgsConstructor;
+import org.jboss.jandex.Main;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,5 +30,9 @@ public class MainCategoryService {
 
     public List<MainCategory> getAllMainCategory(){
         return mainCategoryRepository.findAllMainCategory();
+    }
+
+    public MainCategory findById(Long id){
+        return mainCategoryRepository.findById(id);
     }
 }
