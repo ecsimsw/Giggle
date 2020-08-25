@@ -29,4 +29,9 @@ public class MainCategoryRepository {
     public MainCategory findById(Long id){
         return em.find(MainCategory.class, id);
     }
+
+    public void updatePostCnt(MainCategory mainCategory, int postCnt){
+        mainCategory.setPostCnt(postCnt);
+        em.merge(mainCategory);
+    }
 }

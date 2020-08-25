@@ -40,6 +40,9 @@
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+
+
+            <span th:text="${'Ad) total postCnt : ' + totalPostCnt}">total post : 1000</span>
           </div>
 
           <!-- Content Row -->
@@ -134,9 +137,9 @@
                       <tr th:each="post, numStatus : ${newPostList}">
                         <td th:text ="${'#'+post.id}">1</td>
                         <td>
-                          <a th:href="'/post/board'+${post.communityType} +'/'+${post.category}+'?page=1'" th:text="${post.title}">Title</a>
+                          <a th:href="${'/post/read?post='+post.id}" th:text="${post.title}">Title</a>
                         </td>
-                        <td th:text="${post.category}">study</td>
+                        <td th:text="${post.category.name}">study</td>
                         <td th:text="${post.writer}">tester</td>
                       </tr>
                       </tbody>

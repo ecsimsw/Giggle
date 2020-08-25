@@ -1,5 +1,6 @@
 package com.giggle.Service;
 
+import com.giggle.Domain.Entity.Category;
 import com.giggle.Domain.Entity.MainCategory;
 import com.giggle.Domain.Entity.MiddleCategory;
 import com.giggle.Domain.Form.CreateMainCategoryForm;
@@ -25,9 +26,13 @@ public class MiddleCategoryService {
         MiddleCategory middleCategory = new MiddleCategory();
         middleCategory.setMainCategory(mainCategoryRepository.findById(createMiddleCategoryForm.getMainCategoryId()));
         middleCategory.setName(createMiddleCategoryForm.getName());
-        middleCategory.setPostCnt(0);
 
         middleCategoryRepository.save(middleCategory);
     }
+
+    public void updatePostCnt(MiddleCategory middleCategory, int postCnt){
+        middleCategoryRepository.updatePostCnt(middleCategory, postCnt);
+    }
+
 
 }

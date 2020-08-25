@@ -35,4 +35,8 @@ public class MainCategoryService {
     public MainCategory findById(Long id){
         return mainCategoryRepository.findById(id);
     }
+
+    public void updatePostCnt(MainCategory mainCategory, int postCnt){
+        mainCategoryRepository.updatePostCnt(mainCategory, postCnt);
+    }
 }

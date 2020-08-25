@@ -1,5 +1,6 @@
 package com.giggle.Repository;
 
+import com.giggle.Domain.Entity.Category;
 import com.giggle.Domain.Entity.Post;
 import com.giggle.Domain.Entity.CommunityType;
 import lombok.RequiredArgsConstructor;
@@ -18,27 +19,14 @@ public class PostRepository {
         em.persist(post);
     }
 
-    public List<Post> findAllPosts(){
-        List<Post> selectedPosts = em.createQuery("select p from Post p", Post.class)
-                .getResultList();
-        return selectedPosts;
-    }
-
-    public List<Post> postInCommunityCategory(CommunityType communityType, String categoryName){
-        List<Post> selectedPosts = em.createQuery("select p from Post p where p.communityType =:communityType AND p.category = :categoryName",Post.class)
-                .setParameter("communityType", communityType)
-                .setParameter("categoryName",categoryName)
-                .getResultList();
-        return selectedPosts;
-    }
-
-    public List<Post> postInCommunityCategory(CommunityType communityType, String categoryName, int from, int maxCnt){
-        List<Post> selectedPosts = em.createQuery("select p from Post p where p.communityType =:communityType AND p.category = :categoryName",Post.class)
-                .setParameter("communityType", communityType)
-                .setParameter("categoryName",categoryName)
+    public List<Post> postInCommunityCategory(Category category, int from, int maxCnt){
+        List<Post> selectedPosts = em.createQuery("select p from Post p where p.category =:category",Post.class)
+                .setParameter("category", category)
                 .setFirstResult(from)
                 .setMaxResults(maxCnt)
                 .getResultList();
+
+        Collections.reverse(selectedPosts);
         return selectedPosts;
     }
 

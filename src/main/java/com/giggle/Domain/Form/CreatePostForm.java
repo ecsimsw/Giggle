@@ -5,9 +5,7 @@ import lombok.Setter;
 
 @Getter @Setter
 public class CreatePostForm {
-
-    private String community;
-    private String category;
+    private String categoryId;
     private String title;
     private String content;
 }

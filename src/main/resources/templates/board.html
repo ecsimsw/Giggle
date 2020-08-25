@@ -130,7 +130,7 @@
                 $('#page-content').text('Page ' + page);
 
                 if(page!=null){
-                    location.href="/post/board/"+[[${communityName}]]+"/"+[[${categoryName}]]+"?page="+page;
+                    location.href="/post/board?category="+[[${category.id}]]+"&page="+page;
                  }
             }
         });
@@ -160,11 +160,5 @@
     border: 1px solid #ddd;
 }
 </style>
-
 </body>
-
-
-
-
-
 </html>

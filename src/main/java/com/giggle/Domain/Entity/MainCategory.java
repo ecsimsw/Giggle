@@ -20,4 +20,6 @@ public class MainCategory {
 
     @OneToMany(mappedBy = "mainCategory", cascade = CascadeType.ALL)
     private List<MiddleCategory> middleCategoryList = new ArrayList<>();
+
+    private int postCnt;
 }

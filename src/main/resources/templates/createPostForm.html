@@ -20,29 +20,25 @@
     <br>
     <p>createPost</p>
     <br>
-    <form class="form" th:action="${'/post/create/'+communityName+'/'+categoryName}" method="post">
-
-        <br>
-        <input type="text" name="community" hidden th:value="${communityName}">
-
+    <form class="form" th:action="${'/post/create'}" method="post">
         <div class="form-group">
             <label for="category">category</label>
 
-            <select th:if="${categoryName !=null}" class="form-control" id="category" name="category">
-                <option th:value="${categoryName}" th:text="${categoryName}" selected>categoryNow</option>
+            <select th:if="${category !=null}" class="form-control" id="category" name="categoryId">
+                <option th:value="${category.id}" th:text="${category.name}" selected>categoryNow</option>
 
-                <option th:each="categoryName : ${categoryNameList}"
-                        th:value="${categoryName}"
-                        th:if="${categoryName}!=${categoryName}"
-                        th:text="${categoryName}">categoryName</option>
+                <option th:each="tempCategory : ${middleCategory.categoryList}"
+                        th:value="${tempCategory.id}"
+                        th:if="${tempCategory.name}!=${category.name}"
+                        th:text="${tempCategory.name}">categoryName</option>
             </select>
 
-            <select th:if="${categoryName == null}" class="form-control" id="category" name="category">
+            <select th:if="${category == null}" class="form-control" name="category">
                 <option valie="" selected disabled hidden>Choose category</option>
 
-                <option th:each="categoryName : ${categoryNameList}"
-                        th:value="${categoryName}"
-                        th:text="${categoryName}">categoryName</option>
+                <option th:each="tempCategory : ${middleCategory.categoryList}"
+                        th:value="${tempCategory.id}"
+                        th:text="${tempCategory.name}">categoryName</option>
             </select>
         </div>
         <br>
