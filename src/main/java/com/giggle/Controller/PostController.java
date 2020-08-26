@@ -81,7 +81,14 @@ public class PostController {
 
         model.addAttribute("postList", postList);
 
-        return "board";
+        return "postRead";
+    }
+
+    @GetMapping("/read")
+    public String readPost(){
+
+
+        return "test";
     }
 
 }
