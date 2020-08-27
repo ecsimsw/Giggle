@@ -11,6 +11,12 @@
             margin-top: 3%;
         }
     </style>
+
+
+    <link href="C:\Users\user\IdeaProjects\Giggle\src\main\resources\static\SBadmin2\sb-admin-2.min.css" rel="stylesheet">
+    <script src="C:\Users\user\IdeaProjects\Giggle\src\main\resources\static\script\jquery-3.5.1.js"></script>
+    <script src="C:\Users\user\IdeaProjects\Giggle\src\main\resources\static\script\jquery.twbsPagination.min.js"></script>
+
 </head>
 
 <body class="text-center">
@@ -44,10 +50,18 @@
         <br>
         <input type="text" name="title" class="form-control" placeholder="title" required="" autofocus="">
         <br>
-        <input type="text" name="content" class="form-control" placeholder="content.." required="">
+        <textarea name="content" class="form-control" onkeydown="resize(this)" onkeyup="resize(this)" placeholder="content.." rows="15" required="">
+
+        </textarea>
         <br>
         <button class="btn btn-primary btn-lg btn-block" type="submit">Create</button>
     </form>
 </div>
 </body>
+<script>
+function resize(obj) {
+  obj.style.height = "10px";
+  obj.style.height = (360+obj.scrollHeight)+"px";
+}
+</script>
 </html>
