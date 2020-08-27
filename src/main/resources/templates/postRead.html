@@ -10,8 +10,6 @@
         <!--    <script src="C:\Users\user\IdeaProjects\Giggle\src\main\resources\static\script\jquery-3.5.1.js"></script>-->
         <!--    <script src="C:\Users\user\IdeaProjects\Giggle\src\main\resources\static\script\jquery.twbsPagination.min.js"></script>-->
 
-
-
     </style>
 </head>
 
@@ -56,16 +54,19 @@
                                     <li class="abuse" style="
                                         margin-right: 15px;
                                         float: left;">신고</li>
-                                </ul><br><time style="font-size:8px">5분 전</time></div>
+                                </ul>
+                                <br>
+                                <time style="font-size:8px" th:text="${#temporals.format(post.dateTime,'yyyy-MM-dd HH:mm:ss')}">2020.08.27</time>
+                            </div>
                             <div>
                                 <form>
                                     <div class="">
                                         <a class="" style="font-size:12px; padding-top:2px;">
                                             <br>
                                             <div class="article" style="padding-left: 15px; margin-right:15px; color:black;">
-                                                <div style="font-weight: 800;font-size:20px;">스프링 질문이요</div>
+                                                <div style="font-weight: 500; font-family:initial; font-size:20px;" th:text="${post.title}">스프링 질문이요</div>
                                                 <br>
-                                                <div class="post_content" style="line-height: 3;">
+                                                <div class="post_content" th:text="${post.content}" style="line-height: 3; font-size:15px;">
                                                     흔들리는 꽃들 속에서 네 샴푸향이 느껴진거야 한번 연락해볼까
                                                     모두 그에게 말해 또 왔네<br>
                                                     죽지 않고 왔다 이렇게<br>
@@ -113,58 +114,5 @@
 <!-- BottomScript-->
 <div th:replace="/fragment/bottomScript :: bottomScript"> </div>
 
-<script th:inline="javascript">
-/*<![CDATA[*/
-        $('#pagination-demo').twbsPagination({
-            totalPages: /*[[${(totalPost-1)/postForPage+1}]]*/ 2,
-            visiblePages: /*[[${visiblePages}]]*/ 10,
-            initiateStartPageClick : false,
-            prev:null,
-            next:null,
-            startPage : [[${pageNow}]],
-            onPageClick: function (event, page) {
-                $('#page-content').text('Page ' + page);
-
-                if(page!=null){
-                    location.href="/post/board?category="+[[${category.id}]]+"&page="+page;
-                 }
-            }
-        });
-/*]]>*/
-
-    </script>
-
-<script>
-    $(document).ready(function() {
-      $('.wrap').on( 'keyup', 'textarea', function (e){
-        $(this).css('height', 'auto' );
-        $(this).height( this.scrollHeight );
-      });
-      $('.wrap').find( 'textarea' ).keyup();
-    });
-  </script>
-
-
-<style>
-    #page-item{
-        text-align: center;
-        width: 50px;
-    }
-
-    #pagination-demo{
-        place-content:center;
-    }
-
-    .pagination>li>a, .pagination>li>span {
-    position: relative;
-    padding: 6px 12px;
-    margin-left: -1px;
-    line-height: 1.42857143;
-    color: #337ab7;
-    text-decoration: none;
-    background-color: #fff;
-    border: 1px solid #ddd;
-}
-</style>
 </body>
 </html>

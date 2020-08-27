@@ -40,4 +40,8 @@ public class PostRepository {
 
         return selectedPosts;
     }
+
+    public Post findById(long id){
+        return em.find(Post.class, id);
+    }
  }

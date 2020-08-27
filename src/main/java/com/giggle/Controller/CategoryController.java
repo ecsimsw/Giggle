@@ -62,5 +62,7 @@ public class CategoryController {
         categoryService.createCategory(createCategoryForm);
         return "redirect:/main";
     }
+//
+//    @GetMapping("/delete")
 
 }

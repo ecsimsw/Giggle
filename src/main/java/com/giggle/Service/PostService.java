@@ -28,7 +28,7 @@ public class PostService {
         newPost.setCategory(category);
         newPost.setTitle(createPostForm.getTitle());
         newPost.setWriter("tester");
-        newPost.setContent(createPostForm.getContent());
+        newPost.setContent(createPostForm.getContent().replace("\r\n", "<br>"));
         newPost.setViewCnt(0);
         categoryService.updatePostCnt(category, category.getPostCnt()+1);
 
@@ -50,5 +50,9 @@ public class PostService {
         else{
             return postRepository.getNewPost(totalPostCnt-newPostCnt, newPostCnt);
         }
+    }
+
+    public Post readPost(Long id){
+        return postRepository.findById(id);
     }
 }

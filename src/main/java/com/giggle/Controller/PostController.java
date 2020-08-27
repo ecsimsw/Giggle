@@ -55,9 +55,10 @@ public class PostController {
         List<MainCategory> mainCategoryList = mainCategoryService.getAllMainCategory();
         model.addAttribute("mainCategoryList", mainCategoryList);
 
-        Category category = categoryService.findById(categoryId);
 
         // categories
+
+        Category category = categoryService.findById(categoryId);
 
         MiddleCategory middleCategory = category.getMiddleCategory();
         model.addAttribute("middleCategory", middleCategory);
@@ -85,10 +86,19 @@ public class PostController {
     }
 
     @GetMapping("/read")
-    public String readPost(){
+    public String readPost(@RequestParam Long post, Model model){
 
+        // side bar
 
-        return "test";
+        List<MainCategory> mainCategoryList = mainCategoryService.getAllMainCategory();
+        model.addAttribute("mainCategoryList", mainCategoryList);
+
+        // post
+
+        Post postToRead = postService.readPost(post);
+        model.addAttribute("post", postToRead);
+
+        return "postRead";
     }
 
 }
