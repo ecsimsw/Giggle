@@ -2,13 +2,21 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="ko">
 <head>
     <title>Giggle</title>
-    <link href="/static/bootstrap/css/bootstrap.css" rel="stylesheet">
+
+    <link href="/static/SBadmin2/sb-admin-2.min.css" rel="stylesheet">
+
     <style>
-        .container, .container-sm, .container-md, .container-lg, .container-xl {
-            max-width: 500px;
-        }
+
         .container{
             margin-top: 3%;
+        }
+
+        .text-center {
+        /* text-align: center!important; */
+        }
+
+        .font-black{
+        color:black;
         }
     </style>
 
@@ -22,11 +30,11 @@
 <body class="text-center">
 <div class="container">
     <br>
-    <h3>Giggle</h3>
+    <h3 class="font-black">Giggle</h3>
     <br>
-    <p>createPost</p>
+    <p class="font-black">createPost</p>
     <br>
-    <form class="form" th:action="${'/post/create'}" method="post">
+    <form style="text-align:initial;" th:action="${'/post/create'}" method="post">
         <div class="form-group">
             <label for="category">category</label>
 
@@ -47,21 +55,15 @@
                         th:text="${tempCategory.name}">categoryName</option>
             </select>
         </div>
-        <br>
-        <input type="text" name="title" class="form-control" placeholder="title" required="" autofocus="">
-        <br>
-        <textarea name="content" class="form-control" onkeydown="resize(this)" onkeyup="resize(this)" placeholder="content.." rows="15" required="">
 
-        </textarea>
+        <label for="title">title</label>
+        <input type="text" id="title" name="title" class="form-control" placeholder="글 제목" style="margin-bottom : 16px;" required="" autofocus="">
+
+        <label for="content">content</label>
+        <textarea id="content" name="content" class="form-control" placeholder="content.." rows="15" required=""></textarea>
         <br>
         <button class="btn btn-primary btn-lg btn-block" type="submit">Create</button>
     </form>
 </div>
 </body>
-<script>
-function resize(obj) {
-  obj.style.height = "10px";
-  obj.style.height = (360+obj.scrollHeight)+"px";
-}
-</script>
 </html>

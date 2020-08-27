@@ -1,0 +1,15 @@
+
+.container, .container-sm, .container-md, .container-lg, .container-xl {
+    max-width: 500px;
+}
+.container{
+    margin-top: 3%;
+}
+
+ .font-black{
+color:black;
+}
+
+ .text-left{
+ text-align:initial;
+}
