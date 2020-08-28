@@ -34,5 +34,10 @@ public class MiddleCategoryService {
         middleCategoryRepository.updatePostCnt(middleCategory, postCnt);
     }
 
+    @Transactional
+    public void deleteMiddleCategory(long id){
+        middleCategoryRepository.deleteById(id);
+    }
+
 
 }

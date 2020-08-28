@@ -15,21 +15,25 @@
     <br>
     <p class="font-black">Delete Middle Category</p>
     <br>
-    <form class="form text-left" th:action="${'/category/delete/category'}"method="post">
-        <div th:each="mainCategory : ${mainCategoryList}">
-            <div th:text="${mainCategory.name}">mainCategory.name</div>
-            <div th:each="middleCategory : ${mainCategory.middleCategoryList}">
-                <div th:text="${middleCategory.name}">middleCategory.name</div>
-                <div th:each = " category : ${middleCategory.categoryList}">
-                    <select class="form-control" name="categoryId">
-                        <option
-                                th:value="${category.id}"
-                                th:text="${category.name}">middleCategoryName
-                        </option>
-                    </select>
+    <form class="form text-left" th:action="${'/category/delete'}"method="post">
+        <select class="form-control" name="selectedCategory">
+            <div th:each="mainCategory, index_main : ${mainCategoryList}">
+                <option style="font-size:18px; font-weight:500; color:black;" th:value="${'main/'+mainCategory.id}" th:text="${mainCategory.name}">mainCategory</option>
+
+                <div th:each="middleCategory,index_mid : ${mainCategory.middleCategoryList}">
+                    <option style="font-size:16px; color:black;" th:value="${'mid/'+middleCategory.id}" th:text="${middleCategory.name}">middleCategory</option>
+
+                        <div th:each="category, index_cat : ${middleCategory.categoryList}">
+                            <option style="font-size:14px" th:value="${'cat/'+category.id}" th:text="${category.name}">category</option>
+                        </div>
                 </div>
+
+                <option th:if="${index_main.count!=index_main.size}" disabled> </option>
             </div>
-        </div>
+        </select>
+
+        <br>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">delete</button>
     </form>
 </div>
 </body>

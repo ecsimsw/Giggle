@@ -34,4 +34,8 @@ public class MainCategoryRepository {
         mainCategory.setPostCnt(postCnt);
         em.merge(mainCategory);
     }
+
+    public void deleteById(long id){
+        em.remove(findById(id));
+    }
 }

@@ -39,4 +39,9 @@ public class MainCategoryService {
     public void updatePostCnt(MainCategory mainCategory, int postCnt){
         mainCategoryRepository.updatePostCnt(mainCategory, postCnt);
     }
+
+    @Transactional
+    public void deleteMainCategory(long id){
+        mainCategoryRepository.deleteById(id);
+    }
 }

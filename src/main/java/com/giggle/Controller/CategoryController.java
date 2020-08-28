@@ -64,15 +64,40 @@ public class CategoryController {
         return "redirect:/main";
     }
 
-    @GetMapping("/delete/{categoryType}")
-    public String deleteMainCategory(@PathVariable String categoryType, Model model){
-        model.addAttribute("mainCategoryList",mainCategoryService.getAllMainCategory());
-        if(categoryType.equals("mainCategory"))
-            return "deleteMainCategory";
-        else if(categoryType.equals("middleCategory"))
-            return "deleteMiddleCategory";
-        else if(categoryType.equals("category"))
-            return "deleteCategory";
-        else return "";
+    @GetMapping("/delete")
+    public String deleteMainCategory(Model model){
+
+        // sideBar
+        List<MainCategory> mainCategoryList = mainCategoryService.getAllMainCategory();
+        model.addAttribute("mainCategoryList", mainCategoryList);
+
+        return "deleteCategory";
+    }
+
+    @PostMapping("/delete")
+    public String deleteMainCategory(@RequestParam String selectedCategory) throws Exception {
+        String type;
+        long id;
+        try {
+            String[] typeId = selectedCategory.split("/");
+            type = typeId[0];
+            id = Long.parseLong(typeId[1]);
+        } catch (Exception e){
+            throw new RuntimeException("Error in selectedCategory");
+        }
+        if(type.equals("main")){
+            mainCategoryService.deleteMainCategory(id);
+        }
+        else if(type.equals("mid")){
+           middleCategoryService.deleteMiddleCategory(id);
+        }
+        else if(type.equals("cat")){
+           categoryService.deleteCategory(id);
+        }
+        else{
+           throw new RuntimeException("Error in selectedCategory");
+        }
+
+        return "redirect:/main";
     }
 }

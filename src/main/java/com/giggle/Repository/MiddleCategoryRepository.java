@@ -32,4 +32,8 @@ public class MiddleCategoryRepository {
         middleCategory.setPostCnt(postCnt);
         em.merge(middleCategory);
     }
+
+    public void deleteById(long id){
+        em.remove(findById(id));
+    }
 }

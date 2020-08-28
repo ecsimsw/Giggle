@@ -1,7 +1,6 @@
 package com.giggle.Service;
 
 import com.giggle.Domain.Entity.Category;
-import com.giggle.Domain.Entity.CommunityType;
 import com.giggle.Domain.Entity.Post;
 import com.giggle.Domain.Form.CreateCategoryForm;
 import com.giggle.Repository.CategoryRepository;
@@ -11,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -38,7 +36,7 @@ public class CategoryService {
     }
 
     public Category findById(Long id){
-        return categoryRepository.findCategoryById(id);
+        return categoryRepository.findById(id);
     }
 
     public void updatePostCnt(Category category, int postCnt){
@@ -61,5 +59,10 @@ public class CategoryService {
         }
 
         return postRepository.postInCommunityCategory(category, from, max);
+    }
+
+    @Transactional
+    public void deleteCategory(long id){
+        categoryRepository.deleteById(id);
     }
 }

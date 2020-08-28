@@ -35,7 +35,7 @@ public class CategoryRepository {
                 .get(0);
         return selectedCategory;
     }
-    public Category findCategoryById(Long id){
+    public Category findById(Long id){
         return em.find(Category.class,id);
     }
 
@@ -43,5 +43,9 @@ public class CategoryRepository {
 //        Category c = getCategoryById(category.getId());  다시 찾을 필요 없음.
         category.setPostCnt(postCnt);
         em.merge(category);
+    }
+
+    public void deleteById(long id){
+        em.remove(findById(id));
     }
 }
