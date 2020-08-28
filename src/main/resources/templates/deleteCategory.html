@@ -21,10 +21,10 @@
                 <option style="font-size:18px; font-weight:500; color:black;" th:value="${'main/'+mainCategory.id}" th:text="${mainCategory.name}">mainCategory</option>
 
                 <div th:each="middleCategory,index_mid : ${mainCategory.middleCategoryList}">
-                    <option style="font-size:16px; color:black;" th:value="${'mid/'+middleCategory.id}" th:text="${middleCategory.name}">middleCategory</option>
+                    <option style="font-size:16px; color:black;" th:value="${'mid/'+middleCategory.id}" th:utext="${'&amp;nbsp;&amp;nbsp;&amp;nbsp;'+middleCategory.name}">middleCategory</option>
 
                         <div th:each="category, index_cat : ${middleCategory.categoryList}">
-                            <option style="font-size:14px" th:value="${'cat/'+category.id}" th:text="${category.name}">category</option>
+                            <option style="font-size:14px; color: darkslategray;" th:value="${'cat/'+category.id}" th:utext="${'&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;'+category.name}">category</option>
                         </div>
                 </div>
 
