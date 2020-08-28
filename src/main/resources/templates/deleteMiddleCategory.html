@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <title>Giggle</title>
+    <!--    <link href="/static/bootstrap/css/bootstrap.css" rel="stylesheet">-->
+    <link href="/static/SBadmin2/sb-admin-2.min.css" rel="stylesheet">
+    <link href="/static/style/formStyle.css" rel="stylesheet">
+
+</head>
+
+<body class="text-center">
+<div class="container">
+    <br>
+    <h3 class="font-black">Giggle</h3>
+    <br>
+    <p class="font-black">Delete Middle Category</p>
+    <br>
+    <form class="form text-left" th:action="${'/category/delete/middleCategory'}"method="post">
+        <select class="form-control" name="middleCategoryId">
+            <div th:each="mainCategory, index : ${mainCategoryList}">
+                <option style="font-weight:500; color:black;" th:text="${mainCategory.name}" disabled></option>
+                <div th:each="middleCategory : ${mainCategory.middleCategoryList}">
+                    <option th:value="${middleCategory.id}" th:text="${middleCategory.name}">middleCategoryName></option>
+                </div>
+
+                <option th:if="${index.count!=index.size}" disabled> </option>
+            </div>
+        </select>
+    </form>
+</div>
+</body>
+</html>
