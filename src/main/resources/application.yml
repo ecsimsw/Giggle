@@ -1,13 +1,13 @@
 spring:
   datasource:
-    url: jdbc:h2:tcp://localhost/~/test;MVCC=TRUE
+    url: jdbc:h2:tcp://localhost/~/Giggle;MVCC=TRUE
     username: sa
     password:
     driver-class-name: org.h2.Driver
 
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: create
     properties:
       hibernate:
         format_sql: true
