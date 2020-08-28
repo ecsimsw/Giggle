@@ -3,6 +3,7 @@ package com.giggle.Controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.giggle.Domain.Entity.CommunityType;
+import com.giggle.Domain.Entity.MainCategory;
 import com.giggle.Domain.Form.CreateCategoryForm;
 import com.giggle.Domain.Form.CreateMainCategoryForm;
 import com.giggle.Domain.Form.CreateMiddleCategoryForm;
@@ -62,7 +63,16 @@ public class CategoryController {
         categoryService.createCategory(createCategoryForm);
         return "redirect:/main";
     }
-//
-//    @GetMapping("/delete")
 
+    @GetMapping("/delete/{categoryType}")
+    public String deleteMainCategory(@PathVariable String categoryType, Model model){
+        model.addAttribute("mainCategoryList",mainCategoryService.getAllMainCategory());
+        if(categoryType.equals("mainCategory"))
+            return "deleteMainCategory";
+        else if(categoryType.equals("middleCategory"))
+            return "deleteMiddleCategory";
+        else if(categoryType.equals("category"))
+            return "deleteCategory";
+        else return "";
+    }
 }

@@ -13,18 +13,23 @@
     <br>
     <h3 class="font-black">Giggle</h3>
     <br>
-    <p class="font-black">delete Category</p>
+    <p class="font-black">Delete Middle Category</p>
     <br>
     <form class="form text-left" th:action="${'/category/delete/category'}"method="post">
-        <label for="Main Category">Main Category</label>
-        <select id="Main Category" th:if="${category !=null}" class="form-control" name="mainCategoryId">
-            <option th:value="null" th:text="${mainCategoryList}" selected>null</option>
-
-            <option th:each="tempCategory : ${middleCategory.categoryList}"
-                    th:value="${tempCategory.id}"
-                    th:if="${tempCategory.name}!=${category.name}"
-                    th:text="${tempCategory.name}">categoryName</option>
-        </select>
+        <div th:each="mainCategory : ${mainCategoryList}">
+            <div th:text="${mainCategory.name}">mainCategory.name</div>
+            <div th:each="middleCategory : ${mainCategory.middleCategoryList}">
+                <div th:text="${middleCategory.name}">middleCategory.name</div>
+                <div th:each = " category : ${middleCategory.categoryList}">
+                    <select class="form-control" name="categoryId">
+                        <option
+                                th:value="${category.id}"
+                                th:text="${category.name}">middleCategoryName
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </div>
     </form>
 </div>
 </body>

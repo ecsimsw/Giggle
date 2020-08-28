@@ -79,7 +79,17 @@
                 <span>Ad) Create Main Category</span>
             </a>
 
-            <a class="nav-link" th:href="${'/category/create/middleCategory?mainCategory='+mainCategory.id}">
+            <a class="nav-link" th:href="${'/category/delete/mainCategory'}">
+                <i class="fas fa-fw fa-cog"></i>
+                <span>Ad) delete Main Category</span>
+            </a>
+
+            <a class="nav-link" th:href="${'/category/delete/middleCategory'}">
+                <i class="fas fa-fw fa-cog"></i>
+                <span>Ad) delete Middle Category</span>
+            </a>
+
+            <a class="nav-link" th:href="${'/category/delete/category'}">
                 <i class="fas fa-fw fa-cog"></i>
                 <span>Ad) delete Category</span>
             </a>
