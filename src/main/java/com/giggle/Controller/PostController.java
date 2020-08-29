@@ -112,4 +112,15 @@ public class PostController {
         postService.editPost(postId, postForm);
         return "redirect:/post/read?post="+postId;
     }
+
+    @GetMapping("/delete")
+    public String deletePost(@RequestParam("post") Long postId){
+
+        Post post = postService.findById(postId);
+        long categoryId = post.getCategory().getId();
+        int page = 1;
+
+        postService.deletePost(postId);
+        return "redirect:/post/board?category="+categoryId+"&page="+page;
+    }
 }

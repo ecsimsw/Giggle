@@ -45,7 +45,7 @@ public class PostRepository {
         return em.find(Post.class, id);
     }
 
-    public void updatePost(Post post){
-        em.merge(post);
-    }
+    public void updatePost(Post post){ em.merge(post); }
+
+    public void remove(Post post){ em.remove(post); }
  }

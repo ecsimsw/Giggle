@@ -101,5 +101,9 @@ public class CategoryController {
         return "redirect:/main";
     }
 
-
+    @GetMapping("/refreshPostCnt")
+    public String refreshPostCnt(){
+        categoryService.updateWholeCategoryPostCnt();
+        return "redirect:/main";
+    }
 }

@@ -30,7 +30,7 @@ public class MiddleCategoryRepository {
 
     public void updatePostCnt(MiddleCategory middleCategory, int postCnt){
         middleCategory.setPostCnt(postCnt);
-        em.merge(middleCategory);
+//        em.merge(middleCategory);
     }
 
     public void deleteById(long id){

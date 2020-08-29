@@ -42,7 +42,7 @@ public class CategoryRepository {
     public void updatePostCnt(Category category, int postCnt){
 //        Category c = getCategoryById(category.getId());  다시 찾을 필요 없음.
         category.setPostCnt(postCnt);
-        em.merge(category);
+//        em.merge(category);   필요 없음. 영속성 컨텍스트 / set으로 처리
     }
 
     public void deleteById(long id){

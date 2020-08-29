@@ -82,9 +82,29 @@
                                     <li class="abuse" style="
                                         margin-right: 15px;
                                         float: left;">
-                                        <a class="myButton" th:href="'/post/delete?post='+${post.id}">
+
+                                        <a class="myButton" href="#" data-toggle="modal" data-target="#deletePostModal" >
                                             <span>삭제</span>
                                         </a>
+                                        <div>
+                                            <div class="modal fade" id="deletePostModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Do you really want to delete this post?</h5>
+                                                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">×</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">Select "Delete" below if you are ready to delete this.</div>
+                                                        <div class="modal-footer">
+                                                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                                                            <a class="btn btn-primary" th:href="'/post/delete?post='+${post.id}">Delete</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </li>
                                 </ul>
                                 <br>

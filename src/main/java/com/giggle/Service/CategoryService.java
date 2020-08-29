@@ -1,9 +1,12 @@
 package com.giggle.Service;
 
 import com.giggle.Domain.Entity.Category;
+import com.giggle.Domain.Entity.MainCategory;
+import com.giggle.Domain.Entity.MiddleCategory;
 import com.giggle.Domain.Entity.Post;
 import com.giggle.Domain.Form.CreateCategoryForm;
 import com.giggle.Repository.CategoryRepository;
+import com.giggle.Repository.MainCategoryRepository;
 import com.giggle.Repository.MiddleCategoryRepository;
 import com.giggle.Repository.PostRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +22,7 @@ public class CategoryService {
 
     private final CategoryRepository categoryRepository;
     private final MiddleCategoryRepository middleCategoryRepository;
+    private final MainCategoryRepository mainCategoryRepository;
     private final PostRepository postRepository;
 
     @Transactional
@@ -40,7 +44,37 @@ public class CategoryService {
     }
 
     public void updatePostCnt(Category category, int postCnt){
+        int dif = postCnt - category.getPostCnt();
         categoryRepository.updatePostCnt(category, postCnt);
+
+        MiddleCategory middleCategory = category.getMiddleCategory();
+        middleCategoryRepository.updatePostCnt(middleCategory, middleCategory.getPostCnt()+dif);
+
+        MainCategory mainCategory = middleCategory.getMainCategory();
+        mainCategoryRepository.updatePostCnt(mainCategory, mainCategory.getPostCnt()+dif);
+    }
+
+    public void updateWholeCategoryPostCnt(){
+        List<MainCategory> allMainCategory = mainCategoryRepository.findAllMainCategory();
+
+        for(MainCategory mainCategory : allMainCategory){
+            int mainPostCnt =0;
+
+            for(MiddleCategory middleCategory : mainCategory.getMiddleCategoryList()){
+                int middlePostCnt =0;
+
+                for(Category category : middleCategory.getCategoryList()){
+                    int postCnt = category.getPosts().size();
+                    categoryRepository.updatePostCnt(category, postCnt);
+                    middlePostCnt+=postCnt;
+                }
+
+                middleCategoryRepository.updatePostCnt(middleCategory, middlePostCnt);
+                mainPostCnt+=middlePostCnt;
+            }
+
+            mainCategoryRepository.updatePostCnt(mainCategory, mainPostCnt);
+        }
     }
 
     public List<Post> getPostsInCategory(Category category, int page, int postForPage){

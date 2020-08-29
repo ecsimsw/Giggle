@@ -32,13 +32,6 @@ public class PostService {
         categoryService.updatePostCnt(category, category.getPostCnt()+1);
 
         postRepository.save(newPost);
-
-        MiddleCategory middleCategory = category.getMiddleCategory();
-        middleCategoryService.updatePostCnt(middleCategory,middleCategory.getPostCnt()+1);
-
-        MainCategory mainCategory = middleCategory.getMainCategory();
-        mainCategoryService.updatePostCnt(mainCategory, mainCategory.getPostCnt()+1);
-
         return newPost.getId();
     }
 
@@ -69,5 +62,14 @@ public class PostService {
         post.setContent(postForm.getContent());
 
         postRepository.updatePost(post);
+    }
+
+    @Transactional
+    public void deletePost(Long id){
+        Post post = findById(id);
+        Category category = post.getCategory();
+        categoryService.updatePostCnt(category, category.getPostCnt()-1);
+
+        postRepository.remove(post);
     }
 }

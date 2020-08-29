@@ -32,7 +32,7 @@ public class MainCategoryRepository {
 
     public void updatePostCnt(MainCategory mainCategory, int postCnt){
         mainCategory.setPostCnt(postCnt);
-        em.merge(mainCategory);
+//        em.merge(mainCategory);
     }
 
     public void deleteById(long id){
