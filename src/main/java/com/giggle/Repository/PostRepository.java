@@ -44,4 +44,8 @@ public class PostRepository {
     public Post findById(long id){
         return em.find(Post.class, id);
     }
+
+    public void updatePost(Post post){
+        em.merge(post);
+    }
  }

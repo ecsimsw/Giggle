@@ -10,6 +10,30 @@
         <!--    <script src="C:\Users\user\IdeaProjects\Giggle\src\main\resources\static\script\jquery-3.5.1.js"></script>-->
         <!--    <script src="C:\Users\user\IdeaProjects\Giggle\src\main\resources\static\script\jquery.twbsPagination.min.js"></script>-->
 
+        .myButton{
+            color:lightslategray;
+            text-decoration:none;
+        }
+
+        .myButton:link{
+            color:lightslategray;
+            text-decoration:none;
+        }
+
+        .myButton:visited{
+            color:lightslategray;
+            text-decoration:none;
+        }
+
+        .myButton:hover{
+            color:lightslategray;
+            text-decoration:none;
+        }
+
+        .myButton:active{
+            color:lightslategray;
+            text-decoration:none;
+        }
     </style>
 </head>
 
@@ -31,7 +55,7 @@
             <div th:replace="/fragment/topBar :: topBar"> </div>
 
             <!-- Begin Page Content -->
-            <div  style=" max-width: 1400px; padding-left: 10px; padding-right: 10px;">
+            <div  style=" max-width: 1412px; padding-left: 10px; padding-right: 10px;">
                 <!-- Content Row -->
                 <div class="row">
                     <!-- Area Chart -->
@@ -50,10 +74,18 @@
                                         font-size: 12px;">
                                     <li class="messagesend" data-modal="messageSend" data-article-id="138946575" data-is-anonym="1" style="
                                         margin-right: 15px;
-                                        float: left;">쪽지</li>
+                                        float: left;">
+                                        <a class="myButton" th:href="'/post/edit?post='+${post.id}">
+                                            <span>수정</span>
+                                        </a>
+                                    </li>
                                     <li class="abuse" style="
                                         margin-right: 15px;
-                                        float: left;">신고</li>
+                                        float: left;">
+                                        <a class="myButton" th:href="'/post/delete?post='+${post.id}">
+                                            <span>삭제</span>
+                                        </a>
+                                    </li>
                                 </ul>
                                 <br>
                                 <time style="font-size:8px" th:text="${#temporals.format(post.dateTime,'yyyy-MM-dd HH:mm:ss')}">2020.08.27</time>

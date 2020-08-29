@@ -1,9 +1,7 @@
 package com.giggle.Controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.giggle.Domain.Entity.*;
-import com.giggle.Domain.Form.CreatePostForm;
+import com.giggle.Domain.Form.PostForm;
 import com.giggle.Service.CategoryService;
 import com.giggle.Service.MainCategoryService;
 import com.giggle.Service.PostService;
@@ -12,10 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -38,10 +32,10 @@ public class PostController {
     }
 
     @PostMapping("/create")
-    public String createPost(CreatePostForm createPostForm, Model model) {
-        postService.createPost(createPostForm);
+    public String createPost(PostForm postForm, Model model) {
+        postService.createPost(postForm);
 
-        Long categoryId = Long.parseLong(createPostForm.getCategoryId());
+        Long categoryId = Long.parseLong(postForm.getCategoryId());
         return "redirect:/post/board?category="+categoryId+"&page=1";
     }
 
@@ -101,4 +95,21 @@ public class PostController {
         return "postRead";
     }
 
+    @GetMapping("/edit")
+    public String editPostForm(@RequestParam("post") Long postId, Model model){
+
+        Post post = postService.findById(postId);
+
+        model.addAttribute("post", post);
+        model.addAttribute("category", post.getCategory());
+        model.addAttribute("middleCategory", post.getCategory().getMiddleCategory());
+
+        return "editPostForm";
+    }
+
+    @PostMapping("/edit")
+    public String editPostForm(@RequestParam("post") Long postId, PostForm postForm){
+        postService.editPost(postId, postForm);
+        return "redirect:/post/read?post="+postId;
+    }
 }

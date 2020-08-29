@@ -1,8 +1,7 @@
 package com.giggle.Service;
 
 import com.giggle.Domain.Entity.*;
-import com.giggle.Domain.Form.CreatePostForm;
-import com.giggle.Repository.CategoryRepository;
+import com.giggle.Domain.Form.PostForm;
 import com.giggle.Repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,15 +19,15 @@ public class PostService {
     private final MainCategoryService mainCategoryService;
 
     @Transactional
-    public long createPost(CreatePostForm createPostForm){
-        long categoryId = Long.parseLong(createPostForm.getCategoryId());
+    public long createPost(PostForm postForm){
+        long categoryId = Long.parseLong(postForm.getCategoryId());
         Category category = categoryService.findById(categoryId);
 
         Post newPost = new Post();
         newPost.setCategory(category);
-        newPost.setTitle(createPostForm.getTitle());
+        newPost.setTitle(postForm.getTitle());
         newPost.setWriter("tester");
-        newPost.setContent(createPostForm.getContent().replace("\r\n", "<br>"));
+        newPost.setContent(postForm.getContent().replace("\r\n", "<br>"));
         newPost.setViewCnt(0);
         categoryService.updatePostCnt(category, category.getPostCnt()+1);
 
@@ -54,5 +53,21 @@ public class PostService {
 
     public Post readPost(Long id){
         return postRepository.findById(id);
+    }
+
+    public Post findById(Long id){return postRepository.findById(id);}
+
+    @Transactional
+    public void editPost(Long id, PostForm postForm){
+        Post post = findById(id);
+
+        long categoryId = Long.parseLong(postForm.getCategoryId());
+        Category category = categoryService.findById(categoryId);
+
+        post.setCategory(category);
+        post.setTitle(postForm.getTitle());
+        post.setContent(postForm.getContent());
+
+        postRepository.updatePost(post);
     }
 }
