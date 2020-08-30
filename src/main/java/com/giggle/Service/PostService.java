@@ -59,7 +59,7 @@ public class PostService {
 
         post.setCategory(category);
         post.setTitle(postForm.getTitle());
-        post.setContent(postForm.getContent());
+        post.setContent(postForm.getContent().replace("\r\n", "<br>"));
 
         postRepository.updatePost(post);
     }

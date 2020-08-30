@@ -54,53 +54,36 @@
             <!-- topBar :: loginId -->
             <div th:replace="/fragment/topBar :: topBar"> </div>
 
-            <!-- Begin Page Content -->
-            <div  style=" max-width: 1412px; padding-left: 10px; padding-right: 10px;">
-                <!-- Content Row -->
+            <!-- article_content -->
+            <div class="article_content" style=" max-width: 1412px; padding-left: 10px; padding-right: 10px;">
                 <div class="row">
-                    <!-- Area Chart -->
                     <div class="col-lg-12">
                         <div class="card shadow mb-3">
-                            <div class="card-header align-items-center " style="
-                                padding-top: 14px;
-                                padding-bottom: 4px;">
-                                <img src="https://cf-fpi.everytime.kr/0.png" class="picture large" style="margin-right: 15px;width: 40px;float: left;height: 40px;"><span style="font-size:14px;padding-top:2px;">익명</span>
-
-                                <ul class="status" style="
-                                        list-style: none;
-                                        float: right;
-                                        padding-top: 10px;
-                                        margin-bottom: 0px;
-                                        font-size: 12px;">
-                                    <li class="messagesend" data-modal="messageSend" data-article-id="138946575" data-is-anonym="1" style="
-                                        margin-right: 15px;
-                                        float: left;">
-                                        <a class="myButton" th:href="'/post/edit?post='+${post.id}">
-                                            <span>수정</span>
-                                        </a>
+                            <div class="card-header align-items-center " style="padding-top: 14px;padding-bottom: 4px;">
+                                <img src="https://cf-fpi.everytime.kr/0.png" class="picture large" style="margin-right: 15px; width: 40px; float: left; height: 40px;">
+                                <span style="font-size:14px;padding-top:2px;">익명</span>
+                                <ul class="status" style="list-style: none;float: right; padding-top: 10px; margin-bottom: 0px; font-size: 10px;">
+                                    <li style="margin-right: 15px; float: left;">
+                                        <a class="myButton" th:href="'/post/edit?post='+${post.id}"><span>수정</span></a>
                                     </li>
-                                    <li class="abuse" style="
-                                        margin-right: 15px;
-                                        float: left;">
-
+                                    <li style="margin-right: 15px;float: left;">
                                         <a class="myButton" href="#" data-toggle="modal" data-target="#deletePostModal" >
                                             <span>삭제</span>
                                         </a>
-                                        <div>
-                                            <div class="modal fade" id="deletePostModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                <div class="modal-dialog" role="document">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel">Do you really want to delete this post?</h5>
-                                                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                                                                <span aria-hidden="true">×</span>
-                                                            </button>
-                                                        </div>
-                                                        <div class="modal-body">Select "Delete" below if you are ready to delete this.</div>
-                                                        <div class="modal-footer">
-                                                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                                                            <a class="btn btn-primary" th:href="'/post/delete?post='+${post.id}">Delete</a>
-                                                        </div>
+                                        <!-- assert delete Post -->
+                                        <div class="modal fade" id="deletePostModal" tabindex="-1" role="dialog" aria-labelledby="deletePostLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="deletePostLabel">Do you really want to delete this post?</h5>
+                                                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">×</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">Select "Delete" below if you are ready to delete this.</div>
+                                                    <div class="modal-footer">
+                                                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                                                        <a class="btn btn-primary" th:href="'/post/delete?post='+${post.id}">Delete</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -110,39 +93,94 @@
                                 <br>
                                 <time style="font-size:8px" th:text="${#temporals.format(post.dateTime,'yyyy-MM-dd HH:mm:ss')}">2020.08.27</time>
                             </div>
-                            <div>
-                                <form>
-                                    <div class="">
-                                        <a class="" style="font-size:12px; padding-top:2px;">
-                                            <br>
-                                            <div class="article" style="padding-left: 15px; margin-right:15px; color:black;">
-                                                <div style="font-weight: 500; font-family:initial; font-size:20px;" th:text="${post.title}">스프링 질문이요</div>
-                                                <br>
-                                                <div class="post_content" th:utext="${post.content}" style="line-height: 3; font-size:15px;">
-                                                    흔들리는 꽃들 속에서 네 샴푸향이 느껴진거야 한번 연락해볼까
-                                                    모두 그에게 말해 또 왔네<br>
-                                                    죽지 않고 왔다 이렇게<br>
-                                                    snacky chan rhyme 빌릴래<br>
-                                                    했어 예수처럼 이렇게 부활을<br>
-                                                    031팔 안쪽의 타투
+                            <!-- post content -->
+                            <form>
+                                <a class="" style="font-size:12px; padding-top:2px;">
+                                    <br>
+                                    <div class="article" style="padding-left: 15px; margin-right:15px; color:black;">
+                                        <div style="font-weight: 500; font-family:initial; font-size:20px;" th:text="${post.title}">스프링 질문이요</div>
+                                        <br>
+                                        <div class="post_content" th:utext="${post.content}" style="line-height: 25px; font-size:15px;">
+                                            servlet이랑 jsp를 막 공부하고 온 학생입니다.<br>
+                                            이번에 스프링 mvc를 공부하면서 dispatcher servlet를 정리했는데 <br>
+                                            dispatcher servlet이 요청을 다 받아서, root webApplication context는 dispatcher servlet이 여러개일 때를 생각해서<br>
+                                            어플리케이션 전역에서 사용될 container<br>
+                                            servlet webApplication context는 해당 dispatcher안에서만 사용될 container인데<br>
+                                            이때 스프링의 탄성 계수를 구하시오.
+                                        </div>
+                                    </div>
+                                    <ul class="status" style="list-style: none;">
+                                        <li title="공감" class="vote" style="
+                                            float: right;
+                                            padding-right: 0px;
+                                            margin-right: 15px;
+                                        "> like : 0</li>
+                                        <li title="댓글" class="comment" style="
+                                            float: right;
+                                            margin-right: 15px;
+                                            margin-bottom: 10px;
+                                        "> comment : 0</li>
+                                    </ul>
+                                </a>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- comment_content -->
+            <div class = "comment" style=" max-width: 1412px; padding-left: 10px; padding-right: 10px;">
+                <div class="row">
+                    <div class="col-lg-12 ">
+                        <div class="card " style=" margin-left: 20px;">
+                            <form>
+                                <div class="card-header align-items-center" style="background-color: white;">
+                                    <img src="https://cf-fpi.everytime.kr/0.png" class="picture large" style="margin-right: 15px;width: 40px;float: left;height: 40px;">
+                                    <span style="float: left;font-size: 10px;padding-top: 5px;">익명</span>
+                                    <ul class="status" style="list-style: none;float: right;margin-bottom: 0px;font-size: 10px;">
+                                    <li style="margin-right: 15px;float: left;">
+                                        <a class="myButton" href="/post/edit?post=26">
+                                            <span>수정</span>
+                                        </a>
+                                    </li>
+                                    <li style="margin-right: 15px;float: left;">
+                                        <a class="myButton" href="#" data-toggle="modal" data-target="#deleteCommentModal">
+                                            <span>삭제</span>
+                                        </a>
+
+                                        <!-- assert delete comment -->
+                                        <div>
+                                            <div class="modal fade" id="deleteCommentModal" tabindex="-1" role="dialog" aria-labelledby="deleteCommentLabel" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="deleteCommentLabel">Do you really want to delete this post?</h5>
+                                                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">×</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">Select "Delete" below if you are ready to delete this.</div>
+                                                        <div class="modal-footer">
+                                                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                                                            <a class="btn btn-primary" href="/post/delete?post=26">Delete</a>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <ul class="status" style="list-style: none;">
-                                                <li title="공감" class="vote" style="
-                                                    float: right;
-                                                    padding-right: 0px;
-                                                    margin-right: 15px;
-                                                "> like : 0</li>
-                                                <li title="댓글" class="comment" style="
-                                                    float: right;
-                                                    margin-right: 15px;
-                                                    margin-bottom: 10px;
-                                                "> comment : 0</li>
-                                            </ul>
-                                        </a>
-                                    </div>
-                                </form>
-                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                                    <span> <br> </span>
+                                    <time style="float: left;font-size:8px;">2020-08-30 13:25:16</time>
+                                    <span style="line-height: 8px;"><br></span>
+                                    <div class="post_comment" style="line-height: 25px;font-size: 12px;color: black;padding-top: 5px;">
+                                        책 팝니다
+                                        아니요<br>
+                                        사실 안팝니다
+                                        sdfasfd
+                                        뻥입니다</div>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>

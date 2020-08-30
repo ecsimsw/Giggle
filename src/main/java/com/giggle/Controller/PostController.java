@@ -101,6 +101,7 @@ public class PostController {
         Post post = postService.findById(postId);
 
         model.addAttribute("post", post);
+        model.addAttribute("content", post.getContent().replace("<br>","\n"));
         model.addAttribute("category", post.getCategory());
         model.addAttribute("middleCategory", post.getCategory().getMiddleCategory());
 
