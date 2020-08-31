@@ -36,7 +36,7 @@ public class MainController {
         model.addAttribute("mainCategoryList", mainCategoryList);
 
         // new Posts
-        int newPostCntToPrint = 8;
+        int newPostCntToPrint = 7;
 
         int totalPostCnt = 0;
 
