@@ -133,9 +133,10 @@
                             </form>
                             <br>
                             <div class="comment_input_box">
-                                <a href="#" data-toggle="modal" data-target="#inputCommentModal">
-                                    <input type="text" class="form-control" placeholder="댓글 입력" style="  border-top-color: lightgray;border-bottom: white; border-right: white;border-left: white;margin-bottom: 3px; border-radius:0;">
+                                <a class="myButton" href="#" data-toggle="modal" data-target="#inputCommentModal">
+                                    <input type="text" class="form-control" placeholder="댓글 입력" style="  border-top-color: lightgray;border-bottom: white; border-right: white;border-left: white; border-radius:0; font-size:12px;">
                                 </a>
+
                                 <div>
                                     <div class="modal fade" id="inputCommentModal" tabindex="-1" role="dialog" aria-labelledby="inputCommentLabel" aria-modal="true">
                                         <div class="modal-dialog" role="document">
@@ -146,7 +147,7 @@
                                                         <span aria-hidden="true">×</span>
                                                     </button>
                                                 </div>
-                                                <textarea class="form-container "style="border: 0.5px solid lightgray;margin-top: 0px;margin-bottom: 0px;padding-left: 8px;padding-right: 8px;padding-top: 8px;" rows="15">Insert your comment</textarea>
+                                                <textarea class="form-container" placeholder="Comment..." style="border: 0.5px solid lightgray;margin-top: 0px;margin-bottom: 0px;padding-left: 8px;padding-right: 8px;padding-top: 8px;" rows="15"></textarea>
                                                 <div class="modal-footer">
                                                     <a class="btn btn-primary" href="/post/delete?post=26">Enter</a><button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
                                                 </div>
@@ -156,41 +157,13 @@
                                 </div>
                             </div>
 
-
-                            <div class="comment_input_box">
-                                <a href="#" data-toggle="modal" data-target="#inputCommentModal">
-                                    <input type="text" class="form-control" placeholder="댓글 입력"
-                                           style="  border-top-color: lightgray;border-bottom: white; border-right: white;border-left: white;margin-bottom: 3px; border-radius:0;">
-
-                                </a>
-
-                                <div>
-                                    <div class="modal fade" id="inputCommentModal" tabindex="-1" role="dialog" aria-labelledby="inputCommentLabel" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="inputCommentLabel">Comment..</h5>
-                                                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">×</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">Select "Delete" below if you are ready to delete this.</div>
-                                                <div class="modal-footer">
-                                                    <a class="btn btn-primary" href="/post/delete?post=26">Enter</a>
-                                                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- comment_content -->
-            <div class = "comment" style=" max-width: 1412px; margin-left: 10px; margin-right: 10px; margin-top:5px;">
+            <div class="commnet_content" style=" max-width: 1412px; margin-top:5px; padding-left: 10px; padding-right: 10px;">
                 <div class="row">
                     <div class="col-lg-12 ">
                         <div class="card ">
