@@ -2,7 +2,6 @@ package com.giggle.Repository;
 
 import com.giggle.Domain.Entity.Category;
 import com.giggle.Domain.Entity.Post;
-import com.giggle.Domain.Entity.CommunityType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

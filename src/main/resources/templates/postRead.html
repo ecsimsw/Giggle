@@ -116,7 +116,6 @@
                                         </div>
                                     </div>
                                     <br>
-                                    <br>
                                     <ul class="status" style="list-style: none;">
                                         <li title="공감" class="vote" style="
                                             float: right;
@@ -163,7 +162,7 @@
             </div>
 
             <!-- comment_content -->
-            <div class="commnet_content" style=" max-width: 1412px; margin-top:5px; padding-left: 10px; padding-right: 10px;">
+            <div class="commnet_content_level1" style=" max-width: 1412px; margin-top:5px; padding-left: 10px; padding-right: 10px;">
                 <div class="row">
                     <div class="col-lg-12 ">
                         <div class="card ">
@@ -204,6 +203,63 @@
                                         </div>
                                     </li>
                                 </ul>
+                                    <span> <br> </span>
+                                    <time style="float: left;font-size:8px;">2020-08-30 13:25:16</time>
+                                    <span style="line-height: 8px;"><br></span>
+                                    <div class="post_comment" style="line-height: 25px;font-size: 12px;color: black;padding-top: 5px;">
+                                        책 팝니다
+                                        아니요<br>
+                                        사실 안팝니다
+                                        sdfasfd
+                                        뻥입니다</div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="commnet_content_level2" style="max-width: 1392px;margin-top:5px;padding-left: 10px;padding-right: 10px;margin-left: 20px;">
+                <div class="row">
+                    <div class="col-lg-12 ">
+                        <div class="card ">
+                            <form>
+                                <div class="card-header align-items-center" style="background-color: white;">
+                                    <img src="https://cf-fpi.everytime.kr/0.png" class="picture large" style="margin-right: 15px;width: 40px;float: left;height: 40px;">
+                                    <span style="float: left;font-size: 10px;padding-top: 5px;">익명</span>
+                                    <ul class="status" style="list-style: none;float: right;margin-bottom: 0px;font-size: 10px;">
+                                        <li style="margin-right: 15px;float: left;">
+                                            <a class="myButton" href="/post/edit?post=26">
+                                                <span>수정</span>
+                                            </a>
+                                        </li>
+                                        <li style="margin-right: 15px;float: left;">
+                                            <a class="myButton" href="#" data-toggle="modal" data-target="#deleteCommentModal">
+                                                <span>삭제</span>
+                                            </a>
+
+                                            <!-- assert delete comment -->
+                                            <div>
+                                                <div class="modal fade" id="deleteCommentModal" tabindex="-1" role="dialog" aria-labelledby="deleteCommentLabel" aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="deleteCommentLabel">Do you really want to delete this post?</h5>
+                                                                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">×</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">Select "Delete" below if you are ready to delete this.</div>
+                                                            <div class="modal-footer">
+                                                                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                                                                <a class="btn btn-primary" href="/post/delete?post=26">Delete</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
                                     <span> <br> </span>
                                     <time style="float: left;font-size:8px;">2020-08-30 13:25:16</time>
                                     <span style="line-height: 8px;"><br></span>
