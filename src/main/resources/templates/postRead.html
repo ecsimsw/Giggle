@@ -6,6 +6,10 @@
 
     <style>
 
+        .card{
+            border-radius : 0;
+        }
+
         <!--    <link href="C:\Users\user\IdeaProjects\Giggle\src\main\resources\static\SBadmin2\sb-admin-2.min.css" rel="stylesheet">-->
         <!--    <script src="C:\Users\user\IdeaProjects\Giggle\src\main\resources\static\script\jquery-3.5.1.js"></script>-->
         <!--    <script src="C:\Users\user\IdeaProjects\Giggle\src\main\resources\static\script\jquery.twbsPagination.min.js"></script>-->
@@ -58,10 +62,12 @@
             <div class="article_content" style=" max-width: 1412px; padding-left: 10px; padding-right: 10px;">
                 <div class="row">
                     <div class="col-lg-12">
-                        <div class="card shadow mb-3">
+                        <div class="card shadow" style="border:1px solid lightgray;">
                             <div class="card-header align-items-center " style="padding-top: 14px;padding-bottom: 4px;">
                                 <img src="https://cf-fpi.everytime.kr/0.png" class="picture large" style="margin-right: 15px; width: 40px; float: left; height: 40px;">
                                 <span style="font-size:14px;padding-top:2px;">익명</span>
+
+                                <!-- writer status -->
                                 <ul class="status" style="list-style: none;float: right; padding-top: 10px; margin-bottom: 0px; font-size: 10px;">
                                     <li style="margin-right: 15px; float: left;">
                                         <a class="myButton" th:href="'/post/edit?post='+${post.id}"><span>수정</span></a>
@@ -95,7 +101,7 @@
                             </div>
                             <!-- post content -->
                             <form>
-                                <a class="" style="font-size:12px; padding-top:2px;">
+                                <a class="post_content_box" style="font-size:12px; padding-top:2px;">
                                     <br>
                                     <div class="article" style="padding-left: 15px; margin-right:15px; color:black;">
                                         <div style="font-weight: 500; font-family:initial; font-size:20px;" th:text="${post.title}">스프링 질문이요</div>
@@ -109,6 +115,7 @@
                                             이때 스프링의 탄성 계수를 구하시오.
                                         </div>
                                     </div>
+                                    <br>
                                     <ul class="status" style="list-style: none;">
                                         <li title="공감" class="vote" style="
                                             float: right;
@@ -123,16 +130,42 @@
                                     </ul>
                                 </a>
                             </form>
+                            <br>
+                            <div class="comment_input_box">
+                                <a class="myButton" href="#" data-toggle="modal" data-target="#inputCommentModal">
+                                    <input type="text" class="form-control" placeholder="댓글 입력" style="  border-top-color: lightgray;border-bottom: white; border-right: white;border-left: white; border-radius:0; font-size:12px;">
+                                </a>
+
+                                <div>
+                                    <div class="modal fade" id="inputCommentModal" tabindex="-1" role="dialog" aria-labelledby="inputCommentLabel" aria-modal="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="inputCommentLabel">Comment..</h5>
+                                                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">×</span>
+                                                    </button>
+                                                </div>
+                                                <textarea class="form-container" placeholder="Comment..." style="border: 0.5px solid lightgray;margin-top: 0px;margin-bottom: 0px;padding-left: 8px;padding-right: 8px;padding-top: 8px;" rows="15"></textarea>
+                                                <div class="modal-footer">
+                                                    <a class="btn btn-primary" href="/post/delete?post=26">Enter</a><button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- comment_content -->
-            <div class = "comment" style=" max-width: 1412px; padding-left: 10px; padding-right: 10px;">
+            <div class="commnet_content_level1" style=" max-width: 1412px; margin-top:5px; padding-left: 10px; padding-right: 10px;">
                 <div class="row">
                     <div class="col-lg-12 ">
-                        <div class="card " style=" margin-left: 20px;">
+                        <div class="card ">
                             <form>
                                 <div class="card-header align-items-center" style="background-color: white;">
                                     <img src="https://cf-fpi.everytime.kr/0.png" class="picture large" style="margin-right: 15px;width: 40px;float: left;height: 40px;">
@@ -170,6 +203,63 @@
                                         </div>
                                     </li>
                                 </ul>
+                                    <span> <br> </span>
+                                    <time style="float: left;font-size:8px;">2020-08-30 13:25:16</time>
+                                    <span style="line-height: 8px;"><br></span>
+                                    <div class="post_comment" style="line-height: 25px;font-size: 12px;color: black;padding-top: 5px;">
+                                        책 팝니다
+                                        아니요<br>
+                                        사실 안팝니다
+                                        sdfasfd
+                                        뻥입니다</div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="commnet_content_level2" style="max-width: 1392px;margin-top:5px;padding-left: 10px;padding-right: 10px;margin-left: 20px;">
+                <div class="row">
+                    <div class="col-lg-12 ">
+                        <div class="card ">
+                            <form>
+                                <div class="card-header align-items-center" style="background-color: white;">
+                                    <img src="https://cf-fpi.everytime.kr/0.png" class="picture large" style="margin-right: 15px;width: 40px;float: left;height: 40px;">
+                                    <span style="float: left;font-size: 10px;padding-top: 5px;">익명</span>
+                                    <ul class="status" style="list-style: none;float: right;margin-bottom: 0px;font-size: 10px;">
+                                        <li style="margin-right: 15px;float: left;">
+                                            <a class="myButton" href="/post/edit?post=26">
+                                                <span>수정</span>
+                                            </a>
+                                        </li>
+                                        <li style="margin-right: 15px;float: left;">
+                                            <a class="myButton" href="#" data-toggle="modal" data-target="#deleteCommentModal">
+                                                <span>삭제</span>
+                                            </a>
+
+                                            <!-- assert delete comment -->
+                                            <div>
+                                                <div class="modal fade" id="deleteCommentModal" tabindex="-1" role="dialog" aria-labelledby="deleteCommentLabel" aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="deleteCommentLabel">Do you really want to delete this post?</h5>
+                                                                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">×</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">Select "Delete" below if you are ready to delete this.</div>
+                                                            <div class="modal-footer">
+                                                                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                                                                <a class="btn btn-primary" href="/post/delete?post=26">Delete</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
                                     <span> <br> </span>
                                     <time style="float: left;font-size:8px;">2020-08-30 13:25:16</time>
                                     <span style="line-height: 8px;"><br></span>

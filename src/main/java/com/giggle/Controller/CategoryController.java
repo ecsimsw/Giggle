@@ -2,7 +2,6 @@ package com.giggle.Controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.giggle.Domain.Entity.CommunityType;
 import com.giggle.Domain.Entity.MainCategory;
 import com.giggle.Domain.Form.CreateCategoryForm;
 import com.giggle.Domain.Form.CreateMainCategoryForm;
