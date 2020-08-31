@@ -77,6 +77,27 @@ public class CategoryService {
         }
     }
 
+    public void updateAllCategoryPostCnt(){
+        List<MainCategory> allMainCategory = mainCategoryRepository.findAllMainCategory();
+
+        for(MainCategory mainCategory : allMainCategory){
+            int mainPostCnt =0;
+
+            for(MiddleCategory middleCategory : mainCategory.getMiddleCategoryList()){
+                int middlePostCnt =0;
+
+                for(Category category : middleCategory.getCategoryList()){
+                    int postCnt = category.getPostCnt();
+                    middlePostCnt+=postCnt;
+                    mainPostCnt+=postCnt;
+                }
+                middleCategoryRepository.updatePostCnt(middleCategory, middlePostCnt);
+            }
+
+            mainCategoryRepository.updatePostCnt(mainCategory, mainPostCnt);
+        }
+    }
+
     public List<Post> getPostsInCategory(Category category, int page, int postForPage){
         int totalCnt = category.getPostCnt();
 
@@ -97,6 +118,23 @@ public class CategoryService {
 
     @Transactional
     public void deleteCategory(long id){
+
+        // 이게 jpa에서 category를 지우는 거랑, java에서 middleCategory 안의 categoryList 안에서 category를 지우는 게 다르다.
+
+        // jpa에서만 지우면 middleCategory에 categoryList에는 category가 남아있다.
+
+        Category category = categoryRepository.findById(id);
+        int postCnt = category.getPostCnt();
+
+        MiddleCategory middleCategory = category.getMiddleCategory();
+        MainCategory mainCategory = middleCategory.getMainCategory();
+        middleCategory.getCategoryList().remove(category);
+
+        mainCategoryRepository.updatePostCnt(mainCategory, mainCategory.getPostCnt()-postCnt);
+        middleCategoryRepository.updatePostCnt(middleCategory, middleCategory.getPostCnt()-postCnt);
+        categoryRepository.updatePostCnt(category, 0);
+
         categoryRepository.deleteById(id);
+
     }
 }

@@ -36,6 +36,11 @@ public class MiddleCategoryService {
 
     @Transactional
     public void deleteMiddleCategory(long id){
+        MiddleCategory middleCategory = middleCategoryRepository.findById(id);
+        MainCategory mainCategory =   middleCategory.getMainCategory();
+        mainCategory.getMiddleCategoryList().remove(middleCategory);
+        mainCategoryRepository.updatePostCnt(mainCategory, mainCategory.getPostCnt()-middleCategory.getPostCnt());
+        middleCategoryRepository.updatePostCnt(middleCategory,0);
         middleCategoryRepository.deleteById(id);
     }
 
