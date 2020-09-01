@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -15,28 +14,30 @@ import java.util.List;
 @Entity
 @Getter @Setter
 @EntityListeners(AuditingEntityListener.class)
-public class Post{
+public class Comment {
     @Id
     @GeneratedValue
-    @Column(name="post_id")
+    @Column(name="comment_id")
     private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "super_comment_id")
+    private Comment superComment;
+
+    @OneToMany(mappedBy = "superComment", cascade = CascadeType.ALL)
+    private List<Comment> subComment = new ArrayList<>();
+
+    private int level;
 
     private String writer;
 
-    private String title;
-
-    @ManyToOne
-    @JoinColumn(name="category_id")
-    private Category category;
-
     private String content;
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
-    private List<Comment> commentList = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name="post_id")
+    private Post post;
 
     @CreatedDate
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss")
     private LocalDateTime dateTime;
-
-    private int viewCnt;
 }
