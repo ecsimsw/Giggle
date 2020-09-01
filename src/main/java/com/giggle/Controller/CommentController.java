@@ -26,19 +26,10 @@ public class CommentController {
     private final PostService postService;
 
     @PostMapping("/create")
-    public String createComment(CreateCommentForm createCommentForm, Model model){
+    public String createComment(CreateCommentForm createCommentForm){
         commentService.createComment(createCommentForm);
-
-
-        // side bar
-
-        List<MainCategory> mainCategoryList = mainCategoryService.getAllMainCategory();
-        model.addAttribute("mainCategoryList", mainCategoryList);
-
-        // post
         long postId=  Long.parseLong(createCommentForm.getPostId());
-        model.addAttribute("post", postService.findById(postId));
 
-        return "postRead";
+        return "redirect:/post/read?post="+postId;
     }
 }

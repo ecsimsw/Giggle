@@ -128,7 +128,7 @@
                             <br>
                             <div class="comment_input_box">
                                 <a class="myButton" href="#" data-toggle="modal" data-target="#inputCommentModal">
-                                    <input type="text" class="form-control" placeholder="댓글 입력" style="  border-top-color: lightgray;border-bottom: white; border-right: white;border-left: white; border-radius:0; font-size:12px;">
+                                    <input type="text" class="form-control" placeholder="댓글 입력" style="border-top-width: 0.1px;  border-top-color: lightgray;border-bottom: white; border-right: white;border-left: white; border-radius:0; font-size:12px;">
                                 </a>
 
                                 <div>
@@ -159,100 +159,16 @@
                     </div>
                 </div>
             </div>
-            <div class="comment_level1" th:each="comment : ${post.commentList}">
+            <div class="comment_level1" th:each="comment_level1 : ${post.commentList}">
                 <!-- comment_content -->
-                <div style="max-width: 1412px; margin-top:5px; padding-left: 10px; padding-right: 10px;">
+                <div th:if="${comment_level1.level == 1}" style="max-width: 1412px; margin-top:5px; padding-left: 10px; padding-right: 10px;">
                     <div class="row">
                         <div class="col-lg-12 ">
                             <div class="card ">
                                 <form>
                                     <div class="card-header align-items-center" style="background-color: white; border:none;">
                                         <img src="https://cf-fpi.everytime.kr/0.png" class="picture large" style="margin-right: 15px;width: 40px;float: left;height: 40px;">
-                                        <span style="float: left;font-size: 10px;padding-top: 5px;" th:text="${comment.writer}">익명</span>
-                                        <ul class="status" style="list-style: none;float: right;margin-bottom: 0px;font-size: 10px;">
-                                        <li style="margin-right: 15px;float: left;">
-                                            <a class="myButton" href="/post/edit?post=26">
-                                                <span>수정</span>
-                                            </a>
-                                        </li>
-                                        <li style="margin-right: 15px;float: left;">
-                                            <a class="myButton" href="#" data-toggle="modal" data-target="#deleteCommentModal">
-                                                <span>삭제</span>
-                                            </a>
-
-                                            <!-- assert delete comment -->
-                                            <div>
-                                                <div class="modal fade" id="deleteCommentModal" tabindex="-1" role="dialog" aria-labelledby="deleteCommentLabel" aria-hidden="true">
-                                                    <div class="modal-dialog" role="document">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h5 class="modal-title" id="deleteCommentLabel">Do you really want to delete this post?</h5>
-                                                                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                                                                    <span aria-hidden="true">×</span>
-                                                                </button>
-                                                            </div>
-                                                            <div class="modal-body">Select "Delete" below if you are ready to delete this.</div>
-                                                            <div class="modal-footer">
-                                                                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                                                                <a class="btn btn-primary" href="/post/delete?post=26">Delete</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                        <span><br></span>
-                                        <time th:text="${#temporals.format(comment.dateTime,'yyyy-MM-dd HH:mm:ss')}" style="float: left;font-size:8px;" >2020-08-30 13:25:16</time>
-                                        <span style="line-height: 8px;"><br></span>
-                                        <div class="post_comment" th:utext="${comment.content}" style="line-height: 25px;font-size: 12px;color: black;padding-top: 5px;">
-                                            comment_content
-                                        </div>
-                                        <br>
-                                        <a class="myButton" href="#" data-toggle="modal" data-target="${'#inputCommentModal_level2_'+comment.id}">
-                                            <span style="padding-right:10px; font-size:14px; float:right; padding-bottom:5px;">comment</span>
-                                        </a>
-                                    </div>
-                                </form>
-
-                                <!-- comment toggle -->
-                                <div>
-                                    <div class="modal fade" th:id="${'inputCommentModal_level2_'+comment.id}" tabindex="-1" role="dialog" aria-labelledby="inputCommentLabel_level2" aria-modal="true">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <form class="form" th:action="@{/comment/create}" method="post">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="inputCommentLabel_level2" th:text="${'Comment : '+comment.content}">Comment..</h5>
-                                                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">×</span>
-                                                        </button>
-                                                    </div>
-                                                    <input hidden name="postId" th:value="${post.id}">
-                                                    <input hidden name="commentId" th:value="${comment.id}">
-                                                    <textarea class="form-container" name="content" placeholder="Comment..." style="width: 100%; border: 0.5px solid lightgray;margin-top: 0px;margin-bottom: 0px;padding-left: 8px;padding-right: 8px;padding-top: 8px;" rows="15"></textarea>
-                                                    <div class="modal-footer">
-                                                        <button class="btn btn-primary" type="submit" >Enter</button>
-                                                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="comment_level2" th:each="comment_level2 : ${comment.subComment}">
-                     <div style="max-width: 1392px;margin-top:5px;padding-left: 10px;padding-right: 10px;margin-left: 20px;">
-                    <div class="row">
-                        <div class="col-lg-12 ">
-                            <div class="card ">
-                                <form>
-                                    <div class="card-header align-items-center" style="background-color: white;">
-                                        <img src="https://cf-fpi.everytime.kr/0.png" class="picture large" style="margin-right: 15px;width: 40px;float: left;height: 40px;">
-                                        <span style="float: left;font-size: 10px;padding-top: 5px;" th:text="${comment_level2.writer}">익명</span>
+                                        <span style="float: left;font-size: 10px;padding-top: 5px;" th:text="${comment_level1.writer}">익명</span>
                                         <ul class="status" style="list-style: none;float: right;margin-bottom: 0px;font-size: 10px;">
                                             <li style="margin-right: 15px;float: left;">
                                                 <a class="myButton" href="/post/edit?post=26">
@@ -286,20 +202,189 @@
                                                 </div>
                                             </li>
                                         </ul>
-                                        <span> <br> </span>
-                                        <time th:text="${#temporals.format(comment_level2.dateTime,'yyyy-MM-dd HH:mm:ss')}" style="float: left;font-size:8px;">2020-08-30 13:25:16</time>
+                                        <span><br></span>
+                                        <time th:text="${#temporals.format(comment_level1.dateTime,'yyyy-MM-dd HH:mm:ss')}" style="float: left;font-size:8px;" >2020-08-30 13:25:16</time>
                                         <span style="line-height: 8px;"><br></span>
-                                        <div class="post_comment" th:utext="${comment_level2.content}" style="line-height: 25px;font-size: 12px;color: black;padding-top: 5px;">
-                                            책 팝니다
+                                        <div class="post_comment" th:utext="${comment_level1.content}" style="line-height: 25px;font-size: 12px;color: black;padding-top: 5px;">
+                                            comment_content
                                         </div>
+                                        <br>
+                                        <a class="myButton" href="#" data-toggle="modal" th:data-target="${'#commentModal'+comment_level1.id}">
+                                            <span style="padding-right:10px; font-size:14px; float:right; padding-bottom:5px;">comment</span>
+                                        </a>
                                     </div>
                                 </form>
+
+                                <!-- comment toggle -->
+                                <div>
+                                    <div class="modal fade" th:id="${'commentModal'+comment_level1.id}" tabindex="-1" role="dialog" aria-labelledby="inputCommentLabel_level2" aria-modal="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <form class="form" th:action="@{/comment/create}" method="post">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="inputCommentLabel_level2" th:text="${'Comment : '+comment_level1.content}">Comment..</h5>
+                                                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">×</span>
+                                                        </button>
+                                                    </div>
+                                                    <input hidden name="postId" th:value="${post.id}">
+                                                    <input hidden name="commentId" th:value="${comment_level1.id}">
+                                                    <textarea class="form-container" name="content" placeholder="Comment..." style="width: 100%; border: 0.5px solid lightgray;margin-top: 0px;margin-bottom: 0px;padding-left: 8px;padding-right: 8px;padding-top: 8px;" rows="15"></textarea>
+                                                    <div class="modal-footer">
+                                                        <button class="btn btn-primary" type="submit" >Enter</button>
+                                                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <div class="comment_level2" th:each="comment_level2 : ${comment_level1.subComment}">
+                    <div th:if="${comment_level2.level==2}" style="max-width: 1392px;margin-top:5px;padding-left: 10px;padding-right: 10px;margin-left: 20px;">
+                        <div class="row">
+                            <div class="col-lg-12 ">
+                                <div class="card ">
+                                    <form>
+                                        <div class="card-header align-items-center" style="border:none; background-color: white;">
+                                            <img src="https://cf-fpi.everytime.kr/0.png" class="picture large" style="margin-right: 15px;width: 40px;float: left;height: 40px;">
+                                            <span style="float: left;font-size: 10px;padding-top: 5px;" th:text="${comment_level2.writer}">익명</span>
+                                            <ul class="status" style="list-style: none;float: right;margin-bottom: 0px;font-size: 10px;">
+                                                <li style="margin-right: 15px;float: left;">
+                                                    <a class="myButton" href="/post/edit?post=26">
+                                                        <span>수정</span>
+                                                    </a>
+                                                </li>
+                                                <li style="margin-right: 15px;float: left;">
+                                                    <a class="myButton" href="#" data-toggle="modal" data-target="#deleteCommentModal">
+                                                        <span>삭제</span>
+                                                    </a>
+
+                                                    <!-- assert delete comment -->
+                                                    <div>
+                                                        <div class="modal fade" id="deleteCommentModal" tabindex="-1" role="dialog" aria-labelledby="deleteCommentLabel" aria-hidden="true">
+                                                            <div class="modal-dialog" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title" id="deleteCommentLabel">Do you really want to delete this post?</h5>
+                                                                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">×</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="modal-body">Select "Delete" below if you are ready to delete this.</div>
+                                                                    <div class="modal-footer">
+                                                                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                                                                        <a class="btn btn-primary" href="/post/delete?post=26">Delete</a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                            <span><br></span>
+                                            <time th:text="${#temporals.format(comment_level2.dateTime,'yyyy-MM-dd HH:mm:ss')}" style="float: left;font-size:8px;" >2020-08-30 13:25:16</time>
+                                            <span style="line-height: 8px;"><br></span>
+                                            <div class="post_comment" th:utext="${comment_level2.content}" style="line-height: 25px;font-size: 12px;color: black;padding-top: 5px;">
+                                                comment_content
+                                            </div>
+                                            <br>
+                                            <a class="myButton" href="#" data-toggle="modal" th:data-target="${'#commentModal'+comment_level2.id}">
+                                                <span style="padding-right:10px; font-size:14px; float:right; padding-bottom:5px;">comment</span>
+                                            </a>
+                                        </div>
+                                    </form>
+                                    <!-- comment level2 toggle -->
+                                    <div>
+                                        <div class="modal fade" th:id="${'commentModal'+comment_level2.id}" tabindex="-1" role="dialog" aria-labelledby="inputCommentLabel_level3" aria-modal="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <form class="form" th:action="@{/comment/create}" method="post">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="inputCommentLabel_level3" th:text="${'Comment : '+comment_level2.content}">Comment..</h5>
+                                                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">×</span>
+                                                            </button>
+                                                        </div>
+                                                        <input hidden name="postId" th:value="${post.id}">
+                                                        <input hidden name="commentId" th:value="${comment_level2.id}">
+                                                        <textarea class="form-container" name="content" placeholder="Comment..." style="width: 100%; border: 0.5px solid lightgray;margin-top: 0px;margin-bottom: 0px;padding-left: 8px;padding-right: 8px;padding-top: 8px;" rows="15"></textarea>
+                                                        <div class="modal-footer">
+                                                            <button class="btn btn-primary" type="submit" >Enter</button>
+                                                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="comment_level3" th:each="comment_level3 : ${comment_level2.subComment}">
+                        <div th:if="${comment_level3.level==3}" style="max-width: 1392px;margin-top:5px;padding-left: 30px;padding-right: 10px;margin-left: 20px;">
+                            <div class="row">
+                                <div class="col-lg-12 ">
+                                    <div class="card ">
+                                        <form>
+                                            <div class="card-header align-items-center" style="border:none; background-color: white;">
+                                                <img src="https://cf-fpi.everytime.kr/0.png" class="picture large" style="margin-right: 15px;width: 40px;float: left;height: 40px;">
+                                                <span style="float: left;font-size: 10px;padding-top: 5px;" th:text="${comment_level3.writer}">익명</span>
+                                                <ul class="status" style="list-style: none;float: right;margin-bottom: 0px;font-size: 10px;">
+                                                    <li style="margin-right: 15px;float: left;">
+                                                        <a class="myButton" href="/post/edit?post=26">
+                                                            <span>수정</span>
+                                                        </a>
+                                                    </li>
+                                                    <li style="margin-right: 15px;float: left;">
+                                                        <a class="myButton" href="#" data-toggle="modal" data-target="#deleteCommentModal">
+                                                            <span>삭제</span>
+                                                        </a>
+
+                                                        <!-- assert delete comment -->
+                                                        <div>
+                                                            <div class="modal fade" id="deleteCommentModal" tabindex="-1" role="dialog" aria-labelledby="deleteCommentLabel" aria-hidden="true">
+                                                                <div class="modal-dialog" role="document">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h5 class="modal-title" id="deleteCommentLabel">Do you really want to delete this post?</h5>
+                                                                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                                                                <span aria-hidden="true">×</span>
+                                                                            </button>
+                                                                        </div>
+                                                                        <div class="modal-body">Select "Delete" below if you are ready to delete this.</div>
+                                                                        <div class="modal-footer">
+                                                                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                                                                            <a class="btn btn-primary" href="/post/delete?post=26">Delete</a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                                <span><br></span>
+                                                <time th:text="${#temporals.format(comment_level3.dateTime,'yyyy-MM-dd HH:mm:ss')}" style="float: left;font-size:8px;" >2020-08-30 13:25:16</time>
+                                                <span style="line-height: 8px;"><br></span>
+                                                <div class="post_comment" th:utext="${comment_level3.content}" style="line-height: 25px;font-size: 12px;color: black;padding-top: 5px;">
+                                                    comment_content
+                                                </div>
+                                                <br>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
         </div>
         <!-- End of Main Content -->
 
