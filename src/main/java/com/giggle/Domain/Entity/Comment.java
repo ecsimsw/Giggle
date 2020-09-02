@@ -20,7 +20,7 @@ public class Comment {
     @Column(name="comment_id")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "super_comment_id")
     private Comment superComment;
 
@@ -33,7 +33,7 @@ public class Comment {
 
     private String content;
 
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="post_id")
     private Post post;
 

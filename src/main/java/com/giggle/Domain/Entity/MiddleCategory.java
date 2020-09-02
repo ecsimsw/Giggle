@@ -19,7 +19,7 @@ public class MiddleCategory {
 
     private String name;
 
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="main_category_id")
     private MainCategory mainCategory;
 

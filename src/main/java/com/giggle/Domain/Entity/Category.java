@@ -21,7 +21,7 @@ public class Category {
     private Long mainCatId;
     private Long middleCatId;
 
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="middle_category_id")
     private MiddleCategory middleCategory;
 
