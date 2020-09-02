@@ -23,4 +23,8 @@ public class CommentRepository {
     public void deleteById(long id){
         em.remove(findById(id));
     }
+
+    public void editComment(Comment comment){
+        em.merge(comment);
+    }
 }

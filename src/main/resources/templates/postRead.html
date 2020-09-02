@@ -131,6 +131,8 @@
                                     <input type="text" class="form-control" placeholder="댓글 입력" style="border-top-width: 0.1px;  border-top-color: lightgray;border-bottom: white; border-right: white;border-left: white; border-radius:0; font-size:12px;">
                                 </a>
 
+
+                                <!-- create comment form -->
                                 <div>
                                     <div class="modal fade" id="inputCommentModal" tabindex="-1" role="dialog" aria-labelledby="inputCommentLabel" aria-modal="true">
                                         <div class="modal-dialog" role="document">
@@ -171,9 +173,11 @@
                                         <span style="float: left;font-size: 10px;padding-top: 5px;" th:text="${comment_level1.writer}">익명</span>
                                         <ul class="status" style="list-style: none;float: right;margin-bottom: 0px;font-size: 10px;">
                                             <li style="margin-right: 15px;float: left;">
-                                                <a class="myButton" href="/post/edit?post=26">
+                                                <a class="myButton" href="#" data-toggle="modal" th:data-target="${'#editCommentModal'+comment_level1.id}">
                                                     <span>수정</span>
                                                 </a>
+
+
                                             </li>
                                             <li style="margin-right: 15px;float: left;">
                                                 <a class="myButton" href="#" data-toggle="modal" th:data-target="${'#deleteCommentModal'+comment_level1.id}">
@@ -239,6 +243,29 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <!-- edit comment form -->
+                                <div>
+                                    <div class="modal fade" th:id="${'editCommentModal'+comment_level1.id}" tabindex="-1" role="dialog" aria-labelledby="editCommentLabel" aria-modal="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <form class="form" th:action="${'/comment/edit?comment='+comment_level1.id}" method="post">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="editCommentLabel">Comment..</h5>
+                                                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">×</span>
+                                                        </button>
+                                                    </div>
+                                                    <textarea class="form-container" name="content" th:text="${comment_level1.content}" style="width: 100%; border: 0.5px solid lightgray;margin-top: 0px;margin-bottom: 0px;padding-left: 8px;padding-right: 8px;padding-top: 8px;" rows="15"></textarea>
+                                                    <div class="modal-footer">
+                                                        <button class="btn btn-primary" type="submit" >Enter</button>
+                                                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -255,7 +282,7 @@
                                             <span style="float: left;font-size: 10px;padding-top: 5px;" th:text="${comment_level2.writer}">익명</span>
                                             <ul class="status" style="list-style: none;float: right;margin-bottom: 0px;font-size: 10px;">
                                                 <li style="margin-right: 15px;float: left;">
-                                                    <a class="myButton" href="/post/edit?post=26">
+                                                    <a class="myButton" href="#" data-toggle="modal" th:data-target="${'#editCommentModal'+comment_level2.id}">
                                                         <span>수정</span>
                                                     </a>
                                                 </li>
@@ -263,7 +290,6 @@
                                                     <a class="myButton" href="#" data-toggle="modal" th:data-target="${'#deleteCommentModal'+comment_level2.id}">
                                                         <span>삭제</span>
                                                     </a>
-
                                                     <!-- assert delete comment -->
                                                     <div>
                                                         <div class="modal fade" th:id="${'deleteCommentModal'+comment_level2.id}" tabindex="-1" role="dialog" aria-labelledby="deleteCommentLabel2" aria-hidden="true">
@@ -322,6 +348,29 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                    <!-- edit comment form -->
+                                    <div>
+                                        <div class="modal fade" th:id="${'editCommentModal'+comment_level2.id}" tabindex="-1" role="dialog" aria-labelledby="editCommentLabel2" aria-modal="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <form class="form" th:action="${'/comment/edit?comment='+comment_level2.id}" method="post">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="editCommentLabel2">Comment..</h5>
+                                                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">×</span>
+                                                            </button>
+                                                        </div>
+                                                        <textarea class="form-container" name="content" th:text="${comment_level2.content}" style="width: 100%; border: 0.5px solid lightgray;margin-top: 0px;margin-bottom: 0px;padding-left: 8px;padding-right: 8px;padding-top: 8px;" rows="15"></textarea>
+                                                        <div class="modal-footer">
+                                                            <button class="btn btn-primary" type="submit" >Enter</button>
+                                                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -339,7 +388,7 @@
                                                 <span style="float: left;font-size: 10px;padding-top: 5px;" th:text="${comment_level3.writer}">익명</span>
                                                 <ul class="status" style="list-style: none;float: right;margin-bottom: 0px;font-size: 10px;">
                                                     <li style="margin-right: 15px;float: left;">
-                                                        <a class="myButton" href="/post/edit?post=26">
+                                                        <a class="myButton" href="#" data-toggle="modal" th:data-target="${'#editCommentModal'+comment_level3.id}">
                                                             <span>수정</span>
                                                         </a>
                                                     </li>
@@ -379,12 +428,36 @@
                                                 <br>
                                             </div>
                                         </form>
+
+                                        <!-- edit comment form -->
+                                        <div>
+                                            <div class="modal fade" th:id="${'editCommentModal'+comment_level3.id}" tabindex="-1" role="dialog" aria-labelledby="editCommentLabel3" aria-modal="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <form class="form" th:action="${'/comment/edit?comment='+comment_level3.id}" method="post">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="editCommentLabel3">Comment..</h5>
+                                                                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">×</span>
+                                                                </button>
+                                                            </div>
+                                                            <textarea class="form-container" name="content" th:text="${comment_level3.content}" style="width: 100%; border: 0.5px solid lightgray;margin-top: 0px;margin-bottom: 0px;padding-left: 8px;padding-right: 8px;padding-top: 8px;" rows="15"></textarea>
+                                                            <div class="modal-footer">
+                                                                <button class="btn btn-primary" type="submit" >Enter</button>
+                                                                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
         </div>
         <!-- End of Main Content -->
 

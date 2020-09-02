@@ -59,4 +59,12 @@ public class CommentService {
     public Comment findById(long id){
         return commentRepository.findById(id);
     }
+
+    @Transactional
+    public void editComment(long id, String content){
+        Comment comment = commentRepository.findById(id);
+        comment.setContent(content);
+
+        commentRepository.editComment(comment);
+    }
 }

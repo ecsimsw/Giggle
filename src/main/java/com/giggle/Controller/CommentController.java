@@ -34,10 +34,14 @@ public class CommentController {
         return "redirect:/post/read?post="+postId;
     }
 
-//    @PostMapping("/edit")
-//    public String editComment(@RequestParam String comment,  ) {
-//
-//    }
+    @PostMapping("/edit")
+    public String editComment(@RequestParam String comment, @RequestParam String content) {
+        long commentId = Long.parseLong(comment);
+        commentService.editComment(commentId, content);
+
+        long postId = commentService.findById(commentId).getPost().getId();
+        return "redirect:/post/read?post="+postId;
+    }
 
     @GetMapping("/delete")
     public String deletePost(@RequestParam String comment) {
