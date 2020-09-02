@@ -176,17 +176,17 @@
                                                 </a>
                                             </li>
                                             <li style="margin-right: 15px;float: left;">
-                                                <a class="myButton" href="#" data-toggle="modal" data-target="#deleteCommentModal">
+                                                <a class="myButton" href="#" data-toggle="modal" th:data-target="${'#deleteCommentModal'+comment_level1.id}">
                                                     <span>삭제</span>
                                                 </a>
 
                                                 <!-- assert delete comment -->
                                                 <div>
-                                                    <div class="modal fade" id="deleteCommentModal" tabindex="-1" role="dialog" aria-labelledby="deleteCommentLabel" aria-hidden="true">
+                                                    <div class="modal fade" th:id="${'deleteCommentModal'+comment_level1.id}" tabindex="-1" role="dialog" aria-labelledby="deleteCommentLabel" aria-hidden="true">
                                                         <div class="modal-dialog" role="document">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
-                                                                    <h5 class="modal-title" id="deleteCommentLabel">Do you really want to delete this post?</h5>
+                                                                    <h5 class="modal-title" id="deleteCommentLabel">Do you really want to delete this comment?</h5>
                                                                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                                                                         <span aria-hidden="true">×</span>
                                                                     </button>
@@ -194,7 +194,7 @@
                                                                 <div class="modal-body">Select "Delete" below if you are ready to delete this.</div>
                                                                 <div class="modal-footer">
                                                                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                                                                    <a class="btn btn-primary" href="/post/delete?post=26">Delete</a>
+                                                                    <a class="btn btn-primary" th:href="${'/comment/delete?comment='+comment_level1.id}">Delete</a>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -260,17 +260,17 @@
                                                     </a>
                                                 </li>
                                                 <li style="margin-right: 15px;float: left;">
-                                                    <a class="myButton" href="#" data-toggle="modal" data-target="#deleteCommentModal">
+                                                    <a class="myButton" href="#" data-toggle="modal" th:data-target="${'#deleteCommentModal'+comment_level2.id}">
                                                         <span>삭제</span>
                                                     </a>
 
                                                     <!-- assert delete comment -->
                                                     <div>
-                                                        <div class="modal fade" id="deleteCommentModal" tabindex="-1" role="dialog" aria-labelledby="deleteCommentLabel" aria-hidden="true">
+                                                        <div class="modal fade" th:id="${'deleteCommentModal'+comment_level2.id}" tabindex="-1" role="dialog" aria-labelledby="deleteCommentLabel2" aria-hidden="true">
                                                             <div class="modal-dialog" role="document">
                                                                 <div class="modal-content">
                                                                     <div class="modal-header">
-                                                                        <h5 class="modal-title" id="deleteCommentLabel">Do you really want to delete this post?</h5>
+                                                                        <h5 class="modal-title" id="deleteCommentLabel2">Do you really want to delete this comment?</h5>
                                                                         <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                                                                             <span aria-hidden="true">×</span>
                                                                         </button>
@@ -278,7 +278,7 @@
                                                                     <div class="modal-body">Select "Delete" below if you are ready to delete this.</div>
                                                                     <div class="modal-footer">
                                                                         <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                                                                        <a class="btn btn-primary" href="/post/delete?post=26">Delete</a>
+                                                                        <a class="btn btn-primary" th:href="${'/comment/delete?comment='+comment_level2.id}">Delete</a>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -344,17 +344,17 @@
                                                         </a>
                                                     </li>
                                                     <li style="margin-right: 15px;float: left;">
-                                                        <a class="myButton" href="#" data-toggle="modal" data-target="#deleteCommentModal">
+                                                        <a class="myButton" href="#" data-toggle="modal" th:data-target="${'#deleteCommentModal'+comment_level3.id}">
                                                             <span>삭제</span>
                                                         </a>
 
                                                         <!-- assert delete comment -->
                                                         <div>
-                                                            <div class="modal fade" id="deleteCommentModal" tabindex="-1" role="dialog" aria-labelledby="deleteCommentLabel" aria-hidden="true">
+                                                            <div class="modal fade" th:id="${'deleteCommentModal'+comment_level3.id}" tabindex="-1" role="dialog" aria-labelledby="deleteCommentLabel3" aria-hidden="true">
                                                                 <div class="modal-dialog" role="document">
                                                                     <div class="modal-content">
                                                                         <div class="modal-header">
-                                                                            <h5 class="modal-title" id="deleteCommentLabel">Do you really want to delete this post?</h5>
+                                                                            <h5 class="modal-title" id="deleteCommentLabel3">Do you really want to delete this comment?</h5>
                                                                             <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                                                                                 <span aria-hidden="true">×</span>
                                                                             </button>
@@ -362,7 +362,7 @@
                                                                         <div class="modal-body">Select "Delete" below if you are ready to delete this.</div>
                                                                         <div class="modal-footer">
                                                                             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                                                                            <a class="btn btn-primary" href="/post/delete?post=26">Delete</a>
+                                                                            <a class="btn btn-primary" th:href="${'/comment/delete?comment='+comment_level3.id}">Delete</a>
                                                                         </div>
                                                                     </div>
                                                                 </div>

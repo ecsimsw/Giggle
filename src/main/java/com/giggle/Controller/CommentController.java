@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import com.giggle.Domain.Entity.*;
 
 import java.util.List;
 
@@ -30,6 +31,20 @@ public class CommentController {
         commentService.createComment(createCommentForm);
         long postId=  Long.parseLong(createCommentForm.getPostId());
 
+        return "redirect:/post/read?post="+postId;
+    }
+
+//    @PostMapping("/edit")
+//    public String editComment(@RequestParam String comment,  ) {
+//
+//    }
+
+    @GetMapping("/delete")
+    public String deletePost(@RequestParam String comment) {
+        long commentId = Long.parseLong(comment);
+        Comment commentToDelete = commentService.findById(commentId);
+        long postId = commentToDelete.getPost().getId();
+        commentService.deleteComment(commentId);
         return "redirect:/post/read?post="+postId;
     }
 }

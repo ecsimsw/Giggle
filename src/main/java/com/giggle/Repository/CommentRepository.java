@@ -19,4 +19,8 @@ public class CommentRepository {
     public void save(Comment comment){
         em.persist(comment);
     }
+
+    public void deleteById(long id){
+        em.remove(findById(id));
+    }
 }
