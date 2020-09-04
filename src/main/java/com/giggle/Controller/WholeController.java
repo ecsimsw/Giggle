@@ -30,16 +30,19 @@ public class WholeController {
 
     @PostMapping("/test")
     @ResponseBody
-    public String uploadImage(@RequestPart MultipartFile file) throws Exception{
+    public String uploadImage(@RequestPart List<MultipartFile> files) throws Exception{
 
-        String sourceFileName = file.getOriginalFilename();
-        String sourceFileExtension = FilenameUtils.getExtension(sourceFileName).toLowerCase();
 
-        File destFile;
+        for(MultipartFile file : files){
+            String sourceFileName = file.getOriginalFilename();
+            String sourceFileExtension = FilenameUtils.getExtension(sourceFileName).toLowerCase();
 
-        destFile = new File("C:\\Users\\luraw\\OneDrive\\Desktop\\test."+sourceFileExtension);
-        file.transferTo(destFile);
+            File destFile;
 
-        return file.toString();
+            destFile = new File("C:\\Users\\luraw\\OneDrive\\Desktop\\"+sourceFileName+sourceFileExtension);
+            file.transferTo(destFile);
+        }
+
+        return "";
     }
 }
