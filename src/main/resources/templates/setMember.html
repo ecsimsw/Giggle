@@ -13,44 +13,44 @@
 </head>
 
 <body class="text-center">
-<div class="container">
+<div class="container" style="margin-bottom : 50px">
     <br>
     <h3 class="font-black">Giggle</h3>
     <br>
-    <p class="font-black" th:if="${message} == null" >Setting</p>
+    <p class="font-black" th:if="${message} == null" >User Info</p>
     <p style="color:red" th:if="${message} != null"  th:text="${message}"></p>
     <br>
-    <form class="form text-left" th:action="@{/member/setting}" method="post">
+    <form class="form text-left" th:action="@{/member/setting/memberInfo}" method="post">
         <label for="id">id</label>
-        <input type="text" id="id" name="loginId" class="form-control" th:value="${member.loginId}" >
+        <input type="text" id="id" th:value="${member.loginId}" disabled name="loginId" class="form-control" >
         <br>
         <label for="name">name</label>
-        <input type="text" id ="name" name="name" class="form-control" th:value="${member.name}">
+        <input type="text" id ="name" name="name" th:value="${member.name}" disabled class="form-control">
         <br>
         <label for="nickName">nickName</label>
-        <input type="text" id="nickName" name="nickName" class="form-control" th:value="${member.nickName}">
+        <input type="text" id="nickName" name="nickName" th:value="${member.nickName}" class="form-control">
         <br>
         <table width="100%">
             <tr>
-                <td width="50%">
-                    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-                </td>
-                <td width="50%">
-                    <button class="btn btn-lg btn-primary btn-block" type="button" th:onclick = "location.href='/member/join'">Join</button>
+                <td width="100%">
+                    <button class="btn btn-lg btn-primary btn-block" type="submit">Update</button>
                 </td>
             </tr>
         </table>
     </form>
-
-
-    <form class="form text-left" th:action="@{/member/pwChange}" method="post">
+    <br>
+    <br>
+    <p class="font-black" th:if="${message} == null" >Change Password</p>
+    <p style="color:red" th:if="${message} != null"  th:text="${message}"></p>
+    <form class="form text-left" th:action="@{/member/setting/pw}" method="post">
         <label for="pw_now">현재 Pw</label>
         <input type="text" id="pw_now" name="pwNow" class="form-control" placeholder="Password" required="">
         <br>
         <label for="pw_new">새로운 pw</label>
-        <input type="text" id="pw_new" name="pwNew" class="form-control" placeholder="new Password" required="">
-        <label for="pw_re">pw 재입력</label>
-        <input type="text" id="pw_re" name="pwRe" class="form-control" placeholder="re input new Password" required="">
+        <input type="text" id="pw_new" name="pwNew" class="form-control" placeholder="Input new Password" required="">
+        <br>
+        <label for="pw_re">새로운 pw</label>
+        <input type="ow" id="pw_re" name="pwRe" class="form-control" placeholder="Input new Password" required="">
         <br>
         <table width="100%">
             <tr>
@@ -60,6 +60,8 @@
             </tr>
         </table>
     </form>
+    <br>
+    <br>
 </div>
 </body>
 </html>

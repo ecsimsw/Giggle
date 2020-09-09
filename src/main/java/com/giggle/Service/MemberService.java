@@ -4,6 +4,7 @@ import com.giggle.Domain.Entity.MemberType;
 import com.giggle.Domain.Form.JoinForm;
 import com.giggle.Domain.Form.LoginForm;
 import com.giggle.Domain.Entity.Member;
+import com.giggle.Domain.Form.MemberInfo;
 import com.giggle.Message.EjoinMessage;
 import com.giggle.Message.EloginMessage;
 import com.giggle.Repository.MemberRepository;
@@ -49,5 +50,16 @@ public class MemberService {
         memberRepository.save(member);
 
         return EjoinMessage.success;
+    }
+
+    public Member getByLoginId(String loginId){
+        Member member = memberRepository.findByLoginId(loginId);
+        return member;
+    }
+
+    public Member updateMemberInfo(Long id, MemberInfo memberInfo){
+        Member member = memberRepository.findById(id);
+        memberRepository.setNickName(member, memberInfo.getNickName());
+        return member;
     }
 }

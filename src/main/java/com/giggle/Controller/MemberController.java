@@ -1,7 +1,9 @@
 package com.giggle.Controller;
 
+import com.giggle.Domain.Entity.Member;
 import com.giggle.Domain.Form.JoinForm;
 import com.giggle.Domain.Form.LoginForm;
+import com.giggle.Domain.Form.MemberInfo;
 import com.giggle.Message.EjoinMessage;
 import com.giggle.Message.EloginMessage;
 import com.giggle.Service.MemberService;
@@ -9,13 +11,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
 
 @Controller
 @RequestMapping("/member")
@@ -79,5 +79,25 @@ public class MemberController {
             return "redirect:/main";  // after joinPage
         }
         throw new RuntimeException();
+    }
+
+    @GetMapping("/setting")
+    public String setting(Model model, HttpSession session){
+        String loginId = (String)session.getAttribute("loginId");
+
+        Member member = memberService.getByLoginId(loginId);
+        model.addAttribute("member", member);
+        return "setMember";
+    }
+
+    @PostMapping("/setting/memberInfo")
+    public String settingMemberInfo(MemberInfo memberInfo, HttpSession session){
+
+        String loginId = (String)session.getAttribute("loginId");
+
+        long id = memberService.getByLoginId(loginId).getId();
+        Member member = memberService.updateMemberInfo(id, memberInfo);
+
+        return "redirect:/main";
     }
 }

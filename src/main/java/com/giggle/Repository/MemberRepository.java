@@ -16,6 +16,9 @@ public class MemberRepository {
         em.persist(member);
     }
 
+    public Member findById(Long id){
+       return em.find(Member.class, id);
+    }
     // loginId 는 중복x
     public Member findByLoginId(String loginId){
         List<Member> selectedMembers = em.createQuery("select m from Member m where m.loginId = :loginId",Member.class)
@@ -32,5 +35,10 @@ public class MemberRepository {
                 .getResultList();
         if(selectedMembers.isEmpty()) return null;
         else { return selectedMembers.get(0); }
+    }
+
+    public void setNickName(Member member, String nickName){
+        member.setNickName(nickName);
+        em.flush();
     }
 }
