@@ -16,6 +16,7 @@ import java.util.List;
 
 @Slf4j
 @Controller
+@RequestMapping("/main")
 @RequiredArgsConstructor
 public class MainController {
 
@@ -24,7 +25,7 @@ public class MainController {
     private final MainCategoryService mainCategoryService;
     private final MiddleCategoryService middleCategoryService;
 
-    @GetMapping("/main")
+    @GetMapping("")
     public String mainPage(Model model, HttpSession session){
         String loginId = (String)session.getAttribute("loginId");
         model.addAttribute("loginId",loginId);
@@ -53,5 +54,9 @@ public class MainController {
     }
 
 
+    @GetMapping("/edit/imgBoard")
+    public String editImgBoard(){
+        return "editImgBoard";
+    }
 
 }

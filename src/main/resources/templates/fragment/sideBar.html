@@ -73,6 +73,15 @@
         <!-- Divider -->
         <hr class="sidebar-divider d-none d-md-block">
 
+        <div class="sidebar-heading"
+             style="font-weight: normal;
+                          text-align: center;
+                          text-transform: none;"
+             >
+            administrator
+        </div>
+
+
         <li class="nav-item">
             <a class="nav-link" th:href="${'/category/create/mainCategory'}">
                 <i class="fas fa-fw fa-table"></i>
@@ -87,6 +96,11 @@
             <a class="nav-link" th:href="${'/category/refreshPostCnt'}">
                 <i class="fas fa-fw fa-cog"></i>
                 <span>Ad) refresh Post Count</span>
+            </a>
+
+            <a class="nav-link" th:href="${'/main/edit/imgBoard'}">
+                <i class="fas fa-fw fa-cog"></i>
+                <span>Ad) edit main img board</span>
             </a>
         </li>
 
