@@ -1,5 +1,7 @@
 package com.giggle.Controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.giggle.Domain.Entity.*;
 import com.giggle.Service.*;
 import lombok.RequiredArgsConstructor;
@@ -8,10 +10,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.websocket.Session;
+import java.io.IOException;
+import java.net.http.HttpRequest;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Enumeration;
 import java.util.List;
 
 @Slf4j
@@ -21,9 +27,10 @@ import java.util.List;
 public class MainController {
 
     private final PostService postService;
-    private final CategoryService categoryService;
     private final MainCategoryService mainCategoryService;
-    private final MiddleCategoryService middleCategoryService;
+    private final PageService pageService;
+
+    private final ObjectMapper objectMapper;
 
     @GetMapping("")
     public String mainPage(Model model, HttpSession session){
@@ -57,6 +64,26 @@ public class MainController {
     @GetMapping("/edit/imgBoard")
     public String editImgBoard(){
         return "editImgBoard";
+    }
+
+    @PostMapping("/edit/imgBoard/add")
+    @ResponseBody
+    public String addImg(HttpServletRequest request) throws IOException {
+
+        String str = "add_";
+        int limitCnt=5;
+        List<String> srcList = new ArrayList<>();
+
+        for(int i =0; i<limitCnt; i++){
+            String imgSrc = request.getParameter("add_"+i);
+
+            if(imgSrc != null){
+                srcList.add(imgSrc);
+            }
+        }
+        pageService.addImgBoard(srcList);
+
+        return objectMapper.writeValueAsString(srcList);
     }
 
 }

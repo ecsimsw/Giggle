@@ -20,19 +20,28 @@
     <p style="color:red" th:if="${message} != null"  th:text="${message}"></p>
     <br>
 
-    <form class="form text-left">
+    <div style="
+    font-size: 25px;
+    text-align: left;
+    color: black;
+    font-weight: 900;
+    ">사진 추가</div>
+
+    <form class="form text-left" action="/main/edit/imgBoard/add" method="post">
 
         <div id="addedFormDiv"></div><BR> <!-- 폼을 삽입할 DIV -->
 
         <input type="Button" value="추가" onclick="addForm()">
 
-        <input type="Button" value="삭제" onclick="delForm()">
+        <input type="Button" value="제거" onclick="delForm()">
         <br>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Join</button>
+        <br>
+        <input type="file" accept=".jpg, .png" onchange="imageChange()" class="form-control-file" id="addedFile">
+        <br>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">적용</button>
     </form>
-
-
-
+    <br>
+    <br>
     <div class="col-xs-6 col-lg-6">
         <div id="demo" class="carousel slide" data-ride="carousel">
             <div class="carousel-inner">
@@ -78,15 +87,34 @@
 
 </div>
 
+<style>
+</style>
+
 <script type="text/javascript">
+
    var count = 0;
+   var limitCnt = 5;
 
    function addForm(){
+
+     // 파일 추가 시, 경로 input에 올라오고 input-file reset
+     var fileValue = $("#addedFile").val();   // 파일 경로
+     var fileName = fileValue.split("\\")[fileValue.length-1]; // 파일명
+     document.getElementById("addedFile").value = "";
+
+     if(count>limitCnt){
+        alert("파일은 한번에 5개까지 추가 가능합니다.");
+        return;
+     }
+
+     if(fileValue == ""){
+        alert("파일을 선택해주세요");
+        return;
+     }
+
      var addedFormDiv = document.getElementById("addedFormDiv");
      var str = "";
-     str+="<br>값1-"+count+" <input type='text' name='tb1_"+count+"'>";
-     str+="<br>값2-"+count+" <input type='text' name='tb2_"+count+"'>";
-     str+="<br>값3-"+count+" <input type='text' name='tb3_"+count+"'><BR>";
+     str+="<br>추가 파일 :: <input class='form-control' readonly type='text' name='add_"+count+"' value='"+fileValue+"'>";
 
      // 추가할 폼(에 들어갈 HTML)
      var addedDiv = document.createElement("div"); // 폼 생성
@@ -95,20 +123,20 @@
      addedFormDiv.appendChild(addedDiv); // 삽입할 DIV에 생성한 폼 삽입
 
      count++;
-     document.baseForm.count.value=count;
-     // 다음 페이지에 몇개의 폼을 넘기는지 전달하기 위해 히든 폼에 카운트 저장
    }
 
 
    function delForm(){
      var addedFormDiv = document.getElementById("addedFormDiv");
-     if(count >1){ // 현재 폼이 두개 이상이면
-                var addedDiv = document.getElementById("added_"+(--count));
-                // 마지막으로 생성된 폼의 ID를 통해 Div객체를 가져옴
-                addedFormDiv.removeChild(addedDiv); // 폼 삭제
-     }else{ // 마지막 폼만 남아있다면
-                document.baseForm.reset(); // 폼 내용 삭제
+     if(count >0){
+        var addedDiv = document.getElementById("added_"+(--count));
+        addedFormDiv.removeChild(addedDiv); // 폼 삭제
      }
+   }
+
+   function imageChange(){
+
+        alert(document.getElementById("addedFile").files[0].name);
    }
 
 </script>
@@ -118,3 +146,5 @@
 
 </body>
 </html>
+
+https://codepen.io/uixmat/pen/yadZXv
