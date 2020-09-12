@@ -27,7 +27,7 @@
     font-weight: 900;
     ">사진 추가</div>
 
-    <form class="form text-left" action="/main/edit/imgBoard/add" method="post">
+    <form class="form text-left" action="/main/edit/imgBoard/add" method="post" enctype="multipart/form-data">
 
         <div id="addedFormDiv"></div><BR> <!-- 폼을 삽입할 DIV -->
 
@@ -35,8 +35,6 @@
 
         <input type="Button" value="제거" onclick="delForm()">
         <br>
-        <br>
-        <input type="file" accept=".jpg, .png" onchange="imageChange()" class="form-control-file" id="addedFile">
         <br>
         <button class="btn btn-lg btn-primary btn-block" type="submit">적용</button>
     </form>
@@ -98,23 +96,18 @@
    function addForm(){
 
      // 파일 추가 시, 경로 input에 올라오고 input-file reset
-     var fileValue = $("#addedFile").val();   // 파일 경로
-     var fileName = fileValue.split("\\")[fileValue.length-1]; // 파일명
-     document.getElementById("addedFile").value = "";
+<!--     var fileValue = $("#addedFile").val();   // 파일 경로-->
+<!--     var fileName = fileValue.split("\\")[fileValue.length-1]; // 파일명-->
+<!--     document.getElementById("addedFile").value = "";-->
 
      if(count>limitCnt){
         alert("파일은 한번에 5개까지 추가 가능합니다.");
         return;
      }
 
-     if(fileValue == ""){
-        alert("파일을 선택해주세요");
-        return;
-     }
-
      var addedFormDiv = document.getElementById("addedFormDiv");
      var str = "";
-     str+="<br>추가 파일 :: <input class='form-control' readonly type='text' name='add_"+count+"' value='"+fileValue+"'>";
+     str+="<br>추가 파일 :: <input type='file' name='add_"+count+"'>";
 
      // 추가할 폼(에 들어갈 HTML)
      var addedDiv = document.createElement("div"); // 폼 생성
@@ -134,11 +127,6 @@
      }
    }
 
-   function imageChange(){
-
-        alert(document.getElementById("addedFile").files[0].name);
-   }
-
 </script>
 
 <!-- BottomScript-->
@@ -147,4 +135,3 @@
 </body>
 </html>
 
-https://codepen.io/uixmat/pen/yadZXv

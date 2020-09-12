@@ -3,6 +3,7 @@ package com.giggle.Service;
 import com.giggle.Repository.PageRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.FilenameUtils;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -16,30 +17,20 @@ import java.util.List;
 public class PageService {
 
     private final PageRepository pageRepository;
+    private final ResourceLoader resourceLoader;
 
-    public void addImgBoard(List<String> imgSrcList) throws IOException {
-        for(String fileSrc : imgSrcList){
+    public void addImgBoard(MultipartFile[] multipartFiles, String resourceSrc) throws IOException {
+        for(MultipartFile file : multipartFiles){
+            if(file != null) {
+                String sourceFileName = file.getOriginalFilename();
+                String sourceFileExtension = FilenameUtils.getExtension(sourceFileName).toLowerCase();
 
-            FileInputStream fis = new FileInputStream(fileSrc);
-
-
-            String sourceFileName = fileSrc.substring(fileSrc.lastIndexOf("."));
-            String sourceFileExtension =  fileSrc.substring(fileSrc.lastIndexOf(".")+1).toLowerCase();
-
-            FileOutputStream fileInServer = new FileOutputStream("static\\file\\mainBoardImg\\"+sourceFileName+sourceFileExtension);
+                File destFile;
 
 
-            while(true){
-                int data = fis.read();
-                if(data == -1){
-                    break;
-                }
-                fileInServer.write(data);
+                destFile = new File(resourceSrc +"\\"+ sourceFileName + "." + sourceFileExtension);
+                file.transferTo(destFile);
             }
-
-            fis.close();
-            fileInServer.close();
         }
-
     }
 }

@@ -6,13 +6,17 @@ import com.giggle.Domain.Entity.*;
 import com.giggle.Service.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.websocket.Session;
+import java.io.File;
 import java.io.IOException;
 import java.net.http.HttpRequest;
 import java.util.ArrayList;
@@ -68,22 +72,21 @@ public class MainController {
 
     @PostMapping("/edit/imgBoard/add")
     @ResponseBody
-    public String addImg(HttpServletRequest request) throws IOException {
-
-        String str = "add_";
+    public String addImg(MultipartHttpServletRequest request) throws IOException {
+        String resourceSrc = "\\static\\file\\mainBoardImg";
+        String nameStr = "add_";
         int limitCnt=5;
-        List<String> srcList = new ArrayList<>();
+
+        MultipartFile[] multipartFiles = new MultipartFile[limitCnt];
 
         for(int i =0; i<limitCnt; i++){
-            String imgSrc = request.getParameter("add_"+i);
-
-            if(imgSrc != null){
-                srcList.add(imgSrc);
-            }
+            MultipartFile requestFile = request.getFile(nameStr+i);
+            multipartFiles[i] = requestFile;
         }
-        pageService.addImgBoard(srcList);
 
-        return objectMapper.writeValueAsString(srcList);
+        pageService.addImgBoard(multipartFiles, resourceSrc );
+
+        return "redirect:/main/edit/imgBoard";
     }
 
 }
