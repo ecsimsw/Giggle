@@ -28,7 +28,7 @@ public class PageService {
                 File destFile;
 
 
-                destFile = new File(resourceSrc +"\\"+ sourceFileName + "." + sourceFileExtension);
+                destFile = new File(resourceSrc +"/"+ sourceFileName + "." + sourceFileExtension);
                 file.transferTo(destFile);
             }
         }
