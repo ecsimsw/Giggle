@@ -14,9 +14,10 @@ public class MainBoardImg implements Comparable<MainBoardImg>{
     @Id
     private Long id;
 
+    @GeneratedValue
     private int order;
 
-    private String srcPath; //  "/static/file/mainBoardImg/1test.png"
+    private String fileName; //  "1test.png"
 
     @Override
     public int compareTo(MainBoardImg mainBoardImg){

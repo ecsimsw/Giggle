@@ -36,12 +36,8 @@ public class PostService {
     }
 
     public List<Post> getNewPost(int totalPostCnt, int newPostCnt){
-        if(totalPostCnt-newPostCnt <= 0){
-            return postRepository.getNewPost(0, newPostCnt);
-        }
-        else{
-            return postRepository.getNewPost(totalPostCnt-newPostCnt, newPostCnt);
-        }
+        if(totalPostCnt-newPostCnt <= 0){return postRepository.getNewPost(0, newPostCnt); }
+        else{ return postRepository.getNewPost(totalPostCnt-newPostCnt, newPostCnt); }
     }
 
     public Post readPost(Long id){
@@ -59,7 +55,7 @@ public class PostService {
 
         post.setCategory(category);
         post.setTitle(postForm.getTitle());
-        post.setContent(postForm.getContent().replace("\r\n", "<br>"));
+        post.setContent(postForm.getContent().replace("\r\n", "<br>"));  // 한줄로 표시됨을 방지
 
         postRepository.updatePost(post);
     }

@@ -55,19 +55,21 @@ public class MainController {
         model.addAttribute("mainCategoryList", mainCategoryList);
 
         // new Posts
-        int newPostCntToPrint = 7;
+        int newPostCntToPrint = 7;    // mainPage에 포스트할 새로운 글의 개수를 지정한다.
 
-        int totalPostCnt = 0;
+        int totalPostCnt = 0;   // 전체 글의 개수 표시를 위함
 
-        for(MainCategory m : mainCategoryList) {
-            totalPostCnt += m.getPostCnt();
-        }
+        for(MainCategory m : mainCategoryList) { totalPostCnt += m.getPostCnt(); }
 
         List<Post> newPostList = postService.getNewPost(totalPostCnt, newPostCntToPrint);
 
         model.addAttribute("totalPostCnt", totalPostCnt);
         model.addAttribute("newPostList", newPostList);
 
+
+        // main image board
+        List<String> mainBoardImgSrc = pageService.getMainBoardImgSrc("/mainBoardImg");
+        model.addAttribute("mainBoardImgSrc","hi");
         return "mainPage";
     }
 
@@ -82,34 +84,21 @@ public class MainController {
     public String addImg(MultipartHttpServletRequest multipartHttpServletRequest,
                          HttpServletRequest request) throws IOException {
 
-        URL r = this.getClass().getResource("/");
-        // request.getServletContext.getRealPath() 적용 안됨
-        Resource resource = resourceLoader.getResource("classpath:file/mainBoardImg/image1.png"); // 파일 지정 필요
-
-        resource.exists();
-        resource.getFile();
-        resource.getURI();
-
-//        String resourceSrc = r.getPath();
-//        resourceSrc+="resources/static/file/mainBoardImg";
-
         String resourceSrc = request.getServletContext().getRealPath("/mainBoardImg");
 
-
-        String nameStr = "add_";
-        int limitCnt=5;
+        String nameId = "add_";  // edit/imgBoard 에서 사진 name 형식 : add_1 ~ add_n
+        int limitCnt=5;    // edit/imgBoard 에서 추가할 수 있는 사진 개수 제한
 
         MultipartFile[] multipartFiles = new MultipartFile[limitCnt];
 
         for(int i =0; i<limitCnt; i++){
-            MultipartFile requestFile = multipartHttpServletRequest.getFile(nameStr+i);
+            MultipartFile requestFile = multipartHttpServletRequest.getFile(nameId+i);
             multipartFiles[i] = requestFile;
         }
 
         pageService.addImgBoard(multipartFiles, resourceSrc);
 
-
-        return r.getPath();
+        return resourceSrc;
     }
 
 }
