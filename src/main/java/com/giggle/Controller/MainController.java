@@ -68,8 +68,10 @@ public class MainController {
 
 
         // main image board
-        List<String> mainBoardImgSrc = pageService.getMainBoardImgSrc("/mainBoardImg");
-        model.addAttribute("mainBoardImgSrc","hi");
+        List<String> mainBoardImgSrc = pageService.getMainBoardImgSrc("/static/mainBoardImg");
+
+        log.info(String.valueOf(mainBoardImgSrc.size()));
+        model.addAttribute("mainBoardImgSrc",mainBoardImgSrc);
         return "mainPage";
     }
 

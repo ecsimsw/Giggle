@@ -15,13 +15,15 @@ public class MainBoardImg implements Comparable<MainBoardImg>{
     private Long id;
 
     @GeneratedValue
-    private int order;
+    private int orderImg;
+
+    // expected "identifier"; SQL statement : 사용할 수 없는 테이블 명 일 경우 (order)
 
     private String fileName; //  "1test.png"
 
     @Override
     public int compareTo(MainBoardImg mainBoardImg){
-        if(this.order < mainBoardImg.order){ return -1; }
+        if(this.orderImg < mainBoardImg.orderImg){ return -1; }
         else{ return 1; }
     }
 }

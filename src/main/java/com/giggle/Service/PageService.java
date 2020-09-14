@@ -37,10 +37,13 @@ public class PageService {
     public List<String> getMainBoardImgSrc(String basePath){
         List<String> imgSrcList = new ArrayList<>();
 
-        for(MainBoardImg imgs : pageRepository.getMainBoardImages()){
-            imgSrcList.add(basePath+"/"+imgs.getFileName());
-        }
+        List images = pageRepository.getMainBoardImages();
+        if(images != null){
+            for(MainBoardImg imgs : pageRepository.getMainBoardImages()){
+                imgSrcList.add(basePath+"/"+imgs.getFileName());
+            }
 
+        }
         return imgSrcList;
     }
 }
