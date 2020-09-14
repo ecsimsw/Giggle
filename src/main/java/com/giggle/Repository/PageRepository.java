@@ -29,4 +29,11 @@ public class PageRepository {
         return mainBoardImgSrc;
     }
 
+    public MainBoardImg findById(long id){
+        return em.find(MainBoardImg.class, id);
+    }
+
+    public void deleteMainBoard(MainBoardImg mainBoardImg){
+        em.remove(mainBoardImg);
+    }
 }

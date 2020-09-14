@@ -46,4 +46,21 @@ public class PageService {
         }
         return imgSrcList;
     }
+
+    public List<MainBoardImg> getAllMainBoardImg(){
+        return pageRepository.getMainBoardImages();
+    }
+
+    @Transactional
+    public void deleteImgArr(long[] idArr, String basePath){
+        for(long id : idArr){
+            MainBoardImg mainBoardImg = pageRepository.findById(id);
+
+            File deleteFile = new File(basePath+"/"+mainBoardImg.getFileName());
+
+            if(deleteFile.exists()) { deleteFile.delete(); }
+
+            pageRepository.deleteMainBoard(mainBoardImg);
+        }
+    }
 }

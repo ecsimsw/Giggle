@@ -39,20 +39,29 @@
         <button class="btn btn-lg btn-primary btn-block" type="submit">적용</button>
     </form>
     <br>
-
+    <br>
     <div style="
     font-size: 25px;
     text-align: left;
     color: black;
     font-weight: 900;
     ">사진 제거</div>
-    <form class="form text-left" action="/main/edit/imgBoard/delete" method="get">
-
-        <th:block>
-
-        </th:block>
-
+    <form th:if="${mainBoardImg.size()}!=0" class="form text-left" action="/main/edit/imgBoard/delete" method="get">
+        <select name="imageFiles" multiple>
+            <th:block th:each="image : ${mainBoardImg}">
+                <option th:value="${image.id}" th:text="${image.fileName}" >fileName</option>
+            </th:block>
+        </select>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">적용</button>
     </form>
+    <br>
+    <br>
+    <div style="
+    font-size: 25px;
+    text-align: left;
+    color: black;
+    font-weight: 900;
+    ">현재 보드</div>
     <br>
     <div th:replace="/fragment/mainImgBoard :: mainImgBoard"></div>
 </div>
@@ -63,7 +72,7 @@
 <script type="text/javascript">
 
    var count = 0;
-   var limitCnt = 5;
+   var limitCnt =  /*[[${limitAdditionImgCnt}]]*/ 5;
 
    function addForm(){
 
@@ -73,7 +82,7 @@
 <!--     document.getElementById("addedFile").value = "";-->
 
      if(count>limitCnt){
-        alert("파일은 한번에 5개까지 추가 가능합니다.");
+        alert("파일은 한번에 "+limitAdditionImgCnt+"개까지 추가 가능합니다.");
         return;
      }
 
