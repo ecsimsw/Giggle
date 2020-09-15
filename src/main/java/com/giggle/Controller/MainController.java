@@ -37,7 +37,7 @@ public class MainController {
     private final MainCategoryService mainCategoryService;
     private final PageService pageService;
 
-    private final int newPostCntToPrint = 7;
+    private final int newPostCntToPrint = 7; // mainPage에 포스트할 새로운 글의 개수를 지정한다.
     private final String nameId = "add_";  // edit/imgBoard 에서 사진 name 형식 : add_1 ~ add_n
     private final int limitAdditionImgCnt = 5;  // edit/imgBoard 에서 추가할 수 있는 사진 개수 제한
 
@@ -45,6 +45,7 @@ public class MainController {
     ResourceLoader resourceLoader;
 
     private final ObjectMapper objectMapper;
+
 
     @GetMapping("")
     public String mainPage(Model model, HttpSession session){
@@ -57,11 +58,7 @@ public class MainController {
 
         model.addAttribute("mainCategoryList", mainCategoryList);
 
-        // new Posts
-        int newPostCntToPrint = 7;    // mainPage에 포스트할 새로운 글의 개수를 지정한다.
-
         int totalPostCnt = 0;   // 전체 글의 개수 표시를 위함
-
         for(MainCategory m : mainCategoryList) { totalPostCnt += m.getPostCnt(); }
 
         List<Post> newPostList = postService.getNewPost(totalPostCnt, newPostCntToPrint);
@@ -76,6 +73,8 @@ public class MainController {
         return "mainPage";
     }
 
+
+    // edit img board
 
     @GetMapping("/edit/imgBoard")
     public String editImgBoard(Model model){
@@ -119,6 +118,18 @@ public class MainController {
         pageService.addImgBoard(multipartFiles, resourceSrc);
 
         return "redirect:/main/edit/imgBoard";
+    }
+
+
+    // edit shortCut
+
+    @GetMapping("/edit/shortCut")
+    public String editShortCut(Model model){
+        List<ShortCut> shortCutList = pageService.getAllShortCut();
+
+        model.addAttribute("shortCutList", shortCutList);
+
+        return "editshortCut";
     }
 
 }

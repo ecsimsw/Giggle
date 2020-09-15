@@ -47,7 +47,7 @@
     font-weight: 900;
     ">사진 제거</div>
     <form th:if="${mainBoardImg.size()}!=0" class="form text-left" action="/main/edit/imgBoard/delete" method="get">
-        <select name="imageFiles" multiple>
+        <select name="imageFiles" class="form-control" multiple>
             <th:block th:each="image : ${mainBoardImg}">
                 <option th:value="${image.id}" th:text="${image.fileName}" >fileName</option>
             </th:block>

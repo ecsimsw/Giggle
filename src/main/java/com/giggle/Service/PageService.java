@@ -1,10 +1,11 @@
 package com.giggle.Service;
 
 import com.giggle.Domain.Entity.MainBoardImg;
+import com.giggle.Domain.Entity.ShortCut;
+import com.giggle.Domain.Form.ShortCutForm;
 import com.giggle.Repository.PageRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.FilenameUtils;
-import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,6 +20,9 @@ import java.util.List;
 public class PageService {
 
     private final PageRepository pageRepository;
+
+
+    /// edit Main img Board
 
     @Transactional
     public void addImgBoard(MultipartFile[] multipartFiles, String resourceSrc) throws IOException {
@@ -42,7 +46,6 @@ public class PageService {
             for(MainBoardImg imgs : pageRepository.getMainBoardImages()){
                 imgSrcList.add(basePath+"/"+imgs.getFileName());
             }
-
         }
         return imgSrcList;
     }
@@ -54,13 +57,28 @@ public class PageService {
     @Transactional
     public void deleteImgArr(long[] idArr, String basePath){
         for(long id : idArr){
-            MainBoardImg mainBoardImg = pageRepository.findById(id);
-
+            MainBoardImg mainBoardImg = pageRepository.findMainBoardImgById(id);
             File deleteFile = new File(basePath+"/"+mainBoardImg.getFileName());
-
             if(deleteFile.exists()) { deleteFile.delete(); }
-
-            pageRepository.deleteMainBoard(mainBoardImg);
+            pageRepository.deleteMainBoardImg(mainBoardImg);
         }
+    }
+
+
+    /// edit shortCuts
+
+    @Transactional
+    public void addShortCut(ShortCutForm shortCutForm){
+        pageRepository.createShortCut(shortCutForm);
+    }
+
+    @Transactional
+    public void deleteShortCut(long id){
+        ShortCut shortCut = pageRepository.findShortCutById(id);
+        pageRepository.deleteShortCut(shortCut);
+    }
+
+    public List<ShortCut> getAllShortCut(){
+        return pageRepository.getAllShortCut();
     }
 }
