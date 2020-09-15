@@ -126,8 +126,10 @@ public class MainController {
     @GetMapping("/edit/shortCut")
     public String editShortCut(Model model){
         List<ShortCut> shortCutList = pageService.getAllShortCut();
-
         model.addAttribute("shortCutList", shortCutList);
+
+        List<MainCategory> mainCategoryList = mainCategoryService.getAllMainCategory();
+        model.addAttribute("mainCategoryList", mainCategoryList);
 
         return "editshortCut";
     }

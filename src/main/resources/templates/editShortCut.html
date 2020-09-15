@@ -31,6 +31,7 @@
 
 
         <select id="selectedCategory" class="form-control" name="selectedCategory">
+            <option value="none" selected disabled>=== 선택 ===</option>
             <div th:each="mainCategory, index_main : ${mainCategoryList}">
                 <option style="font-size:18px; font-weight:500; color:black;" disabled th:text="${mainCategory.name}">mainCategory</option>
 
@@ -88,53 +89,26 @@
 
 <script type="text/javascript">
 
-<!--   var count = 0;-->
 <!--   var limitCnt =  /*[[${limitAdditionImgCnt}]]*/ 5;-->
 
    function addForm(){
-     var selectForm  document.getElementById("selectedCategory");
-     var selectedCategoryName = selectForm.options[s.selectedIndex].value;
+     var selectForm = document.getElementById("selectedCategory");
+     var selectedCategoryName = selectForm.options[selectForm.selectedIndex].value;
      var description = document.getElementById("description");
      var color = document.getElementById("color");
      var str = "";
-     str+="<br>미리 보기 ::
-        <div class='col-xl-3 col-md-6 mb-4'>
-          <div class='card border-left-success shadow h-100 py-2'>
-            <div class='card-body'>
-              <div class='row no-gutters align-items-center'>
-                <div class='col mr-2'>
-                  <div class='text-xs font-weight-bold text-success text-uppercase mb-1'>Free conversation</div>
-                  <div class='h5 mb-0 font-weight-bold text-gray-800'>"
-
+     str+="<br>미리 보기 ::<div class='col-xl-3 col-md-6 mb-4'><div class='card border-left-success shadow h-100 py-2'><div class='card-body'>";
+     str+="<div class='row no-gutters align-items-center'><div class='col mr-2'><div class='text-xs font-weight-bold text-success text-uppercase mb-1'>Free conversation</div>";
+     str+="<div class='h5 mb-0 font-weight-bold text-gray-800'>";
      str+=selectedCategoryName;
-     str+=        "</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-     ";
+     str+="</div></div></div></div></div></div>";
 
      // 추가할 폼(에 들어갈 HTML)
      var addedDiv = document.createElement("div"); // 폼 생성
-     addedDiv.id = "added_"+count; // 폼 Div에 ID 부여 (삭제를 위해)
+     addedDiv.id = "added_"; // 폼 Div에 ID 부여 (삭제를 위해)
      addedDiv.innerHTML  = str; // 폼 Div안에 HTML삽입
      addedFormDiv.appendChild(addedDiv); // 삽입할 DIV에 생성한 폼 삽입
-
-     count++;
    }
-
-
-
-
-   function delForm(){
-     var addedFormDiv = document.getElementById("addedFormDiv");
-     if(count >0){
-        var addedDiv = document.getElementById("added_"+(--count));
-        addedFormDiv.removeChild(addedDiv); // 폼 삭제
-     }
-   }
-
 </script>
 
 <!-- BottomScript-->
