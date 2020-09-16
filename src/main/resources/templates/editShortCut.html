@@ -26,12 +26,10 @@
     color: black;
     font-weight: 900;
     ">아이콘 추가</div>
-
+    <br>
     <form class="form text-left" action="/main/edit/shortCut/add" method="post">
-
-
         <select id="selectedCategory" class="form-control" name="selectedCategory">
-            <option value="none" selected disabled>=== 선택 ===</option>
+            <option value="none" selected disabled>=== Select Category ===</option>
             <div th:each="mainCategory, index_main : ${mainCategoryList}">
                 <option style="font-size:18px; font-weight:500; color:black;" disabled th:text="${mainCategory.name}">mainCategory</option>
 
@@ -50,38 +48,36 @@
         <br>
         <input id="color" type="text" class="form-control" required name="color" placeholder="Choose color">
         <br>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">적용</button>
-    </form>
-    <br>
-    <br>
-<!--    <div style="-->
-<!--    font-size: 25px;-->
-<!--    text-align: left;-->
-<!--    color: black;-->
-<!--    font-weight: 900;-->
-<!--    ">아이콘 제거</div>-->
-<!--    <br>-->
-<!--    <form class="form text-left " action="/main/edit/imgBoard/delete" method="get">-->
-<!--        <select name="imageFiles" class="form-control" multiple>-->
-<!--            <th:block th:each="image : ${mainBoardImg}">-->
-<!--                <option th:value="${image.id}" th:text="${image.fileName}" >fileName</option>-->
-<!--            </th:block>-->
-<!--        </select>-->
-<!--        <br>-->
-<!--        <button class="btn btn-lg btn-primary btn-block" type="submit">적용</button>-->
-<!--    </form>-->
-    <br>
-    <br>
-    <div style="
+        <div style="
     font-size: 25px;
     text-align: left;
     color: black;
     font-weight: 900;
     ">미리 보기</div>
-    <input type="Button" value="미리보기 적용" onclick="addForm()">
-    <div id="addedFormDiv"></div><BR> <!-- 폼을 삽입할 DIV -->
+        <br>
+        <input type="Button" value="미리보기 적용" onclick="example()">
+        <div id="exampleFormDiv">
+            <!-- Content Row -->
+            <div class="row">
+                <!-- Earnings (Monthly) Card Example -->
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div id="shortCut_div" class="card shadow h-100 py-2" style="border-left: 0.25rem solid blue !important;">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div id="shortCut_desc" class="text-xs font-weight-bold text-primary text-uppercase mb-1">About notice</div>
+                                    <div id="shortCut_name" class="h5 mb-0 font-weight-bold text-gray-800">Notice</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><BR> <!-- 폼을 삽입할 DIV -->
+        <br>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">적용</button>
+    </form>
     <br>
-    <div th:replace="/fragment/mainImgBoard :: mainImgBoard"></div>
 </div>
 
 <style>
@@ -91,23 +87,24 @@
 
 <!--   var limitCnt =  /*[[${limitAdditionImgCnt}]]*/ 5;-->
 
-   function addForm(){
+   function example(){
+
+     alert("hi");
      var selectForm = document.getElementById("selectedCategory");
      var selectedCategoryName = selectForm.options[selectForm.selectedIndex].value;
-     var description = document.getElementById("description");
-     var color = document.getElementById("color");
-     var str = "";
-     str+="<br>미리 보기 ::<div class='col-xl-3 col-md-6 mb-4'><div class='card border-left-success shadow h-100 py-2'><div class='card-body'>";
-     str+="<div class='row no-gutters align-items-center'><div class='col mr-2'><div class='text-xs font-weight-bold text-success text-uppercase mb-1'>Free conversation</div>";
-     str+="<div class='h5 mb-0 font-weight-bold text-gray-800'>";
-     str+=selectedCategoryName;
-     str+="</div></div></div></div></div></div>";
 
-     // 추가할 폼(에 들어갈 HTML)
-     var addedDiv = document.createElement("div"); // 폼 생성
-     addedDiv.id = "added_"; // 폼 Div에 ID 부여 (삭제를 위해)
-     addedDiv.innerHTML  = str; // 폼 Div안에 HTML삽입
-     addedFormDiv.appendChild(addedDiv); // 삽입할 DIV에 생성한 폼 삽입
+     var input_color = document.getElementById("color").value;
+     var input_desc = document.getElementById("description").value;
+
+     var shortCut_div = document.getElementById("shortCut_div");
+     shortCut_div.style.borderLeftColor = input_color;
+<!--     https://www.w3schools.com/cssref/pr_border-left_color.asp-->
+
+     var description_div = document.getElementById(“shortCut_desc”);
+<!--     description_div.innerHTML = input_desc;-->
+<!--     description_div.style.color = input_color;-->
+
+<!--     document.getElementById(“shortCut_name”).innerHTML = selectedCategoryName;-->
    }
 </script>
 
