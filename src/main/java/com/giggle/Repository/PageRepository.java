@@ -47,11 +47,12 @@ public class PageRepository {
 
     public ShortCut findShortCutById(long id){return em.find(ShortCut.class, id);}
 
-    public void createShortCut(ShortCutForm shortCutForm){
+    public void createShortCut(String categoryName, long categoryId, String description, String color){
         ShortCut newShortCut = new ShortCut();
-        newShortCut.setTitle(shortCutForm.getTitle());
-        newShortCut.setDescription(shortCutForm.getDescription());
-        newShortCut.setLink(shortCutForm.getLink());
+        newShortCut.setTitle(categoryName);
+        newShortCut.setCategoryId(categoryId);
+        newShortCut.setDescription(description);
+        newShortCut.setColor(color);
         em.persist(newShortCut);
     }
 

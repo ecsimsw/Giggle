@@ -16,7 +16,7 @@ public class ShortCut {
     private Long id;
 
     private String title;
-    private String link;
+    private Long categoryId;
     private String description;
     private String color;
 }

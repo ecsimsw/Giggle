@@ -1,5 +1,6 @@
 package com.giggle.Service;
 
+import com.giggle.Domain.Entity.Category;
 import com.giggle.Domain.Entity.MainBoardImg;
 import com.giggle.Domain.Entity.ShortCut;
 import com.giggle.Domain.Form.ShortCutForm;
@@ -68,8 +69,9 @@ public class PageService {
     /// edit shortCuts
 
     @Transactional
-    public void addShortCut(ShortCutForm shortCutForm){
-        pageRepository.createShortCut(shortCutForm);
+    public void addShortCut(Category category, String description, String color){
+
+        pageRepository.createShortCut(category.getName(), category.getId(), description, color);
     }
 
     @Transactional

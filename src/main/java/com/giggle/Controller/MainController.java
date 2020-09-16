@@ -3,6 +3,7 @@ package com.giggle.Controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.giggle.Domain.Entity.*;
+import com.giggle.Domain.Form.ShortCutForm;
 import com.giggle.Service.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,6 +34,7 @@ import java.util.*;
 @RequiredArgsConstructor
 public class MainController {
 
+    private final CategoryService categoryService;
     private final PostService postService;
     private final MainCategoryService mainCategoryService;
     private final PageService pageService;
@@ -41,14 +43,11 @@ public class MainController {
     private final String nameId = "add_";  // edit/imgBoard 에서 사진 name 형식 : add_1 ~ add_n
     private final int limitAdditionImgCnt = 5;  // edit/imgBoard 에서 추가할 수 있는 사진 개수 제한
 
-    @Autowired
-    ResourceLoader resourceLoader;
-
     private final ObjectMapper objectMapper;
 
 
     @GetMapping("")
-    public String mainPage(Model model, HttpSession session){
+    public String mainPage(Model model, HttpSession session) throws JsonProcessingException {
         String loginId = (String)session.getAttribute("loginId");
         model.addAttribute("loginId",loginId);
 
@@ -70,6 +69,14 @@ public class MainController {
         // main image board
         List<String> mainBoardImgSrc = pageService.getMainBoardImgSrc("/static/mainBoardImg");
         model.addAttribute("mainBoardImgSrc",mainBoardImgSrc);
+
+
+        // shortCut
+        List<ShortCut> shortCutList = pageService.getAllShortCut();
+        model.addAttribute("shortCutList", shortCutList);
+
+        log.info("asdfasdf : "+ objectMapper.writeValueAsString(shortCutList));
+
         return "mainPage";
     }
 
@@ -134,4 +141,13 @@ public class MainController {
         return "editshortCut";
     }
 
+
+    @PostMapping("/edit/shortCut/add")
+    public String editShortCutAdd(@RequestParam("selectedCategory") long categoryId,
+                                  @RequestParam String description,
+                                  @RequestParam String color){
+        Category category = categoryService.findById(categoryId);
+        pageService.addShortCut(category, description, color);
+        return "redirect:/main/edit/shortCut";
+    }
 }
