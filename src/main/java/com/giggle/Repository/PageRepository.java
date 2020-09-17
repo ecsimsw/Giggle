@@ -1,12 +1,9 @@
 package com.giggle.Repository;
 
 import com.giggle.Domain.Entity.MainBoardImg;
-import com.giggle.Domain.Entity.MiddleCategory;
 import com.giggle.Domain.Entity.ShortCut;
-import com.giggle.Domain.Form.ShortCutForm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;

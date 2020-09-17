@@ -77,8 +77,24 @@
         <button class="btn btn-lg btn-primary btn-block" type="submit">적용</button>
     </form>
     <br>
+    <div style="
+    font-size: 25px;
+    text-align: left;
+    color: black;
+    font-weight: 900;
+    ">아이콘 삭제</div>
+    <br>
+    <form th:if="${shortCutList.size()}!=0" class="form text-left" action="/main/edit/shortCut/delete" method="get">
+        <select name="shortCut" class="form-control" method="get" multiple>
+            <th:block th:each="shortCut : ${shortCutList}">
+                <option th:style="'color:'+@{${shortCut.color}}+';'"  th:value="${shortCut.id}"
+                        th:text="${shortCut.title}">shortCut_Name</option>
+            </th:block>
+        </select>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">적용</button>
+    </form>
+    <br>
 </div>
-
 <style>
 </style>
 

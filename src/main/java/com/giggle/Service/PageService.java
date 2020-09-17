@@ -3,7 +3,6 @@ package com.giggle.Service;
 import com.giggle.Domain.Entity.Category;
 import com.giggle.Domain.Entity.MainBoardImg;
 import com.giggle.Domain.Entity.ShortCut;
-import com.giggle.Domain.Form.ShortCutForm;
 import com.giggle.Repository.PageRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.FilenameUtils;
@@ -75,9 +74,12 @@ public class PageService {
     }
 
     @Transactional
-    public void deleteShortCut(long id){
-        ShortCut shortCut = pageRepository.findShortCutById(id);
-        pageRepository.deleteShortCut(shortCut);
+    public void deleteShortCutArr(long[] idArr){
+        ShortCut shortCut;
+        for(long id : idArr){
+            shortCut = pageRepository.findShortCutById(id);
+            pageRepository.deleteShortCut(shortCut);
+        }
     }
 
     public List<ShortCut> getAllShortCut(){
