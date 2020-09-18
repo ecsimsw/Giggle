@@ -8,8 +8,16 @@
     <link href="C:\Users\user\IdeaProjects\Giggle\src\main\resources\static\SBadmin2\sb-admin-2.min.css" rel="stylesheet">
     <script src="C:\Users\user\IdeaProjects\Giggle\src\main\resources\static\script\jquery-3.5.1.js"></script>
     <script src="C:\Users\user\IdeaProjects\Giggle\src\main\resources\static\script\jquery.twbsPagination.min.js"></script>
-
 </head>
+
+<!--private String title;   // latestPost, freePost, linkPost-->
+
+<!--private String content;  // freePost-->
+
+<!--private long linkId; // latestPost - categoryId-->
+
+<!--// linkPost - postId-->
+
 
 <body class="text-center">
 <div class="container">
@@ -25,98 +33,115 @@
     text-align: left;
     color: black;
     font-weight: 900;
-    ">Board 추가</div>
+    ">보드 타입 변경</div>
     <br>
-    <form class="form text-left" action="/main/edit/dashBoard/add" method="post">
+    <form class="form text-left" action="/main/edit/dashBoard/type" method="post">
+        <input hidden th:value="${dashBoard.id}" name="id">
         <label for="type">type</label>
-        <select id="type" class="form-control" name="type">
-            <option value="none" selected disabled>Select type</option>
+        <select required id="type" class="form-control" name="type">
+            <option th:value="${dashBoard.type.name()}" th:text="${dashBoard.type.name()}" selected></option>
 
-            <option value="img">Img Board</option>
-            <option value="latestPost">Latest Post</option>
-            <option value="freePost">Free Post</option>
+            <option th:if="${dashBoard.type.name()}!='img'" value="imgBoard">Img Board</option>
+            <option th:if="${dashBoard.type.name()}!='latestPost'" value="latestPost">Latest Post</option>
+            <option th:if="${dashBoard.type.name()}!='freePost'" value="freePost">Free Post</option>
+            <option th:if="${dashBoard.type.name()}!='linkPost'" value="linkPost">Link Post</option>
         </select>
         <br>
         <label for="width">width</label>
-        <select id="width" class="form-control" name="width">
-            <option value="none" selected disabled>Select width</option>
+        <select required id="width" class="form-control" name="width">
+            <option th:value="${dashBoard.width}" th:text="${dashBoard.width}" selected></option>
 
-            <option value="narrow">narrow</option>
-            <option value="wide">wide</option>
+            <option th:if="${dashBoard.width}!='narrow'" value="narrow">narrow</option>
+            <option th:if="${dashBoard.width}!='wide'" value="wide">wide</option>
         </select>
         <br>
         <label for="height">height</label>
-        <select id="height" class="form-control" name="height">
-            <option value="none" selected disabled>Select height</option>
+        <select required id="height" class="form-control" name="height">
+            <option th:value="${dashBoard.height}" th:text="${dashBoard.height}" selected></option>
 
-            <option value="short">short</option>
-            <option value="long">long</option>
+            <option th:if="${dashBoard.height}!='short'" value="short">short</option>
+            <option th:if="${dashBoard.height}!='long'" value="long">long</option>
         </select>
-        <br>
-        <div style="font-size: 25px;text-align: left;color: black;font-weight: 900;">미리 보기</div>
-        <br>
-        <div id="exampleFormDiv">
-            <div class="row">
-                <div id="card_width" class="col-xs-6 col-lg-6" style="padding-right: 0px;padding-left: 0px;">
-                    <div class="col-lg-12 mb-4">
-                        <div class="card shadow mb-4">
-                            <div class="card-header py-3">
-                                <h6 class="m-0 font-weight-bold text-primary">Latest notice</h6>
-                            </div>
-                            <div id="card_height" class="card-body short-board-body">
-                                <p>Add some quality, svg illustrations to your project courtesy of <a target="_blank" rel="nofollow" href="https://undraw.co/">unDraw</a>, a constantly updated collection of beautiful svg images that you can use completely free and without attribution!</p>
-                                <a target="_blank" rel="nofollow" href="https://undraw.co/">See that notice →</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
         <br>
         <button class="btn btn-lg btn-primary btn-block" type="submit">적용</button>
     </form>
     <br>
-    <div style="font-size: 25px;text-align: left;color: black; font-weight: 900;">아이콘 삭제</div>
+
+    <div style="
+    font-size: 25px;
+    text-align: left;
+    color: black;
+    font-weight: 900;
+    ">보드 내용 편집</div>
     <br>
+
+    <th:block th:if="${dashBoard.type.name()} == latestPost">
+        <form class="form text-left" action="/main/edit/dashBoard/latestPost" method="post">
+            <input hidden th:value="${dashBoard.id}" name="id">
+
+            <label for="title">title</label>
+            <input id="title" name="title" type="text" class="form-control" th:value="${dashBoard.title}">
+            <br>
+            <label for="selectedCategory">selectedCategory</label>
+            <select id="selectedCategory" class="form-control" name="linkId">
+                <option value="none" selected disabled>Select Category</option>
+                <div th:each="mainCategory, index_main : ${mainCategoryList}">
+                    <option style="font-size:18px; font-weight:500; color:black;" disabled th:text="${mainCategory.name}">mainCategory</option>
+
+                    <div th:each="middleCategory,index_mid : ${mainCategory.middleCategoryList}">
+                        <option style="font-size:16px; color:black;" disabled th:utext="${'&amp;nbsp;&amp;nbsp;&amp;nbsp;'+middleCategory.name}">middleCategory</option>
+
+                        <div th:each="category, index_cat : ${middleCategory.categoryList}">
+                            <option style="font-size:14px; color: darkslategray;" th:value="${category.id}" th:utext="${'&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;'+category.name}">category</option>
+                        </div>
+                    </div>
+                    <option th:if="${index_main.count!=index_main.size}" disabled> </option>
+                </div>
+            </select>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">적용</button>
+        </form>
+    </th:block>
+
+    <th:block th:if="${dashBoard.type.name()} == linkPost">
+        <form class="form text-left" action="/main/edit/dashBoard/linkPost" method="post">
+            <input hidden th:value="${dashBoard.id}" name="id">
+
+            <label for="title">title</label>
+            <input id="title" name="title" type="text" class="form-control" th:value="${dashBoard.title}">
+            <br>
+            <label for="postId">postId</label>
+            <input id="postId" name="linkId" class="form-control" th:value="${dashBoard.linkId}" type="text">
+            <button class="btn btn-lg btn-primary btn-block" type="submit">적용</button>
+        </form>
+    </th:block>
+
+    <th:block th:if="${dashBoard.type.name()} == freePost">
+        <form class="form text-left" action="/main/edit/dashBoard/freePost" method="post">
+            <input hidden th:value="${dashBoard.id}" name="id">
+
+            <label for="title">title</label>
+            <input id="title" name="title" class="form-control" type="text" th:value="${dashBoard.title}">
+            <br>
+            <label for="content">content</label>
+            <textarea id="content" name="content" class="form-control" th:utext="${dashBoard.content}"></textarea>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">적용</button>
+        </form>
+    </th:block>
+
+    <br>
+    <div style="
+    font-size: 25px;
+    text-align: left;
+    color: black;
+    font-weight: 900;
+    ">보드 삭제</div>
+    <br>
+    <form class="form text-left" action="/main/edit/dashBoard/delete" method="get">
+        <input hidden th:value="${dashBoard.id}" name="id">
+        <button class="btn btn-lg btn-primary btn-block" type="submit">삭제</button>
+    </form>
+
 </div>
-<style>
-</style>
-
-<script type="text/javascript">
-
-   const selectTypeForm = document.getElementById("type");
-   const selectWidthForm = document.getElementById("width");
-   const selectHeightForm = document.getElementById("height");
-
-   const card_width = document.getElementById("card_width");
-   const card_height = document.getElementById("card_height");
-
-
-   selectTypeForm.addEventListener('change', (event) => {
-      var selectedType = selectTypeForm.options[selectTypeForm.selectedIndex].text.trim();
-
-    });
-
-
-   selectWidthForm.addEventListener('change', (event) => {
-      var selectedWidth = selectWidthForm.options[selectWidthForm.selectedIndex].text.trim();
-      if(selectedWidth == 'wide'){
-        card_width.classList.remove('col-lg-6');
-        card_width.classList.add('col-lg-12')
-      }
-      else{
-         card_width.classList.remove('col-lg-12');
-        card_width.classList.add('col-lg-6')
-      }
-    });
-
-   document.addEventListener('keydown', function(event) {
-      if (event.keyCode === 13) {
-        event.preventDefault();
-      };
-    }, true);
-</script>
-
 <!-- BottomScript-->
 <div th:replace="/fragment/bottomScript :: bottomScript"> </div>
 

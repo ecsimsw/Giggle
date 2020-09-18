@@ -140,9 +140,77 @@ public class MainController {
 
 
     @GetMapping("/edit/shortCut/delete")
-    public String editShortCutAdd(@RequestParam(value="shortCut") long[] idArr)
+    public String editShortCutDelete(@RequestParam(value="shortCut") long[] idArr)
     {
         pageService.deleteShortCutArr(idArr);
         return "redirect:/main/edit/shortCut";
+    }
+
+
+    // ---- edit dashBoard
+
+    @GetMapping("/add/dashBoard")
+    public String editDashBoard(){
+        return "addDashBoard";
+    }
+
+    @PostMapping("/add/dashBoard")
+    public String editDashBoardAdd(@RequestParam DashBoardType type,
+                                   @RequestParam String width,
+                                   @RequestParam String height) {
+        pageService.addDashBoard(type, width, height);
+        return "redirect:/main/add/dashBoard";
+    }
+
+    @GetMapping("/edit/dashBoard")
+    public String editDashBoard(@RequestParam long id, Model model) {
+        DashBoard dashBoard = pageService.findDashBoardById(id);
+        model.addAttribute("dashBoard", dashBoard);
+
+        if(dashBoard.getType()== DashBoardType.latestPost){
+            List<MainCategory> mainCategoryList = mainCategoryService.getAllMainCategory();
+            model.addAttribute("mainCategoryList", mainCategoryList);
+        }
+
+        return "editDashBoard";
+    }
+
+    @GetMapping("/edit/dashBoard/delete")
+    public String editDashBoardDelete(@RequestParam long id) {
+        pageService.deleteDashBoard(id);
+        return "redirect:/main";
+    }
+
+    @PostMapping("/edit/dashBoard/type")
+    public String editDashBoardType(@RequestParam long id,
+                                    @RequestParam DashBoardType type,
+                                    @RequestParam String width,
+                                    @RequestParam String height){
+        pageService.editDashBoardType(id, type, width, height);
+        return "redirect:/main/edit/dashBoard?id="+id;
+    }
+
+    @PostMapping("/edit/dashBoard/freePost")
+    public String editDashBoardFreePost(@RequestParam long id,
+                                        @RequestParam String title,
+                                        @RequestParam String content) {
+        pageService.editDashBoardFreePost(id, title, content);
+        return "redirect:/main";
+    }
+
+    @PostMapping("/edit/dashBoard/linkPost")
+    public String editDashBoardLinkPost(@RequestParam long id,
+                                        @RequestParam String title,
+                                        @RequestParam long linkId) {
+        pageService.editDashBoardLinkPost(id, title, linkId);
+        return "redirect:/main";
+    }
+
+    @PostMapping("/edit/dashBoard/latestPost")
+    public String editDashBoardLatestPost(@RequestParam long id,
+                                          @RequestParam String title,
+                                          @RequestParam long linkId) {
+        pageService.editDashBoardLatestPost(id, title, linkId);
+        return "redirect:/main";
     }
 }

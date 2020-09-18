@@ -1,9 +1,8 @@
 package com.giggle.Service;
 
-import com.giggle.Domain.Entity.Category;
-import com.giggle.Domain.Entity.MainBoardImg;
-import com.giggle.Domain.Entity.ShortCut;
+import com.giggle.Domain.Entity.*;
 import com.giggle.Repository.PageRepository;
+import com.giggle.Repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.stereotype.Service;
@@ -20,6 +19,7 @@ import java.util.List;
 public class PageService {
 
     private final PageRepository pageRepository;
+    private final PostRepository postRepository;
 
 
     /// edit Main img Board
@@ -84,5 +84,52 @@ public class PageService {
 
     public List<ShortCut> getAllShortCut(){
         return pageRepository.getAllShortCut();
+    }
+
+
+    // edit dashBoard
+
+    public DashBoard findDashBoardById(long id){
+        return pageRepository.findDashBoardById(id);
+    }
+
+    @Transactional
+    public void addDashBoard(DashBoardType type, String width, String height){
+        pageRepository.createDashBoard(type, width, height);
+    }
+
+    @Transactional
+    public void deleteDashBoard(long id){
+        DashBoard dashBoard = pageRepository.findDashBoardById(id);
+        pageRepository.deleteDashBoard(dashBoard);
+    }
+
+    public List<DashBoard> getAllDashBoard(){
+        return pageRepository.getAllDashBoard();
+    }
+
+    public void editDashBoardType(long id, DashBoardType type, String width, String height){
+        DashBoard dashBoard = pageRepository.findDashBoardById(id);
+        pageRepository.updateDashBoard(dashBoard, type, width, height);
+    }
+
+    public void editDashBoardFreePost(long id, String title, String content){
+        DashBoard dashBoard = pageRepository.findDashBoardById(id);
+        pageRepository.updateDashBoardTitle(dashBoard, title);
+        pageRepository.updateDashBoardContent(dashBoard, content.replace("\r\n", "<br>"));
+    }
+
+    public void editDashBoardLinkPost(long id, String title, long linkId){
+        DashBoard dashBoard = pageRepository.findDashBoardById(id);
+        pageRepository.updateDashBoardTitle(dashBoard, title);
+
+        Post linkedPost = postRepository.findById(linkId);
+        pageRepository.updateDashBoardContent(dashBoard, linkedPost.getContent());
+    }
+
+    public void editDashBoardLatestPost(long id, String title, long linkId){
+        DashBoard dashBoard = pageRepository.findDashBoardById(id);
+        pageRepository.updateDashBoardTitle(dashBoard, title);
+        pageRepository.updateDashBoardLinkId(dashBoard, linkId);
     }
 }

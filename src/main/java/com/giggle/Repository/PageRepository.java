@@ -1,5 +1,7 @@
 package com.giggle.Repository;
 
+import com.giggle.Domain.Entity.DashBoard;
+import com.giggle.Domain.Entity.DashBoardType;
 import com.giggle.Domain.Entity.MainBoardImg;
 import com.giggle.Domain.Entity.ShortCut;
 import lombok.RequiredArgsConstructor;
@@ -61,5 +63,49 @@ public class PageRepository {
 
     public void deleteShortCut(ShortCut shortCut){
         em.remove(shortCut);
+    }
+
+
+    // edit dashBoard
+    public DashBoard findDashBoardById(long id){return em.find(DashBoard.class, id);}
+
+    public void createDashBoard(DashBoardType type, String width, String height){
+        DashBoard newDashBoard = new DashBoard();
+        newDashBoard.setType(type);
+        newDashBoard.setHeight(height);
+        newDashBoard.setWidth(width);
+        em.persist(newDashBoard);
+    }
+
+    public List<DashBoard> getAllDashBoard(){
+        List<DashBoard> allDashBoard = em.createQuery("select d from DashBoard d", DashBoard.class)
+                .getResultList();
+        return allDashBoard;
+    }
+
+    public void deleteDashBoard(DashBoard dashBoard){
+        em.remove(dashBoard);
+    }
+
+    public void updateDashBoard(DashBoard dashBoard, DashBoardType type, String width, String height){
+        dashBoard.setType(type);
+        dashBoard.setWidth(width);
+        dashBoard.setHeight(height);
+        em.flush();
+    }
+
+    public void updateDashBoardTitle(DashBoard dashBoard, String title){
+        dashBoard.setTitle(title);
+        em.flush();
+    }
+
+    public void updateDashBoardContent(DashBoard dashBoard, String content){
+        dashBoard.setContent(content);
+        em.flush();
+    }
+
+    public void updateDashBoardLinkId(DashBoard dashBoard, long linkId){
+        dashBoard.setLinkId(linkId);
+        em.flush();
     }
 }
