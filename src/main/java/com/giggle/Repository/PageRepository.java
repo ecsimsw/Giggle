@@ -74,6 +74,7 @@ public class PageRepository {
         newDashBoard.setType(type);
         newDashBoard.setHeight(height);
         newDashBoard.setWidth(width);
+        newDashBoard.setSpotType(0);
         em.persist(newDashBoard);
     }
 
@@ -106,6 +107,11 @@ public class PageRepository {
 
     public void updateDashBoardLinkId(DashBoard dashBoard, long linkId){
         dashBoard.setLinkId(linkId);
+        em.flush();
+    }
+
+    public void updateSpotType(DashBoard dashBoard, int type){
+        dashBoard.setSpotType(type);
         em.flush();
     }
 }

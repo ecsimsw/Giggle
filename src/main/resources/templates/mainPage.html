@@ -50,15 +50,14 @@
         <div class="" style="max-width: 1400px;padding-left: 10px; padding-right: 10px;">
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-
             <span th:text="${'Ad) total postCnt : ' + totalPostCnt}">total post : 1000</span>
           </div>
 
-            <div class="row">
-              <th:block th:replace="/fragment/shortCut :: shortCut"> </th:block>
-            </div>
+          <div class="row">
+            <th:block th:replace="/fragment/shortCut :: shortCut"> </th:block>
+          </div>
 
-          <!-- Content Row -->
+          <!-- new posts / hot posts Start -->
           <div class="row">
             <!-- new Posts -->
             <div class="col-xs-6 col-lg-6">
@@ -114,7 +113,92 @@
               </div>
             </div>
           </div>
+          <!-- new posts / hot posts End -->
 
+
+
+<!--            <div th:with="value1='99999',  value2=false" >-->
+
+<!--              <div th:text="|${value1} , ${value2}|" ></div>-->
+
+<!--              <div th:with="var1=${value1},  var2=${value2},  var3=true,  var4='TEST중',var5=1111"   >-->
+
+<!--                <div th:if="${var3} == true"    th:text="|${var1} , ${var2}, ${var3} , ${var4} , ${var5}|"   > </div>-->
+
+<!--              </div>-->
+
+<!--            </div>-->
+
+          <div class="row">
+            <!-- th:with  https://attacomsian.com/blog/thymeleaf-local-variables -->
+            <th:block th:each="dashBoard : ${dashBoardList}" th:with="withShort=false, skipIndex =0">
+              <th:block th:if="${dashBoard.type}=='freePost'">
+                  <th:block th:if="${dashBoard.width}=='wide'" >
+                    <div class="col-xs-6 col-lg-12" style="padding-right: 0px;padding-left: 0px;">
+                      <div class="col-lg-12 mb-4 card shadow mb-4">
+                        <div class="card-header py-3">
+                          <h6 class="m-0 font-weight-bold text-primary" th:value="${dashBoard.title}">title</h6>
+                        </div>
+                        <div th:if="${dashBoard.height}=='short'" class="card-body short-board-body">
+                          <div class="post_content" th:utext="${dashBoard.content}" style="line-height: 25px; font-size:15px;">content</div>
+                          <a target="_blank" rel="nofollow" href="https://undraw.co/">See that notice →</a>
+                        </div>
+                        <div th:if="${dashBoard.height}=='long'" class="card-body long-board-body">
+                            <div class="post_content" th:utext="${dashBoard.content}" style="line-height: 25px; font-size:15px;">content</div>
+                            <a target="_blank" rel="nofollow" href="https://undraw.co/">See that notice →</a>
+                        </div>
+                      </div>
+                    </div>
+                  </th:block>
+                  <th:block th:if="${dashBoard.width}=='narrow'" >
+                      <th:block th:if="${dashBoard.height}=='long'" >
+                        <div class="col-xs-6 col-lg-6" style="padding-right: 0px;padding-left: 0px;">
+                            <div class="col-lg-6 mb-4 card shadow mb-4">
+                              <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary" th:value="${dashBoard.title}">title</h6>
+                              </div>
+                              <div class="card-body long-board-body">
+                                <div th:utext="${dashBoard.content}" style="line-height: 25px; font-size:15px;">content</div>
+                                <a target="_blank" rel="nofollow" href="https://undraw.co/">See that notice →</a>
+                              </div>
+                            </div>
+                        </div>
+                      </th:block>
+
+                      <th:block th:if="${dashBoard.height}=='short'">
+                        <th:block th:if="${dashBoard.spotType}==1" >
+                          <div class="col-xs-6 col-lg-6" style="padding-right: 0px;padding-left: 0px;">
+                            <div class="col-lg-6 mb-4 card shadow mb-4">
+                              <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary" th:value="${dashBoard.title}">title</h6>
+                              </div>
+                              <div class="card-body short-board-body">
+                                <div class="post_content" th:utext="${dashBoard.content}" style="line-height: 25px; font-size:15px;">content</div>
+                                <a target="_blank" rel="nofollow" href="https://undraw.co/">See that notice →</a>
+                              </div>
+                            </div>
+
+                            <div class="col-lg-6 mb-4 card shadow mb-4">
+                              <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary" th:value="${dashBoard.title}">title</h6>
+                              </div>
+                              <div class="post_content" th:utext="${dashBoard.content}" style="line-height: 25px; font-size:15px;">content</div>
+                              <a target="_blank" rel="nofollow" href="https://undraw.co/">See that notice →</a>
+                            </div>
+                          </div>
+                        </th:block>
+
+                        <th:block th:if="${dashBoard.spotType}==2" >
+                        </th:block>
+
+                      </th:block>
+                  </th:block>
+              </th:block>
+            </th:block>
+          </div>
+
+
+          <===================================>
 
           <div class="row">
             <div class="col-xs-6 col-lg-12" style="padding-right: 0px;padding-left: 0px;">

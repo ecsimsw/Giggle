@@ -64,6 +64,11 @@ public class MainController {
         List<ShortCut> shortCutList = pageService.getAllShortCut();
         model.addAttribute("shortCutList", shortCutList);
 
+
+        // dashBoard
+        List<DashBoard> dashBoardList = pageService.getAllDashBoard();
+        model.addAttribute("dashBoardList", dashBoardList);
+
         return "mainPage";
     }
 
