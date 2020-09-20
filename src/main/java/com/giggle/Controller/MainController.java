@@ -72,54 +72,6 @@ public class MainController {
         return "mainPage";
     }
 
-
-    // edit img board
-
-    @GetMapping("/edit/imgBoard")
-    public String editImgBoard(Model model){
-
-        // main image board
-        List<String> mainBoardImgSrc = pageService.getMainBoardImgSrc("/static/mainBoardImg");
-        model.addAttribute("mainBoardImgSrc",mainBoardImgSrc);
-
-        // limitAdditionImgCnt
-        model.addAttribute("limitAdditionImgCnt", limitAdditionImgCnt);
-
-        List<MainBoardImg> allMainBoardImg = pageService.getAllMainBoardImg();
-        model.addAttribute("mainBoardImg",allMainBoardImg);
-
-        return "editImgBoard";
-    }
-
-    @GetMapping("/edit/imgBoard/delete")
-    public String editImgBoard(@RequestParam(value="imageFiles") long[] idArr, HttpServletRequest request){
-
-        String resourceSrc = request.getServletContext().getRealPath("/mainBoardImg");
-
-        pageService.deleteImgArr(idArr, resourceSrc);
-
-        return "redirect:/main/edit/imgBoard";
-    }
-
-    @PostMapping("/edit/imgBoard/add")
-    public String addImg(MultipartHttpServletRequest multipartHttpServletRequest,
-                         HttpServletRequest request) throws IOException {
-
-        String resourceSrc = request.getServletContext().getRealPath("/mainBoardImg");
-
-        MultipartFile[] multipartFiles = new MultipartFile[limitAdditionImgCnt];
-
-        for(int i =0; i<limitAdditionImgCnt; i++){
-            MultipartFile requestFile = multipartHttpServletRequest.getFile(nameId+i);
-            multipartFiles[i] = requestFile;
-        }
-
-        pageService.addImgBoard(multipartFiles, resourceSrc);
-
-        return "redirect:/main/edit/imgBoard";
-    }
-
-
     // edit shortCut
 
     @GetMapping("/edit/shortCut")
@@ -164,18 +116,33 @@ public class MainController {
                                    @RequestParam String width,
                                    @RequestParam String height) {
         pageService.addDashBoard(type, width, height);
-        return "redirect:/main/add/dashBoard";
+        return "redirect:/main";
     }
 
     @GetMapping("/edit/dashBoard")
     public String editDashBoard(@RequestParam long id, Model model) {
         DashBoard dashBoard = pageService.findDashBoardById(id);
         model.addAttribute("dashBoard", dashBoard);
-        model.addAttribute("dashBoard_content",  dashBoard.getContent().replace("<br>","\n"));
+
+        String content = dashBoard.getContent();
+        content = content != null ? content.replace("<br>","\n") : null;
+        model.addAttribute("dashBoard_content", content);
 
         if(dashBoard.getType()== DashBoardType.latestPost){
             List<MainCategory> mainCategoryList = mainCategoryService.getAllMainCategory();
             model.addAttribute("mainCategoryList", mainCategoryList);
+        }
+
+        else if(dashBoard.getType() == DashBoardType.imgBoard){
+            // main image board
+            List<String> mainBoardImgSrc = pageService.getMainBoardImgSrc("/static/mainBoardImg");
+            model.addAttribute("mainBoardImgSrc",mainBoardImgSrc);
+
+            // limitAdditionImgCnt
+            model.addAttribute("limitAdditionImgCnt", limitAdditionImgCnt);
+
+            List<MainBoardImg> allMainBoardImg = pageService.getAllMainBoardImg();
+            model.addAttribute("mainBoardImg",allMainBoardImg);
         }
 
         return "editDashBoard";
@@ -193,7 +160,7 @@ public class MainController {
                                     @RequestParam String width,
                                     @RequestParam String height){
         pageService.editDashBoardType(id, type, width, height);
-        return "redirect:/main/edit/dashBoard?id="+id;
+        return "redirect:/main";
     }
 
     @PostMapping("/edit/dashBoard/freePost")
@@ -219,4 +186,36 @@ public class MainController {
         pageService.editDashBoardLatestPost(id, title, linkId);
         return "redirect:/main";
     }
+
+    // edit img board
+
+    @GetMapping("/edit/dashBoard/imgBoard/delete")
+    public String editImgBoard(@RequestParam(value="imageFiles") long[] idArr, HttpServletRequest request){
+
+        String resourceSrc = request.getServletContext().getRealPath("/mainBoardImg");
+
+        pageService.deleteImgArr(idArr, resourceSrc);
+
+        return "redirect:/main";
+    }
+
+    @PostMapping("/edit/dashBoard/imgBoard/add")
+    public String addImg(MultipartHttpServletRequest multipartHttpServletRequest,
+                         HttpServletRequest request) throws IOException {
+
+        String resourceSrc = request.getServletContext().getRealPath("/mainBoardImg");
+
+        MultipartFile[] multipartFiles = new MultipartFile[limitAdditionImgCnt];
+
+        for(int i =0; i<limitAdditionImgCnt; i++){
+            MultipartFile requestFile = multipartHttpServletRequest.getFile(nameId+i);
+            multipartFiles[i] = requestFile;
+        }
+
+        pageService.addImgBoard(multipartFiles, resourceSrc);
+
+        return "redirect:/main";
+    }
+
+
 }
