@@ -23,6 +23,23 @@
      .short-board-body{
         height:200px;
      }
+
+     .dashBoard_title{
+        float:left;
+     }
+
+     .dashBoard_edit{
+        font-size: 12px;
+        float: right;
+        padding-top: 0px;
+        padding-bottom: 0px;
+        font-style: italic;
+     }
+
+     .card-body{
+       overflow: hidden;
+     }
+
   </style>
 
 </head>
@@ -83,7 +100,7 @@
                     </table>
                   </div>
                 </div>
-              </div>
+               </div>
             </div>
 
             <!-- Hot posts -->
@@ -110,34 +127,21 @@
                     </table>
                   </div>
                 </div>
-              </div>
+                </div>
             </div>
           </div>
           <!-- new posts / hot posts End -->
 
-
-
-<!--            <div th:with="value1='99999',  value2=false" >-->
-
-<!--              <div th:text="|${value1} , ${value2}|" ></div>-->
-
-<!--              <div th:with="var1=${value1},  var2=${value2},  var3=true,  var4='TEST중',var5=1111"   >-->
-
-<!--                <div th:if="${var3} == true"    th:text="|${var1} , ${var2}, ${var3} , ${var4} , ${var5}|"   > </div>-->
-
-<!--              </div>-->
-
-<!--            </div>-->
-
+          <!-- dashBoard -->
           <div class="row">
-            <!-- th:with  https://attacomsian.com/blog/thymeleaf-local-variables -->
-            <th:block th:each="dashBoard : ${dashBoardList}" th:with="withShort=false, skipIndex =0">
-              <th:block th:if="${dashBoard.type}=='freePost'">
-                  <th:block th:if="${dashBoard.width}=='wide'" >
-                    <div class="col-xs-6 col-lg-12" style="padding-right: 0px;padding-left: 0px;">
-                      <div class="col-lg-12 mb-4 card shadow mb-4">
+            <th:block th:each="dashBoard, loopState : ${dashBoardList}">
+                <th:block th:if="${dashBoard.width}=='wide'" >
+                  <th:block th:if="${dashBoard.type.name()}!='imgBoard'">
+                    <div class="col-xs-6 col-lg-12">
+                      <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                          <h6 class="m-0 font-weight-bold text-primary" th:value="${dashBoard.title}">title</h6>
+                          <h6 class="m-0 font-weight-bold text-primary dashBoard_title" th:value="${dashBoard.title}">title</h6>
+                          <a class="btn dashBoard_edit" th:href="${'/main/edit/dashBoard/id?='+dashBoard.id}">Edit</a>
                         </div>
                         <div th:if="${dashBoard.height}=='short'" class="card-body short-board-body">
                           <div class="post_content" th:utext="${dashBoard.content}" style="line-height: 25px; font-size:15px;">content</div>
@@ -150,12 +154,89 @@
                       </div>
                     </div>
                   </th:block>
-                  <th:block th:if="${dashBoard.width}=='narrow'" >
-                      <th:block th:if="${dashBoard.height}=='long'" >
-                        <div class="col-xs-6 col-lg-6" style="padding-right: 0px;padding-left: 0px;">
-                            <div class="col-lg-6 mb-4 card shadow mb-4">
+                  <th:block th:if="${dashBoard.type.name()}=='imgBoard'">
+                    <th:block th:if="${dashBoard.height}=='short'">
+                      <div class="col-xs-6 col-lg-12">
+                        <div id="demo" class="carousel slide" data-ride="carousel">
+                          <div class="carousel-inner">
+                            <th:block th:each="src, index : ${mainBoardImgSrc}">
+                              <div th:if="${index.count==1}" class="carousel-item active">
+                                <img class="d-block w-100" th:src="${src}">
+                                <div class = "caption"></div>
+                              </div>
+                                <div th:if="${index.count!=1}" class="carousel-item" style="height:253px">
+                                  <img class="d-block w-100" style="height:100%;" th:src="${src}">
+                                  <a th:value = ${index.count}></a>
+                                  <div class = "caption"></div>
+                                </div>
+                            </th:block>
+                            <a class="carousel-control-prev" href="#demo" data-slide="prev">
+                              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            </a>
+                            <a class="carousel-control-next" href="#demo" data-slide="next">
+                              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            </a>
+                            <div class="indicators">
+                              <!--  <ul class="carousel-indicators">-->
+                              <!--   <li data-target="#demo" data-slide-to="0" class="active">-->
+                              <!--    </li> &lt;!&ndash;0번부터시작&ndash;&gt;-->
+                              <!--    <li data-target="#demo" data-slide-to="1"></li>-->
+                              <!--    <li data-target="#demo" data-slide-to="2"></li>-->
+                              <!--  </ul> &lt;!&ndash; 인디케이터 끝 &ndash;&gt;-->
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </th:block>
+                    <th:block th:if="${dashBoard.height}=='long'">
+                      <div class="col-xs-6 col-lg-12">
+                        <div id="demo" class="carousel slide" data-ride="carousel">
+                          <div class="carousel-inner">
+                            <th:block th:each="src, index : ${mainBoardImgSrc}">
+                              <div th:if="${index.count==1}" class="carousel-item active">
+                                <img class="d-block w-100" th:src="${src}">
+                                <div class = "caption"></div>
+                              </div>
+                              <div th:if="${index.count!=1}" class="carousel-item" style="height:530px">
+                                <img class="d-block w-100" style="height:100%;" th:src="${src}">
+                                <a th:value = ${index.count}></a>
+                                <div class = "caption"></div>
+                              </div>
+                            </th:block>
+
+                            <!-- 왼쪽 오른쪽 화살표 버튼 -->
+                            <a class="carousel-control-prev" href="#demo" data-slide="prev">
+                              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            </a>
+
+                            <a class="carousel-control-next" href="#demo" data-slide="next">
+                              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            </a>
+                            <!-- / 화살표 버튼 끝 -->
+
+                            <!-- 인디케이터 -->
+                            <div class="indicators">
+                              <!--  <ul class="carousel-indicators">-->
+                              <!--   <li data-target="#demo" data-slide-to="0" class="active">-->
+                              <!--    </li> &lt;!&ndash;0번부터시작&ndash;&gt;-->
+                              <!--    <li data-target="#demo" data-slide-to="1"></li>-->
+                              <!--    <li data-target="#demo" data-slide-to="2"></li>-->
+                              <!--  </ul> &lt;!&ndash; 인디케이터 끝 &ndash;&gt;-->
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </th:block>
+                  </th:block>
+                </th:block>
+                <th:block th:if="${dashBoard.width}=='narrow'" >
+                    <th:block th:if="${dashBoard.height}=='long'" >
+                      <th:block th:if="${dashBoard.type.name()}!='imgBoard'">
+                        <div class="col-xs-6 col-lg-6">
+                            <div class ="card shadow mb-4">
                               <div class="card-header py-3">
-                                <h6 class="m-0 font-weight-bold text-primary" th:value="${dashBoard.title}">title</h6>
+                                <h6 class="m-0 font-weight-bold text-primary dashBoard_title" th:value="${dashBoard.title}">title</h6>
+                                <a class="btn dashBoard_edit" th:href="${'/main/edit/dashBoard?id='+dashBoard.id}">Edit</a>
                               </div>
                               <div class="card-body long-board-body">
                                 <div th:utext="${dashBoard.content}" style="line-height: 25px; font-size:15px;">content</div>
@@ -164,40 +245,240 @@
                             </div>
                         </div>
                       </th:block>
+                      <th:block th:if="${dashBoard.type.name()}=='imgBoard'">
+                          <div class="col-xs-6 col-lg-6">
+                            <div id="demo" class="carousel slide" data-ride="carousel">
+                              <div class="carousel-inner">
+                                <th:block th:each="src, index : ${mainBoardImgSrc}">
+                                  <div th:if="${index.count==1}" class="carousel-item active">
+                                    <img class="d-block w-100" th:src="${src}">
+                                    <div class = "caption"></div>
+                                  </div>
+                                  <div th:if="${index.count!=1}" class="carousel-item" style="height:530px">
+                                    <img class="d-block w-100" style="height:100%;" th:src="${src}">
+                                    <a th:value = ${index.count}></a>
+                                    <div class = "caption"></div>
+                                  </div>
+                                </th:block>
 
-                      <th:block th:if="${dashBoard.height}=='short'">
-                        <th:block th:if="${dashBoard.spotType}==1" >
-                          <div class="col-xs-6 col-lg-6" style="padding-right: 0px;padding-left: 0px;">
-                            <div class="col-lg-6 mb-4 card shadow mb-4">
+                                <!-- 왼쪽 오른쪽 화살표 버튼 -->
+                                <a class="carousel-control-prev" href="#demo" data-slide="prev">
+                                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                </a>
+
+                                <a class="carousel-control-next" href="#demo" data-slide="next">
+                                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                </a>
+                                <!-- / 화살표 버튼 끝 -->
+
+                                <!-- 인디케이터 -->
+                                <div class="indicators">
+                                  <!--  <ul class="carousel-indicators">-->
+                                  <!--   <li data-target="#demo" data-slide-to="0" class="active">-->
+                                  <!--    </li> &lt;!&ndash;0번부터시작&ndash;&gt;-->
+                                  <!--    <li data-target="#demo" data-slide-to="1"></li>-->
+                                  <!--    <li data-target="#demo" data-slide-to="2"></li>-->
+                                  <!--  </ul> &lt;!&ndash; 인디케이터 끝 &ndash;&gt;-->
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                      </th:block>
+                    </th:block>
+
+                    <th:block th:if="${dashBoard.height}=='short'">
+                      <th:block th:if="${dashBoard.type.name()}!='imgBoard'">
+                        <th:block th:if="${dashBoard.spotType}==0" >
+                          <div class="col-xs-6 col-lg-6">
+                            <div class="card shadow mb-4">
                               <div class="card-header py-3">
-                                <h6 class="m-0 font-weight-bold text-primary" th:value="${dashBoard.title}">title</h6>
+                                <h6 class="m-0 font-weight-bold text-primary dashBoard_title" th:value="${dashBoard.title}">title</h6>
+                                <a class="btn dashBoard_edit" th:href="${'/main/edit/dashBoard?id='+dashBoard.id}">Edit</a>
                               </div>
                               <div class="card-body short-board-body">
                                 <div class="post_content" th:utext="${dashBoard.content}" style="line-height: 25px; font-size:15px;">content</div>
                                 <a target="_blank" rel="nofollow" href="https://undraw.co/">See that notice →</a>
                               </div>
                             </div>
-
-                            <div class="col-lg-6 mb-4 card shadow mb-4">
-                              <div class="card-header py-3">
-                                <h6 class="m-0 font-weight-bold text-primary" th:value="${dashBoard.title}">title</h6>
+                          </div>
+                        </th:block>
+                        <th:block th:if="${dashBoard.spotType}==1" >
+                          <div class="col-xs-6 col-lg-6">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                  <h6 class="m-0 font-weight-bold text-primary dashBoard_title" th:value="${dashBoard.title}">title</h6>
+                                  <a class="btn dashBoard_edit" th:href="${'/main/edit/dashBoard?id='+dashBoard.id}">Edit</a>
+                                </div>
+                                <div class="card-body short-board-body">
+                                  <div class="post_content" th:utext="${dashBoard.content}" style="line-height: 25px; font-size:15px;">content</div>
+                                  <a target="_blank" rel="nofollow" href="https://undraw.co/">See that notice →</a>
+                                </div>
+                            </div>
+                            <th:block th:if="${dashBoardList.get(loopState.index+1).type.name()}!=imgBoard">
+                              <div class = "card shadow mb-4">
+                                <div class="card-header py-3">
+                                  <h6 class="m-0 font-weight-bold text-primary dashBoard_title" th:value="${dashBoardList.get(loopState.index+1).title}">title</h6>
+                                  <a class="btn dashBoard_edit" th:href="${'/main/edit/dashBoard?id='+dashBoardList.get(loopState.index+1).id}">Edit</a>
+                                </div>
+                                <div class="card-body short-board-body">
+                                  <div class="post_content" th:utext="${dashBoardList.get(loopState.index+1).content}" style="line-height: 25px; font-size:15px;">content</div>
+                                  <a target="_blank" rel="nofollow" href="https://undraw.co/">See that notice →</a>
+                                </div>
                               </div>
-                              <div class="post_content" th:utext="${dashBoard.content}" style="line-height: 25px; font-size:15px;">content</div>
-                              <a target="_blank" rel="nofollow" href="https://undraw.co/">See that notice →</a>
+                            </th:block>
+                            <th:block th:if="${dashBoardList.get(loopState.index+1).type.name()}=='imgBoard'">
+                                  <div id="demo" class="carousel slide" data-ride="carousel">
+                                    <div class="carousel-inner">
+                                      <th:block th:each="src, index : ${mainBoardImgSrc}">
+                                        <div th:if="${index.count==1}" class="carousel-item active">
+                                          <img class="d-block w-100" th:src="${src}">
+                                          <div class = "caption"></div>
+                                        </div>
+                                        <div th:if="${index.count!=1}" class="carousel-item" style="height:253px">
+                                          <img class="d-block w-100" style="height:100%;" th:src="${src}">
+                                          <a th:value = ${index.count}></a>
+                                          <div class = "caption"></div>
+                                        </div>
+                                      </th:block>
+                                      <a class="carousel-control-prev" href="#demo" data-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                      </a>
+                                      <a class="carousel-control-next" href="#demo" data-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                      </a>
+                                      <div class="indicators">
+                                        <!--  <ul class="carousel-indicators">-->
+                                        <!--   <li data-target="#demo" data-slide-to="0" class="active">-->
+                                        <!--    </li> &lt;!&ndash;0번부터시작&ndash;&gt;-->
+                                        <!--    <li data-target="#demo" data-slide-to="1"></li>-->
+                                        <!--    <li data-target="#demo" data-slide-to="2"></li>-->
+                                        <!--  </ul> &lt;!&ndash; 인디케이터 끝 &ndash;&gt;-->
+                                      </div>
+                                    </div>
+                                  </div>
+                            </th:block>
+                          </div>
+                        </th:block>
+                        <th:block th:if="${dashBoard.spotType}==2" >
+                        </th:block>
+                      </th:block>
+
+                      <th:block th:if="${dashBoard.type.name()}=='imgBoard'">
+                        <th:block th:if="${dashBoard.spotType}==0" >
+                          <div id="demo" class="carousel slide" data-ride="carousel" style="margin-bottom: 25px; min-height: 253px;">
+                            <div class="carousel-inner">
+                              <th:block th:each="src, index : ${mainBoardImgSrc}">
+                                <div th:if="${index.count==1}" class="carousel-item active">
+                                  <img class="d-block w-100" th:src="${src}">
+                                  <div class = "caption"></div>
+                                </div>
+                                <div th:if="${index.count!=1}" class="carousel-item" style="height:253px">
+                                  <img class="d-block w-100" style="height:100%;" th:src="${src}">
+                                  <a th:value = ${index.count}></a>
+                                  <div class = "caption"></div>
+                                </div>
+                              </th:block>
+                              <a class="carousel-control-prev" href="#demo" data-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                              </a>
+                              <a class="carousel-control-next" href="#demo" data-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                              </a>
+                              <div class="indicators">
+                                <!--  <ul class="carousel-indicators">-->
+                                <!--   <li data-target="#demo" data-slide-to="0" class="active">-->
+                                <!--    </li> &lt;!&ndash;0번부터시작&ndash;&gt;-->
+                                <!--    <li data-target="#demo" data-slide-to="1"></li>-->
+                                <!--    <li data-target="#demo" data-slide-to="2"></li>-->
+                                <!--  </ul> &lt;!&ndash; 인디케이터 끝 &ndash;&gt;-->
+                              </div>
                             </div>
                           </div>
                         </th:block>
-
+                        <th:block th:if="${dashBoard.spotType}==1" >
+                          <div class="col-xs-6 col-lg-6">
+                            <div id="demo" class="carousel slide" data-ride="carousel" style="margin-bottom: 25px; min-height: 253px;">
+                              <div class="carousel-inner">
+                                <th:block th:each="src, index : ${mainBoardImgSrc}">
+                                  <div th:if="${index.count==1}" class="carousel-item active">
+                                    <img class="d-block w-100" th:src="${src}">
+                                    <div class = "caption"></div>
+                                  </div>
+                                  <div th:if="${index.count!=1}" class="carousel-item" style="height:253px">
+                                    <img class="d-block w-100" style="height:100%;" th:src="${src}">
+                                    <a th:value = ${index.count}></a>
+                                    <div class = "caption"></div>
+                                  </div>
+                                </th:block>
+                                <a class="carousel-control-prev" href="#demo" data-slide="prev">
+                                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                </a>
+                                <a class="carousel-control-next" href="#demo" data-slide="next">
+                                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                </a>
+                                <div class="indicators">
+                                  <!--  <ul class="carousel-indicators">-->
+                                  <!--   <li data-target="#demo" data-slide-to="0" class="active">-->
+                                  <!--    </li> &lt;!&ndash;0번부터시작&ndash;&gt;-->
+                                  <!--    <li data-target="#demo" data-slide-to="1"></li>-->
+                                  <!--    <li data-target="#demo" data-slide-to="2"></li>-->
+                                  <!--  </ul> &lt;!&ndash; 인디케이터 끝 &ndash;&gt;-->
+                                </div>
+                              </div>
+                            </div>
+                            <th:block th:if="${dashBoardList.get(loopState.index+1).type.name()}!=imgBoard">
+                              <div class = "card shadow mb-4">
+                                <div class="card-header py-3">
+                                  <h6 class="m-0 font-weight-bold text-primary dashBoard_title" th:value="${dashBoardList.get(loopState.index+1).title}">title</h6>
+                                  <a class="btn dashBoard_edit" th:href="${'/main/edit/dashBoard?id='+dashBoardList.get(loopState.index+1).id}">Edit</a>
+                                </div>
+                                <div class="card-body short-board-body">
+                                  <div class="post_content" th:utext="${dashBoardList.get(loopState.index+1).content}" style="line-height: 25px; font-size:15px;">content</div>
+                                  <a target="_blank" rel="nofollow" href="https://undraw.co/">See that notice →</a>
+                                </div>
+                              </div>
+                            </th:block>
+                            <th:block th:if="${dashBoardList.get(loopState.index+1).type.name()}=='imgBoard'">
+                              <div id="demo" class="carousel slide" data-ride="carousel">
+                                <div class="carousel-inner">
+                                  <th:block th:each="src, index : ${mainBoardImgSrc}">
+                                    <div th:if="${index.count==1}" class="carousel-item active">
+                                      <img class="d-block w-100" th:src="${src}">
+                                      <div class = "caption"></div>
+                                    </div>
+                                    <div th:if="${index.count!=1}" class="carousel-item" style="height:253px">
+                                      <img class="d-block w-100" style="height:100%;" th:src="${src}">
+                                      <a th:value = ${index.count}></a>
+                                      <div class = "caption"></div>
+                                    </div>
+                                  </th:block>
+                                  <a class="carousel-control-prev" href="#demo" data-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                  </a>
+                                  <a class="carousel-control-next" href="#demo" data-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                  </a>
+                                  <div class="indicators">
+                                    <!--  <ul class="carousel-indicators">-->
+                                    <!--   <li data-target="#demo" data-slide-to="0" class="active">-->
+                                    <!--    </li> &lt;!&ndash;0번부터시작&ndash;&gt;-->
+                                    <!--    <li data-target="#demo" data-slide-to="1"></li>-->
+                                    <!--    <li data-target="#demo" data-slide-to="2"></li>-->
+                                    <!--  </ul> &lt;!&ndash; 인디케이터 끝 &ndash;&gt;-->
+                                  </div>
+                                </div>
+                              </div>
+                            </th:block>
+                          </div>
+                        </th:block>
                         <th:block th:if="${dashBoard.spotType}==2" >
                         </th:block>
-
                       </th:block>
-                  </th:block>
+
+                    </th:block>
               </th:block>
             </th:block>
           </div>
-
-
           <===================================>
 
           <div class="row">
@@ -267,7 +548,51 @@
                   <a target="_blank" rel="nofollow" href="https://undraw.co/">See that notice →</a>
                 </div>
               </div>
-            </div></div>
+            </div>
+          </div>
+
+
+            <!-- imgBoard -->
+            <div class="col-xs-6 col-lg-6">
+              <div id="demo" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner"> <!-- 슬라이드 쇼 -->
+
+                  <!-- Thymeleaf: How to exclude outer tag when using th:each? -->
+                  <th:block th:each="src, index : ${mainBoardImgSrc}">
+                    <div th:if="${index.count==1}" class="carousel-item active">
+                      <img class="d-block w-100" th:src="${src}">
+                      <div class = "caption"></div>
+                    </div>
+                    <div th:if="${index.count!=1}" class="carousel-item" style="height:253px">
+                      <img class="d-block w-100" style="height:100%;" th:src="${src}">
+                      <a th:value = ${index.count}></a>
+                      <div class = "caption"></div>
+                    </div>
+                  </th:block>
+
+                  <!-- 왼쪽 오른쪽 화살표 버튼 -->
+                  <a class="carousel-control-prev" href="#demo" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  </a>
+
+                  <a class="carousel-control-next" href="#demo" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  </a>
+                  <!-- / 화살표 버튼 끝 -->
+
+                  <!-- 인디케이터 -->
+                  <div class="indicators">
+                    <!--  <ul class="carousel-indicators">-->
+                    <!--   <li data-target="#demo" data-slide-to="0" class="active">-->
+                    <!--    </li> &lt;!&ndash;0번부터시작&ndash;&gt;-->
+                    <!--    <li data-target="#demo" data-slide-to="1"></li>-->
+                    <!--    <li data-target="#demo" data-slide-to="2"></li>-->
+                    <!--  </ul> &lt;!&ndash; 인디케이터 끝 &ndash;&gt;-->
+                  </div>
+                </div>
+              </div>
+              <!-- /.container-fluid -->
+            </div>
 
             <div class="col-xs-6 col-lg-6" style="padding-right: 0px;padding-left: 0px;">
             <div class="col-lg-6 mb-6">

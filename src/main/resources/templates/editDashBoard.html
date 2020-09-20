@@ -98,6 +98,7 @@
                     <option th:if="${index_main.count!=index_main.size}" disabled> </option>
                 </div>
             </select>
+            <br>
             <button class="btn btn-lg btn-primary btn-block" type="submit">적용</button>
         </form>
     </th:block>
@@ -111,6 +112,7 @@
             <br>
             <label for="postId">postId</label>
             <input id="postId" name="linkId" class="form-control" th:value="${dashBoard.linkId}" type="text">
+            <br>
             <button class="btn btn-lg btn-primary btn-block" type="submit">적용</button>
         </form>
     </th:block>
@@ -123,7 +125,8 @@
             <input id="title" name="title" class="form-control" type="text" th:value="${dashBoard.title}">
             <br>
             <label for="content">content</label>
-            <textarea id="content" name="content" class="form-control" th:utext="${dashBoard.content}"></textarea>
+            <textarea id="content" name="content" class="form-control" th:utext="${dashBoard_content}"></textarea>
+            <br>
             <button class="btn btn-lg btn-primary btn-block" type="submit">적용</button>
         </form>
     </th:block>

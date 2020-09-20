@@ -171,6 +171,7 @@ public class MainController {
     public String editDashBoard(@RequestParam long id, Model model) {
         DashBoard dashBoard = pageService.findDashBoardById(id);
         model.addAttribute("dashBoard", dashBoard);
+        model.addAttribute("dashBoard_content",  dashBoard.getContent().replace("<br>","\n"));
 
         if(dashBoard.getType()== DashBoardType.latestPost){
             List<MainCategory> mainCategoryList = mainCategoryService.getAllMainCategory();
