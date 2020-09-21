@@ -54,7 +54,6 @@ public class MainController {
         model.addAttribute("totalPostCnt", totalPostCnt);
         model.addAttribute("newPostList", newPostList);
 
-
         // main image board
         List<String> mainBoardImgSrc = pageService.getMainBoardImgSrc("/static/mainBoardImg");
         model.addAttribute("mainBoardImgSrc",mainBoardImgSrc);
@@ -67,6 +66,25 @@ public class MainController {
 
         // dashBoard
         List<DashBoard> dashBoardList = pageService.getAllDashBoard();
+
+        for(DashBoard dashBoard : dashBoardList){
+
+            if(dashBoard.getType() == DashBoardType.latestPost){
+                Category category = categoryService.findById(dashBoard.getLinkId());
+                if(category!=null){
+                    List<Post> posts = category.getPosts();
+                    dashBoard.setContent(posts.get(posts.size()-1).getContent());
+                }
+            }
+
+            else if(dashBoard.getType() == DashBoardType.linkPost){
+                Post post = postService.findById(dashBoard.getLinkId());
+                if(post != null){
+                    dashBoard.setContent(post.getContent());
+                }
+            }
+        }
+
         model.addAttribute("dashBoardList", dashBoardList);
 
         return "mainPage";

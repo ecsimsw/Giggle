@@ -41,8 +41,10 @@ public class PostController {
 
     @GetMapping("/board")
     public String board(@RequestParam("category") Long categoryId,
-                        @RequestParam int page,
+                        @RequestParam(required = false) Integer page,
                         Model model) {
+
+        if(page == null){ page =1; }
 
         // side bar
 

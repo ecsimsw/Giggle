@@ -72,7 +72,6 @@ public class PageService {
 
     @Transactional
     public void addShortCut(Category category, String description, String color){
-
         pageRepository.createShortCut(category.getName(), category.getId(), description, color);
     }
 
@@ -88,7 +87,6 @@ public class PageService {
     public List<ShortCut> getAllShortCut(){
         return pageRepository.getAllShortCut();
     }
-
 
     // edit dashBoard
 
@@ -128,9 +126,7 @@ public class PageService {
     public void editDashBoardLinkPost(long id, String title, long linkId){
         DashBoard dashBoard = pageRepository.findDashBoardById(id);
         pageRepository.updateDashBoardTitle(dashBoard, title);
-
-        Post linkedPost = postRepository.findById(linkId);
-        pageRepository.updateDashBoardContent(dashBoard, linkedPost.getContent());
+        pageRepository.updateDashBoardLinkId(dashBoard, linkId);
     }
 
     public void editDashBoardLatestPost(long id, String title, long linkId){
