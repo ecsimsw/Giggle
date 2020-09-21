@@ -46,7 +46,7 @@ public class MemberService {
         member.setLoginPw(joinForm.getLoginPw());
         member.setName(joinForm.getName());
         member.setNickName(joinForm.getNickName());
-        member.setMemberType(MemberType.PUBLIC);
+        member.setMemberType(MemberType.member);
         memberRepository.save(member);
 
         return EjoinMessage.success;
