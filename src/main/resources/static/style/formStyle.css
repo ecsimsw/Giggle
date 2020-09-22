@@ -12,5 +12,12 @@ color:black;
 
  .text-left{
  text-align:initial;
+
+ .middleMenuName{
+   font-size: 25px;
+   text-align: left;
+   color: black;
+   font-weight: 900;
+ }
 }
 

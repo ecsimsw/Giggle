@@ -9,6 +9,8 @@
     <script src="C:\Users\user\IdeaProjects\Giggle\src\main\resources\static\script\jquery-3.5.1.js"></script>
     <script src="C:\Users\user\IdeaProjects\Giggle\src\main\resources\static\script\jquery.twbsPagination.min.js"></script>
 
+
+    <script src="/static/myScript/nameCheck.js"></script>
 </head>
 
 <body class="text-center">
@@ -20,12 +22,7 @@
     <p style="color:red" th:if="${message} != null"  th:text="${message}"></p>
     <br>
 
-    <div style="
-    font-size: 25px;
-    text-align: left;
-    color: black;
-    font-weight: 900;
-    ">아이콘 추가</div>
+    <div class="middleMenuName">아이콘 추가</div>
     <br>
     <form class="form text-left" action="/main/edit/shortCut/add" method="post">
         <select id="selectedCategory" class="form-control" name="selectedCategory">
@@ -48,12 +45,7 @@
         <br>
         <input id="color" type="text" class="form-control" required name="color" placeholder="Choose color">
         <br>
-        <div style="
-    font-size: 25px;
-    text-align: left;
-    color: black;
-    font-weight: 900;
-    ">미리 보기</div>
+        <div class="middleMenuName">미리 보기</div>
         <br>
         <div id="exampleFormDiv">
             <!-- Content Row -->
@@ -77,12 +69,7 @@
         <button class="btn btn-lg btn-primary btn-block" type="submit">적용</button>
     </form>
     <br>
-    <div style="
-    font-size: 25px;
-    text-align: left;
-    color: black;
-    font-weight: 900;
-    ">아이콘 삭제</div>
+    <div class="middleMenuName">아이콘 삭제</div>
     <br>
     <form th:if="${shortCutList.size()}!=0" class="form text-left" action="/main/edit/shortCut/delete" method="get">
         <select name="shortCut" class="form-control" method="get" multiple>

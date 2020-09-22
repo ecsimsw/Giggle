@@ -8,6 +8,8 @@
     <link href="C:\Users\user\IdeaProjects\Giggle\src\main\resources\static\SBadmin2\sb-admin-2.min.css" rel="stylesheet">
     <script src="C:\Users\user\IdeaProjects\Giggle\src\main\resources\static\script\jquery-3.5.1.js"></script>
     <script src="C:\Users\user\IdeaProjects\Giggle\src\main\resources\static\script\jquery.twbsPagination.min.js"></script>
+
+    <script src="/static/myScript/nameCheck.js"></script>
 </head>
 
 <body class="text-center">
@@ -19,12 +21,7 @@
     <p style="color:red" th:if="${message} != null"  th:text="${message}"></p>
     <br>
 
-    <div style="
-    font-size: 25px;
-    text-align: left;
-    color: black;
-    font-weight: 900;
-    ">보드 타입 변경</div>
+    <div class="middleMenuName">보드 타입 변경</div>
     <br>
     <form class="form text-left" action="/main/edit/dashBoard/type" method="post">
         <input hidden th:value="${dashBoard.id}" name="id">
@@ -59,18 +56,13 @@
     <br>
 
     <th:block th:if="${dashBoard.type.name()} == latestPost">
-        <div style="
-    font-size: 25px;
-    text-align: left;
-    color: black;
-    font-weight: 900;
-    ">보드 내용 편집</div>
+        <div class="middleMenuName">보드 내용 편집</div>
         <br>
-        <form class="form text-left" action="/main/edit/dashBoard/latestPost" method="post">
+        <form class="form text-left" onsubmit="return dashBoardNameCheck()" action="/main/edit/dashBoard/latestPost" method="post">
             <input hidden th:value="${dashBoard.id}" name="id">
 
-            <label for="title">title</label>
-            <input id="title" name="title" type="text" class="form-control" th:value="${dashBoard.title}">
+            <label for="name">title</label>
+            <input id="name" name="title" type="text" class="form-control" th:value="${dashBoard.title}">
             <br>
             <label for="selectedCategory">selectedCategory</label>
             <select id="selectedCategory" class="form-control" name="linkId">
@@ -94,18 +86,13 @@
     </th:block>
 
     <th:block th:if="${dashBoard.type.name()} == linkPost">
-        <div style="
-    font-size: 25px;
-    text-align: left;
-    color: black;
-    font-weight: 900;
-    ">보드 내용 편집</div>
+        <div class="middleMenuName">보드 내용 편집</div>
         <br>
-        <form class="form text-left" action="/main/edit/dashBoard/linkPost" method="post">
+        <form class="form text-left" onsubmit="return dashBoardNameCheck()" action="/main/edit/dashBoard/linkPost" method="post">
             <input hidden th:value="${dashBoard.id}" name="id">
 
-            <label for="title">title</label>
-            <input id="title" name="title" type="text" class="form-control" th:value="${dashBoard.title}">
+            <label for="name">title</label>
+            <input id="name" name="title" type="text" class="form-control" th:value="${dashBoard.title}">
             <br>
             <label for="postId">postId</label>
             <input id="postId" name="linkId" class="form-control" th:value="${dashBoard.linkId}" type="text">
@@ -115,18 +102,13 @@
     </th:block>
 
     <th:block th:if="${dashBoard.type.name()} == freePost">
-        <div style="
-    font-size: 25px;
-    text-align: left;
-    color: black;
-    font-weight: 900;
-    ">보드 내용 편집</div>
+        <div class="middleMenuName">보드 내용 편집</div>
         <br>
-        <form class="form text-left" action="/main/edit/dashBoard/freePost" method="post">
+        <form class="form text-left" onsubmit="return dashBoardNameCheck()" action="/main/edit/dashBoard/freePost" method="post">
             <input hidden th:value="${dashBoard.id}" name="id">
 
-            <label for="title">title</label>
-            <input id="title" name="title" class="form-control" type="text" th:value="${dashBoard.title}">
+            <label for="name">title</label>
+            <input id="name" name="title" class="form-control" type="text" th:value="${dashBoard.title}">
             <br>
             <label for="content">content</label>
             <textarea id="content" name="content" class="form-control" th:utext="${dashBoard_content}"></textarea>
@@ -136,12 +118,7 @@
     </th:block>
 
     <th:block th:if="${dashBoard.type.name()} == imgBoard">
-        <div style="
-    font-size: 25px;
-    text-align: left;
-    color: black;
-    font-weight: 900;
-    ">사진 추가</div>
+        <div class="middleMenuName">사진 추가</div>
 
         <form class="form text-left" action="/main/edit/dashBoard/imgBoard/add" method="post" enctype="multipart/form-data">
 
@@ -156,12 +133,7 @@
         </form>
         <br>
         <br>
-        <div style="
-    font-size: 25px;
-    text-align: left;
-    color: black;
-    font-weight: 900;
-    ">사진 제거</div>
+        <div class="middleMenuName">사진 제거</div>
         <form th:if="${mainBoardImg.size()}!=0" class="form text-left" action="/main/edit/dashBoard/imgBoard/delete" method="get">
             <select name="imageFiles" class="form-control" multiple>
                 <th:block th:each="image : ${mainBoardImg}">
@@ -172,23 +144,13 @@
         </form>
         <br>
         <br>
-        <div style="
-    font-size: 25px;
-    text-align: left;
-    color: black;
-    font-weight: 900;
-    ">현재 보드</div>
+        <div class="middleMenuName">현재 보드</div>
         <br>
         <div th:replace="/fragment/mainImgBoard :: mainImgBoard"></div>
     </th:block>
 
     <br>
-    <div style="
-    font-size: 25px;
-    text-align: left;
-    color: black;
-    font-weight: 900;
-    ">보드 삭제</div>
+    <div class="middleMenuName">보드 삭제</div>
     <br>
     <form class="form text-left" action="/main/edit/dashBoard/delete" method="get">
         <input hidden th:value="${dashBoard.id}" name="id">

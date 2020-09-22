@@ -5,11 +5,11 @@
     <link href="/static/SBadmin2/sb-admin-2.min.css" rel="stylesheet">
     <link href="/static/style/formStyle.css" rel="stylesheet">
 
-
     <link href="C:\Users\user\IdeaProjects\Giggle\src\main\resources\static\SBadmin2\sb-admin-2.min.css" rel="stylesheet">
     <script src="C:\Users\user\IdeaProjects\Giggle\src\main\resources\static\script\jquery-3.5.1.js"></script>
     <script src="C:\Users\user\IdeaProjects\Giggle\src\main\resources\static\script\jquery.twbsPagination.min.js"></script>
 
+    <script src="/static/myScript/nameCheck.js"></script>
 </head>
 
 <body class="text-center">
@@ -42,7 +42,7 @@
     <br>
     <p class="font-black" th:if="${message} == null" >Change Password</p>
     <p style="color:red" th:if="${message} != null"  th:text="${message}"></p>
-    <form class="form text-left" th:action="@{/member/setting/pw}" method="post">
+    <form class="form text-left" onsubmit="return changePw()"  th:action="@{/member/setting/pw}" method="post">
         <label for="pw_now">현재 Pw</label>
         <input type="text" id="pw_now" name="pwNow" class="form-control" placeholder="Password" required="">
         <br>
@@ -64,4 +64,29 @@
     <br>
 </div>
 </body>
+
+<script>
+    function changePw(){
+
+
+         var pw_new = document.getElementById('pw_new').value;
+         var pw_re = document.getElementById('pw_re').value;
+
+
+         if(!pwPatternCheck(pw)){
+            return false;
+         }
+
+
+         if(pw_new != pw_re){
+            alert('새로운 비밀번호 확인 불일치');
+            return false;
+         }
+
+         if(pwCheck('pw_new')){
+            return false;
+         }
+    }
+
+</script>
 </html>
