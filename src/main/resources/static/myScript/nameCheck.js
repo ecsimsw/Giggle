@@ -49,16 +49,82 @@ function dashBoardNameCheck() {
 
     var patternNum = /[0-9]/;
     if(patternNum.test(name.charAt(0))){
-        alert("첫 글자는 숫자가 될 수 없습니다.")
+        alert("이름의 첫 글자는 숫자가 될 수 없습니다.")
         return false;
     }
 
     return true;
 }
 
-function pwPatternCheck(pw){
 
-    var pw = document.getElementById(pw).value;
+function memberNameCheck(nameId) {
+
+    var name = document.getElementById(nameId).value;
+
+    if(name.length < 1 || name.length > 10) {
+        alert("이름은 1자리 이상, 10자리 이하로 구성되어야합니다.");
+        return false;
+    }
+
+    if(checkSpace(name)){
+        alert("이름에 빈칸이 올 수 없습니다.");
+        return false;
+    }
+
+    if(checkSpecial(name)){
+        alert("이름에 특수문자가 포함될 수 없습니다.");
+        return false;
+    }
+
+    var patternNum = /[0-9]/;
+    if(patternNum.test(name.charAt(0))){
+        alert("이름의 첫 글자는 숫자가 될 수 없습니다.")
+        return false;
+    }
+
+    return true;
+}
+
+function idPatternCheck(loginId){
+
+    var id = document.getElementById(loginId).value;
+
+    if(id.length < 5 || id.length > 12) {
+        alert("아이디는 5자리 이상, 12자리 이하로 구성되어야합니다.");
+        return false;
+    }
+
+    var patternSpe = /[~!@#$%^&*()_+|<>?:{}]/;
+
+    if(patternSpe.test(id)) {
+        alert("아이디는 특수문자를 포함할 수 없습니다.");
+        return false;
+     }
+
+    if(checkSpace(id)){
+         alert("아이디는 빈칸을 포함할 수 없습니다.");
+         return false;
+    }
+
+    var patternNum = /[0-9]/;
+
+    if(patternNum.test(id.charAt(0))){
+         alert("아이디의 첫 글자는 숫자가 될 수 없습니다.")
+         return false;
+    }
+
+    if(patternSpe.test(id)) {
+        alert("아이디는 특수문자를 포함할 수 없습니다.");
+        return false;
+     }
+
+     return true;
+}
+
+
+function pwPatternCheck(pwId){
+
+    var pw = document.getElementById(pwId).value;
 
     if(pw.length < 5 || pw.length > 12) {
         alert("패스워드는 5자리 이상, 12자리 이하로 구성되어야합니다.");
@@ -75,7 +141,6 @@ function pwPatternCheck(pw){
      }
 
      return true;
-
 }
 
 function checkSpace(str) {

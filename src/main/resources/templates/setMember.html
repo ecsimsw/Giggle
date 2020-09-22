@@ -67,23 +67,15 @@
 
 <script>
     function changePw(){
-
-
          var pw_new = document.getElementById('pw_new').value;
          var pw_re = document.getElementById('pw_re').value;
-
-
-         if(!pwPatternCheck(pw)){
-            return false;
-         }
-
 
          if(pw_new != pw_re){
             alert('새로운 비밀번호 확인 불일치');
             return false;
          }
 
-         if(pwCheck('pw_new')){
+         if(pwPatternCheck('pw_new') == false){
             return false;
          }
     }

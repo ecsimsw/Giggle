@@ -4,8 +4,8 @@ import com.giggle.Domain.Entity.Member;
 import com.giggle.Domain.Form.JoinForm;
 import com.giggle.Domain.Form.LoginForm;
 import com.giggle.Domain.Form.MemberInfo;
-import com.giggle.Message.EjoinMessage;
-import com.giggle.Message.EloginMessage;
+import com.giggle.Validator.Message.EjoinMessage;
+import com.giggle.Validator.Message.EloginMessage;
 import com.giggle.Service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
-import javax.websocket.Session;
 
 @Controller
 @RequestMapping("/member")
@@ -64,6 +63,7 @@ public class MemberController {
     @PostMapping("/join")
     public String join(JoinForm joinForm, Model model, HttpSession session,
                        RedirectAttributes redirectAttributes){
+
         EjoinMessage resultMessage = memberService.join(joinForm);
         model.addAttribute("joinForm", joinForm);
         if(resultMessage == EjoinMessage.loginIdDuplicate){

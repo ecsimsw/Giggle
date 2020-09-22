@@ -9,6 +9,7 @@
     <script src="C:\Users\user\IdeaProjects\Giggle\src\main\resources\static\script\jquery-3.5.1.js"></script>
     <script src="C:\Users\user\IdeaProjects\Giggle\src\main\resources\static\script\jquery.twbsPagination.min.js"></script>
 
+    <script src="/static/myScript/nameCheck.js"></script>
 </head>
 
 <body class="text-center">
@@ -19,7 +20,7 @@
     <p class="font-black" th:if="${message} == null" >Join</p>
     <p style="color:red" th:if="${message} != null"  th:text="${message}"></p>
     <br>
-    <form class="form text-left"  th:action="@{/member/join}" method="post">
+    <form class="form text-left" onsubmit="return checkField()" th:action="@{/member/join}" method="post">
         <label for="id">id</label>
         <input type="text" id = "id" name="loginId" class="form-control" placeholder="Id" required="" autofocus="">
         <br>
@@ -36,4 +37,27 @@
     </form>
 </div>
 </body>
+<script>
+
+    function checkField(){
+
+        if(idPatternCheck('id')== false){
+            return false;
+        }
+
+        if(memberNameCheck('name')== false){
+            return false;
+        }
+
+        if(memberNameCheck('nickName')== false){
+            return false;
+        }
+
+        if(pwPatternCheck('pw')== false){
+            return false;
+        }
+
+        return true;
+    }
+</script>
 </html>
