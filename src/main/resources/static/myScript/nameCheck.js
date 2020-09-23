@@ -113,11 +113,6 @@ function idPatternCheck(loginId){
          return false;
     }
 
-    if(patternSpe.test(id)) {
-        alert("아이디는 특수문자를 포함할 수 없습니다.");
-        return false;
-     }
-
      return true;
 }
 

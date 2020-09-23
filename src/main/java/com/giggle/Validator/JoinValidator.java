@@ -37,28 +37,51 @@ public class JoinValidator implements Validator {
     public void validate(Object target, Errors errors) {
         JoinForm joinForm = (JoinForm)target;
 
-        if(checkDisAllowedId(joinForm.getLoginId()))
-            errors.rejectValue("loginId", "Disallowed login id");
 
-
-    }
-
-    private boolean checkDisAllowedId(String loginId){
-        for(String id : disAllowed){
-            if(loginId.equals(id)){ return true; }
+        if(validLoginId(joinForm.getLoginId(), joinForm.getLoginPw()) == false){
+            errors.rejectValue("loginId", "Disallowed joinForm");
         }
-        return false;
     }
 
-    private boolean checkLoginId(String loginId){
+    private boolean validLoginId(String loginId, String loginPw){
+
+        for(String id : disAllowed){ if(loginId.equals(id)) return false; }
 
         Pattern pattern = Pattern.compile("[ !@#$%^&*(),.?\":{}|<>]");
-
-        if(loginId.matches(pattern)) {
-            System.out.println("matches 숫자 포함");
-        }else {
-            System.out.println("matches 숫자 미포함");
+        if(pattern.matcher(loginId).find() == true){
+            return false;
         }
+
+        if(loginId.length()<5 || loginId.length()>12){
+            return false;
+        }
+
+        if(loginId.charAt(0)==' '){
+            return false;
+        }
+
+
+        pattern = Pattern.compile("[ !@#$%^&*(),.?\":{}|<>]");
+        if(pattern.matcher(loginPw).find() == false){
+            return false;
+        }
+
+        if(loginPw.length()<5 || loginPw.length()>12){
+            return false;
+        }
+
+        return true;
     }
 
 }
+
+
+//        alert("아이디는 5자리 이상, 12자리 이하로 구성되어야합니다.");
+//
+//        alert("아이디는 특수문자를 포함할 수 없습니다.");
+//
+//        alert("아이디의 첫 글자는 숫자가 될 수 없습니다.")
+//
+//        alert("패스워드는 5자리 이상, 12자리 이하로 구성되어야합니다.");
+//
+//        alert("비밀번호는 문자, 숫자, 특수문자로 구성하여야 합니다.");
