@@ -9,12 +9,16 @@ import com.giggle.Domain.Form.CreateMiddleCategoryForm;
 import com.giggle.Service.CategoryService;
 import com.giggle.Service.MainCategoryService;
 import com.giggle.Service.MiddleCategoryService;
+import com.giggle.Validator.CategoryValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -25,7 +29,8 @@ public class CategoryController {
     private final CategoryService categoryService;
     private final MainCategoryService mainCategoryService;
     private final MiddleCategoryService middleCategoryService;
-    private final ObjectMapper objectMapper;
+
+    @Autowired CategoryValidator categoryValidator;
 
     @GetMapping("/create/mainCategory")
     public String createMainCategory(){
@@ -58,7 +63,15 @@ public class CategoryController {
     }
 
     @PostMapping("/create/category")
-    public String createCategory(CreateCategoryForm createCategoryForm) throws JsonProcessingException {
+    public String createCategory(@Valid CreateCategoryForm createCategoryForm
+            , BindingResult bindingResult) throws JsonProcessingException {
+
+        categoryValidator.validate(createCategoryForm, bindingResult);
+
+        if(bindingResult.hasErrors()){
+            throw new RuntimeException("Invalid categoryForm");
+        }
+
         categoryService.createCategory(createCategoryForm);
         return "redirect:/main";
     }

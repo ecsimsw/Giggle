@@ -48,40 +48,17 @@ public class JoinValidator implements Validator {
         for(String id : disAllowed){ if(loginId.equals(id)) return false; }
 
         Pattern pattern = Pattern.compile("[ !@#$%^&*(),.?\":{}|<>]");
-        if(pattern.matcher(loginId).find() == true){
-            return false;
-        }
 
-        if(loginId.length()<5 || loginId.length()>12){
-            return false;
-        }
+        if(pattern.matcher(loginId).find() == true){ return false; }
 
-        if(loginId.charAt(0)==' '){
-            return false;
-        }
-
+        if(loginId.length()<5 || loginId.length()>12){ return false; }
 
         pattern = Pattern.compile("[ !@#$%^&*(),.?\":{}|<>]");
-        if(pattern.matcher(loginPw).find() == false){
-            return false;
-        }
 
-        if(loginPw.length()<5 || loginPw.length()>12){
-            return false;
-        }
+        if(pattern.matcher(loginPw).find() == false){ return false; }
+
+        if(loginPw.length()<5 || loginPw.length()>12){ return false; }
 
         return true;
     }
-
 }
-
-
-//        alert("아이디는 5자리 이상, 12자리 이하로 구성되어야합니다.");
-//
-//        alert("아이디는 특수문자를 포함할 수 없습니다.");
-//
-//        alert("아이디의 첫 글자는 숫자가 될 수 없습니다.")
-//
-//        alert("패스워드는 5자리 이상, 12자리 이하로 구성되어야합니다.");
-//
-//        alert("비밀번호는 문자, 숫자, 특수문자로 구성하여야 합니다.");

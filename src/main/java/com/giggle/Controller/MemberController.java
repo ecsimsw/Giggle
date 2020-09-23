@@ -4,17 +4,21 @@ import com.giggle.Domain.Entity.Member;
 import com.giggle.Domain.Form.JoinForm;
 import com.giggle.Domain.Form.LoginForm;
 import com.giggle.Domain.Form.MemberInfo;
+import com.giggle.Validator.JoinValidator;
 import com.giggle.Validator.Message.EjoinMessage;
 import com.giggle.Validator.Message.EloginMessage;
 import com.giggle.Service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/member")
@@ -22,6 +26,9 @@ import javax.servlet.http.HttpSession;
 @Slf4j
 public class MemberController {
     private final MemberService memberService;
+
+    @Autowired
+    JoinValidator joinValidator;
 
     @GetMapping("/login")
     public String login() { return "loginForm"; }
@@ -61,11 +68,20 @@ public class MemberController {
     }
 
     @PostMapping("/join")
-    public String join(JoinForm joinForm, Model model, HttpSession session,
-                       RedirectAttributes redirectAttributes){
+    public String join(@Valid JoinForm joinForm, Model model, HttpSession session,
+                       RedirectAttributes redirectAttributes,
+                       BindingResult bindingResult){
+
+        model.addAttribute("joinForm", joinForm);
+
+        joinValidator.validate(joinForm, bindingResult);
+
+        if(bindingResult.hasErrors()){
+            throw new RuntimeException("Invalid joinForm");
+        }
 
         EjoinMessage resultMessage = memberService.join(joinForm);
-        model.addAttribute("joinForm", joinForm);
+
         if(resultMessage == EjoinMessage.loginIdDuplicate){
             redirectAttributes.addFlashAttribute("message", "Duplicated loginId");
             return "redirect:/join";
