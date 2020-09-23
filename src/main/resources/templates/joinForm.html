@@ -49,13 +49,13 @@
             return false;
         }
 
+        if(pwPatternCheck('pw')== false){
+            return false;
+        }
         if(memberNameCheck('nickName')== false){
             return false;
         }
 
-        if(pwPatternCheck('pw')== false){
-            return false;
-        }
 
         return true;
     }

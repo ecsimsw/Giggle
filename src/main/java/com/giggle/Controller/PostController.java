@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -22,7 +23,13 @@ public class PostController {
     private final MainCategoryService mainCategoryService;
 
     @GetMapping("/create")
-    public String createPost(@RequestParam("category") Long categoryId, Model model) {
+    public String createPost(@RequestParam("category") Long categoryId, Model model,
+                             HttpSession httpSession) {
+
+        if(httpSession.getAttribute("loginId")==null){
+            throw new RuntimeException("Wrong access");
+        }
+
         Category category = categoryService.findById(categoryId);
         MiddleCategory middleCategory = category.getMiddleCategory();
 

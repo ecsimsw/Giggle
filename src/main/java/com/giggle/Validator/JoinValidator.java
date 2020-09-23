@@ -53,10 +53,6 @@ public class JoinValidator implements Validator {
 
         if(loginId.length()<5 || loginId.length()>12){ return false; }
 
-        pattern = Pattern.compile("[ !@#$%^&*(),.?\":{}|<>]");
-
-        if(pattern.matcher(loginPw).find() == false){ return false; }
-
         if(loginPw.length()<5 || loginPw.length()>12){ return false; }
 
         return true;

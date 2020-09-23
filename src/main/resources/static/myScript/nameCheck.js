@@ -130,7 +130,7 @@ function pwPatternCheck(pwId){
     var patternChar = /[a-zA-Z]/;
     var patternSpe = /[~!@#$%^&*()_+|<>?:{}]/;
 
-    if(!patternNum.test(str) || !patternChar.test(str) || !patternSpe.test(str)) {
+    if(!patternNum.test(pw) || !patternChar.test(pw) || !patternSpe.test(pw)) {
         alert("비밀번호는 문자, 숫자, 특수문자로 구성하여야 합니다.");
         return false;
      }
