@@ -77,27 +77,6 @@ public class CategoryService {
         }
     }
 
-    public void updateAllCategoryPostCnt(){
-        List<MainCategory> allMainCategory = mainCategoryRepository.findAllMainCategory();
-
-        for(MainCategory mainCategory : allMainCategory){
-            int mainPostCnt =0;
-
-            for(MiddleCategory middleCategory : mainCategory.getMiddleCategoryList()){
-                int middlePostCnt =0;
-
-                for(Category category : middleCategory.getCategoryList()){
-                    int postCnt = category.getPostCnt();
-                    middlePostCnt+=postCnt;
-                    mainPostCnt+=postCnt;
-                }
-                middleCategoryRepository.updatePostCnt(middleCategory, middlePostCnt);
-            }
-
-            mainCategoryRepository.updatePostCnt(mainCategory, mainPostCnt);
-        }
-    }
-
     public List<Post> getPostsInCategory(Category category, int page, int postForPage){
         int totalCnt = category.getPostCnt();
 

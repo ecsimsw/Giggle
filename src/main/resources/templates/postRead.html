@@ -65,10 +65,10 @@
                         <div class="card shadow" style="border:1px solid lightgray;">
                             <div class="card-header align-items-center " style="padding-top: 14px;padding-bottom: 4px;">
                                 <img src="https://cf-fpi.everytime.kr/0.png" class="picture large" style="margin-right: 15px; width: 40px; float: left; height: 40px;">
-                                <span style="font-size:14px;padding-top:2px;">익명</span>
+                                <span style="font-size:14px;padding-top:2px;" th:text="${post.writer}"></span>
 
                                 <!-- writer status -->
-                                <ul class="status" style="list-style: none;float: right; padding-top: 10px; margin-bottom: 0px; font-size: 10px;">
+                                <ul th:if="${post.writer == session.loginId}" class="status" style="list-style: none;float: right; padding-top: 10px; margin-bottom: 0px; font-size: 10px;">
                                     <li style="margin-right: 15px; float: left;">
                                         <a class="myButton" th:href="'/post/edit?post='+${post.id}"><span>수정</span></a>
                                     </li>
@@ -121,16 +121,15 @@
                                             float: right;
                                             margin-right: 15px;
                                             margin-bottom: 10px;
-                                        "> comment : 0</li>
+                                        " th:text="${'comment : '+post.commentList.size()}"> comment : 0</li>
                                     </ul>
                                 </a>
                             </form>
                             <br>
-                            <div class="comment_input_box">
+                            <div th:if="${session.loginId} != null" class="comment_input_box">
                                 <a class="myButton" href="#" data-toggle="modal" data-target="#inputCommentModal">
-                                    <input type="text" class="form-control" placeholder="댓글 입력" style="border-top-width: 0.1px;  border-top-color: lightgray;border-bottom: white; border-right: white;border-left: white; border-radius:0; font-size:12px;">
+                                    <input type="text" class="form-control" readonly placeholder="댓글 입력" style="background-color: white; border-top-width: 0.1px;  border-top-color: lightgray;border-bottom: white; border-right: white;border-left: white; border-radius:0; font-size:12px;">
                                 </a>
-
 
                                 <!-- create comment form -->
                                 <div>
@@ -144,8 +143,10 @@
                                                             <span aria-hidden="true">×</span>
                                                         </button>
                                                     </div>
+                                                    <input hidden name="writer" th:value="${session.loginId}">
                                                     <input hidden name="postId" th:value="${post.id}">
-                                                    <textarea class="form-container" name="content" placeholder="Comment..." style="width: 100%; border: 0.5px solid lightgray;margin-top: 0px;margin-bottom: 0px;padding-left: 8px;padding-right: 8px;padding-top: 8px;" rows="15"></textarea>
+                                                    <textarea class="form-container" name="content" placeholder="Comment..."
+                                                              style="width: 100%; border: 0.5px solid lightgray;margin-top: 0px;margin-bottom: 0px;padding-left: 8px;padding-right: 8px;padding-top: 8px;" rows="15"></textarea>
                                                     <div class="modal-footer">
                                                         <button class="btn btn-primary" type="submit" >Enter</button>
                                                         <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
@@ -156,7 +157,6 @@
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -171,7 +171,7 @@
                                     <div class="card-header align-items-center" style="background-color: white; border:none;">
                                         <img src="https://cf-fpi.everytime.kr/0.png" class="picture large" style="margin-right: 15px;width: 40px;float: left;height: 40px;">
                                         <span style="float: left;font-size: 10px;padding-top: 5px;" th:text="${comment_level1.writer}">익명</span>
-                                        <ul class="status" style="list-style: none;float: right;margin-bottom: 0px;font-size: 10px;">
+                                        <ul th:if="${comment_level1.writer == session.loginId}" class="status" style="list-style: none;float: right;margin-bottom: 0px;font-size: 10px;">
                                             <li style="margin-right: 15px;float: left;">
                                                 <a class="myButton" href="#" data-toggle="modal" th:data-target="${'#editCommentModal'+comment_level1.id}">
                                                     <span>수정</span>
@@ -213,7 +213,7 @@
                                             comment_content
                                         </div>
                                         <br>
-                                        <a class="myButton" href="#" data-toggle="modal" th:data-target="${'#commentModal'+comment_level1.id}">
+                                        <a th:if="${session.loginId}!=null" class="myButton" href="#" data-toggle="modal" th:data-target="${'#commentModal'+comment_level1.id}">
                                             <span style="padding-right:10px; font-size:14px; float:right; padding-bottom:5px;">comment</span>
                                         </a>
                                     </div>
@@ -231,6 +231,7 @@
                                                             <span aria-hidden="true">×</span>
                                                         </button>
                                                     </div>
+                                                    <input hidden name="writer" th:value="${session.loginId}">
                                                     <input hidden name="postId" th:value="${post.id}">
                                                     <input hidden name="commentId" th:value="${comment_level1.id}">
                                                     <textarea class="form-container" name="content" placeholder="Comment..." style="width: 100%; border: 0.5px solid lightgray;margin-top: 0px;margin-bottom: 0px;padding-left: 8px;padding-right: 8px;padding-top: 8px;" rows="15"></textarea>
@@ -280,7 +281,7 @@
                                         <div class="card-header align-items-center" style="border:none; background-color: white;">
                                             <img src="https://cf-fpi.everytime.kr/0.png" class="picture large" style="margin-right: 15px;width: 40px;float: left;height: 40px;">
                                             <span style="float: left;font-size: 10px;padding-top: 5px;" th:text="${comment_level2.writer}">익명</span>
-                                            <ul class="status" style="list-style: none;float: right;margin-bottom: 0px;font-size: 10px;">
+                                            <ul th:if="${comment_level2.writer == session.loginId}" class="status" style="list-style: none;float: right;margin-bottom: 0px;font-size: 10px;">
                                                 <li style="margin-right: 15px;float: left;">
                                                     <a class="myButton" href="#" data-toggle="modal" th:data-target="${'#editCommentModal'+comment_level2.id}">
                                                         <span>수정</span>
@@ -319,7 +320,7 @@
                                                 comment_content
                                             </div>
                                             <br>
-                                            <a class="myButton" href="#" data-toggle="modal" th:data-target="${'#commentModal'+comment_level2.id}">
+                                            <a th:if="${session.loginId}!=null" class="myButton" href="#" data-toggle="modal" th:data-target="${'#commentModal'+comment_level2.id}">
                                                 <span style="padding-right:10px; font-size:14px; float:right; padding-bottom:5px;">comment</span>
                                             </a>
                                         </div>
@@ -336,6 +337,7 @@
                                                                 <span aria-hidden="true">×</span>
                                                             </button>
                                                         </div>
+                                                        <input hidden name="writer" th:value="${session.loginId}">
                                                         <input hidden name="postId" th:value="${post.id}">
                                                         <input hidden name="commentId" th:value="${comment_level2.id}">
                                                         <textarea class="form-container" name="content" placeholder="Comment..." style="width: 100%; border: 0.5px solid lightgray;margin-top: 0px;margin-bottom: 0px;padding-left: 8px;padding-right: 8px;padding-top: 8px;" rows="15"></textarea>
@@ -386,7 +388,7 @@
                                             <div class="card-header align-items-center" style="border:none; background-color: white;">
                                                 <img src="https://cf-fpi.everytime.kr/0.png" class="picture large" style="margin-right: 15px;width: 40px;float: left;height: 40px;">
                                                 <span style="float: left;font-size: 10px;padding-top: 5px;" th:text="${comment_level3.writer}">익명</span>
-                                                <ul class="status" style="list-style: none;float: right;margin-bottom: 0px;font-size: 10px;">
+                                                <ul th:if="${comment_level3.writer == session.loginId}" class="status" style="list-style: none;float: right;margin-bottom: 0px;font-size: 10px;">
                                                     <li style="margin-right: 15px;float: left;">
                                                         <a class="myButton" href="#" data-toggle="modal" th:data-target="${'#editCommentModal'+comment_level3.id}">
                                                             <span>수정</span>

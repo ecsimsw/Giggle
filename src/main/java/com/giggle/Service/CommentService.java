@@ -37,7 +37,7 @@ public class CommentService {
 
         newComment.setContent(createCommentForm.getContent());
         newComment.setPost(post);
-        newComment.setWriter("Tester");
+        newComment.setWriter(createCommentForm.getWriter());
 
         commentRepository.save(newComment);
     }

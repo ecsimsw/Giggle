@@ -67,10 +67,13 @@
                             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                 <h6 class="m-0 font-weight-bold text-primary" th:text="${category.name}" >Spring Boot</h6>
 
-                                <a style="color:white;" th:href="${'/post/create?category='+category.id}" class="d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+                                <a th:if="${session.loginId}!=null" style="color:white;" th:href="${'/post/create?category='+category.id}" class="d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+                                <i class="fas fa-download fa-sm text-white-50"></i>
+                                Post</a>
+
+                                <a th:if="${session.loginId}==null" style="color:white;" th:href="${'/member/login'}" class="d-sm-inline-block btn btn-sm btn-primary shadow-sm">
                                     <i class="fas fa-download fa-sm text-white-50"></i>
-                                    Post
-                                </a>
+                                    Post</a>
                             </div>
                             <div>
                                 <div>

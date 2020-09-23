@@ -23,12 +23,7 @@ public class PostController {
     private final MainCategoryService mainCategoryService;
 
     @GetMapping("/create")
-    public String createPost(@RequestParam("category") Long categoryId, Model model,
-                             HttpSession httpSession) {
-
-        if(httpSession.getAttribute("loginId")==null){
-            throw new RuntimeException("Wrong access");
-        }
+    public String createPost(@RequestParam("category") Long categoryId, Model model){
 
         Category category = categoryService.findById(categoryId);
         MiddleCategory middleCategory = category.getMiddleCategory();
@@ -39,7 +34,13 @@ public class PostController {
     }
 
     @PostMapping("/create")
-    public String createPost(PostForm postForm, Model model) {
+    public String createPost(PostForm postForm, Model model,
+                             HttpSession httpSession) {
+
+        if(httpSession.getAttribute("loginId")==null){
+            throw new RuntimeException("Wrong access");
+        }
+
         postService.createPost(postForm);
 
         Long categoryId = Long.parseLong(postForm.getCategoryId());
@@ -118,15 +119,28 @@ public class PostController {
     }
 
     @PostMapping("/edit")
-    public String editPostForm(@RequestParam("post") Long postId, PostForm postForm){
+    public String editPostForm(@RequestParam("post") Long postId, PostForm postForm,
+                               HttpSession httpSession){
+
+        Post postToEdit = postService.findById(postId);
+        if(!httpSession.getAttribute("loginId").equals(postToEdit.getWriter())){
+            throw new RuntimeException("Wrong access");
+        }
+
         postService.editPost(postId, postForm);
         return "redirect:/post/read?post="+postId;
     }
 
     @GetMapping("/delete")
-    public String deletePost(@RequestParam("post") Long postId){
+    public String deletePost(@RequestParam("post") Long postId,
+                             HttpSession httpSession){
 
         Post post = postService.findById(postId);
+
+        if(!httpSession.getAttribute("loginId").equals(post.getWriter())){
+            throw new RuntimeException("Wrong access");
+        }
+
         long categoryId = post.getCategory().getId();
         int page = 1;
 

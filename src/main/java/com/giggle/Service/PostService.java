@@ -26,7 +26,7 @@ public class PostService {
         Post newPost = new Post();
         newPost.setCategory(category);
         newPost.setTitle(postForm.getTitle());
-        newPost.setWriter("tester");
+        newPost.setWriter(postForm.getWriter());
         newPost.setContent(postForm.getContent().replace("\r\n", "<br>"));
         newPost.setViewCnt(0);
         categoryService.updatePostCnt(category, category.getPostCnt()+1);

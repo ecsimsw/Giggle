@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.giggle.Domain.Entity.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -23,11 +24,15 @@ import java.util.List;
 public class CommentController {
 
     private final CommentService commentService;
-    private final MainCategoryService mainCategoryService;
-    private final PostService postService;
 
     @PostMapping("/create")
-    public String createComment(CreateCommentForm createCommentForm){
+    public String createComment(CreateCommentForm createCommentForm,
+                                HttpSession httpSession) {
+
+        if(httpSession.getAttribute("loginId")==null){
+            throw new RuntimeException("Wrong access");
+        }
+
         commentService.createComment(createCommentForm);
         long postId=  Long.parseLong(createCommentForm.getPostId());
 
@@ -35,8 +40,17 @@ public class CommentController {
     }
 
     @PostMapping("/edit")
-    public String editComment(@RequestParam String comment, @RequestParam String content) {
+    public String editComment(@RequestParam String comment, @RequestParam String content
+                              ,HttpSession httpSession) {
+
         long commentId = Long.parseLong(comment);
+
+        String commentWriter = commentService.findById(commentId).getWriter();
+
+        if(!httpSession.getAttribute("loginId").equals(commentWriter)){
+            throw new RuntimeException("Wrong access");
+        }
+
         commentService.editComment(commentId, content);
 
         long postId = commentService.findById(commentId).getPost().getId();
@@ -44,9 +58,16 @@ public class CommentController {
     }
 
     @GetMapping("/delete")
-    public String deletePost(@RequestParam String comment) {
+    public String deleteComment(@RequestParam String comment,
+                             HttpSession httpSession) {
+
         long commentId = Long.parseLong(comment);
         Comment commentToDelete = commentService.findById(commentId);
+
+        if(!httpSession.getAttribute("loginId").equals(commentToDelete.getWriter())){
+            throw new RuntimeException("Wrong access");
+        }
+
         long postId = commentToDelete.getPost().getId();
         commentService.deleteComment(commentId);
         return "redirect:/post/read?post="+postId;

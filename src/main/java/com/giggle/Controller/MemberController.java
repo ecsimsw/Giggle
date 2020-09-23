@@ -84,11 +84,11 @@ public class MemberController {
 
         if(resultMessage == EjoinMessage.loginIdDuplicate){
             redirectAttributes.addFlashAttribute("message", "Duplicated loginId");
-            return "redirect:/join";
+            return "redirect:/member/join";
         }
         else if(resultMessage == EjoinMessage.nickNameDuplicate){
             redirectAttributes.addFlashAttribute("message", "Duplicated nickName");
-            return "redirect:/join";
+            return "redirect:/member/join";
         }
         else if(resultMessage == EjoinMessage.success){
             session.setAttribute("loginId", joinForm.getLoginId());

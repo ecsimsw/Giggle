@@ -55,7 +55,7 @@
                         th:text="${tempCategory.name}">categoryName</option>
             </select>
         </div>
-        <input type="text" hidden disabled name = "writer" th:value="${session.loginId}">
+        <input type="text" hidden name = "writer" th:value="${session.loginId}">
 
         <label for="title">title</label>
         <input type="text" id="title" name="title" class="form-control" placeholder="글 제목" style="margin-bottom : 16px;" required="" autofocus="">
