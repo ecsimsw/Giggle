@@ -6,10 +6,12 @@ import com.giggle.Repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.persistence.EntityManager;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -94,9 +96,10 @@ public class PageService {
     }
 
     @Transactional
-    public void addDashBoard(DashBoardType type, String width, String height){
-        pageRepository.createDashBoard(type, width, height);
+    public long addDashBoard(DashBoardType type, String width, String height){
+        long dashBoardId = pageRepository.createDashBoard(type, width, height);
         this.updateSpotType();
+        return dashBoardId;
     }
 
     @Transactional
@@ -118,24 +121,28 @@ public class PageService {
         this.updateSpotType();
     }
 
+    @Transactional
     public void editDashBoardFreePost(long id, String title, String content){
         DashBoard dashBoard = pageRepository.findDashBoardById(id);
         dashBoard.setTitle(title);
         dashBoard.setContent(content.replace("\r\n", "<br>"));
     }
 
+    @Transactional
     public void editDashBoardLinkPost(long id, String title, long linkId){
         DashBoard dashBoard = pageRepository.findDashBoardById(id);
         dashBoard.setTitle(title);
         dashBoard.setLinkId(linkId);
     }
 
+    @Transactional
     public void editDashBoardLatestPost(long id, String title, long linkId){
         DashBoard dashBoard = pageRepository.findDashBoardById(id);
         dashBoard.setTitle(title);
         dashBoard.setLinkId(linkId);
     }
 
+    @Transactional
     public void updateSpotType(){
         List<DashBoard> dashBoardList = this.getAllDashBoard();
 

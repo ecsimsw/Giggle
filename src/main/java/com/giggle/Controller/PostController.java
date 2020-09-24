@@ -23,7 +23,12 @@ public class PostController {
     private final MainCategoryService mainCategoryService;
 
     @GetMapping("/create")
-    public String createPost(@RequestParam("category") Long categoryId, Model model){
+    public String createPost(@RequestParam("category") Long categoryId, Model model
+                            ,HttpSession httpSession){
+
+        if(httpSession.getAttribute("loginId")==null){
+            throw new RuntimeException("Wrong access");
+        }
 
         Category category = categoryService.findById(categoryId);
         MiddleCategory middleCategory = category.getMiddleCategory();

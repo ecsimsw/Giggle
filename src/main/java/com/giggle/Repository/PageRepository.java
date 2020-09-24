@@ -69,13 +69,15 @@ public class PageRepository {
     // edit dashBoard
     public DashBoard findDashBoardById(long id){return em.find(DashBoard.class, id);}
 
-    public void createDashBoard(DashBoardType type, String width, String height){
+    public long createDashBoard(DashBoardType type, String width, String height){
         DashBoard newDashBoard = new DashBoard();
         newDashBoard.setType(type);
         newDashBoard.setHeight(height);
         newDashBoard.setWidth(width);
         newDashBoard.setSpotType(0);
         em.persist(newDashBoard);
+
+        return newDashBoard.getId();
     }
 
     public List<DashBoard> getAllDashBoard(){

@@ -133,8 +133,9 @@ public class MainController {
     public String editDashBoardAdd(@RequestParam DashBoardType type,
                                    @RequestParam String width,
                                    @RequestParam String height) {
-        pageService.addDashBoard(type, width, height);
-        return "redirect:/main";
+        long dashBoardId = pageService.addDashBoard(type, width, height);
+
+        return "redirect:/main/edit/dashBoard?id="+dashBoardId;
     }
 
     @GetMapping("/edit/dashBoard")

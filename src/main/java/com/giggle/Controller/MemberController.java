@@ -42,7 +42,9 @@ public class MemberController {
 
         if(resultMessage == EloginMessage.success){
             redirectAttributes.addFlashAttribute("message", "login_success");
-            session.setAttribute("loginId", loginForm.getLoginId());
+            Member loginMember = memberService.getByLoginId(loginForm.getLoginId());
+            session.setAttribute("loginId", loginMember.getLoginId());
+            session.setAttribute("authority", loginMember.getMemberType().name());
             return "redirect:/main";
         }
         else if(resultMessage == EloginMessage.nonExistLoginId){
@@ -59,6 +61,7 @@ public class MemberController {
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.removeAttribute("loginId");
+        session.removeAttribute("authority");
         return "redirect:/main";
     }
 
@@ -91,7 +94,9 @@ public class MemberController {
             return "redirect:/member/join";
         }
         else if(resultMessage == EjoinMessage.success){
-            session.setAttribute("loginId", joinForm.getLoginId());
+            Member loginMember = memberService.getByLoginId(joinForm.getLoginId());
+            session.setAttribute("loginId", loginMember.getLoginId());
+            session.setAttribute("authority", loginMember.getMemberType().name());
             return "redirect:/main";  // after joinPage
         }
         throw new RuntimeException();

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<!-- Topbar Navbar -->
+<th:block th:fragment="mainImgBoard">
+    <!-- start img board -->
+    <div class="col-xs-6 col-lg-6">
+        <div id="demo" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner"> <!-- 슬라이드 쇼 -->
+
+                <!-- Thymeleaf: How to exclude outer tag when using th:each? -->
+                <th:block th:each="src, index : ${mainBoardImgSrc}">
+                    <div th:if="${index.count==1}" class="carousel-item active">
+                        <img class="d-block w-100" th:src="${src}">
+                        <div class = "caption">
+                            <!--  <div class="carousel-caption d-none d-md-block">-->
+                            <!--  <h5>Geeks Hackathon</h5> <p>caption</p>-->
+                            <!--  </div>-->
+                        </div>
+                    </div>
+                    <div th:if="${index.count!=1}" class="carousel-item">
+                        <img class="d-block w-100" th:src="${src}">
+                        <a th:value = ${index.count}></a>
+                        <div class = "caption">
+                            <!--  <div class="carousel-caption d-none d-md-block">-->
+                            <!--  <h5>Geeks Hackathon</h5> <p>caption</p>-->
+                            <!--  </div>-->
+                        </div>
+                    </div>
+                </th:block>
+
+                <!-- 왼쪽 오른쪽 화살표 버튼 -->
+                <a class="carousel-control-prev" href="#demo" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                </a>
+
+                <a class="carousel-control-next" href="#demo" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                </a>
+                <!-- / 화살표 버튼 끝 -->
+
+                <!-- 인디케이터 -->
+                <div class="indicators">
+                    <!--  <ul class="carousel-indicators">-->
+                    <!--   <li data-target="#demo" data-slide-to="0" class="active">-->
+                    <!--    </li> &lt;!&ndash;0번부터시작&ndash;&gt;-->
+                    <!--    <li data-target="#demo" data-slide-to="1"></li>-->
+                    <!--    <li data-target="#demo" data-slide-to="2"></li>-->
+                    <!--  </ul> &lt;!&ndash; 인디케이터 끝 &ndash;&gt;-->
+                </div>
+            </div>
+        </div>
+        <!-- /.container-fluid -->
+    </div>
+    <!-- end img board -->
+</th:block>
+</html>

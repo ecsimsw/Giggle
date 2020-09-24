@@ -58,7 +58,7 @@
     <th:block th:if="${dashBoard.type.name()} == latestPost">
         <div class="middleMenuName">보드 내용 편집</div>
         <br>
-        <form class="form text-left" onsubmit="return dashBoardNameCheck()" action="/main/edit/dashBoard/latestPost" method="post">
+        <form class="form text-left" action="/main/edit/dashBoard/latestPost" method="post">
             <input hidden th:value="${dashBoard.id}" name="id">
 
             <label for="name">title</label>
@@ -88,7 +88,7 @@
     <th:block th:if="${dashBoard.type.name()} == linkPost">
         <div class="middleMenuName">보드 내용 편집</div>
         <br>
-        <form class="form text-left" onsubmit="return dashBoardNameCheck()" action="/main/edit/dashBoard/linkPost" method="post">
+        <form class="form text-left" action="/main/edit/dashBoard/linkPost" method="post">
             <input hidden th:value="${dashBoard.id}" name="id">
 
             <label for="name">title</label>
@@ -104,7 +104,7 @@
     <th:block th:if="${dashBoard.type.name()} == freePost">
         <div class="middleMenuName">보드 내용 편집</div>
         <br>
-        <form class="form text-left" onsubmit="return dashBoardNameCheck()" action="/main/edit/dashBoard/freePost" method="post">
+        <form class="form text-left" action="/main/edit/dashBoard/freePost" method="post">
             <input hidden th:value="${dashBoard.id}" name="id">
 
             <label for="name">title</label>
