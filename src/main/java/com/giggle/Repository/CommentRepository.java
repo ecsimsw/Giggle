@@ -17,7 +17,12 @@ public class CommentRepository {
     }
 
     public void save(Comment comment){
-        em.persist(comment);
+        if(comment.getId()== null){
+            em.persist(comment);
+        }
+        else{
+            em.merge(comment);
+        }
     }
 
     public void deleteById(long id){

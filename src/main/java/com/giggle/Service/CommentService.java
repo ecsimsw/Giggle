@@ -65,6 +65,6 @@ public class CommentService {
         Comment comment = commentRepository.findById(id);
         comment.setContent(content);
 
-        commentRepository.editComment(comment);
+//        commentRepository.editComment(comment);
     }
 }

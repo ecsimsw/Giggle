@@ -30,17 +30,12 @@ public class MiddleCategoryService {
         middleCategoryRepository.save(middleCategory);
     }
 
-    public void updatePostCnt(MiddleCategory middleCategory, int postCnt){
-        middleCategoryRepository.updatePostCnt(middleCategory, postCnt);
-    }
-
     @Transactional
     public void deleteMiddleCategory(long id){
         MiddleCategory middleCategory = middleCategoryRepository.findById(id);
-        MainCategory mainCategory =   middleCategory.getMainCategory();
+        MainCategory mainCategory = middleCategory.getMainCategory();
         mainCategory.getMiddleCategoryList().remove(middleCategory);
-        mainCategoryRepository.updatePostCnt(mainCategory, mainCategory.getPostCnt()-middleCategory.getPostCnt());
-        middleCategoryRepository.updatePostCnt(middleCategory,0);
+        mainCategoryRepository.updatePostCnt(mainCategory.getId(), mainCategory.getPostCnt()-middleCategory.getPostCnt());
         middleCategoryRepository.deleteById(id);
     }
 

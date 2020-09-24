@@ -95,21 +95,6 @@ public class PageRepository {
         em.flush();
     }
 
-    public void updateDashBoardTitle(DashBoard dashBoard, String title){
-        dashBoard.setTitle(title);
-        em.flush();
-    }
-
-    public void updateDashBoardContent(DashBoard dashBoard, String content){
-        dashBoard.setContent(content);
-        em.flush();
-    }
-
-    public void updateDashBoardLinkId(DashBoard dashBoard, long linkId){
-        dashBoard.setLinkId(linkId);
-        em.flush();
-    }
-
     public void updateSpotType(DashBoard dashBoard, int type){
         dashBoard.setSpotType(type);
         em.flush();

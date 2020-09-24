@@ -29,8 +29,8 @@ public class PostService {
         newPost.setWriter(postForm.getWriter());
         newPost.setContent(postForm.getContent().replace("\r\n", "<br>"));
         newPost.setViewCnt(0);
-        categoryService.updatePostCnt(category, category.getPostCnt()+1);
 
+        categoryService.updatePostCnt(categoryId, category.getPostCnt()+1);
         postRepository.save(newPost);
         return newPost.getId();
     }
@@ -49,23 +49,18 @@ public class PostService {
     @Transactional
     public void editPost(Long id, PostForm postForm){
         Post post = findById(id);
-
         long categoryId = Long.parseLong(postForm.getCategoryId());
         Category category = categoryService.findById(categoryId);
-
         post.setCategory(category);
         post.setTitle(postForm.getTitle());
-        post.setContent(postForm.getContent().replace("\r\n", "<br>"));  // 한줄로 표시됨을 방지
-
-        postRepository.updatePost(post);
+        post.setContent(postForm.getContent().replace("\r\n", "<br>"));
     }
 
     @Transactional
     public void deletePost(Long id){
         Post post = findById(id);
         Category category = post.getCategory();
-        categoryService.updatePostCnt(category, category.getPostCnt()-1);
-
+        categoryService.updatePostCnt(category.getId(), category.getPostCnt()-1);
         postRepository.remove(post);
     }
 }

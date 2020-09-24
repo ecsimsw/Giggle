@@ -13,7 +13,11 @@ public class MemberRepository {
     private final EntityManager em;
 
     public void save(Member member){
-        em.persist(member);
+        if(member.getId()==null){
+            em.persist(member); }
+        else{
+            em.merge(member);
+        }
     }
 
     public Member findById(Long id){
@@ -37,8 +41,4 @@ public class MemberRepository {
         else { return selectedMembers.get(0); }
     }
 
-    public void setNickName(Member member, String nickName){
-        member.setNickName(nickName);
-        em.flush();
-    }
 }

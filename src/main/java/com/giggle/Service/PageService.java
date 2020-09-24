@@ -67,7 +67,6 @@ public class PageService {
         }
     }
 
-
     /// edit shortCuts
 
     @Transactional
@@ -113,31 +112,32 @@ public class PageService {
 
     public void editDashBoardType(long id, DashBoardType type, String width, String height){
         DashBoard dashBoard = pageRepository.findDashBoardById(id);
-        pageRepository.updateDashBoard(dashBoard, type, width, height);
+        dashBoard.setType(type);
+        dashBoard.setWidth(width);
+        dashBoard.setHeight(height);
         this.updateSpotType();
     }
 
     public void editDashBoardFreePost(long id, String title, String content){
         DashBoard dashBoard = pageRepository.findDashBoardById(id);
-        pageRepository.updateDashBoardTitle(dashBoard, title);
-        pageRepository.updateDashBoardContent(dashBoard, content.replace("\r\n", "<br>"));
+        dashBoard.setTitle(title);
+        dashBoard.setContent(content.replace("\r\n", "<br>"));
     }
 
     public void editDashBoardLinkPost(long id, String title, long linkId){
         DashBoard dashBoard = pageRepository.findDashBoardById(id);
-        pageRepository.updateDashBoardTitle(dashBoard, title);
-        pageRepository.updateDashBoardLinkId(dashBoard, linkId);
+        dashBoard.setTitle(title);
+        dashBoard.setLinkId(linkId);
     }
 
     public void editDashBoardLatestPost(long id, String title, long linkId){
         DashBoard dashBoard = pageRepository.findDashBoardById(id);
-        pageRepository.updateDashBoardTitle(dashBoard, title);
-        pageRepository.updateDashBoardLinkId(dashBoard, linkId);
+        dashBoard.setTitle(title);
+        dashBoard.setLinkId(linkId);
     }
 
     public void updateSpotType(){
         List<DashBoard> dashBoardList = this.getAllDashBoard();
-        log.info(String.valueOf(dashBoardList.size()));
 
         DashBoard now;
         DashBoard prev;

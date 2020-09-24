@@ -43,15 +43,16 @@ public class CategoryService {
         return categoryRepository.findById(id);
     }
 
-    public void updatePostCnt(Category category, int postCnt){
+    public void updatePostCnt(long categoryId, int postCnt){
+        Category category = categoryRepository.findById(categoryId);
         int dif = postCnt - category.getPostCnt();
-        categoryRepository.updatePostCnt(category, postCnt);
+        category.setPostCnt(postCnt);
 
         MiddleCategory middleCategory = category.getMiddleCategory();
-        middleCategoryRepository.updatePostCnt(middleCategory, middleCategory.getPostCnt()+dif);
+        middleCategoryRepository.updatePostCnt(middleCategory.getId(), middleCategory.getPostCnt()+dif);
 
         MainCategory mainCategory = middleCategory.getMainCategory();
-        mainCategoryRepository.updatePostCnt(mainCategory, mainCategory.getPostCnt()+dif);
+        mainCategoryRepository.updatePostCnt(mainCategory.getId(), mainCategory.getPostCnt()+dif);
     }
 
     public void updateWholeCategoryPostCnt(){
@@ -65,15 +66,15 @@ public class CategoryService {
 
                 for(Category category : middleCategory.getCategoryList()){
                     int postCnt = category.getPosts().size();
-                    categoryRepository.updatePostCnt(category, postCnt);
+                    categoryRepository.updatePostCnt(category.getId(), postCnt);
                     middlePostCnt+=postCnt;
                 }
 
-                middleCategoryRepository.updatePostCnt(middleCategory, middlePostCnt);
+                middleCategoryRepository.updatePostCnt(middleCategory.getId(), middlePostCnt);
                 mainPostCnt+=middlePostCnt;
             }
 
-            mainCategoryRepository.updatePostCnt(mainCategory, mainPostCnt);
+            mainCategoryRepository.updatePostCnt(mainCategory.getId(), mainPostCnt);
         }
     }
 
@@ -99,20 +100,17 @@ public class CategoryService {
     public void deleteCategory(long id){
 
         // 이게 jpa에서 category를 지우는 거랑, java에서 middleCategory 안의 categoryList 안에서 category를 지우는 게 다르다.
-
         // jpa에서만 지우면 middleCategory에 categoryList에는 category가 남아있다.
 
         Category category = categoryRepository.findById(id);
-        int postCnt = category.getPostCnt();
+        int deletedPostCnt = category.getPostCnt();
 
         MiddleCategory middleCategory = category.getMiddleCategory();
         MainCategory mainCategory = middleCategory.getMainCategory();
         middleCategory.getCategoryList().remove(category);
 
-        mainCategoryRepository.updatePostCnt(mainCategory, mainCategory.getPostCnt()-postCnt);
-        middleCategoryRepository.updatePostCnt(middleCategory, middleCategory.getPostCnt()-postCnt);
-        categoryRepository.updatePostCnt(category, 0);
-
+        mainCategoryRepository.updatePostCnt(mainCategory.getId(), mainCategory.getPostCnt()-deletedPostCnt);
+        middleCategoryRepository.updatePostCnt(middleCategory.getId(), middleCategory.getPostCnt()-deletedPostCnt);
         categoryRepository.deleteById(id);
 
     }

@@ -24,6 +24,7 @@ public class MemberService {
         String attemptedId = loginForm.getLoginId();
         String attemptedPw = loginForm.getLoginPw();
         Member selected = memberRepository.findByLoginId(attemptedId);
+        
         if(selected == null){ return EloginMessage.nonExistLoginId; }
         if(!selected.getLoginPw().equals(attemptedPw)){ return EloginMessage.wrongLoginPw; }
         else if(selected.getLoginPw().equals(attemptedPw)){ return EloginMessage.success;}
@@ -59,7 +60,7 @@ public class MemberService {
 
     public Member updateMemberInfo(Long id, MemberInfo memberInfo){
         Member member = memberRepository.findById(id);
-        memberRepository.setNickName(member, memberInfo.getNickName());
+        member.setNickName(memberInfo.getNickName());
         return member;
     }
 }
