@@ -2,20 +2,16 @@ package com.giggle.Service;
 
 import com.giggle.Domain.Entity.*;
 import com.giggle.Repository.PageRepository;
-import com.giggle.Repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.persistence.EntityManager;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ListIterator;
 
 @Service
 @Transactional(readOnly = true)
@@ -24,11 +20,8 @@ import java.util.ListIterator;
 public class PageService {
 
     private final PageRepository pageRepository;
-    private final PostRepository postRepository;
-
 
     /// edit Main img Board
-
     @Transactional
     public void addImgBoard(MultipartFile[] multipartFiles, String resourceSrc) throws IOException {
         for(MultipartFile file : multipartFiles){
@@ -70,7 +63,6 @@ public class PageService {
     }
 
     /// edit shortCuts
-
     @Transactional
     public void addShortCut(Category category, String description, String color){
         pageRepository.createShortCut(category.getName(), category.getId(), description, color);
@@ -90,7 +82,6 @@ public class PageService {
     }
 
     // edit dashBoard
-
     public DashBoard findDashBoardById(long id){
         return pageRepository.findDashBoardById(id);
     }
@@ -210,8 +201,6 @@ public class PageService {
                     }
                 }
             }
-
         }
-
     }
 }

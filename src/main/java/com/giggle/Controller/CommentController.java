@@ -47,6 +47,8 @@ public class CommentController {
 
         String commentWriter = commentService.findById(commentId).getWriter();
 
+
+
         if(!httpSession.getAttribute("loginId").equals(commentWriter)){
             throw new RuntimeException("Wrong access");
         }

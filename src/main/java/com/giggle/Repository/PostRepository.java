@@ -41,7 +41,6 @@ public class PostRepository {
                 .getResultList();
 
         Collections.reverse(selectedPosts);
-
         return selectedPosts;
     }
 

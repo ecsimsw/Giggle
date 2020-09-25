@@ -5,6 +5,7 @@ import com.giggle.Domain.Form.PostForm;
 import com.giggle.Service.CategoryService;
 import com.giggle.Service.MainCategoryService;
 import com.giggle.Service.PostService;
+import com.giggle.Validator.CheckAuthority;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -42,7 +43,8 @@ public class PostController {
     public String createPost(PostForm postForm, Model model,
                              HttpSession httpSession) {
 
-        if(httpSession.getAttribute("loginId")==null){
+        String loginId = (String)httpSession.getAttribute("loginId");
+        if(loginId==null || postForm.getWriter().equals(loginId)){
             throw new RuntimeException("Wrong access");
         }
 
@@ -127,10 +129,14 @@ public class PostController {
     public String editPostForm(@RequestParam("post") Long postId, PostForm postForm,
                                HttpSession httpSession){
 
-        Post postToEdit = postService.findById(postId);
-        if(!httpSession.getAttribute("loginId").equals(postToEdit.getWriter())){
-            throw new RuntimeException("Wrong access");
-        }
+        Post post = postService.findById(postId);
+
+        String authority = (String) httpSession.getAttribute("authority");
+        boolean isAdmin = authority.equals("admin") || authority.equals("master");
+        boolean isPostOwner = httpSession.getAttribute("loginId").equals(post.getWriter());
+        if(!isAdmin && !isPostOwner){ throw new RuntimeException("Wrong access"); }
+
+//        CheckAuthority.checkAuthority(httpSession, post.getWriter());
 
         postService.editPost(postId, postForm);
         return "redirect:/post/read?post="+postId;
@@ -142,9 +148,10 @@ public class PostController {
 
         Post post = postService.findById(postId);
 
-        if(!httpSession.getAttribute("loginId").equals(post.getWriter())){
-            throw new RuntimeException("Wrong access");
-        }
+        String authority = (String) httpSession.getAttribute("authority");
+        boolean isAdmin = authority.equals("admin") || authority.equals("master");
+        boolean isPostOwner = httpSession.getAttribute("loginId").equals(post.getWriter());
+        if(!isAdmin && !isPostOwner){ throw new RuntimeException("Wrong access"); }
 
         long categoryId = post.getCategory().getId();
         int page = 1;

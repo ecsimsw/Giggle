@@ -90,13 +90,6 @@ public class PageRepository {
         em.remove(dashBoard);
     }
 
-    public void updateDashBoard(DashBoard dashBoard, DashBoardType type, String width, String height){
-        dashBoard.setType(type);
-        dashBoard.setWidth(width);
-        dashBoard.setHeight(height);
-        em.flush();
-    }
-
     public void updateSpotType(DashBoard dashBoard, int type){
         dashBoard.setSpotType(type);
         em.flush();
