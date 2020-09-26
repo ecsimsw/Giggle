@@ -1,16 +1,48 @@
 package com.giggle.Validator;
 
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
+
 import javax.servlet.http.HttpSession;
 
+@Component
 public class CheckAuthority {
 
-    public static boolean checkAuthority(HttpSession httpSession, String owner){
-        String authority = (String) httpSession.getAttribute("authority");
-        boolean isAdmin = authority.equals("admin") || authority.equals("master");
-        boolean isOwner = httpSession.getAttribute("loginId").equals(owner);
-        if(!isAdmin && !isOwner){ return false;}
-
+    public boolean checkLogin(String loginId){
+        if(loginId == null){
+            throw new RuntimeException("Wrong access _ Login session information does not exist");
+        }
         return true;
+    }
+
+    public String checkLogin(HttpSession httpSession){
+        String loginId = (String) httpSession.getAttribute("loginId");
+        if(loginId == null){
+            throw new RuntimeException("Wrong access _ Login session information does not exist");
+        }
+        return loginId;
+    }
+
+    public String checkAuthority(HttpSession httpSession){
+        String authority = (String) httpSession.getAttribute("authority");
+        if(authority == null){
+            throw new RuntimeException("Wrong access _ Authority session information does not exist");
+        }
+        return authority;
+    }
+
+    public boolean checkOwner(HttpSession httpSession, String ownerId){
+        String loginId = checkLogin(httpSession);
+        if(!loginId.equals(ownerId))return false;
+        return true;
+    }
+
+    public boolean checkAdmin(HttpSession httpSession){
+        String authority = checkAuthority(httpSession);
+        if(authority.equals("admin") || authority.equals("master")){
+            return true;
+        }
+        return false;
     }
 
 }

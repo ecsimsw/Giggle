@@ -5,6 +5,8 @@ import com.giggle.Domain.Entity.MainCategory;
 import com.giggle.Domain.Entity.MiddleCategory;
 import com.giggle.Domain.Entity.Post;
 import com.giggle.Domain.Form.CreateCategoryForm;
+import com.giggle.Domain.Form.CreateMainCategoryForm;
+import com.giggle.Domain.Form.CreateMiddleCategoryForm;
 import com.giggle.Repository.CategoryRepository;
 import com.giggle.Repository.MainCategoryRepository;
 import com.giggle.Repository.MiddleCategoryRepository;
@@ -24,6 +26,54 @@ public class CategoryService {
     private final MiddleCategoryRepository middleCategoryRepository;
     private final MainCategoryRepository mainCategoryRepository;
     private final PostRepository postRepository;
+
+    /////// mainCategory Service
+
+    @Transactional
+    public void createMainCategory(CreateMainCategoryForm createMainCategoryForm){
+        MainCategory newMainCategory = new MainCategory();
+
+        newMainCategory.setName(createMainCategoryForm.getName());
+        newMainCategory.setDescription(createMainCategoryForm.getDescription());
+
+        mainCategoryRepository.save(newMainCategory);
+    }
+
+    public List<MainCategory> getAllMainCategory(){
+        return mainCategoryRepository.findAllMainCategory();
+    }
+
+    @Transactional
+    public void deleteMainCategory(long id){
+        mainCategoryRepository.deleteById(id);
+    }
+
+
+
+
+    ///////  middleCategory Service
+
+    @Transactional
+    public void createMiddleCategory(CreateMiddleCategoryForm createMiddleCategoryForm){
+        MiddleCategory middleCategory = new MiddleCategory();
+        middleCategory.setMainCategory(mainCategoryRepository.findById(createMiddleCategoryForm.getMainCategoryId()));
+        middleCategory.setName(createMiddleCategoryForm.getName());
+
+        middleCategoryRepository.save(middleCategory);
+    }
+
+    @Transactional
+    public void deleteMiddleCategory(long id){
+        MiddleCategory middleCategory = middleCategoryRepository.findById(id);
+        MainCategory mainCategory = middleCategory.getMainCategory();
+        mainCategory.getMiddleCategoryList().remove(middleCategory);
+        mainCategoryRepository.updatePostCnt(mainCategory.getId(), mainCategory.getPostCnt()-middleCategory.getPostCnt());
+        middleCategoryRepository.deleteById(id);
+    }
+
+
+
+    /////// category Service
 
     @Transactional
     public void createCategory(CreateCategoryForm createCategoryForm){

@@ -15,8 +15,6 @@ public class PostService {
 
     private final PostRepository postRepository;
     private final CategoryService categoryService;
-    private final MiddleCategoryService middleCategoryService;
-    private final MainCategoryService mainCategoryService;
 
     @Transactional
     public long createPost(PostForm postForm){

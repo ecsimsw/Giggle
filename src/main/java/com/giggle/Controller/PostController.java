@@ -3,10 +3,10 @@ package com.giggle.Controller;
 import com.giggle.Domain.Entity.*;
 import com.giggle.Domain.Form.PostForm;
 import com.giggle.Service.CategoryService;
-import com.giggle.Service.MainCategoryService;
 import com.giggle.Service.PostService;
 import com.giggle.Validator.CheckAuthority;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -21,15 +21,15 @@ public class PostController {
 
     private final PostService postService;
     private final CategoryService categoryService;
-    private final MainCategoryService mainCategoryService;
+
+    @Autowired
+    CheckAuthority checkAuthority;
 
     @GetMapping("/create")
     public String createPost(@RequestParam("category") Long categoryId, Model model
                             ,HttpSession httpSession){
 
-        if(httpSession.getAttribute("loginId")==null){
-            throw new RuntimeException("Wrong access");
-        }
+        checkAuthority.checkLogin(httpSession);
 
         Category category = categoryService.findById(categoryId);
         MiddleCategory middleCategory = category.getMiddleCategory();
@@ -43,10 +43,7 @@ public class PostController {
     public String createPost(PostForm postForm, Model model,
                              HttpSession httpSession) {
 
-        String loginId = (String)httpSession.getAttribute("loginId");
-        if(loginId==null || postForm.getWriter().equals(loginId)){
-            throw new RuntimeException("Wrong access");
-        }
+        checkAuthority.checkOwner(httpSession, postForm.getWriter());
 
         postService.createPost(postForm);
 
@@ -63,7 +60,7 @@ public class PostController {
 
         // side bar
 
-        List<MainCategory> mainCategoryList = mainCategoryService.getAllMainCategory();
+        List<MainCategory> mainCategoryList = categoryService.getAllMainCategory();
         model.addAttribute("mainCategoryList", mainCategoryList);
 
 
@@ -101,7 +98,7 @@ public class PostController {
 
         // side bar
 
-        List<MainCategory> mainCategoryList = mainCategoryService.getAllMainCategory();
+        List<MainCategory> mainCategoryList = categoryService.getAllMainCategory();
         model.addAttribute("mainCategoryList", mainCategoryList);
 
         // post
@@ -129,14 +126,13 @@ public class PostController {
     public String editPostForm(@RequestParam("post") Long postId, PostForm postForm,
                                HttpSession httpSession){
 
+
+
         Post post = postService.findById(postId);
 
-        String authority = (String) httpSession.getAttribute("authority");
-        boolean isAdmin = authority.equals("admin") || authority.equals("master");
-        boolean isPostOwner = httpSession.getAttribute("loginId").equals(post.getWriter());
-        if(!isAdmin && !isPostOwner){ throw new RuntimeException("Wrong access"); }
-
-//        CheckAuthority.checkAuthority(httpSession, post.getWriter());
+        boolean isOwner = checkAuthority.checkOwner(httpSession, post.getWriter());
+        boolean isAdmin = checkAuthority.checkAdmin(httpSession);
+        if(!isAdmin && !isOwner){ throw new RuntimeException("You do not have access rights."); }
 
         postService.editPost(postId, postForm);
         return "redirect:/post/read?post="+postId;
@@ -147,14 +143,12 @@ public class PostController {
                              HttpSession httpSession){
 
         Post post = postService.findById(postId);
-
-        String authority = (String) httpSession.getAttribute("authority");
-        boolean isAdmin = authority.equals("admin") || authority.equals("master");
-        boolean isPostOwner = httpSession.getAttribute("loginId").equals(post.getWriter());
-        if(!isAdmin && !isPostOwner){ throw new RuntimeException("Wrong access"); }
-
         long categoryId = post.getCategory().getId();
         int page = 1;
+
+        boolean isOwner = checkAuthority.checkOwner(httpSession, post.getWriter());
+        boolean isAdmin = checkAuthority.checkAdmin(httpSession);
+        if(!isAdmin && !isOwner){ throw new RuntimeException("You do not have access rights."); }
 
         postService.deletePost(postId);
         return "redirect:/post/board?category="+categoryId+"&page="+page;

@@ -4,8 +4,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.giggle.Domain.Entity.*;
 import com.giggle.Service.*;
+import com.giggle.Validator.CheckAuthority;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -25,15 +27,13 @@ public class MainController {
 
     private final CategoryService categoryService;
     private final PostService postService;
-    private final MainCategoryService mainCategoryService;
     private final PageService pageService;
 
     private final int newPostCntToPrint = 7; // mainPage에 포스트할 새로운 글의 개수를 지정한다.
     private final String nameId = "add_";  // edit/imgBoard 에서 사진 name 형식 : add_1 ~ add_n
     private final int limitAdditionImgCnt = 5;  // edit/imgBoard 에서 추가할 수 있는 사진 개수 제한
 
-    private final ObjectMapper objectMapper;
-
+    @Autowired CheckAuthority checkAuthority;
 
     @GetMapping("")
     public String mainPage(Model model, HttpSession session) throws JsonProcessingException {
@@ -42,7 +42,7 @@ public class MainController {
 
         // sideBar
 
-        List<MainCategory> mainCategoryList = mainCategoryService.getAllMainCategory();
+        List<MainCategory> mainCategoryList = categoryService.getAllMainCategory();
 
         model.addAttribute("mainCategoryList", mainCategoryList);
 
@@ -97,7 +97,7 @@ public class MainController {
         List<ShortCut> shortCutList = pageService.getAllShortCut();
         model.addAttribute("shortCutList", shortCutList);
 
-        List<MainCategory> mainCategoryList = mainCategoryService.getAllMainCategory();
+        List<MainCategory> mainCategoryList = categoryService.getAllMainCategory();
         model.addAttribute("mainCategoryList", mainCategoryList);
 
         return "editshortCut";
@@ -107,7 +107,11 @@ public class MainController {
     @PostMapping("/edit/shortCut/add")
     public String editShortCutAdd(@RequestParam("selectedCategory") long categoryId,
                                   @RequestParam String description,
-                                  @RequestParam String color){
+                                  @RequestParam String color,
+                                  HttpSession httpSession){
+        boolean isAdmin = checkAuthority.checkAdmin(httpSession);
+        if(!isAdmin) throw new RuntimeException("You do not have access rights.");
+
         Category category = categoryService.findById(categoryId);
         pageService.addShortCut(category, description, color);
         return "redirect:/main/edit/shortCut";
@@ -132,7 +136,11 @@ public class MainController {
     @PostMapping("/add/dashBoard")
     public String editDashBoardAdd(@RequestParam DashBoardType type,
                                    @RequestParam String width,
-                                   @RequestParam String height) {
+                                   @RequestParam String height,
+                                   HttpSession httpSession){
+        boolean isAdmin = checkAuthority.checkAdmin(httpSession);
+        if(!isAdmin) throw new RuntimeException("You do not have access rights.");
+
         long dashBoardId = pageService.addDashBoard(type, width, height);
 
         return "redirect:/main/edit/dashBoard?id="+dashBoardId;
@@ -148,7 +156,7 @@ public class MainController {
         model.addAttribute("dashBoard_content", content);
 
         if(dashBoard.getType()== DashBoardType.latestPost){
-            List<MainCategory> mainCategoryList = mainCategoryService.getAllMainCategory();
+            List<MainCategory> mainCategoryList = categoryService.getAllMainCategory();
             model.addAttribute("mainCategoryList", mainCategoryList);
         }
 
@@ -177,7 +185,11 @@ public class MainController {
     public String editDashBoardType(@RequestParam long id,
                                     @RequestParam DashBoardType type,
                                     @RequestParam String width,
-                                    @RequestParam String height){
+                                    @RequestParam String height,
+                                    HttpSession httpSession){
+        boolean isAdmin = checkAuthority.checkAdmin(httpSession);
+        if(!isAdmin) throw new RuntimeException("You do not have access rights.");
+
         pageService.editDashBoardType(id, type, width, height);
         return "redirect:/main";
     }
@@ -185,7 +197,12 @@ public class MainController {
     @PostMapping("/edit/dashBoard/freePost")
     public String editDashBoardFreePost(@RequestParam long id,
                                         @RequestParam String title,
-                                        @RequestParam String content) {
+                                        @RequestParam String content,
+                                        HttpSession httpSession){
+        
+        boolean isAdmin = checkAuthority.checkAdmin(httpSession);
+        if(!isAdmin) throw new RuntimeException("You do not have access rights.");
+
         pageService.editDashBoardFreePost(id, title, content);
         return "redirect:/main";
     }
@@ -193,7 +210,12 @@ public class MainController {
     @PostMapping("/edit/dashBoard/linkPost")
     public String editDashBoardLinkPost(@RequestParam long id,
                                         @RequestParam String title,
-                                        @RequestParam long linkId) {
+                                        @RequestParam long linkId,
+                                        HttpSession httpSession){
+
+        boolean isAdmin = checkAuthority.checkAdmin(httpSession);
+        if(!isAdmin) throw new RuntimeException("You do not have access rights.");
+
         pageService.editDashBoardLinkPost(id, title, linkId);
         return "redirect:/main";
     }
@@ -201,13 +223,16 @@ public class MainController {
     @PostMapping("/edit/dashBoard/latestPost")
     public String editDashBoardLatestPost(@RequestParam long id,
                                           @RequestParam String title,
-                                          @RequestParam long linkId) {
+                                          @RequestParam long linkId,
+                                          HttpSession httpSession){
+        boolean isAdmin = checkAuthority.checkAdmin(httpSession);
+        if(!isAdmin) throw new RuntimeException("You do not have access rights.");
+
         pageService.editDashBoardLatestPost(id, title, linkId);
         return "redirect:/main";
     }
 
     // edit img board
-
     @GetMapping("/edit/dashBoard/imgBoard/delete")
     public String editImgBoard(@RequestParam(value="imageFiles") long[] idArr, HttpServletRequest request){
 
@@ -220,7 +245,11 @@ public class MainController {
 
     @PostMapping("/edit/dashBoard/imgBoard/add")
     public String addImg(MultipartHttpServletRequest multipartHttpServletRequest,
-                         HttpServletRequest request) throws IOException {
+                         HttpServletRequest request,
+                         HttpSession httpSession) throws IOException {
+
+        boolean isAdmin = checkAuthority.checkAdmin(httpSession);
+        if(!isAdmin) throw new RuntimeException("You do not have access rights.");
 
         String resourceSrc = request.getServletContext().getRealPath("/mainBoardImg");
 
@@ -235,6 +264,4 @@ public class MainController {
 
         return "redirect:/main";
     }
-
-
 }
