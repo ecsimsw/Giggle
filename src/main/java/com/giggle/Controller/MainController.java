@@ -199,7 +199,7 @@ public class MainController {
                                         @RequestParam String title,
                                         @RequestParam String content,
                                         HttpSession httpSession){
-        
+
         boolean isAdmin = checkAuthority.checkAdmin(httpSession);
         if(!isAdmin) throw new RuntimeException("You do not have access rights.");
 
