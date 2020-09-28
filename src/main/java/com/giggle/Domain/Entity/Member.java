@@ -16,7 +16,6 @@ public class Member {
     private String loginId;
     private String loginPw;
     private String name;
-    private String nickName;
 
     @Enumerated(EnumType.STRING)
     private MemberType memberType;

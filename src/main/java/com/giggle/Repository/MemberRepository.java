@@ -1,5 +1,6 @@
 package com.giggle.Repository;
 
+import com.giggle.Domain.Entity.MainCategory;
 import com.giggle.Domain.Entity.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -33,12 +34,21 @@ public class MemberRepository {
     }
 
     // nickName 는 중복x
-    public Member findByNickName(String nickName){
-        List<Member> selectedMembers = em.createQuery("select m from Member m where m.nickName = :nickName",Member.class)
-                .setParameter("nickName",nickName)
+    public Member findByName(String name){
+        List<Member> selectedMembers = em.createQuery("select m from Member m where m.name = :name",Member.class)
+                .setParameter("name",name)
                 .getResultList();
         if(selectedMembers.isEmpty()) return null;
         else { return selectedMembers.get(0); }
     }
 
+    public void delete(Member member){
+        em.remove(member);
+    }
+
+    public List<Member> findAllMember(){
+        List<Member> members= em.createQuery("select m from Member m", Member.class)
+                .getResultList();
+        return members;
+    }
 }

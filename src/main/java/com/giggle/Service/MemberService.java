@@ -11,7 +11,7 @@ import com.giggle.Repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+import java.util.List;
 
 @Service
 @Transactional(readOnly = true)
@@ -38,7 +38,7 @@ public class MemberService {
             return EjoinMessage.loginIdDuplicate;
         }
 
-        if(memberRepository.findByNickName(joinForm.getNickName()) != null){
+        if(memberRepository.findByName(joinForm.getName()) != null){
             return EjoinMessage.nickNameDuplicate;
         }
 
@@ -46,7 +46,6 @@ public class MemberService {
         member.setLoginId(joinForm.getLoginId());
         member.setLoginPw(joinForm.getLoginPw());
         member.setName(joinForm.getName());
-        member.setNickName(joinForm.getNickName());
         member.setMemberType(MemberType.member);
         memberRepository.save(member);
 
@@ -58,9 +57,39 @@ public class MemberService {
         return member;
     }
 
+    public Member getByName(String userName){
+        Member member = memberRepository.findByName(userName);
+        return member;
+    }
+
+    public List<Member> getAllMember(){
+        List<Member> members = memberRepository.findAllMember();
+        return members;
+    }
+
     public Member updateMemberInfo(Long id, MemberInfo memberInfo){
         Member member = memberRepository.findById(id);
-        member.setNickName(memberInfo.getNickName());
+        member.setName(memberInfo.getName());
+
+        if(memberInfo.getLoginId()!=null){
+            if(!memberInfo.getLoginId().equals("")){
+                member.setLoginId(memberInfo.getLoginId());
+            }
+        }
+
+        if(memberInfo.getType()!=null){
+            if(!memberInfo.getType().equals("")){
+                MemberType memberType = MemberType.valueOf(memberInfo.getType());
+                member.setMemberType(memberType);
+            }
+        }
+
         return member;
+    }
+
+    @Transactional
+    public void deleteById(Long id){
+        Member member = memberRepository.findById(id);
+        memberRepository.delete(member);
     }
 }
