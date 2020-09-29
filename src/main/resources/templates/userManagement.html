@@ -40,8 +40,8 @@
     </div>
 
     <div class="item_container">
-        <th:block th:each="member : memberList">
-            <span class ="data loginId" th:value="member.loginId">ecsimsw</span><br>
+        <th:block th:each="member : ${memberList}">
+            <span class ="data loginId" th:text="${member.loginId}">ecsimsw</span><br>
         </th:block>
     </div>
 
@@ -51,8 +51,8 @@
     </div>
 
     <div class="item_container">
-        <th:block th:each="member : memberList">
-            <span class ="data userName" th:value="member.name">jinhwan</span><br>
+        <th:block th:each="member : ${memberList}">
+            <span class ="data userName" th:text="${member.name}">jinhwan</span><br>
         </th:block>
     </div>
 
@@ -71,7 +71,7 @@
         <input type="text" id ="name" name="name" class="form-control">
         <br>
         <label for="type">type</label>
-        <select class="form-control" id="type">
+        <select class="form-control" id="type" name="type">
             <option value="none" selected disabled>Select type</option>
             <option value="member">member</option>
             <option value="admin">administer</option>
@@ -101,7 +101,8 @@
     // 페이지 로드 시, item_arr 초기화
 
     window.onload = function () {
-        alert('page load');
+        var loginId = window.sessionStorage.getItem('loginId');
+        alert(loginId);
 
         item_collection = document.getElementsByClassName("loginId");
         for(var i=0;i<item_collection.length;i++){
@@ -211,8 +212,9 @@
             member_type.value = data.memberType;
         },
         error: function (request, status, error){
-            var msg = "ERROR : " + request.status + "<br>"
-             msg +=  + "내용 : " + request.responseText + "<br>" + error;
+          var msg = "ERROR : " + request.status + "\n"
+          msg +=  + "Content : " + request.responseText + "\n" + error;
+          alert(msg);
           console.log(msg);
         }
       });

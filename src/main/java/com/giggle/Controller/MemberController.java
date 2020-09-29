@@ -108,6 +108,14 @@ public class MemberController {
         throw new RuntimeException();
     }
 
+    @PostMapping("/join/checkIdDuplicate")
+    @ResponseBody
+    public String checkIdDuplicate(String loginId) throws JsonProcessingException {
+        log.info(loginId);
+        String result = objectMapper.writeValueAsString(loginId);
+        return result;
+    }
+
     @GetMapping("/setting")
     public String setting(Model model, HttpSession session){
         String loginId = (String)session.getAttribute("loginId");
@@ -133,8 +141,6 @@ public class MemberController {
     public String search(String loginId, String userName) throws JsonProcessingException {
 
         String result = "";
-
-        log.info(loginId);
 
         if(loginId != null){
             Member member = memberService.getByLoginId(loginId);

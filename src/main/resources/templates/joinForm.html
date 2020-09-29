@@ -21,39 +21,55 @@
     <p style="color:red" th:if="${message} != null"  th:text="${message}"></p>
     <br>
     <form class="form text-left" onsubmit="return checkField()" th:action="@{/member/join}" method="post">
+        <label for="name">name</label>
+        <button style="float:right" class="btn">중복 확인</button>
+        <input type="text" id ="name" name="name" class="form-control" placeholder="name" required="">
+        <br>
         <label for="id">id</label>
+        <button style="float:right" onclick="checkIdDuplicate()" class="btn">중복 확인</button>
         <input type="text" id = "id" name="loginId" class="form-control" placeholder="Id" required="" autofocus="">
         <br>
         <label for="pw">pw</label>
         <input type="text" id="pw" name="loginPw" class="form-control" placeholder="Pw" required="">
-        <br>
-        <label for="name">name / </label>
-        <input type="text" id ="name" name="name" class="form-control" placeholder="name" required="">
         <br>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Join</button>
     </form>
 </div>
 </body>
 <script>
-
     function checkField(){
+        if(idPatternCheck('id')== false){return false;}
 
-        if(idPatternCheck('id')== false){
-            return false;
-        }
+        if(memberNameCheck('name')== false){ return false;}
 
-        if(memberNameCheck('name')== false){
-            return false;
-        }
+        if(pwPatternCheck('pw')== false){return false;}
 
-        if(pwPatternCheck('pw')== false){
-            return false;
-        }
-        if(memberNameCheck('nickName')== false){
-            return false;
-        }
+        if(memberNameCheck('nickName')== false){return false;}
 
         return true;
+    }
+
+
+    function checkIdDuplicate(){
+
+        var member_id = document.getElementById("id");
+
+        $.ajax({
+        url: "/member/join/checkIdDuplicate",
+        type: "POST",
+        cache: false,
+        dataType: "json",
+        data: "loginId : " + member_id,
+        success: function(data){
+            alert(data);
+        },
+        error: function (request, status, error){
+          var msg = "ERROR : " + request.status + "\n"
+          msg +=  + "Content : " + request.responseText + "\n" + error;
+          alert(msg);
+          console.log(msg);
+        }
+      });
     }
 </script>
 </html>
