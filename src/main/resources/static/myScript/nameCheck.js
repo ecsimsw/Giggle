@@ -122,7 +122,7 @@ function pwPatternCheck(pwId){
     var pw = document.getElementById(pwId).value;
 
     if(pw.length < 5 || pw.length > 12) {
-        alert("패스워드는 5자리 이상, 12자리 이하로 구성되어야합니다.");
+        alert("비밀번호는 5자리 이상, 12자리 이하로 구성되어야합니다.");
         return false;
     }
 

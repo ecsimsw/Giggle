@@ -55,11 +55,11 @@ public class MemberController {
         }
         else if(resultMessage == EloginMessage.nonExistLoginId){
             redirectAttributes.addFlashAttribute("message", "non-existent users");
-            return "redirect:/login";
+            return "redirect:/member/login";
         }
         else if(resultMessage == EloginMessage.wrongLoginPw){
             redirectAttributes.addFlashAttribute("message", "wrong password");
-            return "redirect:/login";
+            return "redirect:/member/login";
         }
         throw new RuntimeException();
     }
@@ -111,9 +111,19 @@ public class MemberController {
     @PostMapping("/join/checkIdDuplicate")
     @ResponseBody
     public String checkIdDuplicate(String loginId) throws JsonProcessingException {
-        log.info(loginId);
-        String result = objectMapper.writeValueAsString(loginId);
-        return result;
+        Member member = memberService.getByLoginId(loginId);
+
+        if(member == null){ return objectMapper.writeValueAsString("ok"); }
+        else{ return objectMapper.writeValueAsString("duplicate"); }
+    }
+
+    @PostMapping("/join/checkNameDuplicate")
+    @ResponseBody
+    public String checkNameDuplicate(String name) throws JsonProcessingException {
+        Member member = memberService.getByName(name);
+
+        if(member == null){ return objectMapper.writeValueAsString("ok"); }
+        else{ return objectMapper.writeValueAsString("duplicate"); }
     }
 
     @GetMapping("/setting")
@@ -126,14 +136,19 @@ public class MemberController {
     }
 
     @PostMapping("/setting/memberInfo")
-    public String settingMemberInfo(MemberInfo memberInfo, HttpSession session){
+    public String settingMemberInfo(MemberInfo memberInfo, Model model,  HttpSession session){
 
         String loginId = (String)session.getAttribute("loginId");
 
         long id = memberService.getByLoginId(loginId).getId();
-        Member member = memberService.updateMemberInfo(id, memberInfo);
 
-        return "redirect:/main";
+        if(memberService.getByName(memberInfo.getName()) != null){
+            memberService.updateMemberInfo(id, memberInfo);
+        }
+        else{
+            model.addAttribute("message", "Entered name is already used");
+        }
+        return "redirect:/member/setting";
     }
 
     @PostMapping("/manage/search")
@@ -144,23 +159,13 @@ public class MemberController {
 
         if(loginId != null){
             Member member = memberService.getByLoginId(loginId);
-
-            if(member == null){
-                result = null;
-            }
-            else{
-                result = objectMapper.writeValueAsString(member);
-            }
+            if(member == null){result = null; }
+            else{result = objectMapper.writeValueAsString(member); }
         }
         else if(userName != null) {
             Member member = memberService.getByName(userName);
-
-            if(member == null){
-                result = null;
-            }
-            else{
-                result = objectMapper.writeValueAsString(member);
-            }
+            if(member == null){result = null; }
+            else{result = objectMapper.writeValueAsString(member); }
         }
         return result;
     }
@@ -185,17 +190,13 @@ public class MemberController {
 
         String authority = checkAuthority.checkAuthority(httpSession);
 
-        if(!authority.equals("master")){
-            throw new RuntimeException("You do not have access rights.");
-        }
+        if(!authority.equals("master")){ throw new RuntimeException("You do not have access rights."); }
 
         if(memberInfo.getId() != null){
             long id = Long.parseLong(memberInfo.getId());
             memberService.updateMemberInfo(id, memberInfo);
         }
-        else{
-            throw new RuntimeException("no-id existence");
-        }
+        else{ throw new RuntimeException("no-id existence"); }
 
         return "redirect:/member/manage/setting";
     }
@@ -205,17 +206,13 @@ public class MemberController {
 
         String authority = checkAuthority.checkAuthority(httpSession);
 
-        if(!authority.equals("master")){
-            throw new RuntimeException("You do not have access rights.");
-        }
+        if(!authority.equals("master")){ throw new RuntimeException("You do not have access rights."); }
 
         if(idStr != null){
             long id = Long.parseLong(idStr);
             memberService.deleteById(id);
         }
-        else{
-            throw new RuntimeException("no-id existence");
-        }
+        else{ throw new RuntimeException("no-id existence"); }
 
         return "redirect:/member/manage/setting";
     }

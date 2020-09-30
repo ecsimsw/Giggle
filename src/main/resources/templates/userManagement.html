@@ -101,9 +101,6 @@
     // 페이지 로드 시, item_arr 초기화
 
     window.onload = function () {
-        var loginId = window.sessionStorage.getItem('loginId');
-        alert(loginId);
-
         item_collection = document.getElementsByClassName("loginId");
         for(var i=0;i<item_collection.length;i++){
           loginId_arr.push(item_collection[i].innerText);
