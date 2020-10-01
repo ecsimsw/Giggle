@@ -40,4 +40,6 @@ public class Comment {
     @CreatedDate
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss")
     private LocalDateTime dateTime;
+
+    private boolean isLive;
 }

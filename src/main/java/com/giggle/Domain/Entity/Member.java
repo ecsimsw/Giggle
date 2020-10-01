@@ -19,4 +19,5 @@ public class Member {
 
     @Enumerated(EnumType.STRING)
     private MemberType memberType;
+
 }

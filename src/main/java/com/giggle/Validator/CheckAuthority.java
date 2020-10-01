@@ -8,13 +8,6 @@ import javax.servlet.http.HttpSession;
 @Component
 public class CheckAuthority {
 
-    public boolean checkLogin(String loginId){
-        if(loginId == null){
-            throw new RuntimeException("Wrong access _ Login session information does not exist");
-        }
-        return true;
-    }
-
     public String checkLogin(HttpSession httpSession){
         String loginId = (String) httpSession.getAttribute("loginId");
         if(loginId == null){

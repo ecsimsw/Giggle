@@ -49,8 +49,6 @@ public class CategoryService {
     }
 
 
-
-
     ///////  middleCategory Service
 
     @Transactional
@@ -70,8 +68,6 @@ public class CategoryService {
         mainCategoryRepository.updatePostCnt(mainCategory.getId(), mainCategory.getPostCnt()-middleCategory.getPostCnt());
         middleCategoryRepository.deleteById(id);
     }
-
-
 
     /////// category Service
 

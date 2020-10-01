@@ -2,7 +2,10 @@ package com.giggle.Controller;
 
 import com.giggle.Domain.Form.CreateCommentForm;
 import com.giggle.Service.CommentService;
+import com.giggle.Validator.CheckAuthority;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,16 +18,27 @@ import javax.servlet.http.HttpSession;
 @Controller
 @RequestMapping("/comment")
 @RequiredArgsConstructor
+@Slf4j
 public class CommentController {
 
     private final CommentService commentService;
+
+    @Autowired CheckAuthority checkAuthority;
 
     @PostMapping("/create")
     public String createComment(CreateCommentForm createCommentForm,
                                 HttpSession httpSession) {
 
-        if(httpSession.getAttribute("loginId")==null){
-            throw new RuntimeException("Wrong access");
+        checkAuthority.checkLogin(httpSession);
+
+        long supCommentId = Long.parseLong(createCommentForm.getCommentId());
+        Comment supComment = commentService.findById(supCommentId);
+
+        if(supComment == null) {
+            throw new RuntimeException("Super comment does not existent");
+        }
+        else if(!supComment.isLive()){
+            throw new RuntimeException("SuperComment is already dead");
         }
 
         commentService.createComment(createCommentForm);
@@ -38,14 +52,9 @@ public class CommentController {
                               ,HttpSession httpSession) {
 
         long commentId = Long.parseLong(comment);
-
         String commentWriter = commentService.findById(commentId).getWriter();
 
-
-
-        if(!httpSession.getAttribute("loginId").equals(commentWriter)){
-            throw new RuntimeException("Wrong access");
-        }
+        checkAuthority.checkOwner(httpSession, commentWriter);
 
         commentService.editComment(commentId, content);
 
@@ -59,10 +68,9 @@ public class CommentController {
 
         long commentId = Long.parseLong(comment);
         Comment commentToDelete = commentService.findById(commentId);
+        String writer = commentToDelete.getWriter();
 
-        if(!httpSession.getAttribute("loginId").equals(commentToDelete.getWriter())){
-            throw new RuntimeException("Wrong access");
-        }
+        checkAuthority.checkOwner(httpSession, writer);
 
         long postId = commentToDelete.getPost().getId();
         commentService.deleteComment(commentId);

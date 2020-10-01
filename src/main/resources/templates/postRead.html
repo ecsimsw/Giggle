@@ -38,6 +38,10 @@
             color:lightslategray;
             text-decoration:none;
         }
+
+        .modal-body{
+            font-size: 14px;
+        }
     </style>
 </head>
 
@@ -213,7 +217,7 @@
                                             comment_content
                                         </div>
                                         <br>
-                                        <a th:if="${session.loginId}!=null" class="myButton" href="#" data-toggle="modal" th:data-target="${'#commentModal'+comment_level1.id}">
+                                        <a class="myButton" th:if="${session.loginId != null && comment_level1.live == true}" href="#" data-toggle="modal" th:data-target="${'#commentModal'+comment_level1.id}">
                                             <span style="padding-right:10px; font-size:14px; float:right; padding-bottom:5px;">comment</span>
                                         </a>
                                     </div>
@@ -252,7 +256,7 @@
                                             <div class="modal-content">
                                                 <form class="form" th:action="${'/comment/edit?comment='+comment_level1.id}" method="post">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title" id="editCommentLabel">Comment..</h5>
+                                                        <h5 class="modal-title"  id="editCommentLabel">Comment..</h5>
                                                         <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                                                             <span aria-hidden="true">×</span>
                                                         </button>
@@ -320,7 +324,7 @@
                                                 comment_content
                                             </div>
                                             <br>
-                                            <a th:if="${session.loginId}!=null" class="myButton" href="#" data-toggle="modal" th:data-target="${'#commentModal'+comment_level2.id}">
+                                            <a th:if="${session.loginId !=null && comment_level2.live==true}" class="myButton" href="#" data-toggle="modal" th:data-target="${'#commentModal'+comment_level2.id}">
                                                 <span style="padding-right:10px; font-size:14px; float:right; padding-bottom:5px;">comment</span>
                                             </a>
                                         </div>

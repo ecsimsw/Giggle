@@ -1,8 +1,10 @@
 package com.giggle.Controller;
 
 import com.giggle.Domain.Entity.*;
+import com.giggle.Domain.Form.ActivityForm;
 import com.giggle.Domain.Form.PostForm;
 import com.giggle.Service.CategoryService;
+import com.giggle.Service.CommentService;
 import com.giggle.Service.PostService;
 import com.giggle.Validator.CheckAuthority;
 import lombok.RequiredArgsConstructor;
@@ -20,10 +22,13 @@ import java.util.List;
 public class PostController {
 
     private final PostService postService;
+    private final CommentService commentService;
     private final CategoryService categoryService;
 
-    @Autowired
-    CheckAuthority checkAuthority;
+    @Autowired CheckAuthority checkAuthority;
+
+    private final int visiblePages = 10;
+    private final int postForPage =15;
 
     @GetMapping("/create")
     public String createPost(@RequestParam("category") Long categoryId, Model model
@@ -51,6 +56,41 @@ public class PostController {
         return "redirect:/post/board?category="+categoryId+"&page=1";
     }
 
+    @GetMapping("/activity")
+    public String activity(Model model, HttpSession httpSession,
+                           @RequestParam(required = false) Integer postPage,
+                           @RequestParam(required = false) Integer commentPage){
+
+        if(postPage == null){ postPage =1; }
+        if(commentPage == null){ commentPage =1; }
+        String loginId = (String)httpSession.getAttribute("loginId");
+        if(loginId == null){
+            throw new RuntimeException("Wrong access, login session is null");
+        }
+        // side bar
+
+        List<MainCategory> mainCategoryList = categoryService.getAllMainCategory();
+        model.addAttribute("mainCategoryList", mainCategoryList);
+
+        ActivityForm myPosts = postService.getActivityPost(loginId,postPage, postForPage);
+        ActivityForm myComments = commentService.getActivityComment(loginId,commentPage, postForPage);
+
+        // pagination
+        model.addAttribute("visiblePages", visiblePages);
+        model.addAttribute("totalPost", myPosts.getTotalCnt());
+        model.addAttribute("totalComment", myComments.getTotalCnt());
+
+        model.addAttribute("postPageNow", postPage);
+        model.addAttribute("commentPageNow", commentPage);
+
+        // print posts
+        model.addAttribute("postForPage", postForPage);
+        model.addAttribute("postList", myPosts.getResultList());
+        model.addAttribute("commentList", myComments.getResultList());
+
+        return "activityPage";
+    }
+
     @GetMapping("/board")
     public String board(@RequestParam("category") Long categoryId,
                         @RequestParam(required = false) Integer page,
@@ -63,9 +103,7 @@ public class PostController {
         List<MainCategory> mainCategoryList = categoryService.getAllMainCategory();
         model.addAttribute("mainCategoryList", mainCategoryList);
 
-
         // categories
-
         Category category = categoryService.findById(categoryId);
 
         MiddleCategory middleCategory = category.getMiddleCategory();
@@ -74,8 +112,6 @@ public class PostController {
 
         // pagination
 
-        int visiblePages = 10;
-
         model.addAttribute("visiblePages", visiblePages);
         model.addAttribute("totalPost", category.getPostCnt());
         model.addAttribute("pageNow", page);
@@ -83,7 +119,6 @@ public class PostController {
 
         // print posts
 
-        int postForPage =15;
         model.addAttribute("postForPage", postForPage);
         model.addAttribute("category", category);
         List<Post> postList = categoryService.getPostsInCategory(category, page, postForPage);
@@ -125,8 +160,6 @@ public class PostController {
     @PostMapping("/edit")
     public String editPostForm(@RequestParam("post") Long postId, PostForm postForm,
                                HttpSession httpSession){
-
-
 
         Post post = postService.findById(postId);
 

@@ -1,11 +1,14 @@
 package com.giggle.Service;
 
 import com.giggle.Domain.Entity.*;
+import com.giggle.Domain.Form.ActivityForm;
 import com.giggle.Domain.Form.PostForm;
 import com.giggle.Repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -60,5 +63,34 @@ public class PostService {
         Category category = post.getCategory();
         categoryService.updatePostCnt(category.getId(), category.getPostCnt()-1);
         postRepository.remove(post);
+    }
+
+    public ActivityForm getActivityPost(String owner, int page, int postForPage){
+
+
+        List<Post> postList = postRepository.getPostByOwner(owner);
+
+        int totalCnt = postList.size();
+        int from;
+        int max;
+
+        if((totalCnt-(page * postForPage))>=0){
+            from = totalCnt-(page * postForPage);
+            max = postForPage;
+        }
+        else{
+            from = 0;
+            max = totalCnt % postForPage;
+        }
+
+        List resultList = new ArrayList();
+
+        for(int i=0; i<max; i++){
+            resultList.add(postList.get(from+max-1-i));
+        }
+
+        ActivityForm resultTuple = new ActivityForm(resultList, totalCnt);
+
+        return resultTuple;
     }
 }
