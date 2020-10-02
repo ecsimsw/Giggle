@@ -158,6 +158,7 @@ public class PostController {
         if(loginId != null){
             Member member = memberService.getByLoginId(loginId);
             model.addAttribute("profileImg", member.getProfileImg());
+            model.addAttribute("authority", member.getMemberType());
         }
         else{
             model.addAttribute("profileImg", "stranger.png");
@@ -194,8 +195,8 @@ public class PostController {
         Post post = postService.findById(postId);
 
         boolean isOwner = checkAuthority.checkOwner(httpSession, post.getWriter());
-        boolean isAdmin = checkAuthority.checkAdmin(httpSession);
-        if(!isAdmin && !isOwner){ throw new RuntimeException("You do not have access rights."); }
+        boolean isMaster = checkAuthority.checkMaster(httpSession);
+        if(!isMaster && !isOwner){ throw new RuntimeException("You do not have access rights."); }
 
         postService.editPost(postId, postForm);
         return "redirect:/post/read?post="+postId;
@@ -210,8 +211,8 @@ public class PostController {
         int page = 1;
 
         boolean isOwner = checkAuthority.checkOwner(httpSession, post.getWriter());
-        boolean isAdmin = checkAuthority.checkAdmin(httpSession);
-        if(!isAdmin && !isOwner){ throw new RuntimeException("You do not have access rights."); }
+        boolean isMaster = checkAuthority.checkMaster(httpSession);
+        if(!isMaster && !isOwner){ throw new RuntimeException("You do not have access rights."); }
 
         postService.deletePost(postId);
         return "redirect:/post/board?category="+categoryId+"&page="+page;

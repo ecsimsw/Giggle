@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpSession;
 import java.awt.desktop.AboutEvent;
 import java.io.File;
 import java.io.IOException;
@@ -38,7 +39,6 @@ public class MemberService {
     @Autowired private final JavaMailSender javaMailSender;
 
     @Transactional
-    @Async
     public void addProfileImg(MultipartFile multipartFile, String resourceSrc, long id) throws IOException {
         Member member = memberRepository.findById(id);
         String beforeFileName = member.getProfileImg();

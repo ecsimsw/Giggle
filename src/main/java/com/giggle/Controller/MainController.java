@@ -30,9 +30,9 @@ public class MainController {
     private final PageService pageService;
     private final MemberService memberService;
 
-    private final int newPostCntToPrint = 7; // mainPage에 포스트할 새로운 글의 개수를 지정한다.
+    private final int newPostCntToPrint = 7; // mainPage에 포스트할 newPost 글의 개수를 지정한다.
+    private final int limitAdditionImgCnt = 5;  // edit/imgBoard 에서 한번에 추가할 수 있는 사진 개수 제한
     private final String nameId = "add_";  // edit/imgBoard 에서 사진 name 형식 : add_1 ~ add_n
-    private final int limitAdditionImgCnt = 5;  // edit/imgBoard 에서 추가할 수 있는 사진 개수 제한
 
     @Autowired CheckAuthority checkAuthority;
 
@@ -48,7 +48,7 @@ public class MainController {
             model.addAttribute("profileImg", member.getProfileImg());
         }
         else{
-            model.addAttribute("profileImg", "/static/profile/stranger.png");
+            model.addAttribute("profileImg", "stranger.png");
         }
 
         // sideBar

@@ -63,7 +63,10 @@ public class CommentService {
         if(commentToDelete.getSubComment().size()==0){
             while(commentToDelete!=null){
                 Comment superComment = commentToDelete.getSuperComment();
-                if(superComment ==null) break;
+                if(superComment ==null){
+                    commentRepository.deleteById(commentToDelete.getId());
+                    break;
+                }
                 superComment.getSubComment().remove(commentToDelete);
                 commentRepository.deleteById(commentToDelete.getId());
                 if(superComment.getSubComment().size()==0 && !superComment.isLive()){

@@ -99,7 +99,7 @@
                                 <span class="post-writer" th:text="${post.writer}"></span>
 
                                 <!-- writer status -->
-                                <ul th:if="${post.writer == session.loginId}" class="status" style="list-style: none;float: right; padding-top: 10px; margin-bottom: 0px; font-size: 10px;">
+                                <ul th:if="${post.writer == session.loginId || session.authority == 'master'}" class="status" style="list-style: none;float: right; padding-top: 10px; margin-bottom: 0px; font-size: 10px;">
                                     <li style="margin-right: 15px; float: left;">
                                         <a class="myButton" th:href="'/post/edit?post='+${post.id}"><span>수정</span></a>
                                     </li>
@@ -201,7 +201,7 @@
                                     <div class="card-header align-items-center" style="background-color: white; border:none;">
                                         <img th:src="${'/static/profile/'+comment_level1.profileImg}" class="propicture large" style="margin-right: 15px;width: 40px;float: left;height: 40px;">
                                         <span class="comment-writer" th:text="${comment_level1.writer}">익명</span>
-                                        <ul th:if="${comment_level1.writer == session.loginId}" class="status" style="list-style: none;float: right;margin-bottom: 0px;font-size: 10px;">
+                                        <ul th:if="${comment_level1.writer == session.loginId || session.authority == 'master'}" class="status" style="list-style: none;float: right;margin-bottom: 0px;font-size: 10px;">
                                             <li class="comment-subButton">
                                                 <a class="myButton" href="#" data-toggle="modal" th:data-target="${'#editCommentModal'+comment_level1.id}">
                                                     <span>수정</span>
@@ -308,7 +308,7 @@
                                         <div class="card-header align-items-center" style="border:none; background-color: white;">
                                             <img th:src="${'/static/profile/'+comment_level2.profileImg}" class="profileImg picture large" style="margin-right: 15px;width: 40px;float: left;height: 40px;">
                                             <span class="comment-writer" th:text="${comment_level2.writer}">익명</span>
-                                            <ul th:if="${comment_level2.writer == session.loginId}" class="status" style="list-style: none;float: right;margin-bottom: 0px;font-size: 13px;">
+                                            <ul th:if="${comment_level2.writer == session.loginId || session.authority == 'master'}" class="status" style="list-style: none;float: right;margin-bottom: 0px;font-size: 13px;">
                                                 <li class="comment-subButton">
                                                     <a class="myButton" href="#" data-toggle="modal" th:data-target="${'#editCommentModal'+comment_level2.id}">
                                                         <span>수정</span>
@@ -414,7 +414,7 @@
                                             <div class="card-header align-items-center" style="border:none; background-color: white;">
                                                 <img th:src="${'/static/profile/'+comment_level3.profileImg}" class="profileImg picture large" style="margin-right: 15px;width: 40px;float: left;height: 40px;">
                                                 <span class="comment-writer" th:text="${comment_level3.writer}">익명</span>
-                                                <ul th:if="${comment_level3.writer == session.loginId}" class="status" style="list-style: none;float: right;margin-bottom: 0px;font-size: 10px;">
+                                                <ul th:if="${comment_level3.writer == session.loginId || session.authority == 'master'}" class="status" style="list-style: none;float: right;margin-bottom: 0px;font-size: 10px;">
                                                     <li class="comment-subButton">
                                                         <a class="myButton" href="#" data-toggle="modal" th:data-target="${'#editCommentModal'+comment_level3.id}">
                                                             <span>수정</span>

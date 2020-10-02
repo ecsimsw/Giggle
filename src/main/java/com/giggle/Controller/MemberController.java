@@ -193,6 +193,9 @@ public class MemberController {
 
         if(memberService.getByName(memberInfo.getName()) == null){
             memberService.updateMemberInfo(id, memberInfo);
+            session.removeAttribute("loginId");
+            session.removeAttribute("authority");
+            return "redirect:/main";
         }
         else{
             model.addAttribute("message", "Entered name is already used");

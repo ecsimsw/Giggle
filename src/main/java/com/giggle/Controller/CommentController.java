@@ -46,9 +46,10 @@ public class CommentController {
                               ,HttpSession httpSession) {
 
         long commentId = Long.parseLong(comment);
-        String commentWriter = commentService.findById(commentId).getWriter();
 
-        checkAuthority.checkOwner(httpSession, commentWriter);
+        boolean isOwner = checkAuthority.checkOwner(httpSession, commentService.findById(commentId).getWriter());
+        boolean isMaster = checkAuthority.checkMaster(httpSession);
+        if(!isMaster && !isOwner){ throw new RuntimeException("You do not have access rights."); }
 
         commentService.editComment(commentId, content);
 
@@ -62,9 +63,10 @@ public class CommentController {
 
         long commentId = Long.parseLong(comment);
         Comment commentToDelete = commentService.findById(commentId);
-        String writer = commentToDelete.getWriter();
 
-        checkAuthority.checkOwner(httpSession, writer);
+        boolean isOwner = checkAuthority.checkOwner(httpSession, commentToDelete.getWriter());
+        boolean isMaster = checkAuthority.checkMaster(httpSession);
+        if(!isMaster && !isOwner){ throw new RuntimeException("You do not have access rights."); }
 
         long postId = commentToDelete.getPost().getId();
         commentService.deleteComment(commentId);

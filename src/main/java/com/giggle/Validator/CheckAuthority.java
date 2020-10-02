@@ -26,13 +26,24 @@ public class CheckAuthority {
 
     public boolean checkOwner(HttpSession httpSession, String ownerId){
         String loginId = checkLogin(httpSession);
-        if(!loginId.equals(ownerId))return false;
+        if(!loginId.equals(ownerId)){
+            return false;
+        }
         return true;
     }
+
 
     public boolean checkAdmin(HttpSession httpSession){
         String authority = checkAuthority(httpSession);
         if(authority.equals("admin") || authority.equals("master")){
+            return true;
+        }
+        return false;
+    }
+
+    public boolean checkMaster(HttpSession httpSession){
+        String authority = checkAuthority(httpSession);
+        if(authority.equals("master")){
             return true;
         }
         return false;
