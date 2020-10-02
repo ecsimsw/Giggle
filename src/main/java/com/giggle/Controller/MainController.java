@@ -48,7 +48,7 @@ public class MainController {
             model.addAttribute("profileImg", member.getProfileImg());
         }
         else{
-            model.addAttribute("profileImg", "stranger.png");
+            model.addAttribute("profileImg", "/static/profile/stranger.png");
         }
 
         // sideBar
