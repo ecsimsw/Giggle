@@ -23,12 +23,15 @@ public class Post{
 
     private String writer;
 
+    private String profileImg;
+
     private String title;
 
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="category_id")
     private Category category;
 
+    @Lob
     private String content;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
@@ -39,4 +42,7 @@ public class Post{
     private LocalDateTime dateTime;
 
     private int viewCnt;
+
+    // Mapping LOB Data in Hibernate
+    // https://www.baeldung.com/hibernate-lob
 }

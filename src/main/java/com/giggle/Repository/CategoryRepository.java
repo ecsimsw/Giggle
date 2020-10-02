@@ -13,17 +13,20 @@ public class CategoryRepository {
     private final EntityManager em;
 
     public void save(Category category){
-        em.persist(category);
+        if(category.getId()==null){
+            em.persist(category);
+        }else{
+            em.merge(category);
+        }
     }
 
     public Category findById(Long id){
         return em.find(Category.class,id);
     }
 
-    public void updatePostCnt(Category category, int postCnt){
-//        Category c = getCategoryById(category.getId());  다시 찾을 필요 없음.
+    public void updatePostCnt(long categoryId, int postCnt){
+        Category category = findById(categoryId);
         category.setPostCnt(postCnt);
-//        em.merge(category);   필요 없음. 영속성 컨텍스트 / set으로 처리
     }
 
     public void deleteById(long id){

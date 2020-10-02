@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <title>Giggle</title>
+    <link href="/static/SBadmin2/sb-admin-2.min.css" rel="stylesheet">
+    <link href="/static/style/formStyle.css" rel="stylesheet">
+    <script src="/static/script/jquery-3.5.1.js"></script>
+
+
+    <link href="C:\Users\user\IdeaProjects\Giggle\src\main\resources\static\SBadmin2\sb-admin-2.min.css" rel="stylesheet">
+    <script src="C:\Users\user\IdeaProjects\Giggle\src\main\resources\static\script\jquery-3.5.1.js"></script>
+    <script src="C:\Users\user\IdeaProjects\Giggle\src\main\resources\static\script\jquery.twbsPagination.min.js"></script>
+
+
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <style>
+        .data{
+            display: none!important;
+        }
+    </style>
+
+</head>
+
+<body class="text-center">
+<div class="container">
+    <br>
+    <h3 class="font-black">Giggle</h3>
+    <br>
+    <p class="font-black" th:if="${message} == null" >User management</p>
+    <p style="color:red" th:if="${message} != null"  th:text="${message}"></p>
+    <br>
+
+    <br>
+    <div>
+        <h5 style="float:left; padding-right:70px">Search by id</h5>
+        <input style="width:238px" id="searchInput_loginId" onchange="searchbar_id()">
+    </div>
+
+    <div class="item_container">
+        <th:block th:each="member : ${memberList}">
+            <span class ="data loginId" th:text="${member.loginId}">ecsimsw</span><br>
+        </th:block>
+    </div>
+
+    <div>
+        <h5 style="float:left; padding-right:40px">Search by name</h5>
+        <input style="width:238px" id="searchInput_userName" onchange="searchbar_name()">
+    </div>
+
+    <div class="item_container">
+        <th:block th:each="member : ${memberList}">
+            <span class ="data userName" th:text="${member.name}">jinhwan</span><br>
+        </th:block>
+    </div>
+
+    <button class="btn btn-lg btn-primary btn-block" type="button" onclick="search()">Search</button>
+
+    <br>
+
+    <form class="form text-left" th:action="@{/member/manage/update}" method="post">
+        <label for="id">id</label>
+        <input type="text" style="background-color:white;" readonly id="id" name="id" class="form-control" >
+
+        <label for="id">loginId</label>
+        <input type="text" id="loginId" name="loginId" class="form-control" >
+        <br>
+        <label for="name">name</label>
+        <input type="text" id ="name" name="name" class="form-control">
+        <br>
+        <label for="email">email</label>
+        <input type="text" id ="email" name="email" class="form-control">
+        <br>
+        <label for="type">type</label>
+        <select class="form-control" id="type" name="type">
+            <option value="none" selected disabled>Select type</option>
+            <option value="member">member</option>
+            <option value="admin">administer</option>
+            <option value="master">master</option>
+        </select>
+        <br>
+        <table width="100%">
+            <tr>
+                <td width="50%">
+                    <button class="btn btn-lg btn-primary btn-block" type="submit">Update</button>
+                </td>
+                <td width="50%">
+                    <button class="btn btn-lg btn-primary btn-block" type="button" onclick="deleteMember()">Delete</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+
+</div>
+</body>
+
+<script type="text/javascript">
+
+    var loginId_arr = [];
+    var userName_arr = [];
+
+    // 페이지 로드 시, item_arr 초기화
+
+    window.onload = function () {
+        item_collection = document.getElementsByClassName("loginId");
+        for(var i=0;i<item_collection.length;i++){
+          loginId_arr.push(item_collection[i].innerText);
+        }
+
+        item_collection = document.getElementsByClassName("userName");
+        for(var i=0;i<item_collection.length;i++){
+          userName_arr.push(item_collection[i].innerText);
+        }
+    }
+
+    // jquery autocomplete
+
+    $(function() {    //화면 다 뜨면 시작
+        var loginIdSource = loginId_arr;
+        var userNameSource = userName_arr;
+
+        $("#searchInput_loginId").autocomplete({  //오토 컴플릿트 시작
+            source : loginIdSource,    // source 는 자동 완성 대상
+            select : function(event, ui) {    //아이템 선택시
+                console.log(ui.item);
+            },
+            focus : function(event, ui) {    //포커스 가면
+                return false;//한글 에러 잡기용도로 사용됨
+            },
+            minLength: 1,// 최소 글자수
+            autoFocus: true, //첫번째 항목 자동 포커스 기본값 false
+            delay: 100,    //검색창에 글자 써지고 나서 autocomplete 창 뜰 때 까지 딜레이 시간(ms)
+            close : function(event){    //자동완성창 닫아질때 호출
+                console.log(event);
+            }
+        });
+
+        $("#searchInput_userName").autocomplete({  //오토 컴플릿트 시작
+            source : userName_arr,    // source 는 자동 완성 대상
+            select : function(event, ui) {    //아이템 선택시
+                console.log(ui.item);
+            },
+            focus : function(event, ui) {    //포커스 가면
+                return false;//한글 에러 잡기용도로 사용됨
+            },
+            minLength: 1,// 최소 글자수
+            autoFocus: true, //첫번째 항목 자동 포커스 기본값 false
+            delay: 100,    //검색창에 글자 써지고 나서 autocomplete 창 뜰 때 까지 딜레이 시간(ms)
+            close : function(event){    //자동완성창 닫아질때 호출
+                console.log(event);
+            }
+        });
+    });
+
+    function searchbar_id(){
+      var searchbar_id = document.getElementById("searchInput_loginId");
+      var searchbar_name = document.getElementById("searchInput_userName");
+
+       if(searchbar_id.value != ""){
+           searchbar_name.disabled = true;
+       }
+       else{
+          searchbar_name.disabled = false;
+       }
+    }
+
+    function searchbar_name(){
+      var searchbar_id = document.getElementById("searchInput_loginId");
+      var searchbar_name = document.getElementById("searchInput_userName");
+       if(searchbar_name.value != ""){
+          searchbar_id.disabled = true;
+       }
+       else{
+          searchbar_id.disabled = false;
+       }
+    }
+
+    function deleteMember(){
+        var id = document.getElementById("id").value;
+        location.href='/member/manage/delete?id='+id;
+    }
+
+
+    function search(){
+      var search_id = document.getElementById("searchInput_loginId").value;
+      var search_name = document.getElementById("searchInput_userName").value;
+
+      var member_id = document.getElementById("id");
+      var member_loginId = document.getElementById("loginId");
+      var member_name = document.getElementById("name");
+      var member_nickName = document.getElementById("nickName");
+      var member_email = document.getElementById("email");
+      var member_type = document.getElementById("type");
+      var form={
+        loginId : search_id,
+        userName : search_name
+      }
+
+      $.ajax({
+        url: "/member/manage/search",
+        type: "POST",
+        cache: false,
+        dataType: "json",
+        data: form,
+        success: function(data){
+            member_id.value = data.id;
+            member_loginId.value = data.loginId;
+            member_name.value = data.name;
+            member_name.email = data.email;
+            member_type.value = data.memberType;
+        },
+        error: function (request, status, error){
+          var msg = "ERROR : " + request.status + "\n"
+          msg +=  + "Content : " + request.responseText + "\n" + error;
+          alert(msg);
+          console.log(msg);
+        }
+      });
+    }
+
+
+
+</script>
+
+</html>

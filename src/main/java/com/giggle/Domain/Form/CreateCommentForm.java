@@ -5,7 +5,6 @@ import lombok.Setter;
 
 @Getter @Setter
 public class CreateCommentForm {
-
     private String content;
     private String postId;
     private String commentId;

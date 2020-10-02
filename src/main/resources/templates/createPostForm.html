@@ -55,6 +55,8 @@
                         th:text="${tempCategory.name}">categoryName</option>
             </select>
         </div>
+<!--        <input type="text" hidden name = "writer" th:value="${session.loginId}">-->
+<!--        화면에서 sesssion 정보를 읽어서 writer를 정하는 것보다, 서버에서 요청을 처리할 때 세션을 읽는 것이 낫지 않을까?-->
 
         <label for="title">title</label>
         <input type="text" id="title" name="title" class="form-control" placeholder="글 제목" style="margin-bottom : 16px;" required="" autofocus="">

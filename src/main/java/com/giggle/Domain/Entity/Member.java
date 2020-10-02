@@ -3,10 +3,7 @@ package com.giggle.Domain.Entity;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @Getter @Setter
@@ -19,7 +16,10 @@ public class Member {
     private String loginId;
     private String loginPw;
     private String name;
-    private String nickName;
+    private String email;
 
+    private String profileImg;
+
+    @Enumerated(EnumType.STRING)
     private MemberType memberType;
 }

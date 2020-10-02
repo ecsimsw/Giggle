@@ -2,6 +2,7 @@ package com.giggle.Repository;
 
 import com.giggle.Domain.Entity.Category;
 import com.giggle.Domain.Entity.Post;
+import com.giggle.Domain.Form.PostForm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -15,7 +16,11 @@ public class PostRepository {
     private final EntityManager em;
 
     public void save(Post post){
-        em.persist(post);
+        if(post.getId()==null){
+            em.persist(post);
+        }else{
+            em.merge(post);
+        }
     }
 
     public List<Post> postInCommunityCategory(Category category, int from, int maxCnt){
@@ -36,7 +41,6 @@ public class PostRepository {
                 .getResultList();
 
         Collections.reverse(selectedPosts);
-
         return selectedPosts;
     }
 
@@ -44,7 +48,12 @@ public class PostRepository {
         return em.find(Post.class, id);
     }
 
-    public void updatePost(Post post){ em.merge(post); }
-
     public void remove(Post post){ em.remove(post); }
+
+    public List<Post> getPostByOwner(String writer){
+        List<Post> selectedPosts = em.createQuery("select p from Post p where p.writer =:writer",Post.class)
+                .setParameter("writer", writer)
+                .getResultList();
+        return selectedPosts;
+    }
  }

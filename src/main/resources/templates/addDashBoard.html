@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <title>Giggle</title>
+    <link href="/static/SBadmin2/sb-admin-2.min.css" rel="stylesheet">
+    <link href="/static/style/formStyle.css" rel="stylesheet">
+
+    <link href="C:\Users\user\IdeaProjects\Giggle\src\main\resources\static\SBadmin2\sb-admin-2.min.css" rel="stylesheet">
+    <script src="C:\Users\user\IdeaProjects\Giggle\src\main\resources\static\script\jquery-3.5.1.js"></script>
+    <script src="C:\Users\user\IdeaProjects\Giggle\src\main\resources\static\script\jquery.twbsPagination.min.js"></script>
+
+    <style>
+     .long-board-body{
+        height:480px;
+     }
+
+     .short-board-body{
+        height:200px;
+     }
+  </style>
+
+</head>
+
+<body class="text-center">
+<div class="container">
+    <br>
+    <h3 class="font-black">Giggle</h3>
+    <br>
+    <p class="font-black" th:if="${message} == null" >Add DashBoard</p>
+    <p style="color:red" th:if="${message} != null"  th:text="${message}"></p>
+    <br>
+
+    <div style="
+    font-size: 25px;
+    text-align: left;
+    color: black;
+    font-weight: 900;
+    ">보드 추가</div>
+    <br>
+    <form class="form text-left" action="/main/add/dashBoard" method="post">
+        <label for="type">type</label>
+        <select id="type" class="form-control" name="type">
+            <option value="none" selected disabled>Select type</option>
+
+            <option value="imgBoard">Img Board</option>
+            <option value="latestPost">Latest Post</option>
+            <option value="freePost">Free Post</option>
+            <option value="linkPost">Link Post</option>
+        </select>
+        <br>
+        <label for="width">width</label>
+        <select id="width" class="form-control" name="width">
+            <option value="none" selected disabled>Select width</option>
+
+            <option value="narrow">narrow</option>
+            <option value="wide">wide</option>
+        </select>
+        <br>
+        <label for="height">height</label>
+        <select id="height" class="form-control" name="height">
+            <option value="none" selected disabled>Select height</option>
+
+            <option value="short">short</option>
+            <option value="long">long</option>
+        </select>
+        <br>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">적용</button>
+    </form>
+    <br>
+</div>
+<!-- BottomScript-->
+<div th:replace="/fragment/bottomScript :: bottomScript"> </div>
+
+</body>
+</html>
+

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <title>Giggle</title>
+    <link href="/static/SBadmin2/sb-admin-2.min.css" rel="stylesheet">
+    <link href="/static/style/formStyle.css" rel="stylesheet">
+
+    <link href="C:\Users\user\IdeaProjects\Giggle\src\main\resources\static\SBadmin2\sb-admin-2.min.css" rel="stylesheet">
+    <script src="C:\Users\user\IdeaProjects\Giggle\src\main\resources\static\script\jquery-3.5.1.js"></script>
+    <script src="C:\Users\user\IdeaProjects\Giggle\src\main\resources\static\script\jquery.twbsPagination.min.js"></script>
+
+    <script src="/static/myScript/nameCheck.js"></script>
+</head>
+
+<body class="text-center">
+<div class="container">
+    <br>
+    <h3 class="font-black">Giggle</h3>
+    <br>
+    <p class="font-black" th:if="${message} == null" >Edit DashBoard</p>
+    <p style="color:red" th:if="${message} != null"  th:text="${message}"></p>
+    <br>
+
+    <div class="middleMenuName">보드 타입 변경</div>
+    <br>
+    <form class="form text-left" action="/main/edit/dashBoard/type" method="post">
+        <input hidden th:value="${dashBoard.id}" name="id">
+        <label for="type">type</label>
+        <select required id="type" class="form-control" name="type">
+            <option th:value="${dashBoard.type.name()}" th:text="${dashBoard.type.name()}" selected></option>
+
+            <option th:if="${dashBoard.type.name()}!='img'" value="imgBoard">Img Board</option>
+            <option th:if="${dashBoard.type.name()}!='latestPost'" value="latestPost">Latest Post</option>
+            <option th:if="${dashBoard.type.name()}!='freePost'" value="freePost">Free Post</option>
+            <option th:if="${dashBoard.type.name()}!='linkPost'" value="linkPost">Link Post</option>
+        </select>
+        <br>
+        <label for="width">width</label>
+        <select required id="width" class="form-control" name="width">
+            <option th:value="${dashBoard.width}" th:text="${dashBoard.width}" selected></option>
+
+            <option th:if="${dashBoard.width}!='narrow'" value="narrow">narrow</option>
+            <option th:if="${dashBoard.width}!='wide'" value="wide">wide</option>
+        </select>
+        <br>
+        <label for="height">height</label>
+        <select required id="height" class="form-control" name="height">
+            <option th:value="${dashBoard.height}" th:text="${dashBoard.height}" selected></option>
+
+            <option th:if="${dashBoard.height}!='short'" value="short">short</option>
+            <option th:if="${dashBoard.height}!='long'" value="long">long</option>
+        </select>
+        <br>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">적용</button>
+    </form>
+    <br>
+
+    <th:block th:if="${dashBoard.type.name()} == latestPost">
+        <div class="middleMenuName">보드 내용 편집</div>
+        <br>
+        <form class="form text-left" action="/main/edit/dashBoard/latestPost" method="post">
+            <input hidden th:value="${dashBoard.id}" name="id">
+
+            <label for="name">title</label>
+            <input id="name" name="title" type="text" class="form-control" th:value="${dashBoard.title}">
+            <br>
+            <label for="selectedCategory">selectedCategory</label>
+            <select id="selectedCategory" class="form-control" name="linkId">
+                <option value="none" selected disabled>Select Category</option>
+                <div th:each="mainCategory, index_main : ${mainCategoryList}">
+                    <option style="font-size:18px; font-weight:500; color:black;" disabled th:text="${mainCategory.name}">mainCategory</option>
+
+                    <div th:each="middleCategory,index_mid : ${mainCategory.middleCategoryList}">
+                        <option style="font-size:16px; color:black;" disabled th:utext="${'&amp;nbsp;&amp;nbsp;&amp;nbsp;'+middleCategory.name}">middleCategory</option>
+
+                        <div th:each="category, index_cat : ${middleCategory.categoryList}">
+                            <option style="font-size:14px; color: darkslategray;" th:value="${category.id}" th:utext="${'&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;'+category.name}">category</option>
+                        </div>
+                    </div>
+                    <option th:if="${index_main.count!=index_main.size}" disabled> </option>
+                </div>
+            </select>
+            <br>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">적용</button>
+        </form>
+    </th:block>
+
+    <th:block th:if="${dashBoard.type.name()} == linkPost">
+        <div class="middleMenuName">보드 내용 편집</div>
+        <br>
+        <form class="form text-left" action="/main/edit/dashBoard/linkPost" method="post">
+            <input hidden th:value="${dashBoard.id}" name="id">
+
+            <label for="name">title</label>
+            <input id="name" name="title" type="text" class="form-control" th:value="${dashBoard.title}">
+            <br>
+            <label for="postId">postId</label>
+            <input id="postId" name="linkId" class="form-control" th:value="${dashBoard.linkId}" type="text">
+            <br>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">적용</button>
+        </form>
+    </th:block>
+
+    <th:block th:if="${dashBoard.type.name()} == freePost">
+        <div class="middleMenuName">보드 내용 편집</div>
+        <br>
+        <form class="form text-left" action="/main/edit/dashBoard/freePost" method="post">
+            <input hidden th:value="${dashBoard.id}" name="id">
+
+            <label for="name">title</label>
+            <input id="name" name="title" class="form-control" type="text" th:value="${dashBoard.title}">
+            <br>
+            <label for="content">content</label>
+            <textarea id="content" name="content" class="form-control" th:utext="${dashBoard_content}"></textarea>
+            <br>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">적용</button>
+        </form>
+    </th:block>
+
+    <th:block th:if="${dashBoard.type.name()} == imgBoard">
+        <div class="middleMenuName">사진 추가</div>
+
+        <form class="form text-left" action="/main/edit/dashBoard/imgBoard/add" method="post" enctype="multipart/form-data">
+            <div id="addedFormDiv"></div><BR> <!-- 폼을 삽입할 DIV -->
+
+            <input type="Button" value="추가" onclick="addForm()">
+
+            <input type="Button" value="제거" onclick="delForm()">
+            <br>
+            <br>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">적용</button>
+        </form>
+        <br>
+        <br>
+        <div class="middleMenuName">사진 제거</div>
+        <form th:if="${mainBoardImg.size()}!=0" class="form text-left" action="/main/edit/dashBoard/imgBoard/delete" method="get">
+            <select name="imageFiles" class="form-control" multiple>
+                <th:block th:each="image : ${mainBoardImg}">
+                    <option th:value="${image.id}" th:text="${image.fileName}" >fileName</option>
+                </th:block>
+            </select>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">적용</button>
+        </form>
+        <br>
+        <br>
+        <div class="middleMenuName">현재 보드</div>
+        <br>
+        <div th:replace="/fragment/mainImgBoard :: mainImgBoard"></div>
+    </th:block>
+
+    <br>
+    <div class="middleMenuName">보드 삭제</div>
+    <br>
+    <form class="form text-left" action="/main/edit/dashBoard/delete" method="get">
+        <input hidden th:value="${dashBoard.id}" name="id">
+        <button class="btn btn-lg btn-primary btn-block" type="submit">삭제</button>
+    </form>
+
+</div>
+<!-- BottomScript-->
+<div th:replace="/fragment/bottomScript :: bottomScript"> </div>
+
+</body>
+
+
+<script type="text/javascript">
+
+   var count = 0;
+   var limitCnt =  /*[[${limitAdditionImgCnt}]]*/ 5;
+
+   function addForm(){
+
+     // 파일 추가 시, 경로 input에 올라오고 input-file reset
+<!--     var fileValue = $("#addedFile").val();   // 파일 경로-->
+<!--     var fileName = fileValue.split("\\")[fileValue.length-1]; // 파일명-->
+<!--     document.getElementById("addedFile").value = "";-->
+
+     if(count>limitCnt){
+        alert("파일은 한번에 "+limitAdditionImgCnt+"개까지 추가 가능합니다.");
+        return;
+     }
+
+     var addedFormDiv = document.getElementById("addedFormDiv");
+     var str = "";
+     str+="<br>추가 파일 :: <input accept='image/*' type='file' name='add_"+count+"'>";
+
+     // 추가할 폼(에 들어갈 HTML)
+     var addedDiv = document.createElement("div"); // 폼 생성
+     addedDiv.id = "added_"+count; // 폼 Div에 ID 부여 (삭제를 위해)
+     addedDiv.innerHTML  = str; // 폼 Div안에 HTML삽입
+     addedFormDiv.appendChild(addedDiv); // 삽입할 DIV에 생성한 폼 삽입
+
+     count++;
+   }
+
+
+   function delForm(){
+     var addedFormDiv = document.getElementById("addedFormDiv");
+     if(count >0){
+        var addedDiv = document.getElementById("added_"+(--count));
+        addedFormDiv.removeChild(addedDiv); // 폼 삭제
+     }
+   }
+
+</script>
+
+
+</html>
+

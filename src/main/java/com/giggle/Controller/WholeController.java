@@ -25,7 +25,7 @@ public class WholeController {
 
     @GetMapping("/test")
     public String uploadImage(){
-        return "test";
+        return "activityPage";
     }
 
     @PostMapping("/test")

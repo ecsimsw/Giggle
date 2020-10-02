@@ -38,6 +38,37 @@
             color:lightslategray;
             text-decoration:none;
         }
+
+        .modal-body{
+            font-size: 14px;
+        }
+
+        .comment-writer{
+            font-size: 15px;
+            padding-top: 5px;
+            padding-bottom: 5px;
+        }
+
+        .comment-subButton{
+            margin-right: 15px;
+            float: left;
+            font-size:13px;
+        }
+
+        .comment-content{
+            line-height: 25px;
+            font-size: 15px;
+            color: black;
+            padding-top: 5px;
+        }
+
+        .post-writer{
+                font-size:15px;padding-top:2px;
+        }
+
+        .profileImg{
+            border-radius: 15%!important;
+        }
     </style>
 </head>
 
@@ -64,11 +95,11 @@
                     <div class="col-lg-12">
                         <div class="card shadow" style="border:1px solid lightgray;">
                             <div class="card-header align-items-center " style="padding-top: 14px;padding-bottom: 4px;">
-                                <img src="https://cf-fpi.everytime.kr/0.png" class="picture large" style="margin-right: 15px; width: 40px; float: left; height: 40px;">
-                                <span style="font-size:14px;padding-top:2px;">익명</span>
+                                <img th:src="${'/static/profile/'+post.profileImg}" clpicture large" style="margin-right: 15px; width: 40px; float: left; height: 40px;">
+                                <span class="post-writer" th:text="${post.writer}"></span>
 
                                 <!-- writer status -->
-                                <ul class="status" style="list-style: none;float: right; padding-top: 10px; margin-bottom: 0px; font-size: 10px;">
+                                <ul th:if="${post.writer == session.loginId}" class="status" style="list-style: none;float: right; padding-top: 10px; margin-bottom: 0px; font-size: 10px;">
                                     <li style="margin-right: 15px; float: left;">
                                         <a class="myButton" th:href="'/post/edit?post='+${post.id}"><span>수정</span></a>
                                     </li>
@@ -121,16 +152,15 @@
                                             float: right;
                                             margin-right: 15px;
                                             margin-bottom: 10px;
-                                        "> comment : 0</li>
+                                        " th:text="${'comment : '+post.commentList.size()}"> comment : 0</li>
                                     </ul>
                                 </a>
                             </form>
                             <br>
-                            <div class="comment_input_box">
+                            <div th:if="${session.loginId} != null" class="comment_input_box">
                                 <a class="myButton" href="#" data-toggle="modal" data-target="#inputCommentModal">
-                                    <input type="text" class="form-control" placeholder="댓글 입력" style="border-top-width: 0.1px;  border-top-color: lightgray;border-bottom: white; border-right: white;border-left: white; border-radius:0; font-size:12px;">
+                                    <input type="text" class="form-control" readonly placeholder="댓글 입력" style="background-color: white; border-top-width: 0.1px;  border-top-color: lightgray;border-bottom: white; border-right: white;border-left: white; border-radius:0; font-size:12px;">
                                 </a>
-
 
                                 <!-- create comment form -->
                                 <div>
@@ -145,7 +175,8 @@
                                                         </button>
                                                     </div>
                                                     <input hidden name="postId" th:value="${post.id}">
-                                                    <textarea class="form-container" name="content" placeholder="Comment..." style="width: 100%; border: 0.5px solid lightgray;margin-top: 0px;margin-bottom: 0px;padding-left: 8px;padding-right: 8px;padding-top: 8px;" rows="15"></textarea>
+                                                    <textarea class="form-container" name="content" placeholder="Comment..."
+                                                              style="width: 100%; border: 0.5px solid lightgray;margin-top: 0px;margin-bottom: 0px;padding-left: 8px;padding-right: 8px;padding-top: 8px;" rows="15"></textarea>
                                                     <div class="modal-footer">
                                                         <button class="btn btn-primary" type="submit" >Enter</button>
                                                         <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
@@ -156,7 +187,6 @@
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -169,17 +199,15 @@
                             <div class="card ">
                                 <form>
                                     <div class="card-header align-items-center" style="background-color: white; border:none;">
-                                        <img src="https://cf-fpi.everytime.kr/0.png" class="picture large" style="margin-right: 15px;width: 40px;float: left;height: 40px;">
-                                        <span style="float: left;font-size: 10px;padding-top: 5px;" th:text="${comment_level1.writer}">익명</span>
-                                        <ul class="status" style="list-style: none;float: right;margin-bottom: 0px;font-size: 10px;">
-                                            <li style="margin-right: 15px;float: left;">
+                                        <img th:src="${'/static/profile/'+comment_level1.profileImg}" class="propicture large" style="margin-right: 15px;width: 40px;float: left;height: 40px;">
+                                        <span class="comment-writer" th:text="${comment_level1.writer}">익명</span>
+                                        <ul th:if="${comment_level1.writer == session.loginId}" class="status" style="list-style: none;float: right;margin-bottom: 0px;font-size: 10px;">
+                                            <li class="comment-subButton">
                                                 <a class="myButton" href="#" data-toggle="modal" th:data-target="${'#editCommentModal'+comment_level1.id}">
                                                     <span>수정</span>
                                                 </a>
-
-
                                             </li>
-                                            <li style="margin-right: 15px;float: left;">
+                                            <li class="comment-subButton">
                                                 <a class="myButton" href="#" data-toggle="modal" th:data-target="${'#deleteCommentModal'+comment_level1.id}">
                                                     <span>삭제</span>
                                                 </a>
@@ -209,11 +237,11 @@
                                         <span><br></span>
                                         <time th:text="${#temporals.format(comment_level1.dateTime,'yyyy-MM-dd HH:mm:ss')}" style="float: left;font-size:8px;" >2020-08-30 13:25:16</time>
                                         <span style="line-height: 8px;"><br></span>
-                                        <div class="post_comment" th:utext="${comment_level1.content}" style="line-height: 25px;font-size: 12px;color: black;padding-top: 5px;">
+                                        <div class="post_comment comment-content" th:utext="${comment_level1.content}">
                                             comment_content
                                         </div>
                                         <br>
-                                        <a class="myButton" href="#" data-toggle="modal" th:data-target="${'#commentModal'+comment_level1.id}">
+                                        <a class="myButton" th:if="${session.loginId != null && comment_level1.live == true}" href="#" data-toggle="modal" th:data-target="${'#commentModal'+comment_level1.id}">
                                             <span style="padding-right:10px; font-size:14px; float:right; padding-bottom:5px;">comment</span>
                                         </a>
                                     </div>
@@ -251,7 +279,7 @@
                                             <div class="modal-content">
                                                 <form class="form" th:action="${'/comment/edit?comment='+comment_level1.id}" method="post">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title" id="editCommentLabel">Comment..</h5>
+                                                        <h5 class="modal-title"  id="editCommentLabel">Comment..</h5>
                                                         <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                                                             <span aria-hidden="true">×</span>
                                                         </button>
@@ -278,15 +306,15 @@
                                 <div class="card ">
                                     <form>
                                         <div class="card-header align-items-center" style="border:none; background-color: white;">
-                                            <img src="https://cf-fpi.everytime.kr/0.png" class="picture large" style="margin-right: 15px;width: 40px;float: left;height: 40px;">
-                                            <span style="float: left;font-size: 10px;padding-top: 5px;" th:text="${comment_level2.writer}">익명</span>
-                                            <ul class="status" style="list-style: none;float: right;margin-bottom: 0px;font-size: 10px;">
-                                                <li style="margin-right: 15px;float: left;">
+                                            <img th:src="${'/static/profile/'+comment_level2.profileImg}" class="profileImg picture large" style="margin-right: 15px;width: 40px;float: left;height: 40px;">
+                                            <span class="comment-writer" th:text="${comment_level2.writer}">익명</span>
+                                            <ul th:if="${comment_level2.writer == session.loginId}" class="status" style="list-style: none;float: right;margin-bottom: 0px;font-size: 13px;">
+                                                <li class="comment-subButton">
                                                     <a class="myButton" href="#" data-toggle="modal" th:data-target="${'#editCommentModal'+comment_level2.id}">
                                                         <span>수정</span>
                                                     </a>
                                                 </li>
-                                                <li style="margin-right: 15px;float: left;">
+                                                <li class="comment-subButton">
                                                     <a class="myButton" href="#" data-toggle="modal" th:data-target="${'#deleteCommentModal'+comment_level2.id}">
                                                         <span>삭제</span>
                                                     </a>
@@ -315,11 +343,11 @@
                                             <span><br></span>
                                             <time th:text="${#temporals.format(comment_level2.dateTime,'yyyy-MM-dd HH:mm:ss')}" style="float: left;font-size:8px;" >2020-08-30 13:25:16</time>
                                             <span style="line-height: 8px;"><br></span>
-                                            <div class="post_comment" th:utext="${comment_level2.content}" style="line-height: 25px;font-size: 12px;color: black;padding-top: 5px;">
+                                            <div class="post_comment comment-content" th:utext="${comment_level2.content}">
                                                 comment_content
                                             </div>
                                             <br>
-                                            <a class="myButton" href="#" data-toggle="modal" th:data-target="${'#commentModal'+comment_level2.id}">
+                                            <a th:if="${session.loginId !=null && comment_level2.live==true}" class="myButton" href="#" data-toggle="modal" th:data-target="${'#commentModal'+comment_level2.id}">
                                                 <span style="padding-right:10px; font-size:14px; float:right; padding-bottom:5px;">comment</span>
                                             </a>
                                         </div>
@@ -384,15 +412,15 @@
                                     <div class="card ">
                                         <form>
                                             <div class="card-header align-items-center" style="border:none; background-color: white;">
-                                                <img src="https://cf-fpi.everytime.kr/0.png" class="picture large" style="margin-right: 15px;width: 40px;float: left;height: 40px;">
-                                                <span style="float: left;font-size: 10px;padding-top: 5px;" th:text="${comment_level3.writer}">익명</span>
-                                                <ul class="status" style="list-style: none;float: right;margin-bottom: 0px;font-size: 10px;">
-                                                    <li style="margin-right: 15px;float: left;">
+                                                <img th:src="${'/static/profile/'+comment_level3.profileImg}" class="profileImg picture large" style="margin-right: 15px;width: 40px;float: left;height: 40px;">
+                                                <span class="comment-writer" th:text="${comment_level3.writer}">익명</span>
+                                                <ul th:if="${comment_level3.writer == session.loginId}" class="status" style="list-style: none;float: right;margin-bottom: 0px;font-size: 10px;">
+                                                    <li class="comment-subButton">
                                                         <a class="myButton" href="#" data-toggle="modal" th:data-target="${'#editCommentModal'+comment_level3.id}">
                                                             <span>수정</span>
                                                         </a>
                                                     </li>
-                                                    <li style="margin-right: 15px;float: left;">
+                                                    <li class="comment-subButton">
                                                         <a class="myButton" href="#" data-toggle="modal" th:data-target="${'#deleteCommentModal'+comment_level3.id}">
                                                             <span>삭제</span>
                                                         </a>
@@ -422,7 +450,7 @@
                                                 <span><br></span>
                                                 <time th:text="${#temporals.format(comment_level3.dateTime,'yyyy-MM-dd HH:mm:ss')}" style="float: left;font-size:8px;" >2020-08-30 13:25:16</time>
                                                 <span style="line-height: 8px;"><br></span>
-                                                <div class="post_comment" th:utext="${comment_level3.content}" style="line-height: 25px;font-size: 12px;color: black;padding-top: 5px;">
+                                                <div class="post_comment comment-content" th:utext="${comment_level3.content}">
                                                     comment_content
                                                 </div>
                                                 <br>

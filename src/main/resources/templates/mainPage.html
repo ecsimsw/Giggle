@@ -14,10 +14,60 @@
 
 <head>
   <div th:replace="/fragment/header :: header"> </div>
+
+  <style>
+     .long-board-body{
+        height:480px;
+     }
+
+     .short-board-body{
+        height:200px;
+     }
+
+     .dashBoard_title{
+        float:left;
+     }
+
+     .dashBoard_edit{
+        font-size: 12px;
+        float: right;
+        padding-top: 0px;
+        padding-bottom: 0px;
+        font-style: italic;
+     }
+
+     .card-body{
+       overflow: hidden;
+     }
+
+     .imgBoard_edit{
+        font-size: 12px;
+        z-index: 2;
+        font-style: italic;
+        right: 30px;
+        position: absolute;
+        top: 15px;
+     }
+
+     .post_content_long{
+          height: 428px;
+          line-height: 25px;
+          font-size: 15px;
+          overflow : hidden;
+     }
+
+       .post_content_short{
+          height: 150px;
+          line-height: 25px;
+          font-size: 15px;
+          overflow : hidden;
+     }
+
+  </style>
+
 </head>
 
 <body id="page-top">
-
 
   <!-- Page Wrapper -->
   <div id="wrapper">
@@ -33,245 +83,47 @@
 
         <!-- topBar :: loginId -->
         <div th:replace="/fragment/topBar :: topBar"> </div>
-
         <!-- Begin Page Content -->
-<!--        <div class="container-fluid">  전체 화면-->
-        <div class="" style="
-             max-width: 1400px;
-             padding-left: 10px;
-             padding-right: 10px;
-             "
-        >
-
-          <!-- Page Heading -->
-          <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-
-
-            <span th:text="${'Ad) total postCnt : ' + totalPostCnt}">total post : 1000</span>
-          </div>
-
-          <!-- Content Row -->
-          <div class="row">
-            <!-- Earnings (Monthly) Card Example -->
-            <div class="col-xl-3 col-md-6 mb-4">
-              <div class="card shadow h-100 py-2"
-                   style="border-left: 0.25rem solid blue !important;">
-                <div class="card-body">
-                  <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">About notice</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">Notice</div>
-                    </div>
-                  </div>
-                </div>
+        <div class="" style="max-width: 1400px;padding-left: 10px; padding-right: 10px;">
+            <div class="d-sm-flex align-items-center justify-content-between mb-4">
+              <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+              <span th:text="${'Ad) total postCnt : ' + totalPostCnt}">total post : 1000</span>
+            </div>
+            <div class="row">
+              <!-- shortCut -->
+              <th:block th:replace="/fragment/shortCut :: shortCut"> </th:block>
+            </div>
+            <!-- new posts / hot posts Start -->
+            <div class="row">
+              <!-- new Posts -->
+              <div class="col-xs-6 col-lg-6">
+                <th:block th:replace="/fragment/newPost :: newPost"> </th:block>
+              </div>
+              <!-- Hot posts -->
+              <div class="col-xs-6 col-lg-6">
+                <th:block th:replace="/fragment/hotPost :: hotPost"> </th:block>
               </div>
             </div>
-
-            <!-- Earnings (Monthly) Card Example -->
-            <div class="col-xl-3 col-md-6 mb-4">
-              <div class="card border-left-success shadow h-100 py-2">
-                <div class="card-body">
-                  <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Free conversation</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">Agora</div>
-                    </div>
-                    <div class="col-auto">
-                      <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
+            <!-- dashBoard -->
+            <div class="row">
+              <th:block th:replace="/fragment/dashBoard :: dashBoard"> </th:block>
             </div>
-
-            <!-- Earnings (Monthly) Card Example -->
-            <div class="col-xl-3 col-md-6 mb-4">
-              <div class="card border-left-success shadow h-100 py-2">
-                <div class="card-body">
-                  <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Free conversation</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">Agora</div>
-                    </div>
-                    <div class="col-auto">
-                      <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Earnings (Monthly) Card Example -->
-            <div class="col-xl-3 col-md-6 mb-4">
-              <div class="card border-left-success shadow h-100 py-2">
-                <div class="card-body">
-                  <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Free conversation</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">Agora</div>
-                    </div>
-                    <div class="col-auto">
-                      <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-
-            <!-- Earnings (Monthly) Card Example -->
-            <div class="col-xl-3 col-md-6 mb-4">
-              <div class="card border-left-info shadow h-100 py-2">
-                <div class="card-body">
-                  <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Events in Geeks</div>
-                      <div class="row no-gutters align-items-center">
-                        <div class="col-auto">
-                          <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">Event</div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-auto">
-                      <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Pending Requests Card Example -->
-            <div class="col-xl-3 col-md-6 mb-4">
-              <div class="card border-left-warning shadow h-100 py-2">
-                <div class="card-body">
-                  <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Our projects</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">Project</div>
-                    </div>
-                    <div class="col-auto">
-                      <i class="fas fa-comments fa-2x text-gray-300"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Content Row -->
-          <div class="row">
-
-            <!-- new Posts -->
-            <div class="col-xs-6 col-lg-6">
-              <div class="card shadow mb-4">
-                <!-- Card Header - Dropdown -->
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">New Posts</h6>
-                </div>
-                <!-- Card Body -->
-                <div class="card-body">
-                  <div class="chart-area">
-                    <table class ="table table-hover table-striped">
-                      <tbody>
-                      <tr th:each="post : ${newPostList}">
-                        <td th:text ="${'#'+post.id}">1</td>
-                        <td>
-                          <a th:href="${'/post/read?post='+post.id}" th:text="${post.title}">Title</a>
-                        </td>
-                        <td th:text="${post.category.name}">study</td>
-                        <td th:text="${post.writer}">tester</td>
-                      </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Hot posts -->
-            <div class="col-xs-6 col-lg-6">
-              <div class="card shadow mb-4">
-                <!-- Card Header - Dropdown -->
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">Hot posts</h6>
-                </div>
-                <!-- Card Body -->
-                <div class="card-body">
-                  <div class="chart-area">
-                    <table class ="table table-hover table-striped">
-                      <tbody>
-                      <tr th:each="post : ${postList}">
-                        <td th:text ="${numStatus.size-numStatus.index}">1</td>
-                        <td>
-                          <a th:href="'/post/'+${post.id}" th:text="${post.title}">Title</a>
-                        </td>
-                        <td th:text="${post.category}">study</td>
-                        <td th:text="${post.writer}">tester</td>
-                      </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Content Row -->
-          <div class="row">
-            <div class="col-xs-6 col-lg-6" style="
-            padding-right: 0px;
-            padding-left: 0px;
-            ">
-              <div class="col-lg-6 mb-4">
-                <!-- Illustrations -->
-                <div class="card shadow mb-4">
-                  <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Latest notice</h6>
-                  </div>
-                  <div class="card-body">
-                    <p>Add some quality, svg illustrations to your project courtesy of <a target="_blank" rel="nofollow" href="https://undraw.co/">unDraw</a>, a constantly updated collection of beautiful svg images that you can use completely free and without attribution!</p>
-                    <a target="_blank" rel="nofollow" href="https://undraw.co/">See that notice &rarr;</a>
-                  </div>
-                </div>
-
-                <!-- Approach -->
-                <div class="card shadow mb-4">
-                  <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Development Approach</h6>
-                  </div>
-                  <div class="card-body">
-                    <p>SB Admin 2 makes extensive use of Bootstrap 4 utility classes in order to reduce CSS bloat and poor page performance. Custom CSS classes are used to create custom components and custom utility classes.</p>
-                    <p class="mb-0">Before working with this theme, you should become familiar with the Bootstrap framework, especially the utility classes.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div th:replace="/fragment/mainImgBoard :: mainImgBoard"></div>
           </div>
         </div>
+        <!-- Footer -->
+        <div th:replace="/fragment/footer :: footer"> </div>
+        </div>
       </div>
-      <!-- End of Main Content -->
-
-      <!-- Footer -->
-      <div th:replace="/fragment/footer :: footer"> </div>
-
     </div>
     <!-- End of Content Wrapper -->
   </div>
   <!-- End of Page Wrapper -->
-
   <!-- Scroll to Top Button-->
   <div th:replace="/fragment/scrollButton :: scrollButton"> </div>
-
   <!-- Logout Modal-->
   <div th:replace="/fragment/logoutModal :: logoutModal"> </div>
-
-
   <!-- BottomScript-->
   <div th:replace="/fragment/bottomScript :: bottomScript"> </div>
-
 
 </body>
 

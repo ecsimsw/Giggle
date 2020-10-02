@@ -28,9 +28,9 @@ public class MiddleCategoryRepository {
         return em.find(MiddleCategory.class, id);
     }
 
-    public void updatePostCnt(MiddleCategory middleCategory, int postCnt){
+    public void updatePostCnt(long middleCategoryId, int postCnt){
+        MiddleCategory middleCategory = this.findById(middleCategoryId);
         middleCategory.setPostCnt(postCnt);
-//        em.merge(middleCategory);
     }
 
     public void deleteById(long id){

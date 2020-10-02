@@ -1,12 +1,11 @@
 package com.giggle.Repository;
 
+import com.giggle.Domain.Entity.DashBoard;
+import com.giggle.Domain.Entity.DashBoardType;
 import com.giggle.Domain.Entity.MainBoardImg;
-import com.giggle.Domain.Entity.MiddleCategory;
 import com.giggle.Domain.Entity.ShortCut;
-import com.giggle.Domain.Form.ShortCutForm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -18,7 +17,6 @@ import java.util.List;
 public class PageRepository {
 
     private final EntityManager em;
-
 
     // edit main board img
 
@@ -42,16 +40,16 @@ public class PageRepository {
         em.remove(mainBoardImg);
     }
 
-
     /// edit shortCut
 
     public ShortCut findShortCutById(long id){return em.find(ShortCut.class, id);}
 
-    public void createShortCut(ShortCutForm shortCutForm){
+    public void createShortCut(String categoryName, long categoryId, String description, String color){
         ShortCut newShortCut = new ShortCut();
-        newShortCut.setTitle(shortCutForm.getTitle());
-        newShortCut.setDescription(shortCutForm.getDescription());
-        newShortCut.setLink(shortCutForm.getLink());
+        newShortCut.setTitle(categoryName);
+        newShortCut.setCategoryId(categoryId);
+        newShortCut.setDescription(description);
+        newShortCut.setColor(color);
         em.persist(newShortCut);
     }
 
@@ -63,5 +61,34 @@ public class PageRepository {
 
     public void deleteShortCut(ShortCut shortCut){
         em.remove(shortCut);
+    }
+
+    // edit dashBoard
+    public DashBoard findDashBoardById(long id){return em.find(DashBoard.class, id);}
+
+    public long createDashBoard(DashBoardType type, String width, String height){
+        DashBoard newDashBoard = new DashBoard();
+        newDashBoard.setType(type);
+        newDashBoard.setHeight(height);
+        newDashBoard.setWidth(width);
+        newDashBoard.setSpotType(0);
+        em.persist(newDashBoard);
+
+        return newDashBoard.getId();
+    }
+
+    public List<DashBoard> getAllDashBoard(){
+        List<DashBoard> allDashBoard = em.createQuery("select d from DashBoard d", DashBoard.class)
+                .getResultList();
+        return allDashBoard;
+    }
+
+    public void deleteDashBoard(DashBoard dashBoard){
+        em.remove(dashBoard);
+    }
+
+    public void updateSpotType(DashBoard dashBoard, int type){
+        dashBoard.setSpotType(type);
+        em.flush();
     }
 }

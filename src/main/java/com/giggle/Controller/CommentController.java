@@ -1,42 +1,55 @@
 package com.giggle.Controller;
 
-import com.giggle.Domain.Entity.MainCategory;
-import com.giggle.Domain.Entity.Post;
 import com.giggle.Domain.Form.CreateCommentForm;
 import com.giggle.Service.CommentService;
-import com.giggle.Service.MainCategoryService;
-import com.giggle.Service.PostService;
+import com.giggle.Service.MemberService;
+import com.giggle.Validator.CheckAuthority;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.giggle.Domain.Entity.*;
 
-import java.util.List;
+import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/comment")
 @RequiredArgsConstructor
+@Slf4j
 public class CommentController {
 
     private final CommentService commentService;
-    private final MainCategoryService mainCategoryService;
-    private final PostService postService;
+    private final MemberService memberService;
+
+    @Autowired CheckAuthority checkAuthority;
 
     @PostMapping("/create")
-    public String createComment(CreateCommentForm createCommentForm){
-        commentService.createComment(createCommentForm);
+    public String createComment(CreateCommentForm createCommentForm,
+                                HttpSession httpSession) {
+
+        String loginId = checkAuthority.checkLogin(httpSession);
+        Member member = memberService.getByLoginId(loginId);
+
+        commentService.createComment(createCommentForm,member);
+
         long postId=  Long.parseLong(createCommentForm.getPostId());
 
         return "redirect:/post/read?post="+postId;
     }
 
     @PostMapping("/edit")
-    public String editComment(@RequestParam String comment, @RequestParam String content) {
+    public String editComment(@RequestParam String comment, @RequestParam String content
+                              ,HttpSession httpSession) {
+
         long commentId = Long.parseLong(comment);
+        String commentWriter = commentService.findById(commentId).getWriter();
+
+        checkAuthority.checkOwner(httpSession, commentWriter);
+
         commentService.editComment(commentId, content);
 
         long postId = commentService.findById(commentId).getPost().getId();
@@ -44,9 +57,15 @@ public class CommentController {
     }
 
     @GetMapping("/delete")
-    public String deletePost(@RequestParam String comment) {
+    public String deleteComment(@RequestParam String comment,
+                             HttpSession httpSession) {
+
         long commentId = Long.parseLong(comment);
         Comment commentToDelete = commentService.findById(commentId);
+        String writer = commentToDelete.getWriter();
+
+        checkAuthority.checkOwner(httpSession, writer);
+
         long postId = commentToDelete.getPost().getId();
         commentService.deleteComment(commentId);
         return "redirect:/post/read?post="+postId;

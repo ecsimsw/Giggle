@@ -2,6 +2,7 @@ package com.giggle.Repository;
 
 import com.giggle.Domain.Entity.MainCategory;
 import lombok.RequiredArgsConstructor;
+import org.jboss.jandex.Main;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -27,9 +28,9 @@ public class MainCategoryRepository {
         return em.find(MainCategory.class, id);
     }
 
-    public void updatePostCnt(MainCategory mainCategory, int postCnt){
+    public void updatePostCnt(long mainCategoryId, int postCnt){
+        MainCategory mainCategory = this.findById(mainCategoryId);
         mainCategory.setPostCnt(postCnt);
-//        em.merge(mainCategory);
     }
 
     public void deleteById(long id){

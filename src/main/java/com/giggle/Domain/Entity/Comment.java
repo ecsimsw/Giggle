@@ -31,6 +31,9 @@ public class Comment {
 
     private String writer;
 
+    private String profileImg;
+
+    @Lob
     private String content;
 
     @ManyToOne(fetch=FetchType.LAZY)
@@ -40,4 +43,6 @@ public class Comment {
     @CreatedDate
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss")
     private LocalDateTime dateTime;
+
+    private boolean isLive;
 }

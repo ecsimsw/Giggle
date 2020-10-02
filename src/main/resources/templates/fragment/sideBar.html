@@ -58,51 +58,61 @@
                                         Study
                                     </a>
                             </div>
-                            <a class="collapse-item" th:href="${'/category/create/category?mainCategory='+mainCategory.id+'&middleCategory='+middleCategory.id}">Ad) Create Category</a>
+                            <a th:if="${session.authority} == 'admin' or ${session.authority} == 'master'"
+                               class="collapse-item" th:href="${'/category/create/category?mainCategory='+mainCategory.id+'&middleCategory='+middleCategory.id}">
+                                Ad) Create Category</a>
                         </div>
                     </div>
                 </div>
 
-                <a class="nav-link" th:href="${'/category/create/middleCategory?mainCategory='+mainCategory.id}">
+                <a th:if="${session.authority} == 'admin' or ${session.authority} == 'master'"
+                   class="nav-link" th:href="${'/category/create/middleCategory?mainCategory='+mainCategory.id}">
                     <i class="fas fa-fw fa-cog"></i>
                     <span>Ad) create Middle Category</span>
                 </a>
             </li>
         </div>
 
-        <!-- Divider -->
-        <hr class="sidebar-divider d-none d-md-block">
+        <th:block th:if="${session.authority} == 'admin' or ${session.authority} == 'master'">
+            <!-- Divider -->
+            <hr class="sidebar-divider d-none d-md-block">
 
-        <div class="sidebar-heading"
-             style="font-weight: normal;
+            <div class="sidebar-heading" style="font-weight: normal;
                           text-align: center;
-                          text-transform: none;"
-             >
-            administrator
-        </div>
+                          text-transform: none;">
+                administrator
+            </div>
 
 
-        <li class="nav-item">
-            <a class="nav-link" th:href="${'/category/create/mainCategory'}">
-                <i class="fas fa-fw fa-table"></i>
-                <span>Ad) Create Main Category</span>
-            </a>
+            <li class="nav-item">
+                <a class="nav-link" th:href="${'/category/create/mainCategory'}">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Ad) Create Main Category</span>
+                </a>
 
-            <a class="nav-link" th:href="${'/category/delete'}">
-                <i class="fas fa-fw fa-cog"></i>
-                <span>Ad) delete Category</span>
-            </a>
+                <a class="nav-link" th:href="${'/category/delete'}">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>Ad) delete Category</span>
+                </a>
 
-            <a class="nav-link" th:href="${'/category/refreshPostCnt'}">
-                <i class="fas fa-fw fa-cog"></i>
-                <span>Ad) refresh Post Count</span>
-            </a>
+                <a class="nav-link" th:href="${'/main/edit/shortCut'}">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>Ad) edit shortCut</span>
+                </a>
 
-            <a class="nav-link" th:href="${'/main/edit/imgBoard'}">
-                <i class="fas fa-fw fa-cog"></i>
-                <span>Ad) edit main img board</span>
-            </a>
-        </li>
+                <a class="nav-link" th:href="${'/main/add/dashBoard'}">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>Ad) add dashBoard</span>
+                </a>
+
+<!--                <a th:if="${session.authority} == 'master'" class="nav-link" th:href="${'/member/manage/setting'}">-->
+                <a class="nav-link" th:href="${'/member/manage/setting'}">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>Ad) member management</span>
+                </a>
+            </li>
+        </th:block>
+
 
         <!-- Divider -->
         <hr class="sidebar-divider d-none d-md-block">

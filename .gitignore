@@ -2,3 +2,11 @@
 /.gradle/
 /build/
 /build/classes/java/main/
+src/main/resources/application.yml
+
+
+## git 캐시 내용 삭제 후, add all
+
+#git rm -r --cached .
+#git add .
+#git commit -m "fixed untracked files"

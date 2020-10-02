@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<div th:fragment="hotPost">
+    <div class="card shadow mb-4">
+        <!-- Card Header - Dropdown -->
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+            <h6 class="m-0 font-weight-bold text-primary">Hot posts</h6>
+            <a class="btn dashBoard_edit" href="/main/editHotPost">Edit</a>
+        </div>
+        <!-- Card Body -->
+        <div class="card-body">
+            <div class="chart-area">
+                <table class ="table table-hover table-striped">
+                    <tbody>
+                    <tr th:each="post : ${postList}">
+                        <td th:text ="${numStatus.size-numStatus.index}">1</td>
+                        <td>
+                            <a th:href="'/post/'+${post.id}" th:text="${post.title}">Title</a>
+                        </td>
+                        <td th:text="${post.category}">study</td>
+                        <td th:text="${post.writer}">tester</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</html>

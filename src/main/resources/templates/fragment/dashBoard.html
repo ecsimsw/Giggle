@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<!-- Topbar Navbar -->
+<th:block th:fragment="dashBoard">
+    <th:block th:each="dashBoard, loopState : ${dashBoardList}">
+        <th:block th:if="${dashBoard.width}=='wide'" >
+            <th:block th:if="${dashBoard.type.name()}!='imgBoard'">
+                <div class="col-xs-6 col-lg-12">
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary dashBoard_title" th:text="${dashBoard.title}">title</h6>
+                            <a th:if="${session.authority} == 'admin' or ${session.authority} == 'master'"
+                               class="btn dashBoard_edit" th:href="${'/main/edit/dashBoard?id='+dashBoard.id}">Edit</a>
+                        </div>
+                        <div th:if="${dashBoard.height}=='short'" class="card-body short-board-body">
+                            <div class="post_content_short" th:utext="${dashBoard.content}" style="line-height: 25px; font-size:15px;">content</div>
+
+                            <a th:if="${dashBoard.type.name()}=='linkPost'" th:href="${'/post/read?post='+dashBoard.linkId}">See that post →</a>
+                            <a th:if="${dashBoard.type.name()}=='latestPost'" th:href="${'/post/board?category='+dashBoard.linkId}">See that category →</a>
+
+                        </div>
+                        <div th:if="${dashBoard.height}=='long'" class="card-body long-board-body">
+                            <div class="post_content_long" th:utext="${dashBoard.content}" style="line-height: 25px; font-size:15px;">content</div>
+                            <a th:if="${dashBoard.type.name()}=='linkPost'" th:href="${'/post/read?post='+dashBoard.linkId}">See that post →</a>
+                            <a th:if="${dashBoard.type.name()}=='latestPost'" th:href="${'/post/board?category='+dashBoard.linkId}">See that category →</a>
+
+                        </div>
+                    </div>
+                </div>
+            </th:block>
+            <th:block th:if="${dashBoard.type.name()}=='imgBoard'">
+                <th:block th:if="${dashBoard.height}=='short'">
+                    <div class="col-xs-6 col-lg-12">
+                        <a th:if="${session.authority} == 'admin' or ${session.authority} == 'master'"
+                           class="btn imgBoard_edit" th:href="${'/main/edit/dashBoard?id='+dashBoard.id}">Edit</a>
+                        <div th:id="${'demo_'+loopState.index}" class="carousel slide" data-ride="carousel" style="margin-bottom: 25px;">
+                            <div class="carousel-inner">
+                                <th:block th:each="src, index : ${mainBoardImgSrc}">
+                                    <div th:if="${index.count==1}" class="carousel-item active" style="height:253px">
+                                        <img class="d-block w-100" style="height:100%;" th:src="${src}">
+                                    </div>
+                                    <div th:if="${index.count!=1}" class="carousel-item" style="height:253px">
+                                        <img class="d-block w-100" style="height:100%;" th:src="${src}">
+                                    </div>
+                                </th:block>
+                                <a class="carousel-control-prev" th:href="${'#demo_'+loopState.index}" data-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                </a>
+                                <a class="carousel-control-next" th:href="${'#demo_'+loopState.index}" data-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </th:block>
+                <th:block th:if="${dashBoard.height}=='long'">
+                    <div class="col-xs-6 col-lg-12">
+                        <a th:if="${session.authority} == 'admin' or ${session.authority} == 'master'"
+                           class="btn imgBoard_edit" th:href="${'/main/edit/dashBoard?id='+dashBoard.id}">Edit</a>
+                        <div th:id="${'demo_'+loopState.index}" class="carousel slide" data-ride="carousel" style="margin-bottom: 25px;">
+                            <div class="carousel-inner">
+                                <th:block th:each="src, index : ${mainBoardImgSrc}">
+                                    <div th:if="${index.count==1}" class="carousel-item active" style="height:530px">
+                                        <img class="d-block w-100" style="height:100%;" th:src="${src}">
+                                    </div>
+                                    <div th:if="${index.count!=1}" class="carousel-item" style="height:530px">
+                                        <img class="d-block w-100" style="height:100%;" th:src="${src}">
+                                    </div>
+                                </th:block>
+
+                                <a class="carousel-control-prev" th:href="${'#demo_'+loopState.index}" data-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                </a>
+
+                                <a class="carousel-control-next" th:href="${'#demo_'+loopState.index}" data-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </th:block>
+            </th:block>
+        </th:block>
+        <th:block th:if="${dashBoard.width}=='narrow'" >
+            <th:block th:if="${dashBoard.height}=='long'" >
+                <th:block th:if="${dashBoard.type.name()}!='imgBoard'">
+                    <div class="col-xs-6 col-lg-6">
+                        <div class ="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary dashBoard_title" th:text="${dashBoard.title}">title</h6>
+                                <a th:if="${session.authority} == 'admin' or ${session.authority} == 'master'"
+                                   class="btn dashBoard_edit" th:href="${'/main/edit/dashBoard?id='+dashBoard.id}">Edit</a>
+                            </div>
+                            <div class="card-body  long-board-body">
+                                <div class="post_content_long" th:utext="${dashBoard.content}" style="line-height: 25px; font-size:15px;">content</div>
+                                <a th:if="${dashBoard.type.name()}=='linkPost'" th:href="${'/post/read?post='+dashBoard.linkId}">See that post →</a>
+                                <a th:if="${dashBoard.type.name()}=='latestPost'" th:href="${'/post/board?category='+dashBoard.linkId}">See that category →</a>
+
+                            </div>
+                        </div>
+                    </div>
+                </th:block>
+                <th:block th:if="${dashBoard.type.name()}=='imgBoard'">
+                    <div class="col-xs-6 col-lg-6">
+                        <a th:if="${session.authority} == 'admin' or ${session.authority} == 'master'"
+                           class="btn imgBoard_edit" th:href="${'/main/edit/dashBoard?id='+dashBoard.id}">Edit</a>
+                        <div th:id="${'demo_'+loopState.index}" class="carousel slide" data-ride="carousel" style="margin-bottom: 25px; min-height: 530px;">
+                            <div class="carousel-inner">
+                                <th:block th:each="src, index : ${mainBoardImgSrc}">
+                                    <div th:if="${index.count==1}" class="carousel-item active" style="height:530px" >
+                                        <img class="d-block w-100" style="height:100%;" th:src="${src}">
+                                    </div>
+                                    <div th:if="${index.count!=1}" class="carousel-item" style="height:530px">
+                                        <img class="d-block w-100" style="height:100%;" th:src="${src}">
+                                    </div>
+                                </th:block>
+                                <a class="carousel-control-prev" th:href="${'#demo_'+loopState.index}" data-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                </a>
+                                <a class="carousel-control-next" th:href="${'#demo_'+loopState.index}" data-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </th:block>
+            </th:block>
+
+            <th:block th:if="${dashBoard.height}=='short'">
+                <th:block th:if="${dashBoard.type.name()}!='imgBoard'">
+                    <th:block th:if="${dashBoard.spotType}==0" >
+                        <div class="col-xs-6 col-lg-6">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary dashBoard_title" th:text="${dashBoard.title}">title</h6>
+                                    <a th:if="${session.authority} == 'admin' or ${session.authority} == 'master'"
+                                       class="btn dashBoard_edit" th:href="${'/main/edit/dashBoard?id='+dashBoard.id}">Edit</a>
+                                </div>
+                                <div class="card-body short-board-body">
+                                    <div class="post_content_short" th:utext="${dashBoard.content}" style="line-height: 25px; font-size:15px;">content</div>
+                                    <a th:if="${dashBoard.type.name()}=='linkPost'" th:href="${'/post/read?post='+dashBoard.linkId}">See that post →</a>
+                                    <a th:if="${dashBoard.type.name()}=='latestPost'" th:href="${'/post/board?category='+dashBoard.linkId}">See that category →</a>
+
+                                </div>
+                            </div>
+                        </div>
+                    </th:block>
+                    <th:block th:if="${dashBoard.spotType}==1" >
+                        <div class="col-xs-6 col-lg-6">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary dashBoard_title" th:text="${dashBoard.title}">title</h6>
+                                    <a th:if="${session.authority} == 'admin' or ${session.authority} == 'master'"
+                                       class="btn dashBoard_edit" th:href="${'/main/edit/dashBoard?id='+dashBoard.id}">Edit</a>
+                                </div>
+                                <div class="card-body short-board-body">
+                                    <div class="post_content_short" th:utext="${dashBoard.content}" style="line-height: 25px; font-size:15px;">content</div>
+                                    <a th:if="${dashBoard.type.name()}=='linkPost'" th:href="${'/post/read?post='+dashBoard.linkId}">See that post →</a>
+                                    <a th:if="${dashBoard.type.name()}=='latestPost'" th:href="${'/post/board?category='+dashBoard.linkId}">See that category →</a>
+
+                                </div>
+                            </div>
+                            <th:block th:if="${dashBoardList.get(loopState.index+1).type.name()}!=imgBoard">
+                                <div class = "card shadow mb-4">
+                                    <div class="card-header py-3">
+                                        <h6 class="m-0 font-weight-bold text-primary dashBoard_title" th:text="${dashBoardList.get(loopState.index+1).title}">title</h6>
+                                        <a th:if="${session.authority} == 'admin' or ${session.authority} == 'master'"
+                                           class="btn dashBoard_edit" th:href="${'/main/edit/dashBoard?id='+dashBoardList.get(loopState.index+1).id}">Edit</a>
+                                    </div>
+                                    <div class="card-body short-board-body">
+                                        <div class="post_content_short" th:utext="${dashBoardList.get(loopState.index+1).content}" style="line-height: 25px; font-size:15px;">content</div>
+                                        <a th:if="${dashBoard.type.name()}=='linkPost'" th:href="${'/post/read?post='+dashBoard.linkId}">See that post →</a>
+                                        <a th:if="${dashBoard.type.name()}=='latestPost'" th:href="${'/post/board?category='+dashBoard.linkId}">See that category →</a>
+
+                                    </div>
+                                </div>
+                            </th:block>
+                            <th:block th:if="${dashBoardList.get(loopState.index+1).type.name()}=='imgBoard'">
+                                <a th:if="${session.authority} == 'admin' or ${session.authority} == 'master'"
+                                   class="btn imgBoard_edit" th:href="${'/main/edit/dashBoard?id='+dashBoardList.get(loopState.index+1).id}">Edit</a>
+                                <div th:id="${'demo_'+loopState.index+1}" class="carousel slide" data-ride="carousel" style="margin-bottom: 25px; min-height: 253px;">
+                                    <div class="carousel-inner">
+                                        <th:block th:each="src, index : ${mainBoardImgSrc}">
+                                            <div th:if="${index.count==1}" class="carousel-item active" style="height:253px">
+                                                <img class="d-block w-100" style="height:100%;" th:src="${src}">
+                                            </div>
+                                            <div th:if="${index.count!=1}" class="carousel-item" style="height:253px">
+                                                <img class="d-block w-100" style="height:100%;" th:src="${src}">
+                                            </div>
+                                        </th:block>
+                                        <a class="carousel-control-prev" th:href="${'#demo_'+loopState.index+1}" data-slide="prev">
+                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        </a>
+                                        <a class="carousel-control-next" th:href="${'#demo_'+loopState.index+1}" data-slide="next">
+                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </th:block>
+                        </div>
+                    </th:block>
+                    <th:block th:if="${dashBoard.spotType}==2" >
+                    </th:block>
+                </th:block>
+                <th:block th:if="${dashBoard.type.name()}=='imgBoard'">
+                    <th:block th:if="${dashBoard.spotType}==0" >
+                        <div class="col-xs-6 col-lg-6">
+                            <a th:if="${session.authority} == 'admin' or ${session.authority} == 'master'"
+                               class="btn imgBoard_edit" th:href="${'/main/edit/dashBoard?id='+dashBoard.id}">Edit</a>
+                            <div th:id="${'demo_'+loopState.index}" class="carousel slide" data-ride="carousel" style="margin-bottom: 25px; min-height: 253px;">
+                                <div class="carousel-inner">
+                                    <th:block th:each="src, index : ${mainBoardImgSrc}">
+                                        <div th:if="${index.count==1}" class="carousel-item active" style="height:253px">
+                                            <img class="d-block w-100" style="height:100%;"  th:src="${src}">
+                                        </div>
+                                        <div th:if="${index.count!=1}" class="carousel-item" style="height:253px">
+                                            <img class="d-block w-100" style="height:100%;" th:src="${src}">
+                                        </div>
+                                    </th:block>
+                                    <a class="carousel-control-prev" th:href="${'#demo_'+loopState.index}" data-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    </a>
+                                    <a class="carousel-control-next" th:href="${'#demo_'+loopState.index}" data-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </th:block>
+                    <th:block th:if="${dashBoard.spotType}==1" >
+                        <div class="col-xs-6 col-lg-6">
+                            <a th:if="${session.authority} == 'admin' or ${session.authority} == 'master'"
+                               class="btn imgBoard_edit" th:href="${'/main/edit/dashBoard?id='+dashBoard.id}">Edit</a>
+                            <div th:id="${'demo_'+loopState.index}" class="carousel slide" data-ride="carousel" style="margin-bottom: 25px; min-height: 253px;">
+                                <div class="carousel-inner">
+                                    <th:block th:each="src, index : ${mainBoardImgSrc}">
+                                        <div th:if="${index.count==1}" class="carousel-item active" style="height:253px">
+                                            <img class="d-block w-100" style="height:100%;" th:src="${src}">
+                                        </div>
+                                        <div th:if="${index.count!=1}" class="carousel-item" style="height:253px">
+                                            <img class="d-block w-100" style="height:100%;" th:src="${src}">
+                                        </div>
+                                    </th:block>
+                                    <a class="carousel-control-prev" th:href="${'#demo_'+loopState.index}" data-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    </a>
+                                    <a class="carousel-control-next" th:href="${'#demo_'+loopState.index}" data-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    </a>
+                                </div>
+                            </div>
+                            <th:block th:if="${dashBoardList.get(loopState.index+1).type.name()}!=imgBoard">
+                                <div class = "card shadow mb-4">
+                                    <div class="card-header py-3">
+                                        <h6 class="m-0 font-weight-bold text-primary dashBoard_title" th:text="${dashBoardList.get(loopState.index+1).title}">title</h6>
+                                        <a th:if="${session.authority} == 'admin' or ${session.authority} == 'master'"
+                                           class="btn dashBoard_edit" th:href="${'/main/edit/dashBoard?id='+dashBoardList.get(loopState.index+1).id}">Edit</a>
+                                    </div>
+                                    <div class="card-body short-board-body">
+                                        <div class="post_content_short" th:utext="${dashBoardList.get(loopState.index+1).content}" style="line-height: 25px; font-size:15px;">content</div>
+                                        <a th:if="${dashBoard.type.name()}=='linkPost'" th:href="${'/post/read?post='+dashBoard.linkId}">See that post →</a>
+                                        <a th:if="${dashBoard.type.name()}=='latestPost'" th:href="${'/post/board?category='+dashBoard.linkId}">See that category →</a>
+
+                                    </div>
+                                </div>
+                            </th:block>
+                            <th:block th:if="${dashBoardList.get(loopState.index+1).type.name()}=='imgBoard'">
+                                <a th:if="${session.authority} == 'admin' or ${session.authority} == 'master'"
+                                   class="btn imgBoard_edit" th:href="${'/main/edit/dashBoard?id='+dashBoardList.get(loopState.index+1).id}">Edit</a>
+                                <div th:id="${'demo_'+loopState.index+1}" class="carousel slide" data-ride="carousel">
+                                    <div class="carousel-inner">
+                                        <th:block th:each="src, index : ${mainBoardImgSrc}">
+                                            <div th:if="${index.count==1}" class="carousel-item active" style="height:253px">
+                                                <img class="d-block w-100" style="height:100%;" th:src="${src}">
+                                                <div class = "caption"></div>
+                                            </div>
+                                            <div th:if="${index.count!=1}" class="carousel-item" style="height:253px">
+                                                <img class="d-block w-100" style="height:100%;" th:src="${src}">
+                                                <a th:value = ${index.count}></a>
+                                                <div class = "caption"></div>
+                                            </div>
+                                        </th:block>
+                                        <a class="carousel-control-prev" th:href="${'#demo_'+loopState.index+1}" data-slide="prev">
+                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        </a>
+                                        <a class="carousel-control-next" th:href="${'#demo_'+loopState.index+1}" data-slide="next">
+                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </th:block>
+                        </div>
+                    </th:block>
+                    <th:block th:if="${dashBoard.spotType}==2" >
+                    </th:block>
+                </th:block>
+            </th:block>
+        </th:block>
+    </th:block>
+
+</th:block>
+</html>
