@@ -89,8 +89,8 @@ function idPatternCheck(loginId){
 
     var id = document.getElementById(loginId).value;
 
-    if(id.length < 5 || id.length > 12) {
-        alert("아이디는 5자리 이상, 12자리 이하로 구성되어야합니다.");
+    if(id.length < 3 || id.length > 12) {
+        alert("아이디는 3자리 이상, 12자리 이하로 구성되어야합니다.");
         return false;
     }
 

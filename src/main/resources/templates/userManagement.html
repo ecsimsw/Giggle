@@ -70,6 +70,9 @@
         <label for="name">name</label>
         <input type="text" id ="name" name="name" class="form-control">
         <br>
+        <label for="email">email</label>
+        <input type="text" id ="email" name="email" class="form-control">
+        <br>
         <label for="type">type</label>
         <select class="form-control" id="type" name="type">
             <option value="none" selected disabled>Select type</option>
@@ -188,8 +191,8 @@
       var member_loginId = document.getElementById("loginId");
       var member_name = document.getElementById("name");
       var member_nickName = document.getElementById("nickName");
+      var member_email = document.getElementById("email");
       var member_type = document.getElementById("type");
-
       var form={
         loginId : search_id,
         userName : search_name
@@ -205,7 +208,7 @@
             member_id.value = data.id;
             member_loginId.value = data.loginId;
             member_name.value = data.name;
-            console.log(data.loginId);
+            member_name.email = data.email;
             member_type.value = data.memberType;
         },
         error: function (request, status, error){

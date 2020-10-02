@@ -2,3 +2,6 @@
 /.gradle/
 /build/
 /build/classes/java/main/
+src/main/resources/application.yml
+resources/application.yml
+application.yml

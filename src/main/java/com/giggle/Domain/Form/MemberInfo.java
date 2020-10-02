@@ -9,4 +9,5 @@ public class MemberInfo {
     private String loginId;
     private String name;
     private String type;
+    private String email;
 }

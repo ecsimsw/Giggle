@@ -11,9 +11,12 @@ import com.giggle.Validator.JoinValidator;
 import com.giggle.Validator.Message.EjoinMessage;
 import com.giggle.Validator.Message.EloginMessage;
 import com.giggle.Service.MemberService;
+import com.sun.mail.util.logging.MailHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,6 +26,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Properties;
 
 @Controller
 @RequestMapping("/member")
@@ -32,9 +36,9 @@ public class MemberController {
     private final MemberService memberService;
     private final ObjectMapper objectMapper;
 
-    @Autowired JoinValidator joinValidator;
+    @Autowired private JoinValidator joinValidator;
 
-    @Autowired CheckAuthority checkAuthority;
+    @Autowired private CheckAuthority checkAuthority;
 
     @GetMapping("/login")
     public String login() { return "loginForm"; }
@@ -89,6 +93,16 @@ public class MemberController {
             throw new RuntimeException("Invalid joinForm");
         }
 
+        String email = joinForm.getEmail();
+        String enteredKey = joinForm.getEmailCheck();
+
+        if(!memberService.verifyEmail(email, enteredKey)){
+            // 인증 번호가 틀릴 경우
+            redirectAttributes.addFlashAttribute("message", "이메일 인증 번호 불일치");
+            redirectAttributes.addFlashAttribute("joinForm", joinForm);
+            return "redirect:/member/join";
+        };
+
         EjoinMessage resultMessage = memberService.join(joinForm);
 
         if(resultMessage == EjoinMessage.loginIdDuplicate){
@@ -100,9 +114,11 @@ public class MemberController {
             return "redirect:/member/join";
         }
         else if(resultMessage == EjoinMessage.success){
-            Member loginMember = memberService.getByLoginId(joinForm.getLoginId());
-            session.setAttribute("loginId", loginMember.getLoginId());
-            session.setAttribute("authority", loginMember.getMemberType().name());
+            Member joinMember = memberService.getByLoginId(joinForm.getLoginId());
+
+            session.setAttribute("loginId", joinMember.getLoginId());
+            session.setAttribute("authority", joinMember.getMemberType());
+
             return "redirect:/main";  // after joinPage
         }
         throw new RuntimeException();
@@ -124,6 +140,24 @@ public class MemberController {
 
         if(member == null){ return objectMapper.writeValueAsString("ok"); }
         else{ return objectMapper.writeValueAsString("duplicate"); }
+    }
+
+    @PostMapping("/join/sendAuthMail")
+    @ResponseBody
+    public String authenticationMail(String email) throws JsonProcessingException{
+        Member member = memberService.getByEmail(email);
+        String msg = "";
+
+        if(member != null){
+            msg = "duplicate";
+            msg = objectMapper.writeValueAsString(msg);
+            return msg;
+        }
+
+        memberService.sendAuthMail(email);
+        msg = "success";
+        msg = objectMapper.writeValueAsString(msg);
+        return msg;
     }
 
     @GetMapping("/setting")

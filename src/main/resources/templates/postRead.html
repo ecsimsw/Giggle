@@ -42,6 +42,29 @@
         .modal-body{
             font-size: 14px;
         }
+
+        .comment-writer{
+            font-size: 15px;
+            padding-top: 5px;
+            padding-bottom: 5px;
+        }
+
+        .comment-subButton{
+            margin-right: 15px;
+            float: left;
+            font-size:13px;
+        }
+
+        .comment-content{
+            line-height: 25px;
+            font-size: 15px;
+            color: black;
+            padding-top: 5px;
+        }
+
+        .post-writer{
+                font-size:15px;padding-top:2px;
+        }
     </style>
 </head>
 
@@ -69,7 +92,7 @@
                         <div class="card shadow" style="border:1px solid lightgray;">
                             <div class="card-header align-items-center " style="padding-top: 14px;padding-bottom: 4px;">
                                 <img src="https://cf-fpi.everytime.kr/0.png" class="picture large" style="margin-right: 15px; width: 40px; float: left; height: 40px;">
-                                <span style="font-size:14px;padding-top:2px;" th:text="${post.writer}"></span>
+                                <span class="post-writer" th:text="${post.writer}"></span>
 
                                 <!-- writer status -->
                                 <ul th:if="${post.writer == session.loginId}" class="status" style="list-style: none;float: right; padding-top: 10px; margin-bottom: 0px; font-size: 10px;">
@@ -174,16 +197,14 @@
                                 <form>
                                     <div class="card-header align-items-center" style="background-color: white; border:none;">
                                         <img src="https://cf-fpi.everytime.kr/0.png" class="picture large" style="margin-right: 15px;width: 40px;float: left;height: 40px;">
-                                        <span style="float: left;font-size: 10px;padding-top: 5px;" th:text="${comment_level1.writer}">익명</span>
+                                        <span class="comment-writer" th:text="${comment_level1.writer}">익명</span>
                                         <ul th:if="${comment_level1.writer == session.loginId}" class="status" style="list-style: none;float: right;margin-bottom: 0px;font-size: 10px;">
-                                            <li style="margin-right: 15px;float: left;">
+                                            <li class="comment-subButton">
                                                 <a class="myButton" href="#" data-toggle="modal" th:data-target="${'#editCommentModal'+comment_level1.id}">
                                                     <span>수정</span>
                                                 </a>
-
-
                                             </li>
-                                            <li style="margin-right: 15px;float: left;">
+                                            <li class="comment-subButton">
                                                 <a class="myButton" href="#" data-toggle="modal" th:data-target="${'#deleteCommentModal'+comment_level1.id}">
                                                     <span>삭제</span>
                                                 </a>
@@ -213,7 +234,7 @@
                                         <span><br></span>
                                         <time th:text="${#temporals.format(comment_level1.dateTime,'yyyy-MM-dd HH:mm:ss')}" style="float: left;font-size:8px;" >2020-08-30 13:25:16</time>
                                         <span style="line-height: 8px;"><br></span>
-                                        <div class="post_comment" th:utext="${comment_level1.content}" style="line-height: 25px;font-size: 12px;color: black;padding-top: 5px;">
+                                        <div class="post_comment comment-content" th:utext="${comment_level1.content}">
                                             comment_content
                                         </div>
                                         <br>
@@ -284,14 +305,14 @@
                                     <form>
                                         <div class="card-header align-items-center" style="border:none; background-color: white;">
                                             <img src="https://cf-fpi.everytime.kr/0.png" class="picture large" style="margin-right: 15px;width: 40px;float: left;height: 40px;">
-                                            <span style="float: left;font-size: 10px;padding-top: 5px;" th:text="${comment_level2.writer}">익명</span>
+                                            <span class="comment-writer" th:text="${comment_level2.writer}">익명</span>
                                             <ul th:if="${comment_level2.writer == session.loginId}" class="status" style="list-style: none;float: right;margin-bottom: 0px;font-size: 10px;">
-                                                <li style="margin-right: 15px;float: left;">
+                                                <li class="comment-subButton">
                                                     <a class="myButton" href="#" data-toggle="modal" th:data-target="${'#editCommentModal'+comment_level2.id}">
                                                         <span>수정</span>
                                                     </a>
                                                 </li>
-                                                <li style="margin-right: 15px;float: left;">
+                                                <li class="comment-subButton">
                                                     <a class="myButton" href="#" data-toggle="modal" th:data-target="${'#deleteCommentModal'+comment_level2.id}">
                                                         <span>삭제</span>
                                                     </a>
@@ -320,7 +341,7 @@
                                             <span><br></span>
                                             <time th:text="${#temporals.format(comment_level2.dateTime,'yyyy-MM-dd HH:mm:ss')}" style="float: left;font-size:8px;" >2020-08-30 13:25:16</time>
                                             <span style="line-height: 8px;"><br></span>
-                                            <div class="post_comment" th:utext="${comment_level2.content}" style="line-height: 25px;font-size: 12px;color: black;padding-top: 5px;">
+                                            <div class="post_comment comment-content" th:utext="${comment_level2.content}">
                                                 comment_content
                                             </div>
                                             <br>
@@ -391,14 +412,14 @@
                                         <form>
                                             <div class="card-header align-items-center" style="border:none; background-color: white;">
                                                 <img src="https://cf-fpi.everytime.kr/0.png" class="picture large" style="margin-right: 15px;width: 40px;float: left;height: 40px;">
-                                                <span style="float: left;font-size: 10px;padding-top: 5px;" th:text="${comment_level3.writer}">익명</span>
+                                                <span class="comment-writer" th:text="${comment_level3.writer}">익명</span>
                                                 <ul th:if="${comment_level3.writer == session.loginId}" class="status" style="list-style: none;float: right;margin-bottom: 0px;font-size: 10px;">
-                                                    <li style="margin-right: 15px;float: left;">
+                                                    <li class="comment-subButton">
                                                         <a class="myButton" href="#" data-toggle="modal" th:data-target="${'#editCommentModal'+comment_level3.id}">
                                                             <span>수정</span>
                                                         </a>
                                                     </li>
-                                                    <li style="margin-right: 15px;float: left;">
+                                                    <li class="comment-subButton">
                                                         <a class="myButton" href="#" data-toggle="modal" th:data-target="${'#deleteCommentModal'+comment_level3.id}">
                                                             <span>삭제</span>
                                                         </a>
@@ -428,7 +449,7 @@
                                                 <span><br></span>
                                                 <time th:text="${#temporals.format(comment_level3.dateTime,'yyyy-MM-dd HH:mm:ss')}" style="float: left;font-size:8px;" >2020-08-30 13:25:16</time>
                                                 <span style="line-height: 8px;"><br></span>
-                                                <div class="post_comment" th:utext="${comment_level3.content}" style="line-height: 25px;font-size: 12px;color: black;padding-top: 5px;">
+                                                <div class="post_comment comment-content" th:utext="${comment_level3.content}">
                                                     comment_content
                                                 </div>
                                                 <br>

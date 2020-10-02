@@ -31,6 +31,7 @@ public class Comment {
 
     private String writer;
 
+    @Lob
     private String content;
 
     @ManyToOne(fetch=FetchType.LAZY)

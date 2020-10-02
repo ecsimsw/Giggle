@@ -25,7 +25,7 @@ import java.util.regex.Pattern;
 public class JoinValidator implements Validator {
 
     private static String[] disAllowed = new String[]{
-            "master", "administer", "kimjinhwan"
+            "master", "administer", "kimjinhwan", "null", "test"
     };
 
     @Override
@@ -45,13 +45,13 @@ public class JoinValidator implements Validator {
 
     private boolean validLoginId(String loginId, String loginPw){
 
-        for(String id : disAllowed){ if(loginId.equals(id)) return false; }
+        for(String id : disAllowed){ if(loginId.toLowerCase().equals(id)) return false; }
 
         Pattern pattern = Pattern.compile("[ !@#$%^&*(),.?\":{}|<>]");
 
         if(pattern.matcher(loginId).find() == true){ return false; }
 
-        if(loginId.length()<5 || loginId.length()>12){ return false; }
+        if(loginId.length()<3 || loginId.length()>12){ return false; }
 
         if(loginPw.length()<5 || loginPw.length()>12){ return false; }
 

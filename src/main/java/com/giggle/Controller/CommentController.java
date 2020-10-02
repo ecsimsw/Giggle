@@ -31,16 +31,6 @@ public class CommentController {
 
         checkAuthority.checkLogin(httpSession);
 
-        long supCommentId = Long.parseLong(createCommentForm.getCommentId());
-        Comment supComment = commentService.findById(supCommentId);
-
-        if(supComment == null) {
-            throw new RuntimeException("Super comment does not existent");
-        }
-        else if(!supComment.isLive()){
-            throw new RuntimeException("SuperComment is already dead");
-        }
-
         commentService.createComment(createCommentForm);
         long postId=  Long.parseLong(createCommentForm.getPostId());
 
