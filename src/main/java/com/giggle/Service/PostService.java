@@ -20,16 +20,18 @@ public class PostService {
     private final CategoryService categoryService;
 
     @Transactional
-    public long createPost(PostForm postForm){
+    public long createPost(PostForm postForm, Member writer){
         long categoryId = Long.parseLong(postForm.getCategoryId());
         Category category = categoryService.findById(categoryId);
 
         Post newPost = new Post();
         newPost.setCategory(category);
         newPost.setTitle(postForm.getTitle());
-        newPost.setWriter(postForm.getWriter());
         newPost.setContent(postForm.getContent().replace("\r\n", "<br>"));
         newPost.setViewCnt(0);
+
+        newPost.setWriter(writer.getLoginId());
+        newPost.setProfileImg(writer.getProfileImg());
 
         categoryService.updatePostCnt(categoryId, category.getPostCnt()+1);
         postRepository.save(newPost);

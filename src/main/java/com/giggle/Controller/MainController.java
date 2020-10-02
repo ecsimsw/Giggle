@@ -28,6 +28,7 @@ public class MainController {
     private final CategoryService categoryService;
     private final PostService postService;
     private final PageService pageService;
+    private final MemberService memberService;
 
     private final int newPostCntToPrint = 7; // mainPage에 포스트할 새로운 글의 개수를 지정한다.
     private final String nameId = "add_";  // edit/imgBoard 에서 사진 name 형식 : add_1 ~ add_n
@@ -37,11 +38,20 @@ public class MainController {
 
     @GetMapping("")
     public String mainPage(Model model, HttpSession session) throws JsonProcessingException {
+
+        // top bar
         String loginId = (String)session.getAttribute("loginId");
         model.addAttribute("loginId",loginId);
 
-        // sideBar
+        if(loginId != null){
+            Member member = memberService.getByLoginId(loginId);
+            model.addAttribute("profileImg", member.getProfileImg());
+        }
+        else{
+            model.addAttribute("profileImg", "stranger.png");
+        }
 
+        // sideBar
         List<MainCategory> mainCategoryList = categoryService.getAllMainCategory();
 
         model.addAttribute("mainCategoryList", mainCategoryList);

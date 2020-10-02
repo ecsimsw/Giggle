@@ -5,6 +5,7 @@ import com.giggle.Domain.Form.ActivityForm;
 import com.giggle.Domain.Form.PostForm;
 import com.giggle.Service.CategoryService;
 import com.giggle.Service.CommentService;
+import com.giggle.Service.MemberService;
 import com.giggle.Service.PostService;
 import com.giggle.Validator.CheckAuthority;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,7 @@ public class PostController {
     private final PostService postService;
     private final CommentService commentService;
     private final CategoryService categoryService;
+    private final MemberService memberService;
 
     @Autowired CheckAuthority checkAuthority;
 
@@ -45,12 +47,14 @@ public class PostController {
     }
 
     @PostMapping("/create")
-    public String createPost(PostForm postForm, Model model,
+    public String createPost(PostForm postForm,
                              HttpSession httpSession) {
 
-        checkAuthority.checkOwner(httpSession, postForm.getWriter());
+        String loginId = checkAuthority.checkLogin(httpSession);
 
-        postService.createPost(postForm);
+        Member member = memberService.getByLoginId(loginId);
+
+        postService.createPost(postForm, member);
 
         Long categoryId = Long.parseLong(postForm.getCategoryId());
         return "redirect:/post/board?category="+categoryId+"&page=1";
@@ -61,14 +65,17 @@ public class PostController {
                            @RequestParam(required = false) Integer postPage,
                            @RequestParam(required = false) Integer commentPage){
 
+        // top bar
+        String loginId = checkAuthority.checkLogin(httpSession);
+        model.addAttribute("loginId",loginId);
+
+        Member member = memberService.getByLoginId(loginId);
+        model.addAttribute("profileImg", member.getProfileImg());
+
         if(postPage == null){ postPage =1; }
         if(commentPage == null){ commentPage =1; }
-        String loginId = (String)httpSession.getAttribute("loginId");
-        if(loginId == null){
-            throw new RuntimeException("Wrong access, login session is null");
-        }
-        // side bar
 
+        // side bar
         List<MainCategory> mainCategoryList = categoryService.getAllMainCategory();
         model.addAttribute("mainCategoryList", mainCategoryList);
 
@@ -94,7 +101,19 @@ public class PostController {
     @GetMapping("/board")
     public String board(@RequestParam("category") Long categoryId,
                         @RequestParam(required = false) Integer page,
-                        Model model) {
+                        Model model, HttpSession session) {
+
+        // top bar
+        String loginId = (String)session.getAttribute("loginId");
+        model.addAttribute("loginId",loginId);
+
+        if(loginId != null){
+            Member member = memberService.getByLoginId(loginId);
+            model.addAttribute("profileImg", member.getProfileImg());
+        }
+        else{
+            model.addAttribute("profileImg", "stranger.png");
+        }
 
         if(page == null){ page =1; }
 
@@ -129,15 +148,26 @@ public class PostController {
     }
 
     @GetMapping("/read")
-    public String readPost(@RequestParam Long post, Model model){
+    public String readPost(@RequestParam Long post, Model model, HttpSession session){
+
+        // top bar
+
+        String loginId = (String)session.getAttribute("loginId");
+        model.addAttribute("loginId",loginId);
+
+        if(loginId != null){
+            Member member = memberService.getByLoginId(loginId);
+            model.addAttribute("profileImg", member.getProfileImg());
+        }
+        else{
+            model.addAttribute("profileImg", "stranger.png");
+        }
 
         // side bar
-
         List<MainCategory> mainCategoryList = categoryService.getAllMainCategory();
         model.addAttribute("mainCategoryList", mainCategoryList);
 
         // post
-
         Post postToRead = postService.readPost(post);
         model.addAttribute("post", postToRead);
 

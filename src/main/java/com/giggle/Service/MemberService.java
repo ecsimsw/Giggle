@@ -10,26 +10,64 @@ import com.giggle.Validator.Message.EjoinMessage;
 import com.giggle.Validator.Message.EloginMessage;
 import com.giggle.Repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.awt.desktop.AboutEvent;
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
+@Slf4j
 public class MemberService {
 
     private final MemberRepository memberRepository;
 
+    @Autowired private final JavaMailSender javaMailSender;
 
-    @Autowired private JavaMailSender javaMailSender;
+    @Transactional
+    @Async
+    public void addProfileImg(MultipartFile multipartFile, String resourceSrc, long id) throws IOException {
+        Member member = memberRepository.findById(id);
+        String beforeFileName = member.getProfileImg();
+
+        String sourceFileName = multipartFile.getOriginalFilename();
+
+        //https://stackoverflow.com/questions/12067697/convert-current-date-to-integer
+        // 현재 날짜, 시간을 기준으로 구별값 첨부 -> 중복 방지
+        int dateTimeInteger = (int) (new Date().getTime()/1000);
+
+        String fileName = dateTimeInteger+sourceFileName;
+        String filePath = resourceSrc +"/"+ fileName;
+        File destFile = new File(filePath);
+
+        multipartFile.transferTo(destFile);
+
+        // 이전 사진 파일 삭제
+        if(!beforeFileName.equals("default.png")){
+            filePath = resourceSrc +"/"+ beforeFileName;
+            File deleteFile = new File(filePath);
+            if(deleteFile.exists()) { deleteFile.delete(); }
+        }
+
+        member.setProfileImg(fileName);
+    }
+
+    public List getAllProfile(){
+        return memberRepository.findAllProfile();
+    }
 
     public Member getById(long id){
         return memberRepository.findById(id);
@@ -63,6 +101,7 @@ public class MemberService {
         member.setName(joinForm.getName());
         member.setMemberType(MemberType.member);
         member.setEmail(joinForm.getEmail());
+        member.setProfileImg("/static/profile/default.png");
         memberRepository.save(member);
 
         Email tempMail = memberRepository.findEmailByAddress(member.getEmail());
@@ -70,7 +109,6 @@ public class MemberService {
 
         return EjoinMessage.success;
     }
-
 
     public Member getByLoginId(String loginId){
         Member member = memberRepository.findByLoginId(loginId);
@@ -156,12 +194,8 @@ public class MemberService {
     public boolean verifyEmail(String address, String enteredKey){
         Email email = memberRepository.findEmailByAddress(address);
         String realKey = email.getKey();
-        if(realKey.equals(enteredKey)){
-            return true;
-        }
-        else{
-            return false;
-        }
+        if(realKey.equals(enteredKey)){ return true; }
+        else{ return false; }
     }
 
     @Transactional

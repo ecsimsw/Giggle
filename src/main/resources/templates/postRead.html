@@ -65,6 +65,10 @@
         .post-writer{
                 font-size:15px;padding-top:2px;
         }
+
+        .profileImg{
+            border-radius: 15%!important;
+        }
     </style>
 </head>
 
@@ -91,7 +95,7 @@
                     <div class="col-lg-12">
                         <div class="card shadow" style="border:1px solid lightgray;">
                             <div class="card-header align-items-center " style="padding-top: 14px;padding-bottom: 4px;">
-                                <img src="https://cf-fpi.everytime.kr/0.png" class="picture large" style="margin-right: 15px; width: 40px; float: left; height: 40px;">
+                                <img th:src="${'/static/profile/'+post.profileImg}" clpicture large" style="margin-right: 15px; width: 40px; float: left; height: 40px;">
                                 <span class="post-writer" th:text="${post.writer}"></span>
 
                                 <!-- writer status -->
@@ -170,7 +174,6 @@
                                                             <span aria-hidden="true">×</span>
                                                         </button>
                                                     </div>
-                                                    <input hidden name="writer" th:value="${session.loginId}">
                                                     <input hidden name="postId" th:value="${post.id}">
                                                     <textarea class="form-container" name="content" placeholder="Comment..."
                                                               style="width: 100%; border: 0.5px solid lightgray;margin-top: 0px;margin-bottom: 0px;padding-left: 8px;padding-right: 8px;padding-top: 8px;" rows="15"></textarea>
@@ -196,7 +199,7 @@
                             <div class="card ">
                                 <form>
                                     <div class="card-header align-items-center" style="background-color: white; border:none;">
-                                        <img src="https://cf-fpi.everytime.kr/0.png" class="picture large" style="margin-right: 15px;width: 40px;float: left;height: 40px;">
+                                        <img th:src="${'/static/profile/'+comment_level1.profileImg}" class="propicture large" style="margin-right: 15px;width: 40px;float: left;height: 40px;">
                                         <span class="comment-writer" th:text="${comment_level1.writer}">익명</span>
                                         <ul th:if="${comment_level1.writer == session.loginId}" class="status" style="list-style: none;float: right;margin-bottom: 0px;font-size: 10px;">
                                             <li class="comment-subButton">
@@ -256,7 +259,6 @@
                                                             <span aria-hidden="true">×</span>
                                                         </button>
                                                     </div>
-                                                    <input hidden name="writer" th:value="${session.loginId}">
                                                     <input hidden name="postId" th:value="${post.id}">
                                                     <input hidden name="commentId" th:value="${comment_level1.id}">
                                                     <textarea class="form-container" name="content" placeholder="Comment..." style="width: 100%; border: 0.5px solid lightgray;margin-top: 0px;margin-bottom: 0px;padding-left: 8px;padding-right: 8px;padding-top: 8px;" rows="15"></textarea>
@@ -304,9 +306,9 @@
                                 <div class="card ">
                                     <form>
                                         <div class="card-header align-items-center" style="border:none; background-color: white;">
-                                            <img src="https://cf-fpi.everytime.kr/0.png" class="picture large" style="margin-right: 15px;width: 40px;float: left;height: 40px;">
+                                            <img th:src="${'/static/profile/'+comment_level2.profileImg}" class="profileImg picture large" style="margin-right: 15px;width: 40px;float: left;height: 40px;">
                                             <span class="comment-writer" th:text="${comment_level2.writer}">익명</span>
-                                            <ul th:if="${comment_level2.writer == session.loginId}" class="status" style="list-style: none;float: right;margin-bottom: 0px;font-size: 10px;">
+                                            <ul th:if="${comment_level2.writer == session.loginId}" class="status" style="list-style: none;float: right;margin-bottom: 0px;font-size: 13px;">
                                                 <li class="comment-subButton">
                                                     <a class="myButton" href="#" data-toggle="modal" th:data-target="${'#editCommentModal'+comment_level2.id}">
                                                         <span>수정</span>
@@ -362,7 +364,6 @@
                                                                 <span aria-hidden="true">×</span>
                                                             </button>
                                                         </div>
-                                                        <input hidden name="writer" th:value="${session.loginId}">
                                                         <input hidden name="postId" th:value="${post.id}">
                                                         <input hidden name="commentId" th:value="${comment_level2.id}">
                                                         <textarea class="form-container" name="content" placeholder="Comment..." style="width: 100%; border: 0.5px solid lightgray;margin-top: 0px;margin-bottom: 0px;padding-left: 8px;padding-right: 8px;padding-top: 8px;" rows="15"></textarea>
@@ -411,7 +412,7 @@
                                     <div class="card ">
                                         <form>
                                             <div class="card-header align-items-center" style="border:none; background-color: white;">
-                                                <img src="https://cf-fpi.everytime.kr/0.png" class="picture large" style="margin-right: 15px;width: 40px;float: left;height: 40px;">
+                                                <img th:src="${'/static/profile/'+comment_level3.profileImg}" class="profileImg picture large" style="margin-right: 15px;width: 40px;float: left;height: 40px;">
                                                 <span class="comment-writer" th:text="${comment_level3.writer}">익명</span>
                                                 <ul th:if="${comment_level3.writer == session.loginId}" class="status" style="list-style: none;float: right;margin-bottom: 0px;font-size: 10px;">
                                                     <li class="comment-subButton">

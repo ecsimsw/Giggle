@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -83,5 +84,17 @@ public class MemberRepository {
 
     public Email findEmailById(long id){
         return em.find(Email.class, id);
+    }
+
+    public List findAllProfile(){
+        List<Member> members= em.createQuery("select m from Member m", Member.class)
+                .getResultList();
+
+        List<String> stringList = new ArrayList<>();
+        for(Member m : members){
+            stringList.add(m.getProfileImg());
+        }
+
+        return stringList;
     }
 }

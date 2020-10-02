@@ -155,7 +155,7 @@
                 <li class="nav-item dropdown no-arrow">
                     <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <span class="mr-2 d-none d-lg-inline text-gray-600 small" th:text="${loginId}">Test</span>
-                        <img class="img-profile rounded-circle" src="/static/file/loginProfile.png">
+                        <img class="img-profile rounded-circle" th:src="${'/static/profile/'+profileImg}">
                     </a>
 
                     <!-- Dropdown - User Information -->
@@ -180,7 +180,7 @@
                 <li class="nav-item dropdown no-arrow">
                     <a class="nav-link dropdown-toggle" th:href="@{/member/login}" id="userDropdown" role="button" >
                         <span class="mr-2 d-none d-lg-inline text-gray-600 small">login</span>
-                        <img class="img-profile rounded-circle" src="/static/file/logoutProfile.png">
+                        <img class="img-profile rounded-circle" th:src="${'/static/profile/'+profileImg}">
                     </a>
                 </li>
             </div>

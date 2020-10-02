@@ -18,7 +18,6 @@ public class PageRepository {
 
     private final EntityManager em;
 
-
     // edit main board img
 
     public void createMainBoardImg(String fileName){
@@ -40,7 +39,6 @@ public class PageRepository {
     public void deleteMainBoardImg(MainBoardImg mainBoardImg){
         em.remove(mainBoardImg);
     }
-
 
     /// edit shortCut
 
@@ -64,7 +62,6 @@ public class PageRepository {
     public void deleteShortCut(ShortCut shortCut){
         em.remove(shortCut);
     }
-
 
     // edit dashBoard
     public DashBoard findDashBoardById(long id){return em.find(DashBoard.class, id);}

@@ -21,10 +21,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 import java.util.Properties;
 
@@ -166,9 +169,21 @@ public class MemberController {
 
         Member member = memberService.getByLoginId(loginId);
         model.addAttribute("member", member);
-        return "setMember";
+        return "userSetting";
     }
 
+    @PostMapping("/setting/profileImg")
+    public String updateProfileImg(long id, HttpServletRequest httpServletRequest, MultipartFile profileImg) throws IOException {
+        String basePath = httpServletRequest.getServletContext().getRealPath("/profile");
+
+        String fileName = profileImg.getOriginalFilename();
+        if(fileName.equals("stranger.png") || fileName.equals("default.png")) {
+            throw new RuntimeException("Invalid file name");
+        }
+
+        memberService.addProfileImg(profileImg,basePath,id);
+        return "redirect:/member/setting";
+    }
     @PostMapping("/setting/memberInfo")
     public String settingMemberInfo(MemberInfo memberInfo, Model model,  HttpSession session){
 
@@ -176,13 +191,29 @@ public class MemberController {
 
         long id = memberService.getByLoginId(loginId).getId();
 
-        if(memberService.getByName(memberInfo.getName()) != null){
+        if(memberService.getByName(memberInfo.getName()) == null){
             memberService.updateMemberInfo(id, memberInfo);
         }
         else{
             model.addAttribute("message", "Entered name is already used");
         }
         return "redirect:/member/setting";
+    }
+
+    @PostMapping("/manage/update")
+    public String manageUpdate(MemberInfo memberInfo, HttpSession httpSession) throws JsonProcessingException {
+
+        String authority = checkAuthority.checkAuthority(httpSession);
+
+        if(!authority.equals("master")){ throw new RuntimeException("You do not have access rights."); }
+
+        if(memberInfo.getId() != null){
+            long id = Long.parseLong(memberInfo.getId());
+            memberService.updateMemberInfo(id, memberInfo);
+        }
+        else{ throw new RuntimeException("no-id existence"); }
+
+        return "redirect:/member/manage/setting";
     }
 
     @PostMapping("/manage/search")
@@ -217,22 +248,6 @@ public class MemberController {
         model.addAttribute("memberList", memberList);
 
         return "userManagement";
-    }
-
-    @PostMapping("/manage/update")
-    public String manageUpdate(MemberInfo memberInfo, HttpSession httpSession) throws JsonProcessingException {
-
-        String authority = checkAuthority.checkAuthority(httpSession);
-
-        if(!authority.equals("master")){ throw new RuntimeException("You do not have access rights."); }
-
-        if(memberInfo.getId() != null){
-            long id = Long.parseLong(memberInfo.getId());
-            memberService.updateMemberInfo(id, memberInfo);
-        }
-        else{ throw new RuntimeException("no-id existence"); }
-
-        return "redirect:/member/manage/setting";
     }
 
     @GetMapping("/manage/delete")

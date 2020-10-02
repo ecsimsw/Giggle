@@ -121,7 +121,6 @@
         <div class="middleMenuName">사진 추가</div>
 
         <form class="form text-left" action="/main/edit/dashBoard/imgBoard/add" method="post" enctype="multipart/form-data">
-
             <div id="addedFormDiv"></div><BR> <!-- 폼을 삽입할 DIV -->
 
             <input type="Button" value="추가" onclick="addForm()">
@@ -183,7 +182,7 @@
 
      var addedFormDiv = document.getElementById("addedFormDiv");
      var str = "";
-     str+="<br>추가 파일 :: <input type='file' name='add_"+count+"'>";
+     str+="<br>추가 파일 :: <input accept='image/*' type='file' name='add_"+count+"'>";
 
      // 추가할 폼(에 들어갈 HTML)
      var addedDiv = document.createElement("div"); // 폼 생성

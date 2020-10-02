@@ -23,6 +23,8 @@ public class Post{
 
     private String writer;
 
+    private String profileImg;
+
     private String title;
 
     @ManyToOne(fetch=FetchType.LAZY)

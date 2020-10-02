@@ -1,5 +1,6 @@
 package com.giggle.Service;
 
+import com.giggle.Domain.Entity.Member;
 import com.giggle.Domain.Entity.Post;
 import com.giggle.Domain.Form.ActivityForm;
 import com.giggle.Domain.Form.CreateCommentForm;
@@ -23,7 +24,7 @@ public class CommentService {
     private final PostService postService;
 
     @Transactional
-    public void createComment(CreateCommentForm createCommentForm){
+    public void createComment(CreateCommentForm createCommentForm, Member member){
         Comment newComment = new Comment();
         long postId = Long.parseLong(createCommentForm.getPostId());
         Post post = postService.findById(postId);
@@ -46,7 +47,10 @@ public class CommentService {
 
         newComment.setContent(createCommentForm.getContent());
         newComment.setPost(post);
-        newComment.setWriter(createCommentForm.getWriter());
+
+        newComment.setWriter(member.getLoginId());
+        newComment.setProfileImg(member.getProfileImg());
+
         newComment.setLive(true);
         commentRepository.save(newComment);
     }
@@ -74,7 +78,6 @@ public class CommentService {
         }
     }
 
-
     public Comment findById(long id){
         return commentRepository.findById(id);
     }
@@ -84,7 +87,6 @@ public class CommentService {
         Comment comment = commentRepository.findById(id);
         comment.setContent(content);
     }
-
 
     public ActivityForm getActivityComment(String owner, int page, int postForPage){
         List<Comment> commentList = commentRepository.getCommentByOwner(owner);

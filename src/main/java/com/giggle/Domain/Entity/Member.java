@@ -18,6 +18,8 @@ public class Member {
     private String name;
     private String email;
 
+    private String profileImg;
+
     @Enumerated(EnumType.STRING)
     private MemberType memberType;
 }
