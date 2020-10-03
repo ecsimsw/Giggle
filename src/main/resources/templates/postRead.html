@@ -69,6 +69,36 @@
         .profileImg{
             border-radius: 15%!important;
         }
+
+        .card-header{
+            padding-right: 0px;
+        }
+
+        .myButton{
+            cursor: pointer;
+        }
+
+        .commentBtn{
+            background-repeat: no-repeat;
+            background-position: left center;
+            background-size: 15px 15px;
+            height: 150px;
+            padding-left: 20px;
+            background-image: url(/static/icon/comment.png);
+            color: #0ca5af;
+            font-size: 15px;
+        }
+
+         .likeBtn{
+            background-repeat: no-repeat;
+            background-position: left center;
+            background-size: 15px 15px;
+            height: 150px;
+            padding-left: 22px;
+            background-image: url(/static/icon/like_no.png);
+            color: red;
+            font-size: 15px;
+        }
     </style>
 </head>
 
@@ -99,7 +129,7 @@
                                 <span class="post-writer" th:text="${post.writer}"></span>
 
                                 <!-- writer status -->
-                                <ul th:if="${post.writer == session.loginId || session.authority == 'master'}" class="status" style="list-style: none;float: right; padding-top: 10px; margin-bottom: 0px; font-size: 10px;">
+                                <ul th:if="${post.writer == session.loginId || session.authority == 'master'}" class="status" style="list-style: none;float: right; padding-top: 10px; margin-bottom: 0px; font-size: 14px;">
                                     <li style="margin-right: 15px; float: left;">
                                         <a class="myButton" th:href="'/post/edit?post='+${post.id}"><span>수정</span></a>
                                     </li>
@@ -135,6 +165,7 @@
                                 <a class="post_content_box" style="font-size:12px; padding-top:2px;">
                                     <br>
                                     <div class="article" style="padding-left: 15px; margin-right:15px; color:black;">
+                                        <input id="postId" hidden th:value="${post.id}">
                                         <div style="font-weight: 500; font-family:initial; font-size:20px;" th:text="${post.title}">스프링 질문이요</div>
                                         <br>
                                         <div class="post_content" th:utext="${post.content}" style="line-height: 25px; font-size:15px;">
@@ -143,16 +174,29 @@
                                     </div>
                                     <br>
                                     <ul class="status" style="list-style: none;">
+                                        <li th:if="${session.loginId != null}" title="댓글" class="comment" style="
+                                            float: right;
+                                            margin-right: 15px;
+                                            margin-bottom: 10px;
+                                        " >
+                                            <a class="myButton" href="#" data-toggle="modal" data-target="#inputCommentModal">
+                                                <span class="commentBtn" th:text="${post.commentList.size()}">
+                                                    0
+                                                </span>
+                                            </a>
+                                        </li>
+
                                         <li title="공감" class="vote" style="
                                             float: right;
                                             padding-right: 0px;
                                             margin-right: 15px;
-                                        "> like : 0</li>
-                                        <li title="댓글" class="comment" style="
-                                            float: right;
-                                            margin-right: 15px;
-                                            margin-bottom: 10px;
-                                        " th:text="${'comment : '+post.commentList.size()}"> comment : 0</li>
+                                        ">
+                                            <a class="myButton" onclick="like()">
+                                                <span id="likeCnt" class="likeBtn" th:text="${post.like.size()}">
+                                                    0
+                                                </span>
+                                            </a>
+                                        </li>
                                     </ul>
                                 </a>
                             </form>
@@ -506,4 +550,43 @@
 <div th:replace="/fragment/bottomScript :: bottomScript"> </div>
 
 </body>
+<script>
+     function like(){
+            var postId = document.getElementById("postId").value;
+            var like = document.getElementById("likeCnt");
+            var likeCnt = like.innerHTML;
+
+            var data = {
+                 postId : postId
+            }
+
+            $.ajax({
+                url: "/post/like",
+                type: "POST",
+                cache: false,
+                dataType: "json",
+                data: data,
+                success: function(data){
+                    if(data == 'no login'){
+                        alert('You have to login first');
+                    }
+                    else if(data == 'dislike'){
+                        like.innerHTML = parseInt(likeCnt)-1;
+                        like.style.backgroundImage = "url('/static/icon/like_no.png')";
+                    }
+                    else{
+                        like.innerHTML = parseInt(likeCnt)+1;
+                        like.style.backgroundImage = "url('/static/icon/like_ok.png')";
+                    }
+                },
+                error: function (request, status, error){
+                  var msg = "ERROR : " + request.status + "\n"
+                  msg +=  + "Content : " + request.responseText + "\n" + error;
+                  alert(msg);
+                  console.log(msg);
+                }
+            });
+        }
+
+</script>
 </html>

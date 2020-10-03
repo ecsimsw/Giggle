@@ -1,14 +1,14 @@
 package com.giggle.Controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.giggle.Domain.Entity.*;
 import com.giggle.Domain.Form.ActivityForm;
 import com.giggle.Domain.Form.PostForm;
-import com.giggle.Service.CategoryService;
-import com.giggle.Service.CommentService;
-import com.giggle.Service.MemberService;
-import com.giggle.Service.PostService;
+import com.giggle.Service.*;
 import com.giggle.Validator.CheckAuthority;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,14 +20,17 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/post")
+@Slf4j
 public class PostController {
 
     private final PostService postService;
     private final CommentService commentService;
     private final CategoryService categoryService;
     private final MemberService memberService;
+    private final LikeService likeService;
 
     @Autowired CheckAuthority checkAuthority;
+    @Autowired ObjectMapper objectMapper;
 
     private final int visiblePages = 10;
     private final int postForPage =15;
@@ -216,5 +219,28 @@ public class PostController {
 
         postService.deletePost(postId);
         return "redirect:/post/board?category="+categoryId+"&page="+page;
+    }
+
+
+    @PostMapping("/like")
+    @ResponseBody
+    public String likePost(long postId, HttpSession httpSession) throws JsonProcessingException {
+        String result;
+
+        String loginId = (String) httpSession.getAttribute("loginId");
+
+        if(loginId == null){
+            result = "no login";
+        }
+        else{
+            Member member = memberService.getByLoginId(loginId);
+            Post post = postService.findById(postId);
+
+            int r = likeService.likePost(post, member);
+            if(r == 1){ result = "like"; }
+            else{ result = "dislike"; }
+        }
+
+        return objectMapper.writeValueAsString(result);
     }
 }

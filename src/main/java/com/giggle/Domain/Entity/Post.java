@@ -10,7 +10,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter @Setter
@@ -45,4 +47,7 @@ public class Post{
 
     // Mapping LOB Data in Hibernate
     // https://www.baeldung.com/hibernate-lob
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    private Set<Like> like = new HashSet<>();
 }

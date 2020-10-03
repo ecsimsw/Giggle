@@ -3,6 +3,9 @@ package com.giggle.Domain.Entity;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.*;
 
 @Entity
@@ -22,4 +25,7 @@ public class Member {
 
     @Enumerated(EnumType.STRING)
     private MemberType memberType;
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private Set<Like> like = new HashSet<>();
 }
