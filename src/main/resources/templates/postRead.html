@@ -96,7 +96,7 @@
             height: 150px;
             padding-left: 22px;
             background-image: url(/static/icon/like_no.png);
-            color: red;
+            color: chocolate;
             font-size: 15px;
         }
     </style>
@@ -192,7 +192,7 @@
                                             margin-right: 15px;
                                         ">
                                             <a class="myButton" onclick="like()">
-                                                <span id="likeCnt" class="likeBtn" th:text="${post.like.size()}">
+                                                <span id="likeCnt" class="likeBtn" th:text="${post.likeCnt}">
                                                     0
                                                 </span>
                                             </a>

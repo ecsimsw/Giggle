@@ -33,6 +33,10 @@ public class Post{
     @JoinColumn(name="category_id")
     private Category category;
 
+
+    // Mapping LOB Data in Hibernate
+    // https://www.baeldung.com/hibernate-lob
+
     @Lob
     private String content;
 
@@ -43,10 +47,7 @@ public class Post{
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss")
     private LocalDateTime dateTime;
 
-    private int viewCnt;
-
-    // Mapping LOB Data in Hibernate
-    // https://www.baeldung.com/hibernate-lob
+    private int likeCnt;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private Set<Like> like = new HashSet<>();

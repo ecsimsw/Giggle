@@ -29,6 +29,7 @@ public class MainController {
     private final PostService postService;
     private final PageService pageService;
     private final MemberService memberService;
+    private final LikeService likeService;
 
     private final int newPostCntToPrint = 7; // mainPage에 포스트할 newPost 글의 개수를 지정한다.
     private final int limitAdditionImgCnt = 5;  // edit/imgBoard 에서 한번에 추가할 수 있는 사진 개수 제한
@@ -53,28 +54,33 @@ public class MainController {
 
         // sideBar
         List<MainCategory> mainCategoryList = categoryService.getAllMainCategory();
-
         model.addAttribute("mainCategoryList", mainCategoryList);
+
+
+        // newPosts, hotPosts
 
         int totalPostCnt = 0;   // 전체 글의 개수 표시를 위함
         for(MainCategory m : mainCategoryList) { totalPostCnt += m.getPostCnt(); }
+        model.addAttribute("totalPostCnt", totalPostCnt);
 
         List<Post> newPostList = postService.getNewPost(totalPostCnt, newPostCntToPrint);
-
-        model.addAttribute("totalPostCnt", totalPostCnt);
         model.addAttribute("newPostList", newPostList);
 
+        List<HotPost> hotPostList = likeService.getHotPostList();
+        model.addAttribute("hotPostList", hotPostList);
+
         // main image board
+
         List<String> mainBoardImgSrc = pageService.getMainBoardImgSrc("/static/mainBoardImg");
         model.addAttribute("mainBoardImgSrc",mainBoardImgSrc);
 
-
         // shortCut
+
         List<ShortCut> shortCutList = pageService.getAllShortCut();
         model.addAttribute("shortCutList", shortCutList);
 
-
         // dashBoard
+
         List<DashBoard> dashBoardList = pageService.getAllDashBoard();
 
         for(DashBoard dashBoard : dashBoardList){

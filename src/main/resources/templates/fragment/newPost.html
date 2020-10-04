@@ -12,12 +12,11 @@
                 <table class ="table table-hover table-striped">
                     <tbody>
                     <tr th:each="post : ${newPostList}">
-                        <td th:text ="${'#'+post.id}">1</td>
-                        <td>
+                        <td style="width:15%; color:dodgerblue;" th:text ="${'#'+post.id}">1</td>
+                        <td style="white-space:nowrap;">
                             <a th:href="${'/post/read?post='+post.id}" th:text="${post.title}">Title</a>
                         </td>
-                        <td th:text="${post.category.name}">study</td>
-                        <td th:text="${post.writer}">tester</td>
+                        <td style="white-space:nowrap; width:25%;" th:text="${post.category.name}">study</td>
                     </tr>
                     </tbody>
                 </table>

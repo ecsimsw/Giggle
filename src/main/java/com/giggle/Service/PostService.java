@@ -3,6 +3,7 @@ package com.giggle.Service;
 import com.giggle.Domain.Entity.*;
 import com.giggle.Domain.Form.ActivityForm;
 import com.giggle.Domain.Form.PostForm;
+import com.giggle.Repository.LikeRepository;
 import com.giggle.Repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,7 @@ public class PostService {
 
     private final PostRepository postRepository;
     private final CategoryService categoryService;
+    private final LikeRepository likeRepository;
 
     @Transactional
     public long createPost(PostForm postForm, Member writer){
@@ -28,7 +30,7 @@ public class PostService {
         newPost.setCategory(category);
         newPost.setTitle(postForm.getTitle());
         newPost.setContent(postForm.getContent().replace("\r\n", "<br>"));
-        newPost.setViewCnt(0);
+        newPost.setLikeCnt(0);
 
         newPost.setWriter(writer.getLoginId());
         newPost.setProfileImg(writer.getProfileImg());
@@ -68,7 +70,6 @@ public class PostService {
     }
 
     public ActivityForm getActivityPost(String owner, int page, int postForPage){
-
 
         List<Post> postList = postRepository.getPostByOwner(owner);
 

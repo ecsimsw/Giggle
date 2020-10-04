@@ -34,6 +34,7 @@ public class PostController {
 
     private final int visiblePages = 10;
     private final int postForPage =15;
+    private final int hotPostCnt = 7;
 
     @GetMapping("/create")
     public String createPost(@RequestParam("category") Long categoryId, Model model
@@ -236,9 +237,13 @@ public class PostController {
             Member member = memberService.getByLoginId(loginId);
             Post post = postService.findById(postId);
 
-            int r = likeService.likePost(post, member);
-            if(r == 1){ result = "like"; }
-            else{ result = "dislike"; }
+            int r = likeService.likePost(post, member, hotPostCnt);
+            if(r == 1){
+                result = "like";
+            }
+            else{
+                result = "dislike";
+            }
         }
 
         return objectMapper.writeValueAsString(result);
