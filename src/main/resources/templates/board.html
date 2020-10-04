@@ -81,7 +81,7 @@
                                                 <td style="width:55%;">
                                                     <a th:href="'/post/read?post='+${post.id}" th:text="${post.title}">Title</a>
                                                 </td>
-                                                <td style="width:15%;" th:text="${post.writer}">tester</td>
+                                                <td style="width:15%;" th:text="${post.writerName}">tester</td>
                                                 <td style="width:20%; white-space: nowrap;" th:text="${#temporals.format(post.dateTime,'yyyy-MM-dd HH:mm:ss')}">2020.08.21</td>
                                             </tr>
                                         </body>

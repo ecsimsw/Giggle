@@ -169,8 +169,8 @@
                                     </div>
                                     <div class="card-body short-board-body">
                                         <div class="post_content_short" th:utext="${dashBoardList.get(loopState.index+1).content}" style="line-height: 25px; font-size:15px;">content</div>
-                                        <a th:if="${dashBoard.type.name()}=='linkPost'" th:href="${'/post/read?post='+dashBoard.linkId}">See that post →</a>
-                                        <a th:if="${dashBoard.type.name()}=='latestPost'" th:href="${'/post/board?category='+dashBoard.linkId}">See that category →</a>
+                                        <a th:if="${dashBoardList.get(loopState.index+1).type.name()}=='linkPost'" th:href="${'/post/read?post='+dashBoardList.get(loopState.index+1).linkId}">See that post →</a>
+                                        <a th:if="${dashBoardList.get(loopState.index+1).type.name()}=='latestPost'" th:href="${'/post/board?category='+dashBoardList.get(loopState.index+1).linkId}">See that category →</a>
 
                                     </div>
                                 </div>
@@ -258,8 +258,8 @@
                                     </div>
                                     <div class="card-body short-board-body">
                                         <div class="post_content_short" th:utext="${dashBoardList.get(loopState.index+1).content}" style="line-height: 25px; font-size:15px;">content</div>
-                                        <a th:if="${dashBoard.type.name()}=='linkPost'" th:href="${'/post/read?post='+dashBoard.linkId}">See that post →</a>
-                                        <a th:if="${dashBoard.type.name()}=='latestPost'" th:href="${'/post/board?category='+dashBoard.linkId}">See that category →</a>
+                                        <a th:if="${dashBoardList.get(loopState.index+1).type.name()}=='linkPost'" th:href="${'/post/read?post='+dashBoardList.get(loopState.index+1).linkId}">See that post →</a>
+                                        <a th:if="${dashBoardList.get(loopState.index+1).type.name()}=='latestPost'" th:href="${'/post/board?category='+dashBoardList.get(loopState.index+1).linkId}">See that category →</a>
 
                                     </div>
                                 </div>

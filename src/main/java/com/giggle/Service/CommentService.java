@@ -48,6 +48,7 @@ public class CommentService {
         newComment.setContent(createCommentForm.getContent());
         newComment.setPost(post);
 
+        newComment.setWriter(member.getName());
         newComment.setWriter(member.getLoginId());
         newComment.setProfileImg(member.getProfileImg());
 

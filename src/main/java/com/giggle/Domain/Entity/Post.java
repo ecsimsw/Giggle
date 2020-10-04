@@ -25,6 +25,8 @@ public class Post{
 
     private String writer;
 
+    private String writerName;
+
     private String profileImg;
 
     private String title;
@@ -51,4 +53,7 @@ public class Post{
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private Set<Like> like = new HashSet<>();
+
+    @OneToOne
+    private HotPost hotPost;
 }

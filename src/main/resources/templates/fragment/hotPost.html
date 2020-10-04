@@ -20,7 +20,11 @@
                         <td style="white-space: nowrap;">
                             <a th:href="${'/post/read?post='+hotPost.post.id}" th:text="${hotPost.post.title}">Title</a>
                         </td>
-                        <td style="white-space: nowrap; width:25%;" th:text="${hotPost.post.category.name}">study</td>
+                        <td style="white-space: nowrap; width:20%;" th:text="${hotPost.post.writerName}">writer</td>
+                        <td style="width:15%;">
+                            <img class="img-profile rounded-circle" th:src="${'/static/profile/'+hotPost.post.profileImg}"
+                                 style="height: 28px;">
+                        </td>
                     </tr>
                     </tbody>
                 </table>

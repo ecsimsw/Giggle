@@ -32,6 +32,7 @@ public class PostService {
         newPost.setContent(postForm.getContent().replace("\r\n", "<br>"));
         newPost.setLikeCnt(0);
 
+        newPost.setWriterName(writer.getName());
         newPost.setWriter(writer.getLoginId());
         newPost.setProfileImg(writer.getProfileImg());
 
@@ -66,6 +67,16 @@ public class PostService {
         Post post = findById(id);
         Category category = post.getCategory();
         categoryService.updatePostCnt(category.getId(), category.getPostCnt()-1);
+
+        List<HotPost> hotPostList = likeRepository.getAllHotPost();
+
+        for(HotPost hotPost : hotPostList) {
+            if(hotPost.getPost().getId() == post.getId()){
+                likeRepository.delete(hotPost);
+                break;
+            }
+        }
+
         postRepository.remove(post);
     }
 

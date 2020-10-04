@@ -5,6 +5,7 @@ import com.giggle.Domain.Entity.Like;
 import com.giggle.Domain.Entity.Member;
 import com.giggle.Domain.Entity.Post;
 import com.giggle.Repository.LikeRepository;
+import com.giggle.Repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +21,7 @@ import java.util.List;
 public class LikeService {
 
     private final LikeRepository likeRepository;
+    private final PostRepository postRepository;
 
     public long checkDuplicate(Post post, Member member){
         for(Like like : post.getLike()){
@@ -77,6 +79,10 @@ public class LikeService {
             HotPost hotPost = new HotPost();
             hotPost.setPost(post);
             likeRepository.save(hotPost);
+
+            Post postTemp = postRepository.findById(post.getId());
+            postTemp.setHotPost(hotPost);
+
             return true;
         }
         else{
@@ -95,6 +101,9 @@ public class LikeService {
                     HotPost newHotPost = new HotPost();
                     newHotPost.setPost(post);
                     likeRepository.save(newHotPost);
+
+                    Post postTemp = postRepository.findById(post.getId());
+                    postTemp.setHotPost(hotPost);
 
                     return true;
                 }

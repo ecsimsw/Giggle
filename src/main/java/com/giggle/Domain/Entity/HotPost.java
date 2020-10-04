@@ -13,7 +13,7 @@ public class HotPost {
     @GeneratedValue
     private Long id;
 
-    @OneToOne
+    @OneToOne(mappedBy = "hotPost")
     @JoinColumn(name="post_id")
     private Post post;
 }

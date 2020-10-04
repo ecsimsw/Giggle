@@ -101,7 +101,7 @@ public class MemberService {
         member.setName(joinForm.getName());
         member.setMemberType(MemberType.member);
         member.setEmail(joinForm.getEmail());
-        member.setProfileImg("/static/profile/default.png");
+        member.setProfileImg("default.png");
         memberRepository.save(member);
 
         Email tempMail = memberRepository.findEmailByAddress(member.getEmail());

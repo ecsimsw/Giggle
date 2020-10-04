@@ -31,6 +31,8 @@ public class Comment {
 
     private String writer;
 
+    private String writerName;
+
     private String profileImg;
 
     @Lob
