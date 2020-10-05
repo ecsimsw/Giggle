@@ -54,6 +54,7 @@ public class Post{
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private Set<Like> like = new HashSet<>();
 
-    @OneToOne
+    @OneToOne(mappedBy = "post")
+    @JoinColumn(name="hot_post_id")
     private HotPost hotPost;
 }

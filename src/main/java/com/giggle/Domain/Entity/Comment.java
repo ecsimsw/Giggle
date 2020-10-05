@@ -11,8 +11,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
 @Getter @Setter
+@Entity
 @EntityListeners(AuditingEntityListener.class)
 public class Comment {
     @Id

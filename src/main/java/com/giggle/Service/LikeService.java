@@ -102,9 +102,6 @@ public class LikeService {
                     newHotPost.setPost(post);
                     likeRepository.save(newHotPost);
 
-                    Post postTemp = postRepository.findById(post.getId());
-                    postTemp.setHotPost(hotPost);
-
                     return true;
                 }
             }

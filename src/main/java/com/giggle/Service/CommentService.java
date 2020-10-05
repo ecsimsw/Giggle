@@ -114,8 +114,6 @@ public class CommentService {
             resultList.add(commentList.get(from+max-i-1));
         }
 
-
-
         ActivityForm resultTuple = new ActivityForm(resultList, totalCnt);
 
         return resultTuple;
