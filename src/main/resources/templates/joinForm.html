@@ -71,7 +71,27 @@
 </html>
 
 <script>
+        var checkDuplicatedId = false;
+        var checkDuplicatedName = false;
+        var checkSendEmail = false;
+
             function checkField(){
+                if(checkDuplicatedName == false){
+                    alert('이름 중복 확인이 필요합니다.')
+                    return false;
+                }
+
+                 if(checkDuplicatedId == false){
+                    alert('Id 중복 확인이 필요합니다.')
+                    return false;
+                }
+
+
+                if(checkSendEmail == false){
+                    alert('이메일 확인이 필요합니다.')
+                    return false;
+                }
+
                 if(idPatternCheck('id')== false){return false;}
 
                 if(memberNameCheck('name')== false){ return false;}
@@ -112,8 +132,8 @@
                 var patternChar = /[a-zA-Z]/;
                 var patternSpe = /[~!@#$%^&*()_+|<>?:{}]/;
 
-                if(!patternNum.test(pw) || !patternChar.test(pw) || !patternSpe.test(pw)) {
-                     pwText.innerHTML  = "비밀번호는 문자, 숫자, 특수문자를 모두 포함";
+                if(!patternNum.test(pw) || !patternChar.test(pw)){
+                     pwText.innerHTML  = "비밀번호는 문자, 숫자를 포함";
                      pwText.style.color = "red";
                     return false;
                 }
@@ -132,7 +152,7 @@
                 var member_email = document.getElementById("email").value;
 
                 if(!email_check(member_email)){
-                    alert('Check your email format');
+                    alert('이메일 형식을 확인하세요.');
                     return;
                 }
                 var data = {
@@ -147,6 +167,7 @@
                     data: data,
                     success: function(data){
                         if(data == 'success'){
+                            checkSendEmail = true;
                             alert('이메일 확인 후, 인증 번호를 기입해주시길 바랍니다.');
                         }
                         else{
@@ -178,10 +199,11 @@
                     data: data,
                     success: function(data){
                         if(data == 'ok'){
-                            alert('You can use this Id');
+                            checkDuplicatedId = true;
+                            alert('사용 가능한 Id 입니다.');
                         }
                         else{
-                            alert('This Id is already used');
+                            alert('이미 사용 중인 Id 입니다.');
                         }
                     },
                     error: function (request, status, error){
@@ -208,10 +230,11 @@
                     data: data,
                     success: function(data){
                         if(data == 'ok'){
-                            alert('You can use this name');
+                            checkDuplicatedName = true;
+                            alert('사용 가능한 이름 입니다.');
                         }
                         else{
-                            alert('This name is already used');
+                            alert('이미 사용 중인 사용자 이름입니다. ');
                         }
                     },
                     error: function (request, status, error){

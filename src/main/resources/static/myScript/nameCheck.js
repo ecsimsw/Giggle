@@ -128,10 +128,9 @@ function pwPatternCheck(pwId){
 
     var patternNum = /[0-9]/;
     var patternChar = /[a-zA-Z]/;
-    var patternSpe = /[~!@#$%^&*()_+|<>?:{}]/;
 
-    if(!patternNum.test(pw) || !patternChar.test(pw) || !patternSpe.test(pw)) {
-        alert("비밀번호는 문자, 숫자, 특수문자로 구성하여야 합니다.");
+    if(!patternNum.test(pw) || !patternChar.test(pw)) {
+        alert("비밀번호는 문자, 숫자로 구성하여야 합니다.");
         return false;
      }
 
