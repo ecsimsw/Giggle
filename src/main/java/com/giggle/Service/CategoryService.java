@@ -25,7 +25,6 @@ public class CategoryService {
     private final CategoryRepository categoryRepository;
     private final MiddleCategoryRepository middleCategoryRepository;
     private final MainCategoryRepository mainCategoryRepository;
-    private final PostRepository postRepository;
 
     /////// mainCategory Service
 
@@ -122,24 +121,6 @@ public class CategoryService {
 
             mainCategoryRepository.updatePostCnt(mainCategory.getId(), mainPostCnt);
         }
-    }
-
-    public List<Post> getPostsInCategory(Category category, int page, int postForPage){
-        int totalCnt = category.getPostCnt();
-
-        int from;
-        int max;
-
-        if((totalCnt-(page * postForPage))>=0){
-            from = totalCnt-(page * postForPage);
-            max = postForPage;
-        }
-        else{
-            from = 0;
-            max = totalCnt % postForPage;
-        }
-
-        return postRepository.postInCommunityCategory(category, from, max);
     }
 
     @Transactional

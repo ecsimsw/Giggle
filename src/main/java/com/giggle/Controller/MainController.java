@@ -29,7 +29,6 @@ public class MainController {
     private final PostService postService;
     private final PageService pageService;
     private final MemberService memberService;
-    private final LikeService likeService;
 
     private final int newPostCntToPrint = 7; // mainPage에 포스트할 newPost 글의 개수를 지정한다.
     private final int limitAdditionImgCnt = 5;  // edit/imgBoard 에서 한번에 추가할 수 있는 사진 개수 제한
@@ -38,7 +37,7 @@ public class MainController {
     @Autowired CheckAuthority checkAuthority;
 
     @GetMapping("")
-    public String mainPage(Model model, HttpSession session) throws JsonProcessingException {
+    public String mainPage(Model model, HttpSession session){
 
         // top bar
         String loginId = (String)session.getAttribute("loginId");
@@ -66,7 +65,7 @@ public class MainController {
         List<Post> newPostList = postService.getNewPost(totalPostCnt, newPostCntToPrint);
         model.addAttribute("newPostList", newPostList);
 
-        List<HotPost> hotPostList = likeService.getHotPostList();
+        List<HotPost> hotPostList = postService.getHotPostList();
         model.addAttribute("hotPostList", hotPostList);
 
         // main image board
@@ -89,7 +88,13 @@ public class MainController {
                 Category category = categoryService.findById(dashBoard.getLinkId());
                 if(category!=null){
                     List<Post> posts = category.getPosts();
-                    dashBoard.setContent(posts.get(posts.size()-1).getContent());
+
+                    if(posts.size()==0){
+                        dashBoard.setContent("no post");
+                    }
+                    else{
+                        dashBoard.setContent(posts.get(posts.size()-1).getContent());
+                    }
                 }
             }
 

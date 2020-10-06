@@ -94,7 +94,7 @@
                         <!-- pagination -->
                         <ul id="pagination-demo" class="pagination-sm"></ul>
                         <br>
-                        <div th:text="${'Total posts = '+totalPost}"></div>
+                        <div th:if="${session.authority== 'master' || session.authority=='admin'}" th:text="${'Ad) Total posts = '+totalPost}"></div>
                     </div>
                 </div>
             </div>

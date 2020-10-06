@@ -28,7 +28,7 @@ public class PageService {
             if(file != null) {
                 String sourceFileName = file.getOriginalFilename();
                 String sourceFileExtension = FilenameUtils.getExtension(sourceFileName).toLowerCase();
-                String fileName = sourceFileName + "." + sourceFileExtension;
+                String fileName = sourceFileName;
                 File destFile = new File(resourceSrc +"/"+ fileName);
                 file.transferTo(destFile);
                 pageRepository.createMainBoardImg(fileName);

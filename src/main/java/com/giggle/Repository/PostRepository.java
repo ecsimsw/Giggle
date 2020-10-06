@@ -23,11 +23,11 @@ public class PostRepository {
         }
     }
 
-    public List<Post> postInCommunityCategory(Category category, int from, int maxCnt){
+    public List<Post> postInCategory(Category category, int from, int postCnt){
         List<Post> selectedPosts = em.createQuery("select p from Post p where p.category =:category",Post.class)
                 .setParameter("category", category)
                 .setFirstResult(from)
-                .setMaxResults(maxCnt)
+                .setMaxResults(postCnt)
                 .getResultList();
 
         Collections.reverse(selectedPosts);

@@ -3,6 +3,7 @@ package com.giggle.Controller;
 import com.giggle.Domain.Form.CreateCommentForm;
 import com.giggle.Service.CommentService;
 import com.giggle.Service.MemberService;
+import com.giggle.Service.PostService;
 import com.giggle.Validator.CheckAuthority;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +25,7 @@ public class CommentController {
 
     private final CommentService commentService;
     private final MemberService memberService;
+    private final PostService postService;
 
     @Autowired CheckAuthority checkAuthority;
 
@@ -32,9 +34,10 @@ public class CommentController {
                                 HttpSession httpSession) {
 
         String loginId = checkAuthority.checkLogin(httpSession);
-        Member member = memberService.getByLoginId(loginId);
+        Member writer = memberService.getByLoginId(loginId);
 
-        commentService.createComment(createCommentForm,member);
+        Post post = postService.findById(Long.parseLong(createCommentForm.getPostId()));
+        commentService.createComment(createCommentForm,post,writer);
 
         long postId=  Long.parseLong(createCommentForm.getPostId());
 

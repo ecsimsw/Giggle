@@ -17,17 +17,13 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-@Slf4j
 public class CommentService {
 
     private final CommentRepository commentRepository;
-    private final PostService postService;
 
     @Transactional
-    public void createComment(CreateCommentForm createCommentForm, Member member){
+    public void createComment(CreateCommentForm createCommentForm, Post post, Member writer){
         Comment newComment = new Comment();
-        long postId = Long.parseLong(createCommentForm.getPostId());
-        Post post = postService.findById(postId);
 
         if(createCommentForm.getCommentId()== null){
             newComment.setLevel(1);
@@ -48,9 +44,9 @@ public class CommentService {
         newComment.setContent(createCommentForm.getContent());
         newComment.setPost(post);
 
-        newComment.setWriter(member.getName());
-        newComment.setWriter(member.getLoginId());
-        newComment.setProfileImg(member.getProfileImg());
+        newComment.setWriterName(writer.getName());
+        newComment.setWriter(writer.getLoginId());
+        newComment.setProfileImg(writer.getProfileImg());
 
         newComment.setLive(true);
         commentRepository.save(newComment);

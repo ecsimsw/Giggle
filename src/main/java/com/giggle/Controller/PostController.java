@@ -27,7 +27,6 @@ public class PostController {
     private final CommentService commentService;
     private final CategoryService categoryService;
     private final MemberService memberService;
-    private final LikeService likeService;
 
     @Autowired CheckAuthority checkAuthority;
     @Autowired ObjectMapper objectMapper;
@@ -144,7 +143,7 @@ public class PostController {
 
         model.addAttribute("postForPage", postForPage);
         model.addAttribute("category", category);
-        List<Post> postList = categoryService.getPostsInCategory(category, page, postForPage);
+        List<Post> postList = postService.getPostsInCategory(category, page, postForPage);
 
         model.addAttribute("postList", postList);
 
@@ -237,7 +236,7 @@ public class PostController {
             Member member = memberService.getByLoginId(loginId);
             Post post = postService.findById(postId);
 
-            int r = likeService.likePost(post, member, hotPostCnt);
+            int r = postService.likePost(post, member, hotPostCnt);
             if(r == 1){
                 result = "like";
             }
