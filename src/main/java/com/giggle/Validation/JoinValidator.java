@@ -36,7 +36,6 @@ public class JoinValidator implements Validator {
     public void validate(Object target, Errors errors) {
         JoinForm joinForm = (JoinForm)target;
 
-
         if(validLoginId(joinForm.getLoginId(), joinForm.getLoginPw()) == false){
             errors.rejectValue("loginId", "Disallowed joinForm");
         }
