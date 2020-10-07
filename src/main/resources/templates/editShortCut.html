@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <title>Giggle</title>
+    <link href="/static/SBadmin2/sb-admin-2.min.css" rel="stylesheet">
+    <link href="/static/style/formStyle.css" rel="stylesheet">
+
+
+    <script src="/static/myScript/nameCheck.js"></script>
+</head>
+
+<body class="text-center">
+<div class="container">
+    <br>
+    <h3 class="font-black">Giggle</h3>
+    <br>
+    <p class="font-black" th:if="${message} == null" >Edit short cut</p>
+    <p style="color:red" th:if="${message} != null"  th:text="${message}"></p>
+    <br>
+
+    <div class="middleMenuName">아이콘 추가</div>
+    <br>
+    <form class="form text-left" action="/main/edit/shortCut/add" method="post">
+        <select id="selectedCategory" class="form-control" name="selectedCategory">
+            <option value="none" selected disabled>Select Category</option>
+            <div th:each="mainCategory, index_main : ${mainCategoryList}">
+                <option style="font-size:18px; font-weight:500; color:black;" disabled th:text="${mainCategory.name}">mainCategory</option>
+
+                <div th:each="middleCategory,index_mid : ${mainCategory.middleCategoryList}">
+                    <option style="font-size:16px; color:black;" disabled th:utext="${'&amp;nbsp;&amp;nbsp;&amp;nbsp;'+middleCategory.name}">middleCategory</option>
+
+                    <div th:each="category, index_cat : ${middleCategory.categoryList}">
+                        <option style="font-size:14px; color: darkslategray;" th:value="${category.id}" th:utext="${'&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;'+category.name}">category</option>
+                    </div>
+                </div>
+                <option th:if="${index_main.count!=index_main.size}" disabled> </option>
+            </div>
+        </select>
+        <br>
+        <input id="description" type="text" class="form-control" required name="description" placeholder="Description">
+        <br>
+        <input id="color" type="text" class="form-control" required name="color" placeholder="Choose color">
+        <br>
+        <div class="middleMenuName">미리 보기</div>
+        <br>
+        <div id="exampleFormDiv">
+            <!-- Content Row -->
+            <div class="row">
+                <!-- Earnings (Monthly) Card Example -->
+                <div class="col-xl-3 col-md-6 mb-4" style="flex: 0 0 50%; max-width:50%;">
+                    <div id="shortCut_div" class="card shadow h-100 py-2" style="border-left: 0.25rem solid blue !important;">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div id="shortCut_desc" class="text-xs font-weight-bold text-uppercase mb-1" style="color:blue">Sample description</div>
+                                    <div id="shortCut_name" class="h5 mb-0 font-weight-bold text-gray-800">Sample</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">적용</button>
+    </form>
+    <br>
+    <div class="middleMenuName">아이콘 삭제</div>
+    <br>
+    <form th:if="${shortCutList.size()}!=0" class="form text-left" action="/main/edit/shortCut/delete" method="get">
+        <select name="shortCut" class="form-control" method="get" multiple>
+            <th:block th:each="shortCut : ${shortCutList}">
+                <option th:style="'color:'+@{${shortCut.color}}+';'"  th:value="${shortCut.id}"
+                        th:text="${shortCut.title}">shortCut_Name</option>
+            </th:block>
+        </select>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">적용</button>
+    </form>
+    <br>
+</div>
+<style>
+</style>
+
+<script type="text/javascript">
+    <!-- javascript change event -->
+    <!--  https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/change_event-->
+
+    <!-- javascript change css -->
+    <!--     https://www.w3schools.com/cssref/pr_border-left_color.asp-->
+
+   const selectForm = document.getElementById("selectedCategory");
+
+   selectForm.addEventListener('change', (event) => {
+      var selectedCategoryName = selectForm.options[selectForm.selectedIndex].text.trim();
+      document.getElementById("shortCut_name").innerHTML = selectedCategoryName;
+    });
+
+   const input_color = document.getElementById("color");
+   input_color.addEventListener('change', (event) => {
+     var shortCut_div = document.getElementById("shortCut_div");
+     shortCut_div.style.borderLeftColor = input_color.value;
+
+     var description_div = document.getElementById("shortCut_desc");
+     description_div.style.color = input_color.value;
+   });
+
+   const input_desc = document.getElementById("description");
+   input_desc.addEventListener('change', (event) => {
+      var description_div = document.getElementById("shortCut_desc");
+      description_div.innerHTML = input_desc.value;
+    });
+
+   document.addEventListener('keydown', function(event) {
+      if (event.keyCode === 13) {
+        event.preventDefault();
+      };
+    }, true);
+</script>
+
+<!-- BottomScript-->
+<div th:replace="/fragment/bottomScript :: bottomScript"> </div>
+
+</body>
+</html>

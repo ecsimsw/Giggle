@@ -6,7 +6,7 @@ import com.giggle.Domain.Entity.*;
 import com.giggle.Domain.Form.ActivityForm;
 import com.giggle.Domain.Form.PostForm;
 import com.giggle.Service.*;
-import com.giggle.Validator.CheckAuthority;
+import com.giggle.Validation.CheckAuthority;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,6 +1,5 @@
-package com.giggle.Validator;
+package com.giggle.Validation;
 
-import com.giggle.Domain.Entity.Member;
 import com.giggle.Domain.Form.JoinForm;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;

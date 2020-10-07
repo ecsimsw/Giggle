@@ -1,6 +1,5 @@
-package com.giggle.Validator;
+package com.giggle.Validation;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpSession;

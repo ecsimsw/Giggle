@@ -4,7 +4,7 @@ import com.giggle.Domain.Form.CreateCommentForm;
 import com.giggle.Service.CommentService;
 import com.giggle.Service.MemberService;
 import com.giggle.Service.PostService;
-import com.giggle.Validator.CheckAuthority;
+import com.giggle.Validation.CheckAuthority;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

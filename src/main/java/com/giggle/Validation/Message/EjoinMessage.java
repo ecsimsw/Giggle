@@ -1,4 +1,4 @@
-package com.giggle.Validator.Message;
+package com.giggle.Validation.Message;
 
 public enum EjoinMessage {
     success, loginIdDuplicate,nickNameDuplicate

@@ -6,17 +6,14 @@ import com.giggle.Domain.Entity.Member;
 import com.giggle.Domain.Form.JoinForm;
 import com.giggle.Domain.Form.LoginForm;
 import com.giggle.Domain.Form.MemberInfo;
-import com.giggle.Validator.CheckAuthority;
-import com.giggle.Validator.JoinValidator;
-import com.giggle.Validator.Message.EjoinMessage;
-import com.giggle.Validator.Message.EloginMessage;
+import com.giggle.Validation.CheckAuthority;
+import com.giggle.Validation.JoinValidator;
+import com.giggle.Validation.Message.EjoinMessage;
+import com.giggle.Validation.Message.EloginMessage;
 import com.giggle.Service.MemberService;
-import com.sun.mail.util.logging.MailHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -29,7 +26,6 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
-import java.util.Properties;
 
 @Controller
 @RequestMapping("/member")

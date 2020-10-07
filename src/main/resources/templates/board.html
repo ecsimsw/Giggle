@@ -92,7 +92,7 @@
 
                         <br><br>
                         <!-- pagination -->
-                        <ul id="pagination-demo" class="pagination-sm"></ul>
+                        <ul id="pagination-ul" class="pagination-sm"></ul>
                         <br>
                         <div th:if="${session.authority== 'master' || session.authority=='admin'}" th:text="${'Ad) Total posts = '+totalPost}"></div>
                     </div>
@@ -119,21 +119,21 @@
 
 <script th:inline="javascript">
 /*<![CDATA[*/
-        $('#pagination-demo').twbsPagination({
-            totalPages: /*[[${(totalPost-1)/postForPage+1}]]*/ 2,
-            visiblePages: /*[[${visiblePages}]]*/ 10,
-            initiateStartPageClick : false,
-            prev:null,
-            next:null,
-            startPage : [[${pageNow}]],
-            onPageClick: function (event, page) {
-                $('#page-content').text('Page ' + page);
+    $('#pagination-ul').twbsPagination({
+        totalPages: /*[[${(totalPost-1)/postForPage+1}]]*/ 2,
+        visiblePages: /*[[${visiblePages}]]*/ 10,
+        initiateStartPageClick : false,
+        prev:null,
+        next:null,
+        startPage : [[${pageNow}]],
+        onPageClick: function (event, page) {
+            $('#page-content').text('Page ' + page);
 
-                if(page!=null){
-                    location.href="/post/board?category="+[[${category.id}]]+"&page="+page;
-                 }
-            }
-        });
+            if(page!=null){
+                location.href="/post/board?category="+[[${category.id}]]+"&page="+page;
+             }
+        }
+    });
 /*]]>*/
 
     </script>
@@ -145,7 +145,7 @@
         width: 50px;
     }
 
-    #pagination-demo{
+    #pagination-ul{
         place-content:center;
     }
 

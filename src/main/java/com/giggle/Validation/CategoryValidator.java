@@ -1,12 +1,10 @@
-package com.giggle.Validator;
+package com.giggle.Validation;
 
 import com.giggle.Domain.Form.CreateCategoryForm;
-import com.giggle.Domain.Form.JoinForm;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
-import java.util.concurrent.Callable;
 import java.util.regex.Pattern;
 
 @Component

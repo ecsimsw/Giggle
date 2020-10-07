@@ -1,10 +1,8 @@
 package com.giggle.Controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.giggle.Domain.Entity.*;
 import com.giggle.Service.*;
-import com.giggle.Validator.CheckAuthority;
+import com.giggle.Validation.CheckAuthority;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -149,12 +147,12 @@ public class MainController {
 
     // ---- edit dashBoard
 
-    @GetMapping("/add/dashBoard")
+    @GetMapping("/edit/dashBoard/add")
     public String editDashBoard(){
         return "addDashBoard";
     }
 
-    @PostMapping("/add/dashBoard")
+    @PostMapping("/edit/dashBoard/add")
     public String editDashBoardAdd(@RequestParam DashBoardType type,
                                    @RequestParam String width,
                                    @RequestParam String height,
@@ -254,7 +252,7 @@ public class MainController {
     }
 
     // edit img board
-    @GetMapping("/edit/dashBoard/imgBoard/delete")
+    @GetMapping("/edit/dashBoard/imgBoard/deleteImg")
     public String editImgBoard(@RequestParam(value="imageFiles") long[] idArr, HttpServletRequest request){
 
         String resourceSrc = request.getServletContext().getRealPath("/mainBoardImg");
@@ -264,7 +262,7 @@ public class MainController {
         return "redirect:/main";
     }
 
-    @PostMapping("/edit/dashBoard/imgBoard/add")
+    @PostMapping("/edit/dashBoard/imgBoard/addImg")
     public String addImg(MultipartHttpServletRequest multipartHttpServletRequest,
                          HttpServletRequest request,
                          HttpSession httpSession) throws IOException {
