@@ -223,13 +223,35 @@ public class MemberController {
 
         if(loginId != null){
             Member member = memberService.getByLoginId(loginId);
-            if(member == null){result = null; }
-            else{result = objectMapper.writeValueAsString(member); }
+            if(member == null){
+                result = "none";
+                result = objectMapper.writeValueAsString(result);
+            }
+            else{
+                MemberInfo searchedMember = new MemberInfo();
+                searchedMember.setId(member.getId().toString());
+                searchedMember.setEmail(member.getEmail());
+                searchedMember.setName(member.getName());
+                searchedMember.setType(member.getMemberType().name());
+                searchedMember.setLoginId(member.getLoginId());
+                result = objectMapper.writeValueAsString(searchedMember);
+            }
         }
         else if(userName != null) {
             Member member = memberService.getByName(userName);
-            if(member == null){result = null; }
-            else{result = objectMapper.writeValueAsString(member); }
+            if(member == null){
+                result = "none";
+                result = objectMapper.writeValueAsString(result);
+            }
+            else{
+                MemberInfo searchedMember = new MemberInfo();
+                searchedMember.setId(member.getId().toString());
+                searchedMember.setEmail(member.getEmail());
+                searchedMember.setName(member.getName());
+                searchedMember.setType(member.getMemberType().name());
+                searchedMember.setLoginId(member.getLoginId());
+                result = objectMapper.writeValueAsString(searchedMember);
+            }
         }
         return result;
     }

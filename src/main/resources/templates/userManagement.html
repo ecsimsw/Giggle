@@ -183,14 +183,12 @@
       var member_id = document.getElementById("id");
       var member_loginId = document.getElementById("loginId");
       var member_name = document.getElementById("name");
-      var member_nickName = document.getElementById("nickName");
       var member_email = document.getElementById("email");
       var member_type = document.getElementById("type");
       var form={
         loginId : search_id,
         userName : search_name
       }
-
       $.ajax({
         url: "/member/manage/search",
         type: "POST",
@@ -198,11 +196,20 @@
         dataType: "json",
         data: form,
         success: function(data){
-            member_id.value = data.id;
-            member_loginId.value = data.loginId;
-            member_name.value = data.name;
-            member_name.email = data.email;
-            member_type.value = data.memberType;
+            if(data == 'none'){
+                alert(data);
+            }
+            else{
+                member_id.value = data.id;
+                member_loginId.value = data.loginId;
+                member_name.value = data.name;
+                member_name.email = data.email;
+                for (var i=0; i<member_type.options.length; i++) {
+                    if (member_type.options[i].value == data.type) {
+                        member_type.options[i].selected = true;
+                    }
+                }
+             }
         },
         error: function (request, status, error){
           var msg = "ERROR : " + request.status + "\n"
