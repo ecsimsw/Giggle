@@ -169,7 +169,7 @@
                                         <div style="font-weight: 500; font-family:initial; font-size:20px;" th:text="${post.title}">스프링 질문이요</div>
                                         <br>
                                         <br>
-                                        <div class="post_content" th:utext="${post.content}" style="line-height: 25px; font-size:15px;">
+                                        <div class="post_content" th:text="${post.content}" style="line-height: 25px; font-size:15px;">
                                             servlet이랑 jsp를 막 공부하고 온 학생입니다.
                                         </div>
                                     </div>
@@ -282,7 +282,7 @@
                                         <span><br></span>
                                         <time th:text="${#temporals.format(comment_level1.dateTime,'yyyy-MM-dd HH:mm:ss')}" style="float: left;font-size:8px;" >2020-08-30 13:25:16</time>
                                         <span style="line-height: 8px;"><br></span>
-                                        <div class="post_comment comment-content" th:utext="${comment_level1.content}">
+                                        <div class="post_comment comment-content" th:text="${comment_level1.content}">
                                             comment_content
                                         </div>
                                         <br>
@@ -388,7 +388,7 @@
                                             <span><br></span>
                                             <time th:text="${#temporals.format(comment_level2.dateTime,'yyyy-MM-dd HH:mm:ss')}" style="float: left;font-size:8px;" >2020-08-30 13:25:16</time>
                                             <span style="line-height: 8px;"><br></span>
-                                            <div class="post_comment comment-content" th:utext="${comment_level2.content}">
+                                            <div class="post_comment comment-content" th:text="${comment_level2.content}">
                                                 comment_content
                                             </div>
                                             <br>
@@ -495,7 +495,7 @@
                                                 <span><br></span>
                                                 <time th:text="${#temporals.format(comment_level3.dateTime,'yyyy-MM-dd HH:mm:ss')}" style="float: left;font-size:8px;" >2020-08-30 13:25:16</time>
                                                 <span style="line-height: 8px;"><br></span>
-                                                <div class="post_comment comment-content" th:utext="${comment_level3.content}">
+                                                <div class="post_comment comment-content" th:text="${comment_level3.content}">
                                                     comment_content
                                                 </div>
                                                 <br>

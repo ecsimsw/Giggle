@@ -66,10 +66,10 @@
                     <option style="font-size:18px; font-weight:500; color:black;" disabled th:text="${mainCategory.name}">mainCategory</option>
 
                     <div th:each="middleCategory,index_mid : ${mainCategory.middleCategoryList}">
-                        <option style="font-size:16px; color:black;" disabled th:utext="${'&amp;nbsp;&amp;nbsp;&amp;nbsp;'+middleCategory.name}">middleCategory</option>
+                        <option style="font-size:16px; color:black;" disabled th:text="${'&amp;nbsp;&amp;nbsp;&amp;nbsp;'+middleCategory.name}">middleCategory</option>
 
                         <div th:each="category, index_cat : ${middleCategory.categoryList}">
-                            <option style="font-size:14px; color: darkslategray;" th:value="${category.id}" th:utext="${'&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;'+category.name}">category</option>
+                            <option style="font-size:14px; color: darkslategray;" th:value="${category.id}" th:text="${'&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;'+category.name}">category</option>
                         </div>
                     </div>
                     <option th:if="${index_main.count!=index_main.size}" disabled> </option>
@@ -106,7 +106,7 @@
             <input id="name" name="title" class="form-control" type="text" th:value="${dashBoard.title}">
             <br>
             <label for="content">content</label>
-            <textarea id="content" name="content" class="form-control" th:utext="${dashBoard_content}"></textarea>
+            <textarea id="content" name="content" class="form-control" th:text="${dashBoard_content}"></textarea>
             <br>
             <button class="btn btn-lg btn-primary btn-block" type="submit">적용</button>
         </form>

@@ -52,7 +52,7 @@
         <input type="text" id="title" name="title" class="form-control"  th:value="${post.title}" style="margin-bottom : 16px;">
 
         <label for="content">content</label>
-        <textarea id="content" th:utext="${content}" name="content" class="form-control" placeholder="content.." rows="15" required=""></textarea>
+        <textarea id="content" th:text="${content}" name="content" class="form-control" placeholder="content.." rows="15" required=""></textarea>
         <br>
         <button class="btn btn-primary btn-lg btn-block" type="submit">Edit</button>
     </form>
