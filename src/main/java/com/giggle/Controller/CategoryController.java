@@ -1,12 +1,14 @@
 package com.giggle.Controller;
 
 import com.giggle.Domain.Entity.MainCategory;
+import com.giggle.Domain.Entity.MemberType;
 import com.giggle.Domain.Form.CreateCategoryForm;
 import com.giggle.Domain.Form.CreateMainCategoryForm;
 import com.giggle.Domain.Form.CreateMiddleCategoryForm;
 import com.giggle.Service.CategoryService;
 import com.giggle.Validation.CategoryValidator;
 import com.giggle.Validation.CheckAuthority;
+import com.giggle.Validation.Permission;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,35 +31,34 @@ public class CategoryController {
     @Autowired CategoryValidator categoryValidator;
     @Autowired CheckAuthority checkAuthority;
 
+    @Permission(authority = MemberType.admin)
     @GetMapping("/create/mainCategory")
     public String createMainCategory(){
         return "createMainCategory";
     }
 
+    @Permission(authority = MemberType.admin)
     @PostMapping("/create/mainCategory")
     public String createMainCategory(CreateMainCategoryForm createMainCategoryForm, HttpSession httpSession){
-        boolean isAdmin = checkAuthority.checkAdmin(httpSession);
-        if(!isAdmin) throw new RuntimeException("You do not have access rights.");
-
         categoryService.createMainCategory(createMainCategoryForm);
         return "redirect:/main";
     }
 
+    @Permission(authority = MemberType.admin)
     @GetMapping("/create/middleCategory")
     public String createMiddleCategory(@RequestParam Long mainCategory, Model model){
         model.addAttribute("mainCategoryId",mainCategory);
         return "createMiddleCategory";
     }
 
+    @Permission(authority = MemberType.admin)
     @PostMapping("/create/middleCategory")
     public String createMiddleCategory(CreateMiddleCategoryForm createMiddleCategoryForm, HttpSession httpSession){
-        boolean isAdmin = checkAuthority.checkAdmin(httpSession);
-        if(!isAdmin) throw new RuntimeException("You do not have access rights.");
-
         categoryService.createMiddleCategory(createMiddleCategoryForm);
         return "redirect:/main";
     }
 
+    @Permission(authority = MemberType.admin)
     @GetMapping("/create/category")
     public String createCategory(@RequestParam Long mainCategory, @RequestParam Long middleCategory, Model model){
 
@@ -66,13 +67,11 @@ public class CategoryController {
         return "createCategory";
     }
 
+    @Permission(authority = MemberType.admin)
     @PostMapping("/create/category")
     public String createCategory(@Valid CreateCategoryForm createCategoryForm,
                                  BindingResult bindingResult,
                                  HttpSession httpSession){
-
-        boolean isAdmin = checkAuthority.checkAdmin(httpSession);
-        if(!isAdmin) throw new RuntimeException("You do not have access rights.");
 
         categoryValidator.validate(createCategoryForm, bindingResult);
         if(bindingResult.hasErrors()){ throw new RuntimeException("Invalid categoryForm"); }
@@ -81,6 +80,7 @@ public class CategoryController {
         return "redirect:/main";
     }
 
+    @Permission(authority = MemberType.admin)
     @GetMapping("/delete")
     public String deleteMainCategory(Model model){
 
@@ -91,13 +91,10 @@ public class CategoryController {
         return "deleteCategory";
     }
 
+    @Permission(authority = MemberType.admin)
     @PostMapping("/delete")
     public String deleteMainCategory(@RequestParam String selectedCategory,
                                      HttpSession httpSession) {
-
-        boolean isAdmin = checkAuthority.checkAdmin(httpSession);
-        if(!isAdmin) throw new RuntimeException("You do not have access rights.");
-
         try {
             String[] typeId = selectedCategory.split("/");
             String type = typeId[0];

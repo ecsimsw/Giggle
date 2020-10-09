@@ -36,10 +36,7 @@ public class PostController {
     private final int hotPostCnt = 7;
 
     @GetMapping("/create")
-    public String createPost(@RequestParam("category") Long categoryId, Model model
-                            ,HttpSession httpSession){
-
-        checkAuthority.checkLogin(httpSession);
+    public String createPost(@RequestParam("category") Long categoryId, Model model){
 
         Category category = categoryService.findById(categoryId);
         MiddleCategory middleCategory = category.getMiddleCategory();
@@ -53,8 +50,7 @@ public class PostController {
     public String createPost(PostForm postForm,
                              HttpSession httpSession) {
 
-        String loginId = checkAuthority.checkLogin(httpSession);
-
+        String loginId = (String)httpSession.getAttribute("loginId");
         Member member = memberService.getByLoginId(loginId);
 
         postService.createPost(postForm, member);
@@ -69,7 +65,7 @@ public class PostController {
                            @RequestParam(required = false) Integer commentPage){
 
         // top bar
-        String loginId = checkAuthority.checkLogin(httpSession);
+        String loginId = (String)httpSession.getAttribute("loginId");
         model.addAttribute("loginId",loginId);
 
         Member member = memberService.getByLoginId(loginId);

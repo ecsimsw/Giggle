@@ -5,6 +5,7 @@ import com.giggle.Validation.PermissionInterceptor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.ListableBeanFactory;
 import org.springframework.beans.factory.ObjectProvider;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
 import org.springframework.boot.autoconfigure.web.ResourceProperties;
 import org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration;
@@ -21,8 +22,6 @@ import java.util.List;
 @Slf4j
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
-
-
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
 

@@ -112,7 +112,7 @@ public class MainController {
 
     // edit shortCut
 
-    @Permission(authority = MemberType.master)
+    @Permission(authority = MemberType.admin)
     @GetMapping("/edit/shortCut")
     public String editShortCut(Model model){
         List<ShortCut> shortCutList = pageService.getAllShortCut();
@@ -124,21 +124,18 @@ public class MainController {
         return "editshortCut";
     }
 
-
+    @Permission(authority = MemberType.admin)
     @PostMapping("/edit/shortCut/add")
     public String editShortCutAdd(@RequestParam("selectedCategory") long categoryId,
                                   @RequestParam String description,
-                                  @RequestParam String color,
-                                  HttpSession httpSession){
-        boolean isAdmin = checkAuthority.checkAdmin(httpSession);
-        if(!isAdmin) throw new RuntimeException("You do not have access rights.");
+                                  @RequestParam String color){
 
         Category category = categoryService.findById(categoryId);
         pageService.addShortCut(category, description, color);
         return "redirect:/main/edit/shortCut";
     }
 
-
+    @Permission(authority = MemberType.admin)
     @GetMapping("/edit/shortCut/delete")
     public String editShortCutDelete(@RequestParam(value="shortCut") long[] idArr)
     {
@@ -148,25 +145,23 @@ public class MainController {
 
 
     // ---- edit dashBoard
-
+    @Permission(authority = MemberType.admin)
     @GetMapping("/edit/dashBoard/add")
     public String editDashBoard(){
         return "addDashBoard";
     }
 
+    @Permission(authority = MemberType.admin)
     @PostMapping("/edit/dashBoard/add")
     public String editDashBoardAdd(@RequestParam DashBoardType type,
                                    @RequestParam String width,
-                                   @RequestParam String height,
-                                   HttpSession httpSession){
-        boolean isAdmin = checkAuthority.checkAdmin(httpSession);
-        if(!isAdmin) throw new RuntimeException("You do not have access rights.");
-
+                                   @RequestParam String height){
         long dashBoardId = pageService.addDashBoard(type, width, height);
 
         return "redirect:/main/edit/dashBoard?id="+dashBoardId;
     }
 
+    @Permission(authority = MemberType.admin)
     @GetMapping("/edit/dashBoard")
     public String editDashBoard(@RequestParam long id, Model model) {
         DashBoard dashBoard = pageService.findDashBoardById(id);
@@ -196,64 +191,55 @@ public class MainController {
         return "editDashBoard";
     }
 
+    @Permission(authority = MemberType.admin)
     @GetMapping("/edit/dashBoard/delete")
     public String editDashBoardDelete(@RequestParam long id) {
         pageService.deleteDashBoard(id);
         return "redirect:/main";
     }
 
+    @Permission(authority = MemberType.admin)
     @PostMapping("/edit/dashBoard/type")
     public String editDashBoardType(@RequestParam long id,
                                     @RequestParam DashBoardType type,
                                     @RequestParam String width,
-                                    @RequestParam String height,
-                                    HttpSession httpSession){
-        boolean isAdmin = checkAuthority.checkAdmin(httpSession);
-        if(!isAdmin) throw new RuntimeException("You do not have access rights.");
+                                    @RequestParam String height){
 
         pageService.editDashBoardType(id, type, width, height);
         return "redirect:/main";
     }
 
+    @Permission(authority = MemberType.admin)
     @PostMapping("/edit/dashBoard/freePost")
     public String editDashBoardFreePost(@RequestParam long id,
                                         @RequestParam String title,
-                                        @RequestParam String content,
-                                        HttpSession httpSession){
-
-        boolean isAdmin = checkAuthority.checkAdmin(httpSession);
-        if(!isAdmin) throw new RuntimeException("You do not have access rights.");
-
+                                        @RequestParam String content){
         pageService.editDashBoardFreePost(id, title, content);
         return "redirect:/main";
     }
 
+    @Permission(authority = MemberType.admin)
     @PostMapping("/edit/dashBoard/linkPost")
     public String editDashBoardLinkPost(@RequestParam long id,
                                         @RequestParam String title,
-                                        @RequestParam long linkId,
-                                        HttpSession httpSession){
-
-        boolean isAdmin = checkAuthority.checkAdmin(httpSession);
-        if(!isAdmin) throw new RuntimeException("You do not have access rights.");
+                                        @RequestParam long linkId){
 
         pageService.editDashBoardLinkPost(id, title, linkId);
         return "redirect:/main";
     }
 
+    @Permission(authority = MemberType.admin)
     @PostMapping("/edit/dashBoard/latestPost")
     public String editDashBoardLatestPost(@RequestParam long id,
                                           @RequestParam String title,
-                                          @RequestParam long linkId,
-                                          HttpSession httpSession){
-        boolean isAdmin = checkAuthority.checkAdmin(httpSession);
-        if(!isAdmin) throw new RuntimeException("You do not have access rights.");
+                                          @RequestParam long linkId){
 
         pageService.editDashBoardLatestPost(id, title, linkId);
         return "redirect:/main";
     }
 
     // edit img board
+    @Permission(authority = MemberType.admin)
     @GetMapping("/edit/dashBoard/imgBoard/deleteImg")
     public String editImgBoard(@RequestParam(value="imageFiles") long[] idArr, HttpServletRequest request){
 
@@ -264,13 +250,10 @@ public class MainController {
         return "redirect:/main";
     }
 
+    @Permission(authority = MemberType.admin)
     @PostMapping("/edit/dashBoard/imgBoard/addImg")
     public String addImg(MultipartHttpServletRequest multipartHttpServletRequest,
-                         HttpServletRequest request,
-                         HttpSession httpSession) throws IOException {
-
-        boolean isAdmin = checkAuthority.checkAdmin(httpSession);
-        if(!isAdmin) throw new RuntimeException("You do not have access rights.");
+                         HttpServletRequest request) throws IOException {
 
         String resourceSrc = request.getServletContext().getRealPath("/mainBoardImg");
 

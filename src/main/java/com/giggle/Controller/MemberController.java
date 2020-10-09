@@ -3,6 +3,7 @@ package com.giggle.Controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.giggle.Domain.Entity.Member;
+import com.giggle.Domain.Entity.MemberType;
 import com.giggle.Domain.Form.JoinForm;
 import com.giggle.Domain.Form.LoginForm;
 import com.giggle.Domain.Form.MemberInfo;
@@ -11,6 +12,7 @@ import com.giggle.Validation.JoinValidator;
 import com.giggle.Validation.Message.EjoinMessage;
 import com.giggle.Validation.Message.EloginMessage;
 import com.giggle.Service.MemberService;
+import com.giggle.Validation.Permission;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -201,6 +203,7 @@ public class MemberController {
         return "redirect:/member/setting";
     }
 
+    @Permission(authority = MemberType.master)
     @PostMapping("/manage/update")
     public String manageUpdate(MemberInfo memberInfo, HttpSession httpSession) throws JsonProcessingException {
 
@@ -273,6 +276,7 @@ public class MemberController {
         return "userManagement";
     }
 
+    @Permission(authority = MemberType.master)
     @GetMapping("/manage/delete")
     public String manageDelete(@RequestParam("id") String idStr, HttpSession httpSession) throws JsonProcessingException {
 
