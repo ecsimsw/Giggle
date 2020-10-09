@@ -28,6 +28,11 @@ public class LoginIntercepter implements HandlerInterceptor {
             return true;
         }
         else{
+            String destUri = request.getRequestURI();
+            String destQuery = request.getQueryString();
+            String dest = (destQuery == null) ? destUri : destUri+"?"+destQuery;
+            request.getSession().setAttribute("dest", dest);
+
             response.sendRedirect("/member/login");
             return false;
         }
@@ -35,9 +40,9 @@ public class LoginIntercepter implements HandlerInterceptor {
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+//
+//        String dest = (String)request.getSession().getAttribute("dest");
+//        response.sendRedirect("dest");
     }
 
-    @Override
-    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
-    }
 }

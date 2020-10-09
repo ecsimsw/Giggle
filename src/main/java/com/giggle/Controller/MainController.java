@@ -3,6 +3,7 @@ package com.giggle.Controller;
 import com.giggle.Domain.Entity.*;
 import com.giggle.Service.*;
 import com.giggle.Validation.CheckAuthority;
+import com.giggle.Validation.Permission;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -111,6 +112,7 @@ public class MainController {
 
     // edit shortCut
 
+    @Permission(authority = MemberType.master)
     @GetMapping("/edit/shortCut")
     public String editShortCut(Model model){
         List<ShortCut> shortCutList = pageService.getAllShortCut();

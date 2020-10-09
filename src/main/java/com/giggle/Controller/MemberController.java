@@ -50,11 +50,13 @@ public class MemberController {
         EloginMessage resultMessage = memberService.loginCheck(loginForm);
 
         if(resultMessage == EloginMessage.success){
-            redirectAttributes.addFlashAttribute("message", "login_success");
             Member loginMember = memberService.getByLoginId(loginForm.getLoginId());
             session.setAttribute("loginId", loginMember.getLoginId());
             session.setAttribute("authority", loginMember.getMemberType().name());
-            return "redirect:/main";
+
+            String dest = (String)session.getAttribute("dest");
+            String redirect = (dest == null) ? "/main" : dest;
+            return "redirect:"+redirect;
         }
         else if(resultMessage == EloginMessage.nonExistLoginId){
             redirectAttributes.addFlashAttribute("message", "non-existent users");
