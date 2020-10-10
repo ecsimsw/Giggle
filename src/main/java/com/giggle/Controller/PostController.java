@@ -32,7 +32,7 @@ public class PostController {
     @Autowired ObjectMapper objectMapper;
 
     private final int visiblePages = 10;
-    private final int postForPage =15;
+    private final int postForPage =12;
     private final int hotPostCnt = 7;
 
     @GetMapping("/create")

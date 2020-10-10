@@ -75,7 +75,7 @@
                                         <tr th:each="comment, numStatus : ${commentList}">
                                             <td th:text ="${'#'+comment.id}">#2154</td>
                                             <td>
-                                                <a th:href="'/post/read?post='+${comment.post.id}" th:text="${comment.content}">content</a>
+                                                <a th:href="'/post/read?post='+${comment.post.id}" th:utext="${comment.content.replace('<br>','')}">content</a>
                                             </td>
                                             <td th:text="${comment.writer}">tester</td>
                                             <td th:text="${#temporals.format(comment.dateTime,'yyyy-MM-dd HH:mm:ss')}">2020.08.21</td>

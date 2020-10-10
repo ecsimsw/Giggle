@@ -41,7 +41,7 @@ public class CommentService {
             supComment.getSubComment().add(newComment);
         }
 
-        newComment.setContent(createCommentForm.getContent());
+        newComment.setContent(createCommentForm.getContent().replace("\r\n", "<br>"));
         newComment.setPost(post);
 
         newComment.setWriterName(writer.getName());

@@ -13,14 +13,14 @@
                                class="btn dashBoard_edit" th:href="${'/main/edit/dashBoard?id='+dashBoard.id}">Edit</a>
                         </div>
                         <div th:if="${dashBoard.height}=='short'" class="card-body short-board-body">
-                            <div class="post_content_short" th:text="${dashBoard.content}" style="line-height: 25px; font-size:15px;">content</div>
+                            <div class="post_content_short" th:utext="${dashBoard.content}" style="line-height: 25px; font-size:15px;">content</div>
 
                             <a class="link_a" th:if="${dashBoard.type.name()}=='linkPost'" th:href="${'/post/read?post='+dashBoard.linkId}">See that post →</a>
                             <a class="link_a" th:if="${dashBoard.type.name()}=='latestPost'" th:href="${'/post/board?category='+dashBoard.linkId}">See that category →</a>
 
                         </div>
                         <div th:if="${dashBoard.height}=='long'" class="card-body long-board-body">
-                            <div class="post_content_long" th:text="${dashBoard.content}" style="line-height: 25px; font-size:15px;">content</div>
+                            <div class="post_content_long" th:utext="${dashBoard.content}" style="line-height: 25px; font-size:15px;">content</div>
                             <a class="link_a" th:if="${dashBoard.type.name()}=='linkPost'" th:href="${'/post/read?post='+dashBoard.linkId}">See that post →</a>
                             <a class="link_a" th:if="${dashBoard.type.name()}=='latestPost'" th:href="${'/post/board?category='+dashBoard.linkId}">See that category →</a>
 
@@ -92,7 +92,7 @@
                                    class="btn dashBoard_edit" th:href="${'/main/edit/dashBoard?id='+dashBoard.id}">Edit</a>
                             </div>
                             <div class="card-body  long-board-body">
-                                <div class="post_content_long" th:text="${dashBoard.content}" style="line-height: 25px; font-size:15px;">content</div>
+                                <div class="post_content_long" th:utext="${dashBoard.content}" style="line-height: 25px; font-size:15px;">content</div>
                                 <a class="link_a" th:if="${dashBoard.type.name()}=='linkPost'" th:href="${'/post/read?post='+dashBoard.linkId}">See that post →</a>
                                 <a class="link_a" th:if="${dashBoard.type.name()}=='latestPost'" th:href="${'/post/board?category='+dashBoard.linkId}">See that category →</a>
 
@@ -137,7 +137,7 @@
                                        class="btn dashBoard_edit" th:href="${'/main/edit/dashBoard?id='+dashBoard.id}">Edit</a>
                                 </div>
                                 <div class="card-body short-board-body">
-                                    <div class="post_content_short" th:text="${dashBoard.content}" style="line-height: 25px; font-size:15px;">content</div>
+                                    <div class="post_content_short" th:utext="${dashBoard.content}" style="line-height: 25px; font-size:15px;">content</div>
                                     <a class="link_a" th:if="${dashBoard.type.name()}=='linkPost'" th:href="${'/post/read?post='+dashBoard.linkId}">See that post →</a>
                                     <a class="link_a" th:if="${dashBoard.type.name()}=='latestPost'" th:href="${'/post/board?category='+dashBoard.linkId}">See that category →</a>
 
@@ -154,7 +154,7 @@
                                        class="btn dashBoard_edit" th:href="${'/main/edit/dashBoard?id='+dashBoard.id}">Edit</a>
                                 </div>
                                 <div class="card-body short-board-body">
-                                    <div class="post_content_short" th:text="${dashBoard.content}" style="line-height: 25px; font-size:15px;">content</div>
+                                    <div class="post_content_short" th:utext="${dashBoard.content}" style="line-height: 25px; font-size:15px;">content</div>
                                     <a class="link_a" th:if="${dashBoard.type.name()}=='linkPost'" th:href="${'/post/read?post='+dashBoard.linkId}">See that post →</a>
                                     <a class="link_a" th:if="${dashBoard.type.name()}=='latestPost'" th:href="${'/post/board?category='+dashBoard.linkId}">See that category →</a>
 
@@ -168,7 +168,7 @@
                                            class="btn dashBoard_edit" th:href="${'/main/edit/dashBoard?id='+dashBoardList.get(loopState.index+1).id}">Edit</a>
                                     </div>
                                     <div class="card-body short-board-body">
-                                        <div class="post_content_short" th:text="${dashBoardList.get(loopState.index+1).content}" style="line-height: 25px; font-size:15px;">content</div>
+                                        <div class="post_content_short" th:utext="${dashBoardList.get(loopState.index+1).content}" style="line-height: 25px; font-size:15px;">content</div>
                                         <a class="link_a" th:if="${dashBoardList.get(loopState.index+1).type.name()}=='linkPost'" th:href="${'/post/read?post='+dashBoardList.get(loopState.index+1).linkId}">See that post →</a>
                                         <a class="link_a" th:if="${dashBoardList.get(loopState.index+1).type.name()}=='latestPost'" th:href="${'/post/board?category='+dashBoardList.get(loopState.index+1).linkId}">See that category →</a>
 
@@ -257,7 +257,7 @@
                                            class="btn dashBoard_edit" th:href="${'/main/edit/dashBoard?id='+dashBoardList.get(loopState.index+1).id}">Edit</a>
                                     </div>
                                     <div class="card-body short-board-body">
-                                        <div class="post_content_short" th:text="${dashBoardList.get(loopState.index+1).content}" style="line-height: 25px; font-size:15px;">content</div>
+                                        <div class="post_content_short" th:utext="${dashBoardList.get(loopState.index+1).content}" style="line-height: 25px; font-size:15px;">content</div>
                                         <a class="link_a" th:if="${dashBoardList.get(loopState.index+1).type.name()}=='linkPost'" th:href="${'/post/read?post='+dashBoardList.get(loopState.index+1).linkId}">See that post →</a>
                                         <a class="link_a" th:if="${dashBoardList.get(loopState.index+1).type.name()}=='latestPost'" th:href="${'/post/board?category='+dashBoardList.get(loopState.index+1).linkId}">See that category →</a>
 

@@ -169,7 +169,7 @@
                                         <div style="font-weight: 500; font-family:initial; font-size:20px;" th:text="${post.title}">스프링 질문이요</div>
                                         <br>
                                         <br>
-                                        <div class="post_content" th:text="${post.content}" style="line-height: 25px; font-size:15px;">
+                                        <div class="post_content" th:utext="${post.content}" style="line-height: 25px; font-size:15px;">
                                             servlet이랑 jsp를 막 공부하고 온 학생입니다.
                                         </div>
                                     </div>
@@ -282,7 +282,7 @@
                                         <span><br></span>
                                         <time th:text="${#temporals.format(comment_level1.dateTime,'yyyy-MM-dd HH:mm:ss')}" style="float: left;font-size:8px;" >2020-08-30 13:25:16</time>
                                         <span style="line-height: 8px;"><br></span>
-                                        <div class="post_comment comment-content" th:text="${comment_level1.content}">
+                                        <div class="post_comment comment-content" th:utext="${comment_level1.content}">
                                             comment_content
                                         </div>
                                         <br>
@@ -299,7 +299,7 @@
                                             <div class="modal-content">
                                                 <form class="form" th:action="@{/comment/create}" method="post">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title" id="inputCommentLabel_level2" th:text="${'Comment : '+comment_level1.content}">Comment..</h5>
+                                                        <h5 class="modal-title" id="inputCommentLabel_level2" th:utext="${'Comment : '+comment_level1.content}">Comment..</h5>
                                                         <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                                                             <span aria-hidden="true">×</span>
                                                         </button>
@@ -329,7 +329,7 @@
                                                             <span aria-hidden="true">×</span>
                                                         </button>
                                                     </div>
-                                                    <textarea class="form-container" name="content" th:text="${comment_level1.content}" style="width: 100%; border: 0.5px solid lightgray;margin-top: 0px;margin-bottom: 0px;padding-left: 8px;padding-right: 8px;padding-top: 8px;" rows="15"></textarea>
+                                                    <textarea class="form-container" name="content" th:utext="${comment_level1.content}" style="width: 100%; border: 0.5px solid lightgray;margin-top: 0px;margin-bottom: 0px;padding-left: 8px;padding-right: 8px;padding-top: 8px;" rows="15"></textarea>
                                                     <div class="modal-footer">
                                                         <button class="btn btn-primary" type="submit" >Enter</button>
                                                         <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
@@ -388,7 +388,7 @@
                                             <span><br></span>
                                             <time th:text="${#temporals.format(comment_level2.dateTime,'yyyy-MM-dd HH:mm:ss')}" style="float: left;font-size:8px;" >2020-08-30 13:25:16</time>
                                             <span style="line-height: 8px;"><br></span>
-                                            <div class="post_comment comment-content" th:text="${comment_level2.content}">
+                                            <div class="post_comment comment-content" th:utext="${comment_level2.content}">
                                                 comment_content
                                             </div>
                                             <br>
@@ -404,7 +404,7 @@
                                                 <div class="modal-content">
                                                     <form class="form" th:action="@{/comment/create}" method="post">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title" id="inputCommentLabel_level3" th:text="${'Comment : '+comment_level2.content}">Comment..</h5>
+                                                            <h5 class="modal-title" id="inputCommentLabel_level3" th:utext="${'Comment : '+comment_level2.content}">Comment..</h5>
                                                             <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                                                                 <span aria-hidden="true">×</span>
                                                             </button>
@@ -434,7 +434,7 @@
                                                                 <span aria-hidden="true">×</span>
                                                             </button>
                                                         </div>
-                                                        <textarea class="form-container" name="content" th:text="${comment_level2.content}" style="width: 100%; border: 0.5px solid lightgray;margin-top: 0px;margin-bottom: 0px;padding-left: 8px;padding-right: 8px;padding-top: 8px;" rows="15"></textarea>
+                                                        <textarea class="form-container" name="content" th:utext="${comment_level2.content}" style="width: 100%; border: 0.5px solid lightgray;margin-top: 0px;margin-bottom: 0px;padding-left: 8px;padding-right: 8px;padding-top: 8px;" rows="15"></textarea>
                                                         <div class="modal-footer">
                                                             <button class="btn btn-primary" type="submit" >Enter</button>
                                                             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
@@ -495,7 +495,7 @@
                                                 <span><br></span>
                                                 <time th:text="${#temporals.format(comment_level3.dateTime,'yyyy-MM-dd HH:mm:ss')}" style="float: left;font-size:8px;" >2020-08-30 13:25:16</time>
                                                 <span style="line-height: 8px;"><br></span>
-                                                <div class="post_comment comment-content" th:text="${comment_level3.content}">
+                                                <div class="post_comment comment-content" th:utext="${comment_level3.content}">
                                                     comment_content
                                                 </div>
                                                 <br>
@@ -514,7 +514,7 @@
                                                                     <span aria-hidden="true">×</span>
                                                                 </button>
                                                             </div>
-                                                            <textarea class="form-container" name="content" th:text="${comment_level3.content}" style="width: 100%; border: 0.5px solid lightgray;margin-top: 0px;margin-bottom: 0px;padding-left: 8px;padding-right: 8px;padding-top: 8px;" rows="15"></textarea>
+                                                            <textarea class="form-container" name="content" th:utext="${comment_level3.content}" style="width: 100%; border: 0.5px solid lightgray;margin-top: 0px;margin-bottom: 0px;padding-left: 8px;padding-right: 8px;padding-top: 8px;" rows="15"></textarea>
                                                             <div class="modal-footer">
                                                                 <button class="btn btn-primary" type="submit" >Enter</button>
                                                                 <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
