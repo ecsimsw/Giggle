@@ -104,7 +104,7 @@
 
   포스트와 댓글은 1:N 양방향 매핑으로, 댓글, N차 대댓글은 자기 참조로 상위 댓글와, 하위 댓글 리스트를 갖도록 하여 계층을 만들어 구현했습니다.
 
-```
+```java
 @Entity
 public class Comment {
 
@@ -131,7 +131,7 @@ public class Comment {
 
   하위 댓글이 남아 있지 않은 경우, 상위 댓글이 같이 삭제되어야 하는지 확인하는 방식으로 삭제 처리를 구현하였습니다.
 
-```
+```java
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -186,7 +186,7 @@ public class CommentService {
 
   이런 N:N 매핑을 Like 엔티티를 추가하여 N:1 + 1:N 의 매핑으로 풀어 참조하도록 구현했습니다.
 
-```
+```java
 @Entity
 @Table(name = "POST_LIKE")
 public class Like {
@@ -210,7 +210,7 @@ public class Like {
 
   Post의 like는 1:N 매핑의 N+1 문제를 피하기 위해 Set을 사용하였습니다.
 
-```
+```java
 @Entity
 public class Post { // Member 동일
    
@@ -258,7 +258,7 @@ public class LoginIntercepter implements HandlerInterceptor {
 
   해당 요청의 멤버 권한 확인은 어노테이션으로 핸들러에 필요한 권한을 명시하여, 그 조건에 부합하는지 확인하는 식으로 처리하였습니다.
 
-```
+```java
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 public @interface Permission {
@@ -268,7 +268,7 @@ public @interface Permission {
 
   커스텀 어노테이션, Permission을 정의하고 authority로 미리 정의해둔 MemberType을 받아 필요한 멤버 타입을 표시할 수 있습니다.  
 
-```
+```java
 public class PermissionInterceptor implements HandlerInterceptor {
 
     @Override
@@ -292,7 +292,7 @@ public class PermissionInterceptor implements HandlerInterceptor {
 
   PermissionInterceptor를 정의하여, 요청을 처리할 handler에 붙은 Permission 어노테이션의 값을 얻고, 세션의 유저 정보와 일치하는지 확인하였습니다.
 
-```
+```java
 @Permission(authority = MemberType.admin)
 @GetMapping("/edit/dashBoard/delete")
 public String editDashBoardDelete(@RequestParam long id) {
@@ -327,7 +327,7 @@ _[Tstroy / ecsimsw / Spring Interceptor / 어노테이션, interceptor을 이용
 
   사용자가 메일 인증 버튼을 누르고, 바로 받아야하는 결과 안내 메시지가 실제로는 서버에서 메일 보내는 것을 다 처리한 이후에나 출력되어 혼동을 주기 때문에 이 문제를 멀티 스레딩으로 해결하고자 하였고, 스프링의 비동기 처리 방식을 공부하여 해결할 수 있었습니다.
 
-```
+```java
 @Transactional
 @Async
 public void sendAuthMail(String to) {
@@ -396,7 +396,7 @@ _[Tstroy / ecsimsw / Spring Interceptor / Google Smtp Server, @Async 비동기 �
 
   따라서 앞서 말한 방식이 단순히 게시물이 좋아요를 받았을 때 인기 게시물 리스트 안의 게시물과 좋아요 개수를 비교하는 것보다 좋은 성능을 기대할 수 없을 것이라는 결론를 내었습니다.
 
-```
+```java
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -435,7 +435,7 @@ public class PostService {
 
   HotPost와 Post는 1:1 양방향 관계로, hotPost를 관계의 주인으로 정하여 hotpost에 post를 대입하는 것이 객체 지향 관점에서 더 자연스러울 것이라고 생각했습니다.
 
-```
+```java
 @Entity
 public class Post{
  
@@ -486,7 +486,7 @@ public class HotPost {
 
   PostService에서는 Controller로부터 받은 현재 카테고리와 페이지, 한 페이지 안에 표시될 post의 개수로, db에서 가져올 데이터의 시작 인덱스와 개수를 결정합니다.
 
-```
+```java
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -521,7 +521,7 @@ public class PostService {
 
   PostRepository에서는 Service에서 넘긴 시작 인덱스와 데이터 개수를 기준으로, 전체 post 중 해당 category에 속한 post를 찾고, 그 중 인덱스 from부터, 페이지에 출력하는 postCnt 개수 이하의 데이터를 List에 담습니다.
 
-```
+```java
 public List<Post> postInCategory(Category category, int from, int postCnt){
     List<Post> selectedPosts =
             em.createQuery("select p from Post p where p.category =:category",Post.class)
@@ -537,7 +537,7 @@ public List<Post> postInCategory(Category category, int from, int postCnt){
 
   Controller에서 "/post/board" 요청에 대한 매핑으로, 현재 페이지, 전체 포스트의 개수, 표시할 페이지의 개수, 한 페이지 당 표시할 post의 개수, 해당 페이지에 표시할 페이지의 개수를 view로 넘깁니다. 
 
-```
+```java
 @Controller
 @RequestMapping("/post")
 @RequiredArgsConstructor
@@ -578,7 +578,7 @@ public class PostController {
 
   view의 스크립트로 JQuery - twbspagination 플러그인을 사용했습니다.
 
-```
+```javascript
 /*<![CDATA[*/
     $('#pagination-ul').twbsPagination({
         totalPages: /*[[${(totalPost-1)/postForPage+1}]]*/ 2,
@@ -610,7 +610,7 @@ public class PostController {
 
   개발자 커뮤니티에 의견을 묻고, 다른 사람들의 방식을 참고하여 사진 자체를 db에 저장하는 것 보다, 물리적으로 저장하고 db에는 상대 경로만을 저장하여 파일을 관리하는 방식으로 결정하였습니다.
 
-```
+```java
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
