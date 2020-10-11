@@ -316,9 +316,7 @@ public void sendAuthMail(String to) {
 
   특히 어떤 방식으로 이메일 주소와 키를 매핑하는 것이 효율적인지, 여러 사람이 한 메일 주소로 인증을 요청할 경우, 또는 메일 주소를 인증만 하고 회원 가입을 완료하지 않을 경우의 문제를 어떻게 해결할 지에 대한 고민을 풀어 보았습니다.
 
-_[Tstroy / ecsimsw / Spring Interceptor / Google Smtp Server, @Async 비동기 메일 인증]
-
-(https://ecsimsw.tistory.com/entry/Spring-Mail-Google-Smtp-server-Async)_
+_[Tstroy / ecsimsw / Spring Interceptor / Google Smtp Server, @Async 비동기 메일 인증](https://ecsimsw.tistory.com/entry/Spring-Mail-Google-Smtp-server-Async)_
 
 <br/>
 
@@ -588,7 +586,7 @@ public class MemberService {
 
 <br/>
 
-# 구현 기능 / 실행 화면
+# 실행 화면
 
 ### 메인 페이지
  
