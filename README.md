@@ -15,6 +15,8 @@
      - 트래픽, 데이터가 많은 경우를 가정하며 간단한 처리에도 보다 효율적인 로직을 찾고자 고민하였습니다.
 
   4. Giggle은 아이들이 깔깔 웃는다는 의미로, 'Geek을 위한 Giggle' 이라는 말 장난에서 지어진 커뮤니티 이름입니다.
+  
+<br/>
     
 # 개발환경 
 
@@ -28,15 +30,81 @@
 
   Thymeleaf / Javascript (Jquery, ajax)
 
-구현 기능 / 실행 화면
+<br/>
 
-### 상세 내용 / 코드 설명
+# 구현 기능 / 실행 화면
 
-#### 포스트와 댓글 / 일대다 양방향 매핑
+### 메인 페이지
+ 
+ 메인 페이지는 좌측의 카테고리, 페이지 중앙의 즐겨찾기, 새로운 포스트(new Posts), 인기 포스트(hot Posts), 그 아래로 대시 보드가 표시됩니다.
+
+  포스팅에 자동 변경되는 New Posts, Hot posts를 제외한 즐겨찾기, 카테고리, 대시보드는 관리자 타입 이상의 권한을 갖은 멤버들이 편집할 수 있습니다.
+
+  카테고리는 총 3단계 레벨로 생성 가능하고, 즐겨찾기는 현재 존재하는 카테고리를 링크하여, 표시 색상과 설명을 직접 결정 할 수 있습니다.
+
+  대시 보드는 등록한 이미지를 슬라이드하는 이미지 보드, 지정한 카테고리의 새 글을 출력하는 보드, 관리자가 원하는 포스팅을 직접 링크하여 출력하는 보드, 마지막으로 관리자가 직접 글을 쓰고, 편집하는 보드의 4가지 타입을 선택할 수 있고, 크기 역시 4가지 타입 안에서 관리자가 설정할 수 있습니다.
+  
+  ![mainPage](./readMe/mainPage.png)
+
+
+<br/>
+
+### 카테고리 보드
+
+카테고리에 포함된 글을 페이지별로 불러와 출력합니다. 
+
+![board](./readMe/board.png)
+
+
+<br/>
+
+### 글 읽기
+
+게시판의 글을 읽고 댓글을 달 수 있습니다. 
+
+댓글은 3단계까지 대댓글을 작성할 수 있고, 하위 댓글이 있는 경우 댓글 삭제 시 "삭제된 댓글"이라는 메시지로 수정되어 주인이 없는 더미 댓글로 남아 이후 수정, 삭제, 대댓글을 작성할 수 없습니다.
+
+삭제하는 댓글의 하위 댓글이 없는 경우 해당 댓글은 바로 삭제되고, 앞선 경우와 반대로 해당 댓글이 삭제되는 경우 상위 더미 댓글까지 삭제되어야할 경우에는 해당 댓글과, 상위 댓글까지 삭제되어야할 모든 상위 더미 댓글을 삭제를 삭제합니다.
+
+포스팅의 좋아요를 표시할 수 있습니다. 좋아요 버튼을 누르면 좋아요가 바로 적용되어 좋아요 수가 1 증가하고, 이미 좋아요를 누른 유저인 경우 좋아요의 개수가 1 줄어듭니다. 
+
+![readPost](./readMe/postRead.png)
+
+
+
+<br/>
+
+### 댓글 등록, 수정
+
+  댓글 쓰기를 요청할 경우, 해당 페이지 내에서 팝업된 박스에 댓글을 입력하여 등록하고, 수정의 경우 수정하려는 댓글이 출력되어 바로 수정할 수 있습니다.
+
+![comment](./readMe/comment.PNG)
+
+<br/>
+
+### 활동 내역
+
+로그인된 유저의 활동 내역을 표시합니다. 본인이 작성한 포스팅과 댓글을 확인할 수 있습니다.
+
+![activity](./readMe/activity.png)
+
+<br/>
+
+### 그 밖의 페이지
+
+위에 소개한 페이지 이외에 로그인과 가입, 즐겨찾기 관리, 대시 보드 관리, 전체 회원 관리, 개인 정보 관리, 카테고리 관리, 포스팅 작성 등의 페이지로 전체 커뮤니티를 관리, 사용합니다.
+
+![loginJoin](./readMe/loginJoin.png)
+
+<br/>
+
+# 상세 내용 / 코드 설명
+
+### 포스트와 댓글 / 일대다 양방향 매핑
 
   포스트와 댓글은 1:N 양방향 매핑으로, 댓글, N차 대댓글은 자기 참조로 상위 댓글와, 하위 댓글 리스트를 갖도록 하여 계층을 만들어 구현했습니다.
 
-```
+```java
 @Entity
 public class Comment {
 
@@ -63,7 +131,7 @@ public class Comment {
 
   하위 댓글이 남아 있지 않은 경우, 상위 댓글이 같이 삭제되어야 하는지 확인하는 방식으로 삭제 처리를 구현하였습니다.
 
-```
+```java
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -106,7 +174,9 @@ public class CommentService {
 }
 ```
 
-**  좋아요 구현 / 다대다 양방향 매핑 처리**
+<br/>
+
+### 좋아요 구현 / 다대다 양방향 매핑 처리
 
   좋아요는 버튼 클릭 시, 이전에 좋아요를 클릭한 이력이 있다면 좋아요 취소를, 이력이 없다면 좋아요를 처리하도록 만들었습니다.
 
@@ -116,7 +186,7 @@ public class CommentService {
 
   이런 N:N 매핑을 Like 엔티티를 추가하여 N:1 + 1:N 의 매핑으로 풀어 참조하도록 구현했습니다.
 
-```
+```java
 @Entity
 @Table(name = "POST_LIKE")
 public class Like {
@@ -140,7 +210,7 @@ public class Like {
 
   Post의 like는 1:N 매핑의 N+1 문제를 피하기 위해 Set을 사용하였습니다.
 
-```
+```java
 @Entity
 public class Post { // Member 동일
    
@@ -151,7 +221,9 @@ public class Post { // Member 동일
 }
 ```
 
-**  로그인, 권한 확인 / Interceptor**
+<br/>
+
+###  로그인, 권한 확인 / Interceptor
 
   어노테이션으로 핸들러 당 필요한 권한을 표시하고, 인터셉터를 사용해서 로그인 여부, 유저의 타입을 확인하였습니다.
 
@@ -186,7 +258,7 @@ public class LoginIntercepter implements HandlerInterceptor {
 
   해당 요청의 멤버 권한 확인은 어노테이션으로 핸들러에 필요한 권한을 명시하여, 그 조건에 부합하는지 확인하는 식으로 처리하였습니다.
 
-```
+```java
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 public @interface Permission {
@@ -196,7 +268,7 @@ public @interface Permission {
 
   커스텀 어노테이션, Permission을 정의하고 authority로 미리 정의해둔 MemberType을 받아 필요한 멤버 타입을 표시할 수 있습니다.  
 
-```
+```java
 public class PermissionInterceptor implements HandlerInterceptor {
 
     @Override
@@ -220,7 +292,7 @@ public class PermissionInterceptor implements HandlerInterceptor {
 
   PermissionInterceptor를 정의하여, 요청을 처리할 handler에 붙은 Permission 어노테이션의 값을 얻고, 세션의 유저 정보와 일치하는지 확인하였습니다.
 
-```
+```java
 @Permission(authority = MemberType.admin)
 @GetMapping("/edit/dashBoard/delete")
 public String editDashBoardDelete(@RequestParam long id) {
@@ -239,7 +311,9 @@ _[Tstroy / ecsimsw / Spring Interceptor / 로그인 여부 확인을 위한 inte
 
 _[Tstroy / ecsimsw / Spring Interceptor / 어노테이션, interceptor을 이용한 유저 권한 확인](https://ecsimsw.tistory.com/entry/Spring-Interceptor-%EA%B6%8C%ED%95%9C-%ED%99%95%EC%9D%B8-%EC%96%B4%EB%85%B8%ED%85%8C%EC%9D%B4%EC%85%98?category=879374)_
 
-**  메일 인증 / Google SMTP, 비동기 처리**
+<br/>
+
+###  메일 인증 / Google SMTP, 비동기 처리
 
   회원 가입 시 해당 이메일이 유효한지 확인하기 위해 [Google SMTP Server](https://support.google.com/a/answer/176600?hl=en)를 사용하였습니다.
 
@@ -253,7 +327,7 @@ _[Tstroy / ecsimsw / Spring Interceptor / 어노테이션, interceptor을 이용
 
   사용자가 메일 인증 버튼을 누르고, 바로 받아야하는 결과 안내 메시지가 실제로는 서버에서 메일 보내는 것을 다 처리한 이후에나 출력되어 혼동을 주기 때문에 이 문제를 멀티 스레딩으로 해결하고자 하였고, 스프링의 비동기 처리 방식을 공부하여 해결할 수 있었습니다.
 
-```
+```java
 @Transactional
 @Async
 public void sendAuthMail(String to) {
@@ -306,9 +380,13 @@ public void sendAuthMail(String to) {
 
   특히 어떤 방식으로 이메일 주소와 키를 매핑하는 것이 효율적인지, 여러 사람이 한 메일 주소로 인증을 요청할 경우, 또는 메일 주소를 인증만 하고 회원 가입을 완료하지 않을 경우의 문제를 어떻게 해결할 지에 대한 고민을 풀어 보았습니다.
 
-_[Tstroy / ecsimsw / Spring Interceptor / Google Smtp Server, @Async 비동기 메일 인증](https://ecsimsw.tistory.com/entry/Spring-Mail-Google-Smtp-server-Async)_
+_[Tstroy / ecsimsw / Spring Interceptor / Google Smtp Server, @Async 비동기 메일 인증]
 
-**  인기 게시물 관리 / 매핑 관계의 주인**
+(https://ecsimsw.tistory.com/entry/Spring-Mail-Google-Smtp-server-Async)_
+
+<br/>
+
+### 인기 게시물 관리 / 매핑 관계의 주인
 
   인기 게시물 관리에 있어, 좋아요와 싫어요가 업데이트 될 때마다 모든 게시물의 좋아요 수를 확인하여 정렬하는 방법은 많은 부하를 낳을 것이기 때문에 최대한 효율적으로 인기 게시물을 뽑을 방법을 고민했습니다.
 
@@ -318,7 +396,7 @@ _[Tstroy / ecsimsw / Spring Interceptor / Google Smtp Server, @Async 비동기 �
 
   따라서 앞서 말한 방식이 단순히 게시물이 좋아요를 받았을 때 인기 게시물 리스트 안의 게시물과 좋아요 개수를 비교하는 것보다 좋은 성능을 기대할 수 없을 것이라는 결론를 내었습니다.
 
-```
+```java
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -357,7 +435,7 @@ public class PostService {
 
   HotPost와 Post는 1:1 양방향 관계로, hotPost를 관계의 주인으로 정하여 hotpost에 post를 대입하는 것이 객체 지향 관점에서 더 자연스러울 것이라고 생각했습니다.
 
-```
+```java
 @Entity
 public class Post{
  
@@ -382,7 +460,9 @@ public class HotPost {
 
 ```
 
-**  DashBoard와 ShortCut**
+<br/>
+
+###  DashBoard와 ShortCut
 
   관리자는 메인 페이지의 DashBoard와 ShortCut을 관리할 수 있습니다.
 
@@ -396,7 +476,9 @@ public class HotPost {
 
 [##_Image|kage@bzGyjV/btqKkOgD5iz/2OTrOXxjtzPTCkimkULnv1/img.png|alignCenter|data-origin-width="0" data-origin-height="0" data-ke-mobilestyle="widthContent"|||_##]
 
-**  페이지 처리**
+<br/>
+
+###  페이지 처리
 
   카테고리의 글 목록을 보거나, 본인이 작성한 글 또는 댓글 내역을 확인할 때, DB에서 한번에 모든 양을 가져오지 않도록 페이지 처리하였습니다.
 
@@ -404,7 +486,7 @@ public class HotPost {
 
   PostService에서는 Controller로부터 받은 현재 카테고리와 페이지, 한 페이지 안에 표시될 post의 개수로, db에서 가져올 데이터의 시작 인덱스와 개수를 결정합니다.
 
-```
+```java
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -439,7 +521,7 @@ public class PostService {
 
   PostRepository에서는 Service에서 넘긴 시작 인덱스와 데이터 개수를 기준으로, 전체 post 중 해당 category에 속한 post를 찾고, 그 중 인덱스 from부터, 페이지에 출력하는 postCnt 개수 이하의 데이터를 List에 담습니다.
 
-```
+```java
 public List<Post> postInCategory(Category category, int from, int postCnt){
     List<Post> selectedPosts =
             em.createQuery("select p from Post p where p.category =:category",Post.class)
@@ -455,7 +537,7 @@ public List<Post> postInCategory(Category category, int from, int postCnt){
 
   Controller에서 "/post/board" 요청에 대한 매핑으로, 현재 페이지, 전체 포스트의 개수, 표시할 페이지의 개수, 한 페이지 당 표시할 post의 개수, 해당 페이지에 표시할 페이지의 개수를 view로 넘깁니다. 
 
-```
+```java
 @Controller
 @RequestMapping("/post")
 @RequiredArgsConstructor
@@ -496,7 +578,7 @@ public class PostController {
 
   view의 스크립트로 JQuery - twbspagination 플러그인을 사용했습니다.
 
-```
+```javascript
 /*<![CDATA[*/
     $('#pagination-ul').twbsPagination({
         totalPages: /*[[${(totalPost-1)/postForPage+1}]]*/ 2,
@@ -516,7 +598,9 @@ public class PostController {
 /*]]>*/
 ```
 
-**  파일 업로드 / multipartResolver**
+<br/>
+
+###  파일 업로드 / multipartResolver
 
   사용자의 프로필 사진이나 메인 화면의 이미지를 업로드하고 관리하는 방법을 고민하였습니다.
 
@@ -526,7 +610,7 @@ public class PostController {
 
   개발자 커뮤니티에 의견을 묻고, 다른 사람들의 방식을 참고하여 사진 자체를 db에 저장하는 것 보다, 물리적으로 저장하고 db에는 상대 경로만을 저장하여 파일을 관리하는 방식으로 결정하였습니다.
 
-```
+```java
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -566,19 +650,23 @@ public class MemberService {
 }    
 ```
 
-#### 후기
+<br/>
 
-  스프링 개념을, 스프링 부트를 사용하는 방법을 이제 막 공부하고 처음 사용해보고자 시작한 프로젝트인 만큼 아쉬움이 많이 남은 토이 프로젝트입니다.
+# 후기
 
-  다른 것 보다 DB 설계와 JPA 개념의 부족함을 많이 느꼈습니다.  
+  스프링 개념을, 스프링 부트를 사용하는 방법을 이제 조금 공부하고 처음 사용해본 것이기 때문에, 새로 공부한 내용을 사용해보는 설렘만큼이나 부족한 부분에 대한 아쉬움도 많이 남습니다.   
 
-  효율적인 설계를 위해 고민하고 더 찾으려 노력했지만, 많은 부분에서 설계가 효율적인지 확신 할 수 있는 근거가 부족함을 느꼈습니다.
+  다른 것 보다 DB 설계와 JPA 개념의 부족함을 많이 느꼈습니다. 효율적인 설계를 위해 고민하고 더 찾으려 노력했지만, 많은 부분에서 성능을 확신 할 수 있는 근거가 부족했고, 많은 경우에서 검색 키워드 조차 못 찾아, 개발자 커뮤니티에 상황을 설명하고 키워드를 요청드려서야 공부할 수 있었던 부분도 많았습니다. 
 
-  또, 전체 MVC 설계에서 Controller, Service, Repository의 역할에 대한 구분을 더 명확히 하고 싶다는 생각이 들었습니다.
+  또, 전체 MVC 설계에서 Controller, Service, Repository의 역할에 대한 구분을 더 명확히 하고 싶다는 생각이 들었습니다. 책이나 블로그로 공부한 예제에서는 납득이 되었던 처리의 위치가, 실제로 코드를 짜면서 보다 다양한 경우를 만나니 '과연 이 로직을 이 단계에서 처리하는 게 맞는가', '여기서 인스턴스를 생성해서 다음 단계로 넘기는 것이 맞는가, 아니면 객체 생성 없이, 속성 값들만 넘기는 것이 맞는가' 등 과연 내가 지킨 MVC 구조를 남에게 보여줬을 때, 누군가 코드의 근거를 물어본다면 자신있게 나의 생각을 얘기하거나, 근거 자료를 찾을 수 있을까 라는 생각을 굉장히 많이하게 되었습니다. 그리고 부끄럽지만 '네'라고 대답할 수 없을 것 같습니다.
 
-  지금 코드에는 
+  자신의 능력을 예쁘게 포장하는 것도 능력이라는 말을 들었습니다. 깔끔하고 포인트를 살려 제 프로젝트를 소개하고 싶었지만, 아직 프로젝트를 정리하는 방식도 못 찾은 것 같습니다. 구현한 결과 화면을 얼마나 자세히 담아야할지, 코드의 비중을 얼마나 두어야할지, 이 프로젝트를 찾는 사람이 코드를 궁금해할지, 문제를 해결할 수 있는 키워드만을 궁금해할지, 혹 이것 조차 지루할지. 아직 제 것을 표현하는 데에도 부족함이 많은 것 같습니다. 
 
-#### 만든이 
+  잘못된 설명이나 지적, 조언, 궁금하신 부분은 블로그 댓글로 남겨주시면 감사하겠습니다.
+
+<br/>
+
+# 만든이 
 
   김진환
 
