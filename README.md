@@ -32,71 +32,7 @@
 
 <br/>
 
-# 구현 기능 / 실행 화면
 
-### 메인 페이지
- 
- 메인 페이지는 좌측의 카테고리, 페이지 중앙의 즐겨찾기, 새로운 포스트(new Posts), 인기 포스트(hot Posts), 그 아래로 대시 보드가 표시됩니다.
-
-  포스팅에 자동 변경되는 New Posts, Hot posts를 제외한 즐겨찾기, 카테고리, 대시보드는 관리자 타입 이상의 권한을 갖은 멤버들이 편집할 수 있습니다.
-
-  카테고리는 총 3단계 레벨로 생성 가능하고, 즐겨찾기는 현재 존재하는 카테고리를 링크하여, 표시 색상과 설명을 직접 결정 할 수 있습니다.
-
-  대시 보드는 등록한 이미지를 슬라이드하는 이미지 보드, 지정한 카테고리의 새 글을 출력하는 보드, 관리자가 원하는 포스팅을 직접 링크하여 출력하는 보드, 마지막으로 관리자가 직접 글을 쓰고, 편집하는 보드의 4가지 타입을 선택할 수 있고, 크기 역시 4가지 타입 안에서 관리자가 설정할 수 있습니다.
-  
-  ![mainPage](./readMe/mainPage.png)
-
-
-<br/>
-
-### 카테고리 보드
-
-카테고리에 포함된 글을 페이지별로 불러와 출력합니다. 
-
-![board](./readMe/board.png)
-
-
-<br/>
-
-### 글 읽기
-
-게시판의 글을 읽고 댓글을 달 수 있습니다. 
-
-댓글은 3단계까지 대댓글을 작성할 수 있고, 하위 댓글이 있는 경우 댓글 삭제 시 "삭제된 댓글"이라는 메시지로 수정되어 주인이 없는 더미 댓글로 남아 이후 수정, 삭제, 대댓글을 작성할 수 없습니다.
-
-삭제하는 댓글의 하위 댓글이 없는 경우 해당 댓글은 바로 삭제되고, 앞선 경우와 반대로 해당 댓글이 삭제되는 경우 상위 더미 댓글까지 삭제되어야할 경우에는 해당 댓글과, 상위 댓글까지 삭제되어야할 모든 상위 더미 댓글을 삭제를 삭제합니다.
-
-포스팅의 좋아요를 표시할 수 있습니다. 좋아요 버튼을 누르면 좋아요가 바로 적용되어 좋아요 수가 1 증가하고, 이미 좋아요를 누른 유저인 경우 좋아요의 개수가 1 줄어듭니다. 
-
-![readPost](./readMe/postRead.png)
-
-
-
-<br/>
-
-### 댓글 등록, 수정
-
-  댓글 쓰기를 요청할 경우, 해당 페이지 내에서 팝업된 박스에 댓글을 입력하여 등록하고, 수정의 경우 수정하려는 댓글이 출력되어 바로 수정할 수 있습니다.
-
-![comment](./readMe/comment.PNG)
-
-<br/>
-
-### 활동 내역
-
-로그인된 유저의 활동 내역을 표시합니다. 본인이 작성한 포스팅과 댓글을 확인할 수 있습니다.
-
-![activity](./readMe/activity.png)
-
-<br/>
-
-### 그 밖의 페이지
-
-위에 소개한 페이지 이외에 로그인과 가입, 즐겨찾기 관리, 대시 보드 관리, 전체 회원 관리, 개인 정보 관리, 카테고리 관리, 포스팅 작성 등의 페이지로 전체 커뮤니티를 관리, 사용합니다.
-
-![loginJoin](./readMe/loginJoin.png)
-
-<br/>
 
 # 상세 내용 / 코드 설명
 
@@ -233,7 +169,7 @@ public class Post { // Member 동일
 
   아래 LoginInterceptor는 적용할 루트와 배제할 루트를 미리 정하고, 로그인 필요 루트에서 세션에 로그인 정보가 없을 시 로그인 페이지로 이동 후, 로그인을 정상적으로 마치면 다시 요청했던 루트로 리다이렉트 시킬 수 있도록 하였습니다. 
 
-```
+```java
 public class LoginIntercepter implements HandlerInterceptor {
     public List loginEssential
             = Arrays.asList("/post/**", "/comment/**", ... );
@@ -317,7 +253,7 @@ _[Tstroy / ecsimsw / Spring Interceptor / 어노테이션, interceptor을 이용
 
   회원 가입 시 해당 이메일이 유효한지 확인하기 위해 [Google SMTP Server](https://support.google.com/a/answer/176600?hl=en)를 사용하였습니다.
 
-[##_Image|kage@Chc0W/btqKxP1jaJz/bZj9QtXmNkHkzMdTbxLPxk/img.png|alignCenter|data-origin-width="0" data-origin-height="0" width="558" height="NaN" data-ke-mobilestyle="widthContent"|||_##]
+![googleSmtp](./readMe/googleSmtp.png)
 
   회원 가입 페이지에서, 이메일을 입력하고 메일 인증을 요청하면 페이지 내에서 Ajax로 서버에 메일 정보를 전송하고, 서버는 해당 메일 주소와 새로 생성한 임의의 15자리의 암호키를 DB에 저장합니다.
 
@@ -466,7 +402,7 @@ public class HotPost {
 
   관리자는 메인 페이지의 DashBoard와 ShortCut을 관리할 수 있습니다.
 
-[##_Image|kage@kGpNf/btqKhlGbkTz/pyKRX5npMknAduK87JvBf1/img.png|alignCenter|data-origin-width="0" data-origin-height="0" width="944" height="NaN" data-ke-mobilestyle="widthContent"|DashBoard 편집 페이지와 ShortCut 편집 페이지||_##]
+![editForm](./readMe/editForm.png)
 
   DashBoard는 4가지 타입이 있습니다. latestPost은 지정한 카테고리의 가장 최신의 글을, linkPost는 관리자가 지정한 글의 내용을, FreePost는 관리자가 직접 작성한 내용을, 마지막으로 ImageBoard는 직접 추가한 이미지들을 슬라이더로 표현합니다.
 
@@ -474,7 +410,7 @@ public class HotPost {
 
   예를 들어, 아래 예시에서 1,2,5,6은 모두 같은 크기의 보드지만, 1,2은 그 다음에 3처럼 큰 보드가 이어지기 때문에 5,6과 같이 좌우로 배치되는 것이 아닌 상하로 배치되도록 하였습니다.
 
-[##_Image|kage@bzGyjV/btqKkOgD5iz/2OTrOXxjtzPTCkimkULnv1/img.png|alignCenter|data-origin-width="0" data-origin-height="0" data-ke-mobilestyle="widthContent"|||_##]
+![dashBoard](./readMe/dashBoard.png)
 
 <br/>
 
@@ -482,7 +418,7 @@ public class HotPost {
 
   카테고리의 글 목록을 보거나, 본인이 작성한 글 또는 댓글 내역을 확인할 때, DB에서 한번에 모든 양을 가져오지 않도록 페이지 처리하였습니다.
 
-[##_Image|kage@1I8dj/btqKjcWvrLm/bH9OhRbSwjC7iTWkvGeMPK/img.png|alignCenter|width="552" height="NaN" data-origin-width="0" data-origin-height="0" data-ke-mobilestyle="widthContent"|||_##]
+![pageNation](./readMe/pageNation.png)
 
   PostService에서는 Controller로부터 받은 현재 카테고리와 페이지, 한 페이지 안에 표시될 post의 개수로, db에서 가져올 데이터의 시작 인덱스와 개수를 결정합니다.
 
@@ -649,6 +585,72 @@ public class MemberService {
     }
 }    
 ```
+
+<br/>
+
+# 구현 기능 / 실행 화면
+
+### 메인 페이지
+ 
+ 메인 페이지는 좌측의 카테고리, 페이지 중앙의 즐겨찾기, 새로운 포스트(new Posts), 인기 포스트(hot Posts), 그 아래로 대시 보드가 표시됩니다.
+
+  포스팅에 자동 변경되는 New Posts, Hot posts를 제외한 즐겨찾기, 카테고리, 대시보드는 관리자 타입 이상의 권한을 갖은 멤버들이 편집할 수 있습니다.
+
+  카테고리는 총 3단계 레벨로 생성 가능하고, 즐겨찾기는 현재 존재하는 카테고리를 링크하여, 표시 색상과 설명을 직접 결정 할 수 있습니다.
+
+  대시 보드는 등록한 이미지를 슬라이드하는 이미지 보드, 지정한 카테고리의 새 글을 출력하는 보드, 관리자가 원하는 포스팅을 직접 링크하여 출력하는 보드, 마지막으로 관리자가 직접 글을 쓰고, 편집하는 보드의 4가지 타입을 선택할 수 있고, 크기 역시 4가지 타입 안에서 관리자가 설정할 수 있습니다.
+  
+  ![mainPage](./readMe/mainPage.png)
+
+
+<br/>
+
+### 카테고리 보드
+
+카테고리에 포함된 글을 페이지별로 불러와 출력합니다. 
+
+![board](./readMe/board.png)
+
+
+<br/>
+
+### 글 읽기
+
+게시판의 글을 읽고 댓글을 달 수 있습니다. 
+
+댓글은 3단계까지 대댓글을 작성할 수 있고, 하위 댓글이 있는 경우 댓글 삭제 시 "삭제된 댓글"이라는 메시지로 수정되어 주인이 없는 더미 댓글로 남아 이후 수정, 삭제, 대댓글을 작성할 수 없습니다.
+
+삭제하는 댓글의 하위 댓글이 없는 경우 해당 댓글은 바로 삭제되고, 앞선 경우와 반대로 해당 댓글이 삭제되는 경우 상위 더미 댓글까지 삭제되어야할 경우에는 해당 댓글과, 상위 댓글까지 삭제되어야할 모든 상위 더미 댓글을 삭제를 삭제합니다.
+
+포스팅의 좋아요를 표시할 수 있습니다. 좋아요 버튼을 누르면 좋아요가 바로 적용되어 좋아요 수가 1 증가하고, 이미 좋아요를 누른 유저인 경우 좋아요의 개수가 1 줄어듭니다. 
+
+![readPost](./readMe/postRead.png)
+
+
+
+<br/>
+
+### 댓글 등록, 수정
+
+  댓글 쓰기를 요청할 경우, 해당 페이지 내에서 팝업된 박스에 댓글을 입력하여 등록하고, 수정의 경우 수정하려는 댓글이 출력되어 바로 수정할 수 있습니다.
+
+![comment](./readMe/comment.PNG)
+
+<br/>
+
+### 활동 내역
+
+로그인된 유저의 활동 내역을 표시합니다. 본인이 작성한 포스팅과 댓글을 확인할 수 있습니다.
+
+![activity](./readMe/activity.png)
+
+<br/>
+
+### 그 밖의 페이지
+
+위에 소개한 페이지 이외에 로그인과 가입, 즐겨찾기 관리, 대시 보드 관리, 전체 회원 관리, 개인 정보 관리, 카테고리 관리, 포스팅 작성 등의 페이지로 전체 커뮤니티를 관리, 사용합니다.
+
+![loginJoin](./readMe/loginJoin.png)
 
 <br/>
 
