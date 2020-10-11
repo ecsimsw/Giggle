@@ -15,6 +15,8 @@
      - 트래픽, 데이터가 많은 경우를 가정하며 간단한 처리에도 보다 효율적인 로직을 찾고자 고민하였습니다.
 
   4. Giggle은 아이들이 깔깔 웃는다는 의미로, 'Geek을 위한 Giggle' 이라는 말 장난에서 지어진 커뮤니티 이름입니다.
+  
+<br/>
     
 # 개발환경 
 
@@ -28,12 +30,11 @@
 
   Thymeleaf / Javascript (Jquery, ajax)
 
+<br/>
 
 # 구현 기능 / 실행 화면
 
-![mainPage](./readMe/mainPage.png)
-
-메인 페이지
+### 메인 페이지
  
  메인 페이지는 좌측의 카테고리, 페이지 중앙의 즐겨찾기, 새로운 포스트(new Posts), 인기 포스트(hot Posts), 그 아래로 대시 보드가 표시됩니다.
 
@@ -42,16 +43,22 @@
   카테고리는 총 3단계 레벨로 생성 가능하고, 즐겨찾기는 현재 존재하는 카테고리를 링크하여, 표시 색상과 설명을 직접 결정 할 수 있습니다.
 
   대시 보드는 등록한 이미지를 슬라이드하는 이미지 보드, 지정한 카테고리의 새 글을 출력하는 보드, 관리자가 원하는 포스팅을 직접 링크하여 출력하는 보드, 마지막으로 관리자가 직접 글을 쓰고, 편집하는 보드의 4가지 타입을 선택할 수 있고, 크기 역시 4가지 타입 안에서 관리자가 설정할 수 있습니다.
+  
+  ![mainPage](./readMe/mainPage.png)
 
-![board](./readMe/board.png)
 
-카테고리 보드
+<br/>
+
+### 카테고리 보드
 
 카테고리에 포함된 글을 페이지별로 불러와 출력합니다. 
 
-![readPost](./readMe/postRead.png)
+![board](./readMe/board.png)
 
-글 읽기
+
+<br/>
+
+### 글 읽기
 
 게시판의 글을 읽고 댓글을 달 수 있습니다. 
 
@@ -61,23 +68,35 @@
 
 포스팅의 좋아요를 표시할 수 있습니다. 좋아요 버튼을 누르면 좋아요가 바로 적용되어 좋아요 수가 1 증가하고, 이미 좋아요를 누른 유저인 경우 좋아요의 개수가 1 줄어듭니다. 
 
-![comment](./readMe/comment.PNG)
+![readPost](./readMe/postRead.png)
 
-댓글 등록, 수정
+
+
+<br/>
+
+### 댓글 등록, 수정
 
   댓글 쓰기를 요청할 경우, 해당 페이지 내에서 팝업된 박스에 댓글을 입력하여 등록하고, 수정의 경우 수정하려는 댓글이 출력되어 바로 수정할 수 있습니다.
 
-![activity](./readMe/activity.png)
+![comment](./readMe/comment.PNG)
 
-활동 내역
+<br/>
+
+### 활동 내역
 
 로그인된 유저의 활동 내역을 표시합니다. 본인이 작성한 포스팅과 댓글을 확인할 수 있습니다.
 
-![loginJoin](./readMe/loginJoin.png)
+![activity](./readMe/activity.png)
 
-그 밖의 페이지
+<br/>
+
+### 그 밖의 페이지
 
 위에 소개한 페이지 이외에 로그인과 가입, 즐겨찾기 관리, 대시 보드 관리, 전체 회원 관리, 개인 정보 관리, 카테고리 관리, 포스팅 작성 등의 페이지로 전체 커뮤니티를 관리, 사용합니다.
+
+![loginJoin](./readMe/loginJoin.png)
+
+<br/>
 
 # 상세 내용 / 코드 설명
 
@@ -155,6 +174,8 @@ public class CommentService {
 }
 ```
 
+<br/>
+
 ### 좋아요 구현 / 다대다 양방향 매핑 처리
 
   좋아요는 버튼 클릭 시, 이전에 좋아요를 클릭한 이력이 있다면 좋아요 취소를, 이력이 없다면 좋아요를 처리하도록 만들었습니다.
@@ -199,6 +220,8 @@ public class Post { // Member 동일
     private Set<Like> like = new HashSet<>();
 }
 ```
+
+<br/>
 
 ###  로그인, 권한 확인 / Interceptor
 
@@ -288,6 +311,8 @@ _[Tstroy / ecsimsw / Spring Interceptor / 로그인 여부 확인을 위한 inte
 
 _[Tstroy / ecsimsw / Spring Interceptor / 어노테이션, interceptor을 이용한 유저 권한 확인](https://ecsimsw.tistory.com/entry/Spring-Interceptor-%EA%B6%8C%ED%95%9C-%ED%99%95%EC%9D%B8-%EC%96%B4%EB%85%B8%ED%85%8C%EC%9D%B4%EC%85%98?category=879374)_
 
+<br/>
+
 ###  메일 인증 / Google SMTP, 비동기 처리
 
   회원 가입 시 해당 이메일이 유효한지 확인하기 위해 [Google SMTP Server](https://support.google.com/a/answer/176600?hl=en)를 사용하였습니다.
@@ -358,6 +383,8 @@ public void sendAuthMail(String to) {
 _[Tstroy / ecsimsw / Spring Interceptor / Google Smtp Server, @Async 비동기 메일 인증]
 
 (https://ecsimsw.tistory.com/entry/Spring-Mail-Google-Smtp-server-Async)_
+
+<br/>
 
 ### 인기 게시물 관리 / 매핑 관계의 주인
 
@@ -433,6 +460,8 @@ public class HotPost {
 
 ```
 
+<br/>
+
 ###  DashBoard와 ShortCut
 
   관리자는 메인 페이지의 DashBoard와 ShortCut을 관리할 수 있습니다.
@@ -446,6 +475,8 @@ public class HotPost {
   예를 들어, 아래 예시에서 1,2,5,6은 모두 같은 크기의 보드지만, 1,2은 그 다음에 3처럼 큰 보드가 이어지기 때문에 5,6과 같이 좌우로 배치되는 것이 아닌 상하로 배치되도록 하였습니다.
 
 [##_Image|kage@bzGyjV/btqKkOgD5iz/2OTrOXxjtzPTCkimkULnv1/img.png|alignCenter|data-origin-width="0" data-origin-height="0" data-ke-mobilestyle="widthContent"|||_##]
+
+<br/>
 
 ###  페이지 처리
 
@@ -567,6 +598,8 @@ public class PostController {
 /*]]>*/
 ```
 
+<br/>
+
 ###  파일 업로드 / multipartResolver
 
   사용자의 프로필 사진이나 메인 화면의 이미지를 업로드하고 관리하는 방법을 고민하였습니다.
@@ -617,6 +650,8 @@ public class MemberService {
 }    
 ```
 
+<br/>
+
 # 후기
 
   스프링 개념을, 스프링 부트를 사용하는 방법을 이제 조금 공부하고 처음 사용해본 것이기 때문에, 새로 공부한 내용을 사용해보는 설렘만큼이나 부족한 부분에 대한 아쉬움도 많이 남습니다.   
@@ -628,6 +663,8 @@ public class MemberService {
   자신의 능력을 예쁘게 포장하는 것도 능력이라는 말을 들었습니다. 깔끔하고 포인트를 살려 제 프로젝트를 소개하고 싶었지만, 아직 프로젝트를 정리하는 방식도 못 찾은 것 같습니다. 구현한 결과 화면을 얼마나 자세히 담아야할지, 코드의 비중을 얼마나 두어야할지, 이 프로젝트를 찾는 사람이 코드를 궁금해할지, 문제를 해결할 수 있는 키워드만을 궁금해할지, 혹 이것 조차 지루할지. 아직 제 것을 표현하는 데에도 부족함이 많은 것 같습니다. 
 
   잘못된 설명이나 지적, 조언, 궁금하신 부분은 블로그 댓글로 남겨주시면 감사하겠습니다.
+
+<br/>
 
 # 만든이 
 
