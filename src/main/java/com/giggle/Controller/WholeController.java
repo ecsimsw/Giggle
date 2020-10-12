@@ -15,34 +15,9 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 public class WholeController {
-
-//    @ExceptionHandler(RuntimeException.class)
-//    public String runtimeExceptionHandler(RuntimeException re, Model model){
-//        model.addAttribute("message", re.getMessage());
-//        return "runtimeError";
-//    }
-
-
-    @GetMapping("/test")
-    public String uploadImage(){
-        return "activityPage";
-    }
-
-    @PostMapping("/test")
-    @ResponseBody
-    public String uploadImage(@RequestPart List<MultipartFile> files) throws Exception{
-
-
-        for(MultipartFile file : files){
-            String sourceFileName = file.getOriginalFilename();
-            String sourceFileExtension = FilenameUtils.getExtension(sourceFileName).toLowerCase();
-
-            File destFile;
-
-            destFile = new File("C:\\Users\\luraw\\OneDrive\\Desktop\\"+sourceFileName+sourceFileExtension);
-            file.transferTo(destFile);
-        }
-
-        return "";
+    @ExceptionHandler(RuntimeException.class)
+    public String runtimeExceptionHandler(RuntimeException re, Model model){
+        model.addAttribute("message", re.getMessage());
+        return "runtimeError";
     }
 }
