@@ -675,7 +675,7 @@ public class MemberService {
 
 하실 말씀 아래 제 개인 블로그에 들려 댓글 달아주시면, 지적 / 조언 / 질문 / 인사 / 어떤 종류의 관심이든 감사하게 여기고 최선을 다해 답해드리겠습니다.  
 
-[github.com/ecsimsw/스프링 게시판](https://ecsimsw.tistory.com/entry/Giggle-%EA%B2%8C%EC%8B%9C%ED%8C%90-Spring-JPAHibernate)
+[Tstory/ecsimsw/스프링 게시판](https://ecsimsw.tistory.com/entry/Giggle-%EA%B2%8C%EC%8B%9C%ED%8C%90-Spring-JPAHibernate)
 
 <br/>
 
