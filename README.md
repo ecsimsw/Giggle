@@ -527,7 +527,7 @@ view의 스크립트로 JQuery - twbspagination 플러그인을 사용했습니�
 
 <br/>
 
-###  파일 업로드 / multipartResolver, 파일 
+###  파일 업로드 / multipartResolver, 파일 관리
 
 <br/>
 
