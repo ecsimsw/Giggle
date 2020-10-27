@@ -4,8 +4,6 @@
 
   2. 컴퓨터 자체를 즐기는 사람들과 소통 할 수 있는 커뮤니티를 만들고 싶었습니다.
 
-&nbsp;&nbsp;&nbsp;&nbsp;   회원들이 자유롭게 글을 작성하거나 댓글을 남기고, 관리자는 커뮤니티의 필요에 따라 자유롭게 게시판 카테고리를 생성하고, 홈페이지를 꾸미며, 회원을 관리할 수 있는 커뮤니티를 만들고자 하였습니다. 
-  
 &nbsp;&nbsp;&nbsp;&nbsp;   Geeks는 제가 학교에서 개발 자체를 좋아하는 친구들과 소통하고 싶어 만든 모임입니다. 친구들이 공부한 걸 정리하고, 자유롭게 소통하고, 프로젝트 결과물을 자랑할 수 있는 공간을 만들고 싶었습니다.
 
   3. 프로젝트에서 가장 집중한 부분은 다음과 같습니다.
@@ -325,7 +323,7 @@ _[Tstroy / ecsimsw / Spring Interceptor / Google Smtp Server, @Async 비동기 �
 
 <br/>
 
-### 인기 게시물 관리 / 매핑 관계의 주인
+### 인기 게시물 관리 / 매핑 관계의 주인에 대한 고민
 
 <br/>
 
@@ -403,23 +401,7 @@ public class HotPost {
 
 <br/>
 
-### DashBoard와 ShortCut
 
-<br/>
-
-관리자는 메인 페이지의 DashBoard와 ShortCut을 관리할 수 있습니다.
-
-![editForm](./readMe/editForm.png)
-
-DashBoard는 4가지 타입이 있습니다. latestPost은 지정한 카테고리의 가장 최신의 글을, linkPost는 관리자가 지정한 글의 내용을, FreePost는 관리자가 직접 작성한 내용을, 마지막으로 ImageBoard는 직접 추가한 이미지들을 슬라이더로 표현합니다.
-
-dashBoard의 크기 역시 4가지 종류로 선택할 수 있습니다. 그리고 선택한 크기와, 주변 대시 보드의 크기에 따라 배치되도록 하였습니다.
-
-예를 들어, 아래 예시에서 1,2,5,6은 모두 같은 크기의 보드지만, 1,2은 그 다음에 3처럼 큰 보드가 이어지기 때문에 5,6과 같이 좌우로 배치되는 것이 아닌 상하로 배치되도록 하였습니다.
-
-![dashBoard](./readMe/dashBoard.png)
-
-<br/>
 
 ###  페이지 처리
 
@@ -545,7 +527,7 @@ view의 스크립트로 JQuery - twbspagination 플러그인을 사용했습니�
 
 <br/>
 
-###  파일 업로드 / multipartResolver
+###  파일 업로드 / multipartResolver, 파일 
 
 <br/>
 
@@ -596,6 +578,23 @@ public class MemberService {
     }
 }    
 ```
+<br/>
+
+### DashBoard와 ShortCut
+
+<br/>
+
+관리자는 메인 페이지의 DashBoard와 ShortCut을 관리할 수 있습니다.
+
+![editForm](./readMe/editForm.png)
+
+DashBoard는 4가지 타입이 있습니다. latestPost은 지정한 카테고리의 가장 최신의 글을, linkPost는 관리자가 지정한 글의 내용을, FreePost는 관리자가 직접 작성한 내용을, 마지막으로 ImageBoard는 직접 추가한 이미지들을 슬라이더로 표현합니다.
+
+dashBoard의 크기 역시 4가지 종류로 선택할 수 있습니다. 그리고 선택한 크기와, 주변 대시 보드의 크기에 따라 배치되도록 하였습니다.
+
+예를 들어, 아래 예시에서 1,2,5,6은 모두 같은 크기의 보드지만, 1,2은 그 다음에 3처럼 큰 보드가 이어지기 때문에 5,6과 같이 좌우로 배치되는 것이 아닌 상하로 배치되도록 하였습니다.
+
+![dashBoard](./readMe/dashBoard.png)
 
 <br/>
 
