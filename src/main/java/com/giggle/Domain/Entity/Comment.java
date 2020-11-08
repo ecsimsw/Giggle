@@ -27,7 +27,7 @@ public class Comment {
     @OneToMany(mappedBy = "superComment", cascade = CascadeType.ALL)
     private List<Comment> subComment = new ArrayList<>();
 
-    private int level;
+    private Integer level;
 
     private String writer;
 
@@ -46,5 +46,5 @@ public class Comment {
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss")
     private LocalDateTime dateTime;
 
-    private boolean isLive;
+    private Boolean isLive;
 }

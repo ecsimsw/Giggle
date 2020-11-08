@@ -24,10 +24,10 @@ public class DashBoard {
 
     private String content;  // freePost
 
-    private long linkId; // latestPost - categoryId
+    private Long linkId; // latestPost - categoryId
                          // linkPost - postId
 
-    private int spotType;  // 0 : Don't care
+    private Integer spotType;  // 0 : Don't care
                            // 1 : Small blocks to go up
                            // 2 : Small blocks to go down
 }

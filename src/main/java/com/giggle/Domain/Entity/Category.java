@@ -25,7 +25,7 @@ public class Category {
     @JoinColumn(name="middle_category_id")
     private MiddleCategory middleCategory;
 
-    private int postCnt;
+    private Integer postCnt;
     private String description;
 
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)

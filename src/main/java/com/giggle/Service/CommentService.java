@@ -33,7 +33,7 @@ public class CommentService {
             long supCommentId = Long.parseLong(createCommentForm.getCommentId());
             Comment supComment = commentRepository.findById(supCommentId);
 
-            if(!supComment.isLive()){
+            if(!supComment.getIsLive()){
                 throw new RuntimeException("SuperComment is already dead");
             }
             newComment.setLevel(supComment.getLevel()+1);
@@ -48,7 +48,7 @@ public class CommentService {
         newComment.setWriter(writer.getLoginId());
         newComment.setProfileImg(writer.getProfileImg());
 
-        newComment.setLive(true);
+        newComment.setIsLive(true);
         commentRepository.save(newComment);
     }
 
@@ -66,7 +66,7 @@ public class CommentService {
                 }
                 superComment.getSubComment().remove(commentToDelete);
                 commentRepository.deleteById(commentToDelete.getId());
-                if(superComment.getSubComment().size()==0 && !superComment.isLive()){
+                if(superComment.getSubComment().size()==0 && !superComment.getIsLive()){
                     commentToDelete = superComment;
                 }
                 else{ break; }
@@ -74,7 +74,7 @@ public class CommentService {
         }
         else if(commentToDelete!=null){
             commentToDelete.setContent("삭제된 댓글입니다.");
-            commentToDelete.setLive(false);
+            commentToDelete.setIsLive(false);
         }
     }
 

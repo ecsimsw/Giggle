@@ -137,18 +137,18 @@ public class MemberService {
             // 인증 요청만 하고, 실제 인증하지 않은 더미 이메일
             // 새로운 키 값 업데이트 -> 병합
 
-            if(email.isUsed()==true){
+            if(email.getIsUsed()==true){
                 throw new RuntimeException("Mail already used");
             }
 
-            email.setKey(key);
+            email.setKeyValue(key);
         }
         else{
             // 아예 새로 요청한 이메일 주소
             email = new Email();
-            email.setKey(key);
+            email.setKeyValue(key);
             email.setAddress(to);
-            email.setUsed(false);
+            email.setIsUsed(false);
         }
         memberRepository.saveEmail(email);
 
@@ -190,7 +190,7 @@ public class MemberService {
 
     public boolean verifyEmail(String address, String enteredKey){
         Email email = memberRepository.findEmailByAddress(address);
-        String realKey = email.getKey();
+        String realKey = email.getKeyValue();
         if(realKey.equals(enteredKey)){ return true; }
         else{ return false; }
     }
@@ -198,7 +198,7 @@ public class MemberService {
     @Transactional
     public void changeEmailUsed(Long id){
         Email email = memberRepository.findEmailById(id);
-        email.setUsed(true);
+        email.setIsUsed(true);
     }
 
     @Transactional

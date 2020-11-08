@@ -49,7 +49,7 @@ public class Post{
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss")
     private LocalDateTime dateTime;
 
-    private int likeCnt;
+    private Integer likeCnt;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private Set<Like> like = new HashSet<>();

@@ -14,7 +14,7 @@ public class MainBoardImg implements Comparable<MainBoardImg>{
     @Id
     private Long id;
 
-    private int orderImg;
+    private Integer orderImg;
 
     // expected "identifier"; SQL statement : 사용할 수 없는 테이블 명 일 경우 (order)
 

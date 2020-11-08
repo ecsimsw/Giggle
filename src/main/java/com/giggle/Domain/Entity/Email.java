@@ -17,7 +17,7 @@ public class Email {
 
     private String address;
 
-    private String key;
+    private String keyValue;
 
-    private boolean used = false;
+    private Boolean isUsed = false;
 }
