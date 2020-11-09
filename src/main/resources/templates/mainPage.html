@@ -84,7 +84,7 @@
   <div id="wrapper">
 
     <!-- sideBar :: communityList, communityNameList -->
-    <div th:replace="/fragment/sideBar :: sideBar"> </div>
+    <div th:replace="fragment/sideBar :: sideBar"> </div>
 
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
@@ -93,7 +93,7 @@
       <div id="content">
 
         <!-- topBar :: loginId -->
-        <div th:replace="/fragment/topBar :: topBar"> </div>
+        <div th:replace="fragment/topBar :: topBar"> </div>
         <!-- Begin Page Content -->
         <div class="" style="max-width: 1400px;padding-left: 10px; padding-right: 10px;">
             <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -102,27 +102,27 @@
             </div>
             <div class="row">
               <!-- shortCut -->
-              <th:block th:replace="/fragment/shortCut :: shortCut"> </th:block>
+              <th:block th:replace="fragment/shortCut :: shortCut"> </th:block>
             </div>
             <!-- new posts / hot posts Start -->
             <div class="row">
               <!-- new Posts -->
               <div class="col-xs-6 col-lg-6">
-                <th:block th:replace="/fragment/newPost :: newPost"> </th:block>
+                <th:block th:replace="fragment/newPost :: newPost"> </th:block>
               </div>
               <!-- Hot posts -->
               <div class="col-xs-6 col-lg-6">
-                <th:block th:replace="/fragment/hotPost :: hotPost"> </th:block>
+                <th:block th:replace="fragment/hotPost :: hotPost"> </th:block>
               </div>
             </div>
             <!-- dashBoard -->
             <div class="row">
-              <th:block th:replace="/fragment/dashBoard :: dashBoard"> </th:block>
+              <th:block th:replace="fragment/dashBoard :: dashBoard"> </th:block>
             </div>
           </div>
         </div>
         <!-- Footer -->
-        <div th:replace="/fragment/footer :: footer"> </div>
+        <div th:replace="fragment/footer :: footer"> </div>
         </div>
       </div>
     </div>
@@ -130,11 +130,11 @@
   </div>
   <!-- End of Page Wrapper -->
   <!-- Scroll to Top Button-->
-  <div th:replace="/fragment/scrollButton :: scrollButton"> </div>
+  <div th:replace="fragment/scrollButton :: scrollButton"> </div>
   <!-- Logout Modal-->
-  <div th:replace="/fragment/logoutModal :: logoutModal"> </div>
+  <div th:replace="fragment/logoutModal :: logoutModal"> </div>
   <!-- BottomScript-->
-  <div th:replace="/fragment/bottomScript :: bottomScript"> </div>
+  <div th:replace="fragment/bottomScript :: bottomScript"> </div>
 
 </body>
 
