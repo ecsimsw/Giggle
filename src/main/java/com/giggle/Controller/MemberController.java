@@ -26,6 +26,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -181,8 +182,9 @@ public class MemberController {
             throw new RuntimeException("Invalid file name");
         }
 
+        File tempFile = new File(basePath+"profile/default.png");
         log.info("basePath : "+ basePath);
-        log.info("fileName : "+ fileName);
+        log.info("fileName : "+ tempFile.exists());
 
 //        memberService.addProfileImg(profileImg,basePath,id);
         return "redirect:/member/setting";
