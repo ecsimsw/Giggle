@@ -181,7 +181,10 @@ public class MemberController {
             throw new RuntimeException("Invalid file name");
         }
 
-        memberService.addProfileImg(profileImg,basePath,id);
+        log.info("basePath : "+ basePath);
+        log.info("fileName : "+ fileName);
+
+//        memberService.addProfileImg(profileImg,basePath,id);
         return "redirect:/member/setting";
     }
     @PostMapping("/setting/memberInfo")
