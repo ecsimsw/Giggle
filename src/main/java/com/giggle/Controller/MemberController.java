@@ -191,6 +191,7 @@ public class MemberController {
         tempFile = new File(basePath);
         log.info("basePath : "+ basePath);
         log.info("fileName : "+ tempFile.exists());
+        log.info("fileName : "+ tempFile.getPath());
 
 //        memberService.addProfileImg(profileImg,basePath,id);
         return "redirect:/member/setting";
