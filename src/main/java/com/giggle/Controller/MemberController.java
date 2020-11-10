@@ -176,7 +176,7 @@ public class MemberController {
     @PostMapping("/setting/profileImg")
     public String updateProfileImg(long id, HttpServletRequest httpServletRequest, MultipartFile profileImg) throws IOException {
         String basePath = httpServletRequest.getServletContext().getRealPath("/");
-        basePath+="/profile/default.png";
+        basePath+="profile/default.png";
 
         String fileName = profileImg.getOriginalFilename();
         if(fileName.equals("stranger.png") || fileName.equals("default.png")) {
@@ -184,6 +184,11 @@ public class MemberController {
         }
 
         File tempFile = new File(basePath);
+        log.info("basePath : "+ basePath);
+        log.info("fileName : "+ tempFile.exists());
+
+        basePath = "/";
+        tempFile = new File(basePath);
         log.info("basePath : "+ basePath);
         log.info("fileName : "+ tempFile.exists());
 
