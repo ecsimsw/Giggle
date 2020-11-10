@@ -187,7 +187,7 @@ public class MemberController {
         log.info("basePath : "+ basePath);
         log.info("fileName : "+ tempFile.exists());
 
-        basePath = "/static/file/profile/default.png\"";
+        basePath = "/static/file/profile/default.png";
         tempFile = new File(basePath);
         log.info("basePath : "+ basePath);
         log.info("fileName : "+ tempFile.exists());
