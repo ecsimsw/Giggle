@@ -63,7 +63,7 @@ public class MemberService {
 
         log.info("filePath : " + filePath);
         log.info("fileName : " + fileName);
-        
+
     }
 
     public List getAllProfile(){
