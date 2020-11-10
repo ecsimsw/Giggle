@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="ko">
 <head>
-    <div th:replace="/fragment/header :: header"> </div>
+    <div th:replace="fragment/header :: header"> </div>
 
     <style>
 
@@ -84,7 +84,7 @@
             background-size: 15px 15px;
             height: 150px;
             padding-left: 20px;
-            background-image: url(/static/icon/comment.png);
+            background-image: url(static/icon/comment.png);
             color: #0ca5af;
             font-size: 15px;
         }
@@ -95,7 +95,7 @@
             background-size: 15px 15px;
             height: 150px;
             padding-left: 22px;
-            background-image: url(/static/icon/like_no.png);
+            background-image: url(static/icon/like_no.png);
             color: chocolate;
             font-size: 15px;
         }
@@ -108,7 +108,7 @@
 <div id="wrapper">
 
     <!-- sideBar :: communityList, communityNameList -->
-    <div th:replace="/fragment/sideBar :: sideBar"> </div>
+    <div th:replace="fragment/sideBar :: sideBar"> </div>
 
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
@@ -117,7 +117,7 @@
         <div id="content">
 
             <!-- topBar :: loginId -->
-            <div th:replace="/fragment/topBar :: topBar"> </div>
+            <div th:replace="fragment/topBar :: topBar"> </div>
 
             <!-- article_content -->
             <div class="article_content" style=" max-width: 1412px; padding-left: 10px; padding-right: 10px;">
@@ -125,7 +125,7 @@
                     <div class="col-lg-12">
                         <div class="card shadow" style="border:1px solid lightgray;">
                             <div class="card-header align-items-center " style="padding-top: 14px;padding-bottom: 4px;">
-                                <img th:src="${'/static/profile/'+post.profileImg}" class="profileImg picture large" style="margin-right: 15px; width: 40px; float: left; height: 40px;">
+                                <img th:src="${'static/profile/'+post.profileImg}" class="profileImg picture large" style="margin-right: 15px; width: 40px; float: left; height: 40px;">
                                 <span class="post-writer" th:text="${post.writerName}"></span>
 
                                 <!-- writer status -->
@@ -244,7 +244,7 @@
                             <div class="card ">
                                 <form>
                                     <div class="card-header align-items-center" style="background-color: white; border:none;">
-                                        <img th:src="${'/static/profile/'+comment_level1.profileImg}" class="propicture large" style="margin-right: 15px;width: 40px;float: left;height: 40px;">
+                                        <img th:src="${'static/profile/'+comment_level1.profileImg}" class="propicture large" style="margin-right: 15px;width: 40px;float: left;height: 40px;">
                                         <span class="comment-writer" th:text="${comment_level1.writerName}">익명</span>
                                         <ul th:if="${comment_level1.writer == session.loginId || session.authority == 'master'}" class="status" style="list-style: none;float: right;margin-bottom: 0px;font-size: 10px;">
                                             <li class="comment-subButton">
@@ -351,7 +351,7 @@
                                 <div class="card ">
                                     <form>
                                         <div class="card-header align-items-center" style="border:none; background-color: white;">
-                                            <img th:src="${'/static/profile/'+comment_level2.profileImg}" class="profileImg picture large" style="margin-right: 15px;width: 40px;float: left;height: 40px;">
+                                            <img th:src="${'static/profile/'+comment_level2.profileImg}" class="profileImg picture large" style="margin-right: 15px;width: 40px;float: left;height: 40px;">
                                             <span class="comment-writer" th:text="${comment_level2.writerName}">익명</span>
                                             <ul th:if="${comment_level2.writer == session.loginId || session.authority == 'master'}" class="status" style="list-style: none;float: right;margin-bottom: 0px;font-size: 13px;">
                                                 <li class="comment-subButton">
@@ -457,7 +457,7 @@
                                     <div class="card ">
                                         <form>
                                             <div class="card-header align-items-center" style="border:none; background-color: white;">
-                                                <img th:src="${'/static/profile/'+comment_level3.profileImg}" class="profileImg picture large" style="margin-right: 15px;width: 40px;float: left;height: 40px;">
+                                                <img th:src="${'static/profile/'+comment_level3.profileImg}" class="profileImg picture large" style="margin-right: 15px;width: 40px;float: left;height: 40px;">
                                                 <span class="comment-writer" th:text="${comment_level3.writerName}">익명</span>
                                                 <ul th:if="${comment_level3.writer == session.loginId || session.authority == 'master'}" class="status" style="list-style: none;float: right;margin-bottom: 0px;font-size: 10px;">
                                                     <li class="comment-subButton">
@@ -535,20 +535,20 @@
         <!-- End of Main Content -->
 
         <!-- Footer -->
-        <div th:replace="/fragment/footer :: footer"> </div>
+        <div th:replace="fragment/footer :: footer"> </div>
     </div>
     <!-- End of Content Wrapper -->
 </div>
 <!-- End of Page Wrapper -->
 
 <!-- Scroll to Top Button-->
-<div th:replace="/fragment/scrollButton :: scrollButton"> </div>
+<div th:replace="fragment/scrollButton :: scrollButton"> </div>
 
 <!-- Logout Modal-->
-<div th:replace="/fragment/logoutModal :: logoutModal"> </div>
+<div th:replace="fragment/logoutModal :: logoutModal"> </div>
 
 <!-- BottomScript-->
-<div th:replace="/fragment/bottomScript :: bottomScript"> </div>
+<div th:replace="fragment/bottomScript :: bottomScript"> </div>
 
 </body>
 <script>
@@ -573,11 +573,11 @@
                     }
                     else if(data == 'dislike'){
                         like.innerHTML = parseInt(likeCnt)-1;
-                        like.style.backgroundImage = "url('/static/icon/like_no.png')";
+                        like.style.backgroundImage = "url('static/icon/like_no.png')";
                     }
                     else{
                         like.innerHTML = parseInt(likeCnt)+1;
-                        like.style.backgroundImage = "url('/static/icon/like_ok.png')";
+                        like.style.backgroundImage = "url('static/icon/like_ok.png')";
                     }
                 },
                 error: function (request, status, error){

@@ -12,7 +12,7 @@
 <div id="wrapper">
 
     <!-- sideBar :: communityList, communityNameList -->
-    <div th:replace="/fragment/sideBar :: sideBar"> </div>
+    <div th:replace="fragment/sideBar :: sideBar"> </div>
 
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
@@ -21,7 +21,7 @@
         <div id="content">
 
             <!-- topBar :: loginId -->
-            <div th:replace="/fragment/topBar :: topBar"> </div>
+            <div th:replace="fragment/topBar :: topBar"> </div>
 
             <!-- Begin Page Content -->
             <div>
@@ -98,20 +98,20 @@
         <!-- End of Main Content -->
 
         <!-- Footer -->
-        <div th:replace="/fragment/footer :: footer"> </div>
+        <div th:replace="fragment/footer :: footer"> </div>
     </div>
     <!-- End of Content Wrapper -->
 </div>
 <!-- End of Page Wrapper -->
 
 <!-- Scroll to Top Button-->
-<div th:replace="/fragment/scrollButton :: scrollButton"> </div>
+<div th:replace="fragment/scrollButton :: scrollButton"> </div>
 
 <!-- Logout Modal-->
-<div th:replace="/fragment/logoutModal :: logoutModal"> </div>
+<div th:replace="fragment/logoutModal :: logoutModal"> </div>
 
 <!-- BottomScript-->
-<div th:replace="/fragment/bottomScript :: bottomScript"> </div>
+<div th:replace="fragment/bottomScript :: bottomScript"> </div>
 
 <script th:inline="javascript">
 /*<![CDATA[*/

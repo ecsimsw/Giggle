@@ -60,6 +60,10 @@ public class MemberService {
         }
 
         member.setProfileImg(fileName);
+
+        log.info("filePath : " + filePath);
+        log.info("fileName : " + fileName);
+        
     }
 
     public List getAllProfile(){
