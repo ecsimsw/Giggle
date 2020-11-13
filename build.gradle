@@ -33,9 +33,10 @@ dependencies {
     }
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.9'
     compile group: 'commons-io', name: 'commons-io', version: '2.6'
-
     implementation 'org.springframework.boot:spring-boot-starter-mail'
 
+    compile('org.springframework.cloud:spring-cloud-starter-aws')
+    implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-aws', version: '2.2.1.RELEASE'
 }
 
 test {

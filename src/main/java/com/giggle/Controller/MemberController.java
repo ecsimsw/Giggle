@@ -7,6 +7,7 @@ import com.giggle.Domain.Entity.MemberType;
 import com.giggle.Domain.Form.JoinForm;
 import com.giggle.Domain.Form.LoginForm;
 import com.giggle.Domain.Form.MemberInfo;
+import com.giggle.S3Uploader;
 import com.giggle.Validation.CheckAuthority;
 import com.giggle.Validation.JoinValidator;
 import com.giggle.Validation.Message.EjoinMessage;
@@ -38,9 +39,10 @@ public class MemberController {
     private final MemberService memberService;
     private final ObjectMapper objectMapper;
 
-    @Autowired private JoinValidator joinValidator;
+    private final JoinValidator joinValidator;
+    private final CheckAuthority checkAuthority;
 
-    @Autowired private CheckAuthority checkAuthority;
+    private final S3Uploader s3Uploader;
 
     @GetMapping("/login")
     public String login() { return "loginForm"; }
@@ -175,26 +177,19 @@ public class MemberController {
 
     @PostMapping("/setting/profileImg")
     public String updateProfileImg(long id, HttpServletRequest httpServletRequest, MultipartFile profileImg) throws IOException {
-        String basePath = httpServletRequest.getServletContext().getRealPath("/");
-        basePath+="profile/default.png";
 
-        String fileName = profileImg.getOriginalFilename();
-        if(fileName.equals("stranger.png") || fileName.equals("default.png")) {
-            throw new RuntimeException("Invalid file name");
-        }
+        String dirName = "test";
+        return s3Uploader.upload(profileImg, dirName);
 
-        File tempFile = new File(basePath);
-        log.info("basePath : "+ basePath);
-        log.info("fileName : "+ tempFile.exists());
-
-        basePath = "/static/file/profile/default.png";
-        tempFile = new File(basePath);
-        log.info("basePath : "+ basePath);
-        log.info("fileName : "+ tempFile.exists());
-        log.info("fileName : "+ tempFile.getPath());
-
+//        String basePath = httpServletRequest.getServletContext().getRealPath("/profile");
+//        basePath+="profile/default.png";
+//
+//        String fileName = profileImg.getOriginalFilename();
+//        if(fileName.equals("stranger.png") || fileName.equals("default.png")) {
+//            throw new RuntimeException("Invalid file name");
+//        }
 //        memberService.addProfileImg(profileImg,basePath,id);
-        return "redirect:/member/setting";
+//        return "redirect:/member/setting";
     }
     @PostMapping("/setting/memberInfo")
     public String settingMemberInfo(MemberInfo memberInfo, Model model,  HttpSession session){
