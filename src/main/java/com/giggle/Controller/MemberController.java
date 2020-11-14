@@ -1,6 +1,5 @@
 package com.giggle.Controller;
 
-import com.amazonaws.services.s3.AmazonS3;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.giggle.Domain.Entity.Member;
@@ -8,8 +7,6 @@ import com.giggle.Domain.Entity.MemberType;
 import com.giggle.Domain.Form.JoinForm;
 import com.giggle.Domain.Form.LoginForm;
 import com.giggle.Domain.Form.MemberInfo;
-import com.giggle.S3Service;
-import com.giggle.S3Uploader;
 import com.giggle.Validation.CheckAuthority;
 import com.giggle.Validation.JoinValidator;
 import com.giggle.Validation.Message.EjoinMessage;
@@ -18,7 +15,6 @@ import com.giggle.Service.MemberService;
 import com.giggle.Validation.Permission;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -26,10 +22,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -43,9 +37,6 @@ public class MemberController {
 
     private final JoinValidator joinValidator;
     private final CheckAuthority checkAuthority;
-
-    private final S3Uploader s3Uploader;
-    private final S3Service s3Service;
 
     @GetMapping("/login")
     public String login() { return "loginForm"; }

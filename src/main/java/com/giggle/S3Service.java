@@ -60,21 +60,27 @@ public class S3Service {
         return upload(uploadFile, dirName);
     }
 
+    public String upload(MultipartFile multipartFile, String dirName, String fileName) throws IOException {
+        File uploadFile = convert(multipartFile)
+                .orElseThrow(() -> new IllegalArgumentException("MultipartFile -> File로 전환이 실패했습니다."));
+
+        return upload(uploadFile, dirName, fileName);
+    }
+
     private String upload(File uploadFile, String dirName) {
-        String fileName = dirName + "/" + uploadFile.getName();
-        String uploadImageUrl = putS3(uploadFile, fileName);
-        removeNewFile(uploadFile);
+        return upload(uploadFile, dirName, uploadFile.getName());
+    }
+
+    private String upload(File uploadFile, String dirName, String fileName) {
+        String name = dirName + "/" + fileName;
+        String uploadImageUrl = putS3(uploadFile, name);
+        if(uploadFile.exists()) uploadFile.delete();
         return uploadImageUrl;
     }
 
     private String putS3(File uploadFile, String fileName) {
         amazonS3Client.putObject(new PutObjectRequest(bucket, fileName, uploadFile).withCannedAcl(CannedAccessControlList.PublicRead));
         return amazonS3Client.getUrl(bucket, fileName).toString();
-    }
-
-    private void removeNewFile(File targetFile) {
-        if (targetFile.delete()) { log.info("파일이 삭제되었습니다.");
-        } else { log.info("파일이 삭제되지 못했습니다."); }
     }
 
     private Optional<File> convert(MultipartFile file) throws IOException {
