@@ -51,6 +51,15 @@ public class S3Uploader {
         }
     }
 
+    public void removeFile(File targetFile) {
+        if (targetFile.delete()) {
+            log.info("파일이 삭제되었습니다.");
+        } else {
+            log.info("파일이 삭제되지 못했습니다.");
+        }
+    }
+
+
     private Optional<File> convert(MultipartFile file) throws IOException {
         File convertFile = new File(file.getOriginalFilename());
         if(convertFile.createNewFile()) {

@@ -1,5 +1,6 @@
 package com.giggle.Controller;
 
+import com.amazonaws.services.s3.AmazonS3;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.giggle.Domain.Entity.Member;
@@ -7,6 +8,7 @@ import com.giggle.Domain.Entity.MemberType;
 import com.giggle.Domain.Form.JoinForm;
 import com.giggle.Domain.Form.LoginForm;
 import com.giggle.Domain.Form.MemberInfo;
+import com.giggle.S3Service;
 import com.giggle.S3Uploader;
 import com.giggle.Validation.CheckAuthority;
 import com.giggle.Validation.JoinValidator;
@@ -43,6 +45,7 @@ public class MemberController {
     private final CheckAuthority checkAuthority;
 
     private final S3Uploader s3Uploader;
+    private final S3Service s3Service;
 
     @GetMapping("/login")
     public String login() { return "loginForm"; }
@@ -177,19 +180,51 @@ public class MemberController {
 
     @PostMapping("/setting/profileImg")
     public String updateProfileImg(long id, HttpServletRequest httpServletRequest, MultipartFile profileImg) throws IOException {
+        // ---- in window
 
-        String dirName = "test";
-        return s3Uploader.upload(profileImg, dirName);
+        //        String basePath = httpServletRequest.getServletContext().getRealPath("/profile");
+        //        String fileName = profileImg.getOriginalFilename();
 
-//        String basePath = httpServletRequest.getServletContext().getRealPath("/profile");
-//        basePath+="profile/default.png";
-//
+        //        if(fileName.equals("stranger.png") || fileName.equals("default.png")) {
+        //            throw new RuntimeException("Invalid file name");
+        //        }
+        //        memberService.addProfileImg(profileImg,basePath,id);
+
+        // ---- integration AWS/s3
+
+//        String basePath = "profile";
 //        String fileName = profileImg.getOriginalFilename();
+//
+//        if(profileImg.isEmpty()) return "redirect:/member/setting";
 //        if(fileName.equals("stranger.png") || fileName.equals("default.png")) {
 //            throw new RuntimeException("Invalid file name");
 //        }
-//        memberService.addProfileImg(profileImg,basePath,id);
-//        return "redirect:/member/setting";
+//
+//        s3Uploader.upload(profileImg, basePath);
+
+        Regions clientRegion = Regions.DEFAULT_REGION;
+        String bucketName = "*** Bucket name ***";
+        String keyName = "*** Key name ****";
+
+        try {
+            AmazonS3 s3Client = AmazonS3ClientBuilder.standard()
+                    .withCredentials(new ProfileCredentialsProvider())
+                    .withRegion(clientRegion)
+                    .build();
+
+            s3Client.deleteObject(new DeleteObjectRequest(bucketName, keyName));
+        } catch (AmazonServiceException e) {
+            // The call was transmitted successfully, but Amazon S3 couldn't process
+            // it, so it returned an error response.
+            e.printStackTrace();
+        } catch (SdkClientException e) {
+            // Amazon S3 couldn't be contacted for a response, or the client
+            // couldn't parse the response from Amazon S3.
+            e.printStackTrace();
+        }
+
+
+        return "redirect:/member/setting";
     }
     @PostMapping("/setting/memberInfo")
     public String settingMemberInfo(MemberInfo memberInfo, Model model,  HttpSession session){
