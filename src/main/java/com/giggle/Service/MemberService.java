@@ -1,11 +1,13 @@
 package com.giggle.Service;
 
+import com.amazonaws.services.s3.AmazonS3;
 import com.giggle.Domain.Entity.Email;
 import com.giggle.Domain.Entity.MemberType;
 import com.giggle.Domain.Form.JoinForm;
 import com.giggle.Domain.Form.LoginForm;
 import com.giggle.Domain.Entity.Member;
 import com.giggle.Domain.Form.MemberInfo;
+import com.giggle.S3Service;
 import com.giggle.Validation.Message.EjoinMessage;
 import com.giggle.Validation.Message.EloginMessage;
 import com.giggle.Repository.MemberRepository;
@@ -32,8 +34,9 @@ import java.util.Random;
 public class MemberService {
 
     private final MemberRepository memberRepository;
+    private final S3Service s3Service;
 
-    @Autowired private final JavaMailSender javaMailSender;
+    private final JavaMailSender javaMailSender;
 
     @Transactional
     public void addProfileImg(MultipartFile multipartFile, String resourceSrc, long id) throws IOException {
@@ -60,10 +63,35 @@ public class MemberService {
         }
 
         member.setProfileImg(fileName);
+    }
 
-        log.info("filePath : " + filePath);
-        log.info("fileName : " + fileName);
+    @Transactional
+    public void addProfileImgWithS3(MultipartFile multipartFile, String baseSrc, long id) throws IOException {
+        AmazonS3 s3Client = s3Service.getS3Client();
 
+        Member member = memberRepository.findById(id);
+
+        // 이전 사진 파일 삭제
+        String beforeFileName = member.getProfileImg();
+        if(!beforeFileName.equals("default.png")){
+            String beforeFilePath = baseSrc +"/"+ beforeFileName;
+            boolean isExistObject = s3Client.doesObjectExist(s3Service.getBucket(), beforeFilePath);
+            if (isExistObject == true) {
+                s3Client.deleteObject(s3Service.getBucket(), beforeFilePath);
+            }
+        }
+
+        // 현재 사진 파일 S3 저장
+        String sourceFileName = multipartFile.getOriginalFilename();
+
+        int dateTimeInteger = (int) (new Date().getTime()/1000);
+        // 현재 날짜, 시간을 기준으로 구별값 첨부 -> 중복 방지
+        String fileName = dateTimeInteger+sourceFileName;
+        String filePath = baseSrc +"/"+ fileName;
+        s3Service.upload(multipartFile, filePath);
+
+        // 회원의 profileImg에 fileName 기록
+        member.setProfileImg(fileName);
     }
 
     public List getAllProfile(){

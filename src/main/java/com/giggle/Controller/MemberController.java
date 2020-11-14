@@ -178,54 +178,36 @@ public class MemberController {
         return "userSetting";
     }
 
+    // ---- integration AWS/s3
     @PostMapping("/setting/profileImg")
-    public String updateProfileImg(long id, HttpServletRequest httpServletRequest, MultipartFile profileImg) throws IOException {
-        // ---- in window
+    public String updateProfileImg(long id, MultipartFile profileImg) throws IOException {
+        String basePath = "profile";
+        String fileName = profileImg.getOriginalFilename();
 
-        //        String basePath = httpServletRequest.getServletContext().getRealPath("/profile");
-        //        String fileName = profileImg.getOriginalFilename();
-
-        //        if(fileName.equals("stranger.png") || fileName.equals("default.png")) {
-        //            throw new RuntimeException("Invalid file name");
-        //        }
-        //        memberService.addProfileImg(profileImg,basePath,id);
-
-        // ---- integration AWS/s3
-
-//        String basePath = "profile";
-//        String fileName = profileImg.getOriginalFilename();
-//
-//        if(profileImg.isEmpty()) return "redirect:/member/setting";
-//        if(fileName.equals("stranger.png") || fileName.equals("default.png")) {
-//            throw new RuntimeException("Invalid file name");
-//        }
-//
-//        s3Uploader.upload(profileImg, basePath);
-
-        Regions clientRegion = Regions.DEFAULT_REGION;
-        String bucketName = "*** Bucket name ***";
-        String keyName = "*** Key name ****";
-
-        try {
-            AmazonS3 s3Client = AmazonS3ClientBuilder.standard()
-                    .withCredentials(new ProfileCredentialsProvider())
-                    .withRegion(clientRegion)
-                    .build();
-
-            s3Client.deleteObject(new DeleteObjectRequest(bucketName, keyName));
-        } catch (AmazonServiceException e) {
-            // The call was transmitted successfully, but Amazon S3 couldn't process
-            // it, so it returned an error response.
-            e.printStackTrace();
-        } catch (SdkClientException e) {
-            // Amazon S3 couldn't be contacted for a response, or the client
-            // couldn't parse the response from Amazon S3.
-            e.printStackTrace();
+        if (profileImg.isEmpty()) return "redirect:/member/setting";
+        if (fileName.equals("stranger.png") || fileName.equals("default.png")) {
+            throw new RuntimeException("Invalid file name");
         }
 
+        memberService.addProfileImgWithS3(profileImg,basePath,id);
 
         return "redirect:/member/setting";
     }
+
+//    ---- in window
+//    @PostMapping("/setting/profileImg")
+//    public String updateProfileImg(long id, HttpServletRequest httpServletRequest, MultipartFile profileImg) throws IOException {
+//        String basePath = httpServletRequest.getServletContext().getRealPath("/profile");
+//        String fileName = profileImg.getOriginalFilename();
+//
+//        if(fileName.equals("stranger.png") || fileName.equals("default.png")) {
+//            throw new RuntimeException("Invalid file name");
+//        }
+//        memberService.addProfileImg(profileImg,basePath,id);
+//
+//        return "redirect:/member/setting";
+//    }
+
     @PostMapping("/setting/memberInfo")
     public String settingMemberInfo(MemberInfo memberInfo, Model model,  HttpSession session){
 
