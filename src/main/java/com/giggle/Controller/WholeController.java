@@ -15,9 +15,9 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 public class WholeController {
-    @ExceptionHandler(RuntimeException.class)
-    public String runtimeExceptionHandler(RuntimeException re, Model model){
-        model.addAttribute("message", re.getMessage());
-        return "runtimeError";
-    }
+//    @ExceptionHandler(RuntimeException.class)
+//    public String runtimeExceptionHandler(RuntimeException re, Model model){
+//        model.addAttribute("message", re.getMessage());
+//        return "runtimeError";
+//    }
 }
