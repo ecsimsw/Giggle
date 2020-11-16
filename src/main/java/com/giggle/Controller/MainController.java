@@ -258,7 +258,7 @@ public class MainController {
     @GetMapping("/edit/dashBoard/imgBoard/deleteImg")
     public String editImgBoard(@RequestParam(value="imageFiles") long[] idArr, HttpServletRequest request){
 
-        String basePath = s3Path;
+        String basePath = "mainBoardImg";
         pageService.deleteImgArrWithS3(idArr, basePath);
 
         return "redirect:/main";
@@ -289,7 +289,7 @@ public class MainController {
     @PostMapping("/edit/dashBoard/imgBoard/addImg")
     public String addImg(MultipartHttpServletRequest multipartHttpServletRequest) throws IOException {
 
-        String basePath = s3Path;
+        String basePath = "mainBoardImg";
 
         MultipartFile[] multipartFiles = new MultipartFile[limitAdditionImgCnt];
 
