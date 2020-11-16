@@ -24,8 +24,8 @@
                         </td>
                         <td style="white-space: nowrap; width:20%;" th:text="${hotPost.post.writerName}">writer</td>
                         <td style="width:15%;">
-                            <img class="img-profile rounded-circle" th:src="${'/static/profile/'+hotPost.post.profileImg}"
-                                 style="height: 28px;">
+<!--                            <img class="img-profile rounded-circle" th:src="${'/static/profile/'+hotPost.post.profileImg}" style="height: 28px;">-->
+                            <img class="img-profile rounded-circle" th:src="${@environment.getProperty('s3.path')+'/profile/'+hotPost.post.profileImg}" style="height: 28px;">
                         </td>
                     </tr>
                     </tbody>
