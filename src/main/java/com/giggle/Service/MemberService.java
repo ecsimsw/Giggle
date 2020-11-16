@@ -130,12 +130,12 @@ public class MemberService {
         member.setLoginPw(joinForm.getLoginPw());
         member.setName(joinForm.getName());
         member.setMemberType(MemberType.member);
-        member.setEmail(joinForm.getEmail());
+//        member.setEmail(joinForm.getEmail());
         member.setProfileImg("default.png");
         memberRepository.save(member);
 
-        Email tempMail = memberRepository.findEmailByAddress(member.getEmail());
-        this.changeEmailUsed(tempMail.getId());
+//        Email tempMail = memberRepository.findEmailByAddress(member.getEmail());
+//        this.changeEmailUsed(tempMail.getId());
 
         return EjoinMessage.success;
     }

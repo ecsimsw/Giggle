@@ -21,14 +21,13 @@
         <button type="button" style="float:right; font-size:12px;" onclick="checkNameDuplicate()" class="btn">중복 확인</button>
         <input type="text" id ="name" name="name" class="form-control" placeholder="name" required="">
         <br>
-        <label for="email">email</label>
-        <button type="button" style="float:right; font-size:12px;" onclick="sendAuthMail()" class="btn">인증 메일 전송</button>
-        <input type="text" id ="email" name="email" class="form-control" placeholder="email" required="">
-        <br>
-        <label for="emailCheck">인증 번호</label>
-        <input type="text" id ="emailCheck" name="emailCheck" class="form-control" placeholder="emailCheck" required="">
-
-        <br>
+<!--        <label for="email">email</label>-->
+<!--        <button type="button" style="float:right; font-size:12px;" onclick="sendAuthMail()" class="btn">인증 메일 전송</button>-->
+<!--        <input type="text" id ="email" name="email" class="form-control" placeholder="email" required="">-->
+<!--        <br>-->
+<!--        <label for="emailCheck">인증 번호</label>-->
+<!--        <input type="text" id ="emailCheck" name="emailCheck" class="form-control" placeholder="emailCheck" required="">-->
+<!--        <br>-->
         <label for="id">id</label>
         <button type="button" style="float:right; font-size:12px;" onclick="checkIdDuplicate()" class="btn">중복 확인</button>
         <!--button의 타입설정 안하면, 폼 submit됨-->
@@ -47,14 +46,14 @@
         <button type="button" style="float:right; font-size:12px;" onclick="checkNameDuplicate()" class="btn">중복 확인</button>
         <input type="text" id ="name" name="name" th:value="${joinForm.name}" class="form-control" placeholder="name" required="">
         <br>
-        <label for="email">email</label>
-        <button type="button" style="float:right; font-size:12px;" onclick="sendAuthMail()" class="btn">인증 메일 전송</button>
-        <input type="text" id ="email" name="email" th:value="${joinForm.email}" class="form-control" placeholder="email" required="">
-        <br>
-        <label for="emailCheck">인증 번호</label>
-        <input type="text" id ="emailCheck" name="emailCheck" class="form-control" placeholder="emailCheck" required="">
 
-        <br>
+<!--        <label for="email">email</label>-->
+<!--        <button type="button" style="float:right; font-size:12px;" onclick="sendAuthMail()" class="btn">인증 메일 전송</button>-->
+<!--        <input type="text" id ="email" name="email" th:value="${joinForm.email}" class="form-control" placeholder="email" required="">-->
+<!--        <br>-->
+<!--        <label for="emailCheck">인증 번호</label>-->
+<!--        <input type="text" id ="emailCheck" name="emailCheck" class="form-control" placeholder="emailCheck" required="">-->
+<!--        <br>-->
         <label for="id">id</label>
         <button type="button" style="float:right; font-size:12px;" onclick="checkIdDuplicate()" class="btn">중복 확인</button>
         <input type="text" id = "id" name="loginId" th:value="${joinForm.loginId}" class="form-control" placeholder="Id" required="" autofocus="">
@@ -73,7 +72,8 @@
 <script>
         var checkDuplicatedId = false;
         var checkDuplicatedName = false;
-        var checkSendEmail = false;
+<!--        var checkSendEmail = false;     // 이메일 인증 패스-->
+        var checkSendEmail = true;
 
             function checkField(){
                 if(checkDuplicatedName == false){

@@ -93,15 +93,16 @@ public class MemberController {
             throw new RuntimeException("Invalid joinForm");
         }
 
-        String email = joinForm.getEmail();
-        String enteredKey = joinForm.getEmailCheck();
-
-        if(!memberService.verifyEmail(email, enteredKey)){
-            // 인증 번호가 틀릴 경우
-            redirectAttributes.addFlashAttribute("message", "이메일 인증 번호 불일치");
-            redirectAttributes.addFlashAttribute("joinForm", joinForm);
-            return "redirect:/member/join";
-        };
+        // 이메일 인증 패스
+//        String email = joinForm.getEmail();
+//        String enteredKey = joinForm.getEmailCheck();
+//
+//        if(!memberService.verifyEmail(email, enteredKey)){
+//            // 인증 번호가 틀릴 경우
+//            redirectAttributes.addFlashAttribute("message", "이메일 인증 번호 불일치");
+//            redirectAttributes.addFlashAttribute("joinForm", joinForm);
+//            return "redirect:/member/join";
+//        };
 
         EjoinMessage resultMessage = memberService.join(joinForm);
 
