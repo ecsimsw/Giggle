@@ -12,6 +12,7 @@ import com.giggle.Repository.MainCategoryRepository;
 import com.giggle.Repository.MiddleCategoryRepository;
 import com.giggle.Repository.PostRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +21,7 @@ import java.util.List;
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
+@Slf4j
 public class CategoryService {
 
     private final CategoryRepository categoryRepository;
@@ -30,12 +32,12 @@ public class CategoryService {
 
     @Transactional
     public void createMainCategory(CreateMainCategoryForm createMainCategoryForm){
-        MainCategory newMainCategory = new MainCategory();
+        MainCategory mainCategory = new MainCategory();
 
-        newMainCategory.setName(createMainCategoryForm.getName());
-        newMainCategory.setDescription(createMainCategoryForm.getDescription());
-
-        mainCategoryRepository.save(newMainCategory);
+        mainCategory.setName(createMainCategoryForm.getName());
+        mainCategory.setDescription(createMainCategoryForm.getDescription());
+        mainCategory.setPostCnt(0);
+        mainCategoryRepository.save(mainCategory);
     }
 
     public List<MainCategory> getAllMainCategory(){
@@ -55,6 +57,7 @@ public class CategoryService {
         MiddleCategory middleCategory = new MiddleCategory();
         middleCategory.setMainCategory(mainCategoryRepository.findById(createMiddleCategoryForm.getMainCategoryId()));
         middleCategory.setName(createMiddleCategoryForm.getName());
+        middleCategory.setPostCnt(0);
 
         middleCategoryRepository.save(middleCategory);
     }
@@ -92,6 +95,10 @@ public class CategoryService {
         Category category = categoryRepository.findById(categoryId);
         int dif = postCnt - category.getPostCnt();
         category.setPostCnt(postCnt);
+
+        log.info("Category : "+ category.getId());
+        log.info("middleCategory : "+ category.getMiddleCategory().getId());
+        log.info("middleCategory postCnt : "+ category.getMiddleCategory().getPostCnt());
 
         MiddleCategory middleCategory = category.getMiddleCategory();
         middleCategoryRepository.updatePostCnt(middleCategory.getId(), middleCategory.getPostCnt()+dif);

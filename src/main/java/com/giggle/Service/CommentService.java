@@ -6,7 +6,6 @@ import com.giggle.Domain.Form.ActivityForm;
 import com.giggle.Domain.Form.CreateCommentForm;
 import com.giggle.Repository.CommentRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.giggle.Domain.Entity.Comment;
@@ -33,7 +32,7 @@ public class CommentService {
             long supCommentId = Long.parseLong(createCommentForm.getCommentId());
             Comment supComment = commentRepository.findById(supCommentId);
 
-            if(!supComment.getIsLive()){
+            if(!supComment.getLive()){
                 throw new RuntimeException("SuperComment is already dead");
             }
             newComment.setLevel(supComment.getLevel()+1);
@@ -48,7 +47,7 @@ public class CommentService {
         newComment.setWriter(writer.getLoginId());
         newComment.setProfileImg(writer.getProfileImg());
 
-        newComment.setIsLive(true);
+        newComment.setLive(true);
         commentRepository.save(newComment);
     }
 
@@ -66,7 +65,7 @@ public class CommentService {
                 }
                 superComment.getSubComment().remove(commentToDelete);
                 commentRepository.deleteById(commentToDelete.getId());
-                if(superComment.getSubComment().size()==0 && !superComment.getIsLive()){
+                if(superComment.getSubComment().size()==0 && !superComment.getLive()){
                     commentToDelete = superComment;
                 }
                 else{ break; }
@@ -74,7 +73,7 @@ public class CommentService {
         }
         else if(commentToDelete!=null){
             commentToDelete.setContent("삭제된 댓글입니다.");
-            commentToDelete.setIsLive(false);
+            commentToDelete.setLive(false);
         }
     }
 

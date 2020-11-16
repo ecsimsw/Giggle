@@ -46,5 +46,5 @@ public class Comment {
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss")
     private LocalDateTime dateTime;
 
-    private Boolean isLive;
+    private Boolean live;
 }
