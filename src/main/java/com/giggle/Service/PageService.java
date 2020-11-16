@@ -1,7 +1,9 @@
 package com.giggle.Service;
 
+import com.amazonaws.services.s3.AmazonS3;
 import com.giggle.Domain.Entity.*;
 import com.giggle.Repository.PageRepository;
+import com.giggle.S3Service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
@@ -11,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -20,6 +23,7 @@ import java.util.List;
 public class PageService {
 
     private final PageRepository pageRepository;
+    private final S3Service s3Service;
 
     /// edit Main img Board
     @Transactional
@@ -27,10 +31,28 @@ public class PageService {
         for(MultipartFile file : multipartFiles){
             if(file != null) {
                 String sourceFileName = file.getOriginalFilename();
-                String sourceFileExtension = FilenameUtils.getExtension(sourceFileName).toLowerCase();
                 String fileName = sourceFileName;
                 File destFile = new File(resourceSrc +"/"+ fileName);
                 file.transferTo(destFile);
+                pageRepository.createMainBoardImg(fileName);
+            }
+        }
+    }
+
+    @Transactional
+    public void addImgBoardWithS3(MultipartFile[] multipartFiles, String basePath) throws IOException {
+        for(MultipartFile file : multipartFiles){
+            if(file != null) {
+                // 현재 사진 파일 S3 저장
+                String sourceFileName = file.getOriginalFilename();
+
+                // 현재 날짜, 시간을 기준으로 구별값 첨부 -> 중복 방지
+                int dateTimeInteger = (int) (new Date().getTime()/1000);
+                String fileName = dateTimeInteger+sourceFileName;
+                log.info("fileName : " + fileName);
+
+                s3Service.upload(file, basePath, fileName);
+
                 pageRepository.createMainBoardImg(fileName);
             }
         }
@@ -58,6 +80,22 @@ public class PageService {
             MainBoardImg mainBoardImg = pageRepository.findMainBoardImgById(id);
             File deleteFile = new File(basePath+"/"+mainBoardImg.getFileName());
             if(deleteFile.exists()) { deleteFile.delete(); }
+            pageRepository.deleteMainBoardImg(mainBoardImg);
+        }
+    }
+
+    @Transactional
+    public void deleteImgArrWithS3(long[] idArr, String basePath){
+        for(long id : idArr){
+            MainBoardImg mainBoardImg = pageRepository.findMainBoardImgById(id);
+
+            AmazonS3 s3Client = s3Service.s3Client;
+
+            String filePath = basePath+"/"+mainBoardImg.getFileName();
+            boolean isExistObject = s3Client.doesObjectExist(s3Service.getBucket(), filePath);
+            if (isExistObject == true) {
+                s3Client.deleteObject(s3Service.getBucket(), filePath);
+            }
             pageRepository.deleteMainBoardImg(mainBoardImg);
         }
     }

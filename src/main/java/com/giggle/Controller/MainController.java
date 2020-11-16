@@ -7,6 +7,7 @@ import com.giggle.Validation.Permission;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -33,7 +34,7 @@ public class MainController {
     private final int limitAdditionImgCnt = 5;  // edit/imgBoard 에서 한번에 추가할 수 있는 사진 개수 제한
     private final String nameId = "add_";  // edit/imgBoard 에서 사진 name 형식 : add_1 ~ add_n
 
-    @Autowired CheckAuthority checkAuthority;
+    @Value("${s3.path}") private String s3Path;
 
     @GetMapping("")
     public String mainPage(Model model, HttpSession session){
@@ -69,7 +70,8 @@ public class MainController {
 
         // main image board
 
-        List<String> mainBoardImgSrc = pageService.getMainBoardImgSrc("/static/mainBoardImg");
+//        List<String> mainBoardImgSrc = pageService.getMainBoardImgSrc("/static/mainBoardImg");
+        List<String> mainBoardImgSrc = pageService.getMainBoardImgSrc(s3Path+"/mainBoardImg");
         model.addAttribute("mainBoardImgSrc",mainBoardImgSrc);
 
         // shortCut
@@ -178,7 +180,8 @@ public class MainController {
 
         else if(dashBoard.getType() == DashBoardType.imgBoard){
             // main image board
-            List<String> mainBoardImgSrc = pageService.getMainBoardImgSrc("/static/mainBoardImg");
+//            List<String> mainBoardImgSrc = pageService.getMainBoardImgSrc("/static/mainBoardImg");
+            List<String> mainBoardImgSrc = pageService.getMainBoardImgSrc(s3Path+"/mainBoardImg");
             model.addAttribute("mainBoardImgSrc",mainBoardImgSrc);
 
             // limitAdditionImgCnt
@@ -238,24 +241,55 @@ public class MainController {
         return "redirect:/main";
     }
 
-    // edit img board
+    // edit img board with window
+//    @Permission(authority = MemberType.admin)
+//    @GetMapping("/edit/dashBoard/imgBoard/deleteImg")
+//    public String editImgBoard(@RequestParam(value="imageFiles") long[] idArr, HttpServletRequest request){
+//
+//        String resourceSrc = request.getServletContext().getRealPath("/mainBoardImg");
+//
+//        pageService.deleteImgArr(idArr, resourceSrc);
+//
+//        return "redirect:/main";
+//    }
+
+    // edit img board with s3
     @Permission(authority = MemberType.admin)
     @GetMapping("/edit/dashBoard/imgBoard/deleteImg")
     public String editImgBoard(@RequestParam(value="imageFiles") long[] idArr, HttpServletRequest request){
 
-        String resourceSrc = request.getServletContext().getRealPath("/mainBoardImg");
-
-        pageService.deleteImgArr(idArr, resourceSrc);
+        String basePath = s3Path;
+        pageService.deleteImgArrWithS3(idArr, basePath);
 
         return "redirect:/main";
     }
 
+    // addImg with window
+//    @Permission(authority = MemberType.admin)
+//    @PostMapping("/edit/dashBoard/imgBoard/addImg")
+//    public String addImg(MultipartHttpServletRequest multipartHttpServletRequest,
+//                         HttpServletRequest request) throws IOException {
+//
+//        String resourceSrc = request.getServletContext().getRealPath("/mainBoardImg");
+//
+//        MultipartFile[] multipartFiles = new MultipartFile[limitAdditionImgCnt];
+//
+//        for(int i =0; i<limitAdditionImgCnt; i++){
+//            MultipartFile requestFile = multipartHttpServletRequest.getFile(nameId+i);
+//            multipartFiles[i] = requestFile;
+//        }
+//
+//        pageService.addImgBoard(multipartFiles, resourceSrc);
+//
+//        return "redirect:/main";
+//    }
+
+    // addImg with S3
     @Permission(authority = MemberType.admin)
     @PostMapping("/edit/dashBoard/imgBoard/addImg")
-    public String addImg(MultipartHttpServletRequest multipartHttpServletRequest,
-                         HttpServletRequest request) throws IOException {
+    public String addImg(MultipartHttpServletRequest multipartHttpServletRequest) throws IOException {
 
-        String resourceSrc = request.getServletContext().getRealPath("/mainBoardImg");
+        String basePath = s3Path;
 
         MultipartFile[] multipartFiles = new MultipartFile[limitAdditionImgCnt];
 
@@ -264,7 +298,7 @@ public class MainController {
             multipartFiles[i] = requestFile;
         }
 
-        pageService.addImgBoard(multipartFiles, resourceSrc);
+        pageService.addImgBoardWithS3(multipartFiles, basePath);
 
         return "redirect:/main";
     }
