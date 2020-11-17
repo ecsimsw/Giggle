@@ -176,18 +176,15 @@ public class MemberController {
     // ---- integration AWS/s3
     @PostMapping("/setting/profileImg")
     public String updateProfileImg(long id, MultipartFile profileImg) throws IOException {
+        String basePath = "profile";
+        String fileName = profileImg.getOriginalFilename();
 
-          s3Service.upload(profileImg);
+        if (profileImg.isEmpty()) return "redirect:/member/setting";
+        if (fileName.equals("stranger.png") || fileName.equals("default.png")) {
+            throw new RuntimeException("Invalid file name");
+        }
 
-//        String basePath = "profile";
-//        String fileName = profileImg.getOriginalFilename();
-//
-//        if (profileImg.isEmpty()) return "redirect:/member/setting";
-//        if (fileName.equals("stranger.png") || fileName.equals("default.png")) {
-//            throw new RuntimeException("Invalid file name");
-//        }
-//
-//        memberService.addProfileImgWithS3(profileImg,basePath,id);
+        memberService.addProfileImgWithS3(profileImg,basePath,id);
 
         return "redirect:/member/setting";
     }
