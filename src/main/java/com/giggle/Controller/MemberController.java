@@ -7,6 +7,7 @@ import com.giggle.Domain.Entity.MemberType;
 import com.giggle.Domain.Form.JoinForm;
 import com.giggle.Domain.Form.LoginForm;
 import com.giggle.Domain.Form.MemberInfo;
+import com.giggle.S3Service;
 import com.giggle.Validation.CheckAuthority;
 import com.giggle.Validation.JoinValidator;
 import com.giggle.Validation.Message.EjoinMessage;
@@ -37,6 +38,8 @@ public class MemberController {
 
     private final JoinValidator joinValidator;
     private final CheckAuthority checkAuthority;
+
+    private final S3Service s3Service;
 
     @GetMapping("/login")
     public String login() { return "loginForm"; }
@@ -173,15 +176,18 @@ public class MemberController {
     // ---- integration AWS/s3
     @PostMapping("/setting/profileImg")
     public String updateProfileImg(long id, MultipartFile profileImg) throws IOException {
-        String basePath = "profile";
-        String fileName = profileImg.getOriginalFilename();
 
-        if (profileImg.isEmpty()) return "redirect:/member/setting";
-        if (fileName.equals("stranger.png") || fileName.equals("default.png")) {
-            throw new RuntimeException("Invalid file name");
-        }
-
-        memberService.addProfileImgWithS3(profileImg,basePath,id);
+          s3Service.upload(profileImg);
+          
+//        String basePath = "profile";
+//        String fileName = profileImg.getOriginalFilename();
+//
+//        if (profileImg.isEmpty()) return "redirect:/member/setting";
+//        if (fileName.equals("stranger.png") || fileName.equals("default.png")) {
+//            throw new RuntimeException("Invalid file name");
+//        }
+//
+//        memberService.addProfileImgWithS3(profileImg,basePath,id);
 
         return "redirect:/member/setting";
     }
@@ -241,7 +247,7 @@ public class MemberController {
     public String search(String loginId, String userName) throws JsonProcessingException {
 
         String result = "";
-        
+
         if(!loginId.equals("")){
             Member member = memberService.getByLoginId(loginId);
             if(member == null){
