@@ -241,37 +241,25 @@ public class MemberController {
     public String search(String loginId, String userName) throws JsonProcessingException {
 
         String result = "";
-
-        if(loginId != null){
+        
+        if(!loginId.equals("")){
             Member member = memberService.getByLoginId(loginId);
             if(member == null){
                 result = "none";
                 result = objectMapper.writeValueAsString(result);
             }
             else{
-                MemberInfo searchedMember = new MemberInfo();
-                searchedMember.setId(member.getId().toString());
-                searchedMember.setEmail(member.getEmail());
-                searchedMember.setName(member.getName());
-                searchedMember.setType(member.getMemberType().name());
-                searchedMember.setLoginId(member.getLoginId());
-                result = objectMapper.writeValueAsString(searchedMember);
+                result = objectMapper.writeValueAsString(member);
             }
         }
-        else if(userName != null) {
+        else if(!userName.equals("")) {
             Member member = memberService.getByName(userName);
             if(member == null){
                 result = "none";
                 result = objectMapper.writeValueAsString(result);
             }
             else{
-                MemberInfo searchedMember = new MemberInfo();
-                searchedMember.setId(member.getId().toString());
-                searchedMember.setEmail(member.getEmail());
-                searchedMember.setName(member.getName());
-                searchedMember.setType(member.getMemberType().name());
-                searchedMember.setLoginId(member.getLoginId());
-                result = objectMapper.writeValueAsString(searchedMember);
+                result = objectMapper.writeValueAsString(member);
             }
         }
         return result;

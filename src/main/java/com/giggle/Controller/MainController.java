@@ -123,7 +123,7 @@ public class MainController {
         List<MainCategory> mainCategoryList = categoryService.getAllMainCategory();
         model.addAttribute("mainCategoryList", mainCategoryList);
 
-        return "editshortCut";
+        return "editShortCut";
     }
 
     @Permission(authority = MemberType.admin)
