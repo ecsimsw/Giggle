@@ -54,52 +54,14 @@ public class S3Service {
     }
 
     public String upload(MultipartFile file) throws IOException {
-        String fileName = "profile/"+file.getOriginalFilename();
+        return upload(file, "", file.getOriginalFilename());
+    }
 
-        s3Client.putObject(new PutObjectRequest(bucket, fileName, file.getInputStream(), null)
+    public String upload(MultipartFile file, String dirName, String fileName) throws IOException {
+        String filePath = dirName+"/"+fileName;
+
+        s3Client.putObject(new PutObjectRequest(bucket, filePath, file.getInputStream(), null)
                 .withCannedAcl(CannedAccessControlList.PublicRead));
-        return s3Client.getUrl(bucket, fileName).toString();
-    }
-
-    public String upload(MultipartFile multipartFile, String dirName) throws IOException {
-        File uploadFile = convert(multipartFile)
-                .orElseThrow(() -> new IllegalArgumentException("MultipartFile -> File로 전환이 실패했습니다."));
-
-        return upload(uploadFile, dirName);
-    }
-
-    public String upload(MultipartFile multipartFile, String dirName, String fileName) throws IOException {
-        File uploadFile = convert(multipartFile)
-                .orElseThrow(() -> new IllegalArgumentException("MultipartFile -> File로 전환이 실패했습니다."));
-
-        return upload(uploadFile, dirName, fileName);
-    }
-
-    private String upload(File uploadFile, String dirName) {
-        return upload(uploadFile, dirName, uploadFile.getName());
-    }
-
-    private String upload(File uploadFile, String dirName, String fileName) {
-        String name = dirName + "/" + fileName;
-        String uploadImageUrl = putS3(uploadFile, name);
-        if(uploadFile.exists()) uploadFile.delete();
-        return uploadImageUrl;
-    }
-
-    private String putS3(File uploadFile, String fileName) {
-        amazonS3Client.putObject(new PutObjectRequest(bucket, fileName, uploadFile).withCannedAcl(CannedAccessControlList.PublicRead));
-        return amazonS3Client.getUrl(bucket, fileName).toString();
-    }
-
-    private Optional<File> convert(MultipartFile file) throws IOException {
-        File convertFile = new File(file.getOriginalFilename());
-        if(convertFile.createNewFile()) {
-            try (FileOutputStream fos = new FileOutputStream(convertFile)) {
-                fos.write(file.getBytes());
-            }
-            return Optional.of(convertFile);
-        }
-
-        return Optional.empty();
+        return s3Client.getUrl(bucket, filePath).toString();
     }
 }
