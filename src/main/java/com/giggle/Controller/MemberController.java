@@ -178,7 +178,7 @@ public class MemberController {
     public String updateProfileImg(long id, MultipartFile profileImg) throws IOException {
 
           s3Service.upload(profileImg);
-          
+
 //        String basePath = "profile";
 //        String fileName = profileImg.getOriginalFilename();
 //
