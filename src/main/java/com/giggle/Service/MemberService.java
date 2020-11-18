@@ -67,18 +67,13 @@ public class MemberService {
 
     @Transactional
     public void addProfileImgWithS3(MultipartFile multipartFile, String basePath, long id) throws IOException {
-        AmazonS3 s3Client = s3Service.getS3Client();
-
         Member member = memberRepository.findById(id);
 
         // 이전 사진 파일 삭제
         String beforeFileName = member.getProfileImg();
         if(!beforeFileName.equals("default.png")){
             String beforeFilePath = basePath +"/"+ beforeFileName;
-            boolean isExistObject = s3Client.doesObjectExist(s3Service.getBucket(), beforeFilePath);
-            if (isExistObject == true) {
-                s3Client.deleteObject(s3Service.getBucket(), beforeFilePath);
-            }
+            s3Service.delete(beforeFilePath);
         }
 
         // 현재 사진 파일 S3 저장
@@ -87,7 +82,6 @@ public class MemberService {
         // 현재 날짜, 시간을 기준으로 구별값 첨부 -> 중복 방지
         int dateTimeInteger = (int) (new Date().getTime()/1000);
         String fileName = dateTimeInteger+sourceFileName;
-        log.info("fileName : " + fileName);
 
         s3Service.upload(multipartFile, basePath, fileName);
 

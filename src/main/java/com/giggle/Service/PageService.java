@@ -89,13 +89,10 @@ public class PageService {
         for(long id : idArr){
             MainBoardImg mainBoardImg = pageRepository.findMainBoardImgById(id);
 
-            AmazonS3 s3Client = s3Service.s3Client;
-
             String filePath = basePath+"/"+mainBoardImg.getFileName();
-            boolean isExistObject = s3Client.doesObjectExist(s3Service.getBucket(), filePath);
-            if (isExistObject == true) {
-                s3Client.deleteObject(s3Service.getBucket(), filePath);
-            }
+
+            s3Service.delete(filePath);
+
             pageRepository.deleteMainBoardImg(mainBoardImg);
         }
     }

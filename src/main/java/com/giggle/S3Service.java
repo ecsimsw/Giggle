@@ -64,4 +64,11 @@ public class S3Service {
                 .withCannedAcl(CannedAccessControlList.PublicRead));
         return s3Client.getUrl(bucket, filePath).toString();
     }
+
+    public void delete(String filePath){
+        boolean isExistObject = s3Client.doesObjectExist(bucket, filePath);
+        if (isExistObject == true) {
+            s3Client.deleteObject(bucket, filePath);
+        }
+    }
 }
