@@ -17,17 +17,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.PostConstruct;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Optional;
 
 @Service
 @Getter
 @RequiredArgsConstructor
-@Slf4j
 public class S3Service {
-    public AmazonS3 s3Client;
+    private AmazonS3 s3Client;
 
     private final AmazonS3Client amazonS3Client;
 

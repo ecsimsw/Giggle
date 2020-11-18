@@ -39,8 +39,6 @@ public class MemberController {
     private final JoinValidator joinValidator;
     private final CheckAuthority checkAuthority;
 
-    private final S3Service s3Service;
-
     @GetMapping("/login")
     public String login() { return "loginForm"; }
 
