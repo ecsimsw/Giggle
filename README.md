@@ -21,6 +21,9 @@
  &nbsp;&nbsp;&nbsp;&nbsp; AWS의 EC2, RDS, S3를 사용하였고, 공부한 내용은 https://ecsimsw.tistory.com/category/AWS 에 정리해두었습니다.
   
 <br/>
+
+![mainPage](./readMe/mainPage.png)
+
     
 # 개발환경 
 
