@@ -16,7 +16,7 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp;  트래픽, 데이터가 많은 경우를 가정하며 간단한 처리에도 보다 효율적인 로직을 찾고자 고민하였습니다.
 
-  5. AWS 사용법을 공부하여 해당 어플리케이션을 배포하였습니다.
+  5. AWS 사용법을 공부하여 해당 어플리케이션을 배포하였습니다. (2020-12-15 종료)
   
  &nbsp;&nbsp;&nbsp;&nbsp; AWS의 EC2, RDS, S3를 사용하였고, 공부한 내용은 https://ecsimsw.tistory.com/category/AWS 에 정리해두었습니다.
   
